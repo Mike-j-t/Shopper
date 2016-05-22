@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+        <CheckBoxPreference
+            android:title="@string/developermode_label"
+            android:summary="@string/developermode_info"
+            android:key="@string/sharedpreferencekey_developermode"
+            android:defaultValue="false"/>
+        <CheckBoxPreference
+            android:title="@string/showhelpmode_label"
+            android:summary="@string/showhelpmode_info"
+            android:key="@string/sharedpreferencekey_showhelpmode"
+            android:defaultValue="false"/>
+</PreferenceScreen>

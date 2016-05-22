@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#000000</color>
+    <color name="colorHelpButton">#AAFFAA</color>
+    <color name="colorNormalButton">#5555FF</color>
+    <color name="colorNormalButtonText">#FFFFFF</color>
+    <color name="colorRequiredLabel">#FF4081</color>
+    <color name="colorlistviewheading">#3F71d5</color>
+    <color name="colorlistviewsubheading">#5F91F5</color>
+    <color name="colorstandardhint">#008800</color>
+    <color name="colorrequiredhint">#FF8888</color>
+    <color name="colorlistviewrowodd">#DDDDFF</color>
+    <color name="colorlistviewroweven">#EEEEFF</color>
+    <color name="colorstandardspinnerpopupbackground">#DDDDFF</color>
+    <color name="advancedinputoption">#FF7700</color>
+</resources>

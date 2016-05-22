@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/standard_listview_row_height"
+    android:padding="1dp">
+    <TextView
+        android:id="@+id/adiae_aislesdb_id"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1"
+        android:singleLine="true"
+        android:textColor="@color/colorRequiredLabel" />
+    <TextView
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="match_parent"
+        android:layout_weight="0.025"/>
+    <TextView
+        android:id="@+id/adiae_aislesdb_shopref"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1"
+        android:singleLine="true"
+        android:textColor="@color/colorRequiredLabel"/>
+    <TextView
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="match_parent"
+        android:layout_weight="0.025"/>
+    <TextView
+        android:id="@+id/adiae_aislesdb_order"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1"
+        android:textColor="@color/colorRequiredLabel"
+        android:singleLine="true"/>
+    <TextView
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="match_parent"
+        android:layout_weight="0.025"/>
+    <TextView
+        android:id="@+id/adiae_aislesdb_aislename"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="match_parent"
+        android:layout_weight="0.7"
+        android:singleLine="true"
+        android:textStyle="bold"/>
+</LinearLayout>
