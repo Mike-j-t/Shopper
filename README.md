@@ -42,68 +42,106 @@ _Note **id** and **shopname** only required.
 
  _Note all fields required, **shopref** is critical for referential integrity. **aisleorder** will default to 100_
   
-**Products** - Columns :-
-  _id                 integer   - unqiue identifier of the product
-  productname         text      - name of the product
-  productaisleref     integer - _NOTE NOT USED - REDUNDANT_
-  productuses         integer   - _NOTE NOT USED - REDUNDANT_
-  productnotes        text     - _NOTE NOT USED - REDUNDANT_
-  
-**ProductUsage** - Columns :-
-  productaisleref     integer - that aisle in which this product (as per productproductref) is stocked 
-                                (note a product can be stocked in multiple aisles)
-  productproductref   integer - reference to the product
-  productcost         real    - the cost of this unique use of the product (how much it costs in this store/aisle)
-  productbuycount     integer - how many times this product/aisle has been purchased
-                                not implemented yet, but designed to cater for pre-emptive rule suggestion
-  productfirstbuydate integer - date when first added to shopping list (again for pre-emptive rule suggestion)
-  productlatestbuydate integer - date of the last addition to the shopping list
-  mincost             real    - NOT USED BUT MAY BE
-  orderinaisle        integer - the order of the product within the aisle and thus shop
-  
-**Rules** - Columns :-
-  _id                 integer - unique rule identifier
-  rulename            text    - name of the rule
-  ruletype            integer - NOT USED BUT MAY BE
-  rulepromptflag      integer - true/false wether the rule, when applied to the shopping list should be prompted
-                                i.e. addition to the shopping list can be skipped
-  ruleperiod          integer - The base period, DAYS (0), WEEKS(1), FORTNIGHTS(2), MONTHS(3), QUARTERS(4), YEARS(5)
-                                for the determination of the addition of the rule to the shopping list
-  rulemultipier       integer - A number that multiplies the ruleperiod e.g. if period is 0 and multiplier 5 then every 5 days.
-  ruleactiveon        integer - The date/time that the next occurence will be added 
-                                (when added then adjusted according to period and multiplier)
-  ruleproductref      integer - The product to which this rule will apply
-  ruleaisleref        integer - The aisle holding the product (i.e. product and aisle equates to unique productusage)
-  rulesuses           integer - The number of uses (applies to shopping list) made of this rule (for potential use)
-  mincost             real    - NOT USED BUT MAY BE
-  maxcost             real    - NOT USED BUT MAY BE
-  rulesnumbertoget    integer - Quantity to add to the shopping list
-  
-**ShopList** - Columns :-
-  _id                 integer - Unique identifer for the shopping list entry
-  slproductid         integer - _id of the product
-  sldateadded         integer - Date that this entry was added
-  slnumbertoget       integer - The quantity to get (Note adding the same product/aisle item increments this)
-  sldone              integer - flag if all have been purchased (i.e if true then not included in shopping list)
-                                (NOTE) theorectically 0 quantity is the same. However, 0 quantity alone results in
-                                the entry still appearing in the shopping list but differently (can thus be recalled)
-  productusageref     integer - Unused (would be same as slproductid)
-  aisleref            integer - _id of the aisle. This slproductid and aislref defnies unique productusage entry
-  
-**AppValues** - Columns :-
-  NOTE caters for storage of underlying values e.g. the list of periods used by rules
-  _id                 integer - unique VALUE identifier
-  valuename           text    - Name of the value (not need not be unique e.g. for arrays)
-  valuetype           text    - The type of the value stored e.g. INTEGER, TEXT or REAL
-  valueint            integer - The stored value, if it is of type INTEGER
-  valuereal           real    - The stored value, if it is of type REAL
-  valuetext           text    - The stored value, if it is of type TEXT
-  valueincludeinsettings integer - UNUSED but potential to use in automatically genereating user settings
-  valuesettingsinfo   text    - UNUSED but would be used in conjunction with valueincludeinsettings as text to display
-  
-**Database Code**
+**Products**
 
-Note all database related code is held in the one file ShopperDBHelper.java
+| Column | Type | Description |
+|--------|------|-------------|
+| \_id | Integer | Unique identifier |
+| productname | Text | Name of the product |
+| productaisleref | Integer | _Redundant (link table productusage links products to aisles)_ |
+| productuses | Integer | _Redundant_ |
+| product notes| Text | _Redundant_|
+  
+**ProductUsage**
+
+| Column | Type | Description |
+|--------|------|-------------|
+| productaisleref | Integer | Aisle that this product has been assigned to **1st** part of **Primary Key** |
+| productprodcutref | Integer | Product assigned to the aisle **2nd** and final part of **Primary Key** |
+| productcost | Real | The cost of this product in this specific product/aisle combination |
+| productbuycount | Integer | Number of times this product has been purchased (would be used for suggested rules feature )|
+| productfirstbuydate | Integer | Date that this product was first purchased |
+| productlastbuydate | Integer | The lastest Date that this product was purchased |
+| mincost | Real | Unused |
+| orderinaisle | Integer | order of the product within the aisle |
+
+_Note that product, within the productusage table, refers to the unqiue product/aisle combination. 
+That is a product (as per the product table) may be assigned to a number of aisles.
+Hence the rather limited columns in the product table but a relatively high number of columns in the productusage table._
+
+  
+**Rules**
+
+| Column | Type | Description |
+|--------|------|-------------|
+|\_id | Integer | Unique identifier |
+| rulename | Text | The name of the Rule |
+| ruletype | Integer | Unused |
+| rulepromptflag | Integer | flag as to whether or not application of the rule should be prompted |
+| ruleperiod | Integer | The base period/frequency used by the rule DAYS(0), WEEKS(1), FORTNIGHTS(2), MONTHS(3), QUARTERS(4) or YEARS(5) |
+| rulemultiplier | Integer | period * multiplier determines the rules occurence frequency |
+| ruleactiveon | Integer | The Date that the rule becomes active (_if that date or past when shopping list is opened then rule is applied and the product added to the list_)|
+| ruleproductref | Integer | The \_id of the underlying product and thus also 2nd part of productusage Primary Key |
+| ruleaisleref | Integer | The \_id of the aisle i.e. 1st part of the productusage Primary Key |
+| ruleuses | Integer | The number of times that this rule has been applied (used to add a shopping list entry) |
+| mincost | Real | unused |
+| maxcost | Real | unused |
+| rulesnumbertoget | Integer | The quantity of products to purchase |
+  
+**ShopList**
+
+| Column | Type | Description |
+|--------|------|-------------|
+| \_id | Integer | Unique Shoppinbg List Entry Identifier |
+| slproductid | Integer| \_id of the product |
+| sldateadded | Integer | Date the entry was added |
+| slnumbertoget | Integer | The number to purchase |
+| sldone | Integer |  Flag to denote when the entry has been completed |
+| productusageref | Integer | Unused, would replicate slproductid |
+| aisleref | Integer | \_id of the aisle |
+
+_Note An entry has three states incomplete, fully purchased (ie slnumbertoget is 0 )_
+  
+**AppValues**
+
+| Column | Type | Description |
+|--------|------|-------------|
+| \_id | Integer | unique APPVALUE identifier |
+| valuename | Text| Name of the value (not need not be unique e.g. for arrays) |
+| valuetype| Text | The type of the value stored e.g. INTEGER, TEXT or REAL |
+| valueint | Integer | The stored value, if it is of type INTEGER |
+| valuereal | Real | The stored value, if it is of type REAL |
+| valuetext | Text | The stored value, if it is of type TEXT |
+| valueincludeinsettings | Integer| UNUSED but potential to use in automatically genereating user settings |
+| valuesettingsinfo | Text | UNUSED but would be used in conjunction with valueincludeinsettings as text to display |
+
+  _NOTE caters for storage of underlying values e.g. the list of periods used by rules_
+  
+**Database Code the ShopperDnHelper.java file**
+
+All database related code is held in the one file ShopperDBHelper.java
+
+This file consists of two prime sections class definitions for DB objects and the primary DBHelper code.
+The class definitions define three classes that allow the DB structure to be built as objects namely DBColumn, DBTAble and DBDatabase.
+Methods of these objects then build the SQL for the creation and or update of the actual tables via the creation of a psuedo DB schema which is compared against
+what actually exists.  This comparison against what cuurently exists being undertaken at two points. In the mandatory DBHelper onCreate method and in
+an added method onUpgrade, invoked everytime the app is run. This bypasses the standard SQLite version control methodology used.
+Basically it caters for relatively simple database modifications.
+
+**Class DBColumn - Properties**
+
+| Property | Type | Use |
+|-|-|-|
+| usable| Boolean | Flag to indicate if the object is in a usable state |
+| name | String | Column name |
+| type | String | SQLite Type e.g. INT, REAL .... (note converted to TEXT, INTEGER, REAL or NUMERIC by the DBCOLumn's `simplifyColumnType` method)|
+| primary\_index| Boolean | Wether or not this column is part of the primary index |
+| default\_value | String | The default value of the column  as a string, if empty then no defualt value is set|
+| order | Integer | unused at present but could facilitate ordering of columns accordingly |
+| problem\_msg| String | For holding error messages |
+
+
+
 This includes Classes :-
 DBColumn						A class used for the define of table columns; an instance cconsists of a single column :-
 									usable		- boolean flag indicating wheter or not this column is deemed usable
