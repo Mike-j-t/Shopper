@@ -119,7 +119,7 @@ _Note An entry has three states incomplete, fully purchased (ie slnumbertoget is
   
 **Database Code the ShopperDnHelper.java file**
 
-All database related code is held in the one file ShopperDBHelper.java
+All database related code is held in the one file **ShopperDBHelper**.java
 
 This file consists of two prime sections class definitions for DB objects and the primary DBHelper code.
 The class definitions define three classes that allow the DB structure to be built as objects namely DBColumn, DBTAble and DBDatabase.
@@ -130,8 +130,9 @@ Basically it caters for relatively simple database modifications.
 
 **Class DBColumn - Properties**
 
+
 | Property | Type | Use |
-|-|-|-|
+|----------|------|-----|
 | usable| Boolean | Flag to indicate if the object is in a usable state |
 | name | String | Column name |
 | type | String | SQLite Type e.g. INT, REAL .... (note converted to TEXT, INTEGER, REAL or NUMERIC by the DBCOLumn's `simplifyColumnType` method)|
@@ -140,17 +141,18 @@ Basically it caters for relatively simple database modifications.
 | order | Integer | unused at present but could facilitate ordering of columns accordingly |
 | problem\_msg| String | For holding error messages |
 
+**Class DBColumn - Constructors**
+
+| Constructor | Notes |
+|-------------|-------|
+| DBcolumn()| Default shouldn't be used |
+| DBColumn(String column_name) | Only the column name supplied - should be avoided |
+| DBColumn(String column_name, int sortorder) | Column name and sort order - Should be avoided |
+| DBColumn(String column_name, String column_type, boolean primary_index, String default_value) | Full bar sort order BEST |
+| DBColumn(String column_name,String column_type, boolean primary_index, String  default_value, int sortorder) | OK but no need for sort order |
 
 
-This includes Classes :-
-DBColumn						A class used for the define of table columns; an instance cconsists of a single column :-
-									usable		- boolean flag indicating wheter or not this column is deemed usable
-									name 		- string, that contains the name of the column
-									type 		- string,(can be any of the types allowable by SQLite, however converted to stored type by simplifyColumnType(String type))
-									primary_index - (boolean, defaults to false, true if the column is a primary index or part of a primary index)
-									default_value - string, that is empty (not null) if no default value otherwise contains the default value for the column
-									order		- integer, the order of the column NOTE ordering isn't implemented
-									problem_msg - string, for messages regarding errors encountered
+
 									
 								5 constructors :-
 									DBColumn()
