@@ -87,5 +87,62 @@ AppValues - Columns :-
   valueincludeinsettings integer - UNUSED but potential to use in automatically genereating user settings
   valuesettingsinfo   text    - UNUSED but would be used in conjunction with valueincludeinsettings as text to display
   
+Database Code
+
+Note all database related code is held in the one file ShopperDBHelper.java
+This includes Classes :-
+DBColumn						A class used for the define of table columns; an instance cconsists of a single column :-
+									usable		- boolean flag indicating wheter or not this column is deemed usable
+									name 		- string, that contains the name of the column
+									type 		- string,(can be any of the types allowable by SQLite, however converted to stored type by simplifyColumnType(String type))
+									primary_index - (boolean, defaults to false, true if the column is a primary index or part of a primary index)
+									default_value - string, that is empty (not null) if no default value otherwise contains the default value for the column
+									order		- integer, the order of the column NOTE ordering isn't implemented
+									problem_msg - string, for messages regarding errors encountered
+									
+								5 constructors :-
+									DBColumn()
+									DBColumn(String column_name)
+									DBColumn(String column_name, int sortorder)
+									DBColumn(String column_name, String column_type, boolean primary_index, String default_value)
+									DBColumn(String column_name,String column_type, boolean primary_index, String  default_value, int sortorder)
+									
+								3 Methods for setting properties :-
+									setDBColumnName(String column_name)
+									setDBColumnType(String column_type)
+									setDefault_value(String default_value)
+									
+								10 methods for retrieving properties :-
+									String getDBColumnName()
+									String getDBColumnType()
+									boolean getDBColumnIsUsable()
+									boolean isDBColumnUsable() NOTE same as getDBColumnIsUsable()
+									boolean getDBColumnIsPrimaryIndex()
+									String getDBColumnDefaultValue()
+									boolean isDBColumnPrimaryIndex() Note same as getDBColumnisPrimaryIndex()
+									String getDBColumnProblemMsg()
+									String getUnusableMsg() Note same as getDBColumnProblemMsg()
+									int getSortorder()
+									
+								2 internal methods used during construction
+									boolean checkDBColumnIsUsable(String caller) - Checks that column is usable and if not sets appropriate message(s)
+									String simplifyColumnType(String type) (converts valuetype to core type e.g. INT, BIG INT etc returns INTEGER)
+									
+		example usage for the columns in the Aisles table (note uses predefined varialbes e.g. AISLES_COLUMN_ID ):-
+
+					// Aisles Table and columns
+					ArrayList<DBColumn> aislescolumns = new ArrayList<DBColumn>();					//arraylist to hold all columns for the aisles
+					aislescolumns.add(new DBColumn(AISLES_COLUMN_ID,"INTEGER",true,""));			// _id column, INTEGER type, is primary index column with no default value		
+					aislescolumns.add(new DBColumn(AISLES_COLUMN_NAME,"TEXT",false,""));			// name column, TEXT type, isn't primary, no default value
+					aislescolumns.add(new DBColumn(AISLES_COLUMN_ORDER,"INTEGER",false,"100"));		// order columh, INTEGER type, isn't PI, defaults to 100
+					aislescolumns.add(new DBColumn(AISLES_COLUMN_SHOP,"INTEGER",false,""));
+					// Followed by (see DBTable classs below)
+					DBTable aisles = new DBTable(AISLES_TABLE_NAME,aislescolumns);					// creates a DBTable instance called aisles which uses the ailses
+					AISLES_COLUMN_COUNT = aisles.numberOfColumnsInTable();							// sets variable to number of columns in the table
+					
+					
+DBTable							A class used for the definition of DB tables; and instance consists of the table name and an array of DBColumn instances
+DB
+  
   
 
