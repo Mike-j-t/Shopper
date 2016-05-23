@@ -3,39 +3,53 @@ Android Shopping list app
 Written using Android Studio
 Utilises SQLite (7 Tables, Shops, Aisles, Products, ProductUsage, Rules, ShopList & Appvalues).
 
-Features
+**Features**
 Ordered shopping list (ordered by Shop/Aisle/Product).
 Automated and prompted addition to the shopping list according to rules.
 Free from Ads and in-app purchases.
 
-Notes
+**Notes**
 Shops referred to as Stores (attempt to avoid cofusion between verb Shop and object Shop).
 
-DB Structure
-Shops Table - Columns :-
-  _id                 integer   - unique identifier (thus possible to have same shop details)
-  shopname            text      - name of the shop (store)
-  shoporder           integer   - order that the shop (store) appears in the shopping list (lower #'s first)
-  shopstreet          text      - address of the shop (store) (used for reference)
-  shopcity            text      - city/area of the shop (store) (used for reference)
-  shopstate           text      - state/county that the shop (store) is located in (used for reference)
-  shopphone           text      - phone number of the shop (store) (used for reference)
-  shopnotes           text      - notes about the shop (store) (used for reference)
+**DB Structure**
+
+**Shops**
+
+| Column        | Type          | Description                                                                           |
+|---------------|---------------|---------------------------------------------------------------------------------------|
+| \_id          | Integer       | unique identifier (thus possible to have same shop details)                           |
+| shopname      | Text          | name of the shop (store)                                                              |
+| shoporder     | Integer       | order of the shop in the shopping list (lower #'s appear first)                       |
+| shopstreet    | Text          | name of the street (reference/convenience/distinguising chain stores)                 |
+| shopcity      | Text          | name of the city/area/suburb etc(reference/convenience/distinguising chain stores)    |
+| shopstate     | Text          | name of the state/county etc (reference/convenience)                                  |
+| shopphone     | Text          | phone number (reference/convenience)                                                  |
+| shopnotes     | Text          | notes (reference/convenience)                                                         | 
+ 
+_Note **id** and **shopname** only required. 
+**shoporder** required but defaults to **100**.
+**shopcity** and **shopstreet** are often displayed to allow stores in the same chain to be distinguished, so best given._
+ 
   
-Aisles Table - Columns :-
-  _id                 integer   - unique identifier
-  aislename           text      - name of the aisle/area (note created as default under some conditions)
-  aisleorder          integer   - order of the aisle area within the shop (store) (lower #'s first)
-  aisleshopref        integer  - id of the shop that owns the aisle
+**Aisles**
+
+| Column        | Type          | Description                                                                           |
+|---------------|---------------|---------------------------------------------------------------------------------------|
+| \_id          | Integer       | unique identifier (thus possible to have same aisle details)                          |
+| aislename     | Text          | name of the aisle                                                                     |
+| aisleorder    | Integer       | order of the aisle within the shop in the shopping list (lower #'s appear first)      |
+| aisleshopref  | Text          | the _id of the shop that the aisle is in                                              |
+
+ _Note all fields required, **shopref** is critical for referential integrity. **aisleorder** will default to 100_
   
-Products - Columns :-
+**Products** - Columns :-
   _id                 integer   - unqiue identifier of the product
   productname         text      - name of the product
-  productaisleref     integer - NOTE NOT USED - REDUNDANT
-  productuses         integer   - NOTE NOT USED - REDUNDANT
-  productnotes        text     - NOTE NOT USED - REDUNDANT
+  productaisleref     integer - _NOTE NOT USED - REDUNDANT_
+  productuses         integer   - _NOTE NOT USED - REDUNDANT_
+  productnotes        text     - _NOTE NOT USED - REDUNDANT_
   
-ProductUsage - Columns :-
+**ProductUsage** - Columns :-
   productaisleref     integer - that aisle in which this product (as per productproductref) is stocked 
                                 (note a product can be stocked in multiple aisles)
   productproductref   integer - reference to the product
@@ -47,7 +61,7 @@ ProductUsage - Columns :-
   mincost             real    - NOT USED BUT MAY BE
   orderinaisle        integer - the order of the product within the aisle and thus shop
   
-Rules - Columns :-
+**Rules** - Columns :-
   _id                 integer - unique rule identifier
   rulename            text    - name of the rule
   ruletype            integer - NOT USED BUT MAY BE
@@ -65,7 +79,7 @@ Rules - Columns :-
   maxcost             real    - NOT USED BUT MAY BE
   rulesnumbertoget    integer - Quantity to add to the shopping list
   
-ShopList - Columns :-
+**ShopList** - Columns :-
   _id                 integer - Unique identifer for the shopping list entry
   slproductid         integer - _id of the product
   sldateadded         integer - Date that this entry was added
@@ -76,7 +90,7 @@ ShopList - Columns :-
   productusageref     integer - Unused (would be same as slproductid)
   aisleref            integer - _id of the aisle. This slproductid and aislref defnies unique productusage entry
   
-AppValues - Columns :-
+**AppValues** - Columns :-
   NOTE caters for storage of underlying values e.g. the list of periods used by rules
   _id                 integer - unique VALUE identifier
   valuename           text    - Name of the value (not need not be unique e.g. for arrays)
@@ -87,7 +101,7 @@ AppValues - Columns :-
   valueincludeinsettings integer - UNUSED but potential to use in automatically genereating user settings
   valuesettingsinfo   text    - UNUSED but would be used in conjunction with valueincludeinsettings as text to display
   
-Database Code
+**Database Code**
 
 Note all database related code is held in the one file ShopperDBHelper.java
 This includes Classes :-
