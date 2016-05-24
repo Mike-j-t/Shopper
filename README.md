@@ -3,7 +3,7 @@
 | Desctiption |
 |---|
 | Andorid Shopping List App |
-| Writtne using Android Studio |
+| Written using Android Studio |
 | Utilises SQLite _(7 Tables, Shops, Aisles, Products, ProductUsage, Rules, ShopList & Appvalues)_ |
 
 |Features |
@@ -13,5 +13,6 @@
 | Free from Ads and in App purchases. |
 | Icon Free _No guessing what an icon means_. |
 | Currently limited to 10" tablets. |
+| Flexbility _e.g. can be used as a todo list_. |
 
-_See the Wike pages for further Informatiom._
+_See the Wiki pages for further Informatiom._
