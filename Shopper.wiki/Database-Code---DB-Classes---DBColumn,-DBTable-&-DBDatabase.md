@@ -159,4 +159,4 @@ _example usage for the columns in the Aisles table (note uses predefined variabl
 | DBDatabase(String database_name, DBTable database_table) | Instantiate single table database. Usability would depend on underlying table which is checked via `checkDBDatabaseIsUsable`. |
 | DBDatabase(String database_name, ArrayList<DBTable> database_tables ||
 
-
+***

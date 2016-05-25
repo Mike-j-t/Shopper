@@ -117,3 +117,4 @@ _Note An entry has three states incomplete, fully purchased (ie slnumbertoget is
   _NOTE caters for storage of underlying values e.g. the list of periods used by rules_
  
 ***
+***
