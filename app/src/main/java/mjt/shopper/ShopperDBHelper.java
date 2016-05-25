@@ -79,7 +79,6 @@ import java.util.*;
  *    NOTE!!! ALTER statements should now not be generated if the table to which they relate does
  *    not exist in the actual database
  */
-
 class DBDatabase {
     private boolean usable;
     private String database_name;
