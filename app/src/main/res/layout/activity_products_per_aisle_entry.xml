@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="@dimen/standard_listview_width"
+    android:layout_height="@dimen/standard_listview_row_height"
+    android:padding="0dp">
+    <TextView
+        android:id="@+id/product_id_entry"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="@dimen/standard_listview_row_height" />
+    <TextView
+        android:id="@+id/product_name_entry"
+        android:layout_width="@dimen/productname_text_size"
+        android:layout_height="@dimen/standard_listview_row_height"
+        android:singleLine="true"
+        android:textSize="@dimen/standard_listview_text_size"/>
+    <TextView
+        android:id="@+id/product_order_entry"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="@dimen/standard_listview_row_height" />
+    <TextView
+        android:id="@+id/product_aisle_entry"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="@dimen/standard_listview_row_height" />
+    <TextView
+        android:id="@+id/product_uses_entry"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="@dimen/standard_listview_row_height" />
+    <TextView
+        android:id="@+id/product_notes_entry"
+        android:layout_width="300dp"
+        android:layout_height="@dimen/standard_listview_row_height"
+        android:singleLine="true"
+        android:textSize="@dimen/standard_listview_text_size"/>
+    <TextView
+        android:id="@+id/productusage_aisleref_entry"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="@dimen/rowheight" />
+    <TextView
+        android:id="@+id/productusage_productref_entry"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="@dimen/standard_listview_row_height" />
+    <TextView
+        android:id="@+id/productusage_cost_entry"
+        android:layout_width="@dimen/standard_realnumb_width"
+        android:layout_height="@dimen/standard_listview_row_height"
+        android:singleLine="true"
+        android:textSize="@dimen/standard_listview_text_size"/>
+    <TextView
+        android:id="@+id/productusage_buycount_entry"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="@dimen/standard_listview_row_height" />
+    <TextView
+        android:id="@+id/productusage_firstbuydate_entry"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="@dimen/standard_listview_row_height" />
+    <TextView
+        android:id="@+id/productusage_lastbuydate_entry"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="@dimen/standard_listview_row_height" />
+    <TextView
+        android:id="@+id/productusage_mincost_entry"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="@dimen/standard_listview_row_height" />
+    <TextView
+        android:id="@+id/productusage_orderinaisle_entry"
+        android:layout_width="@dimen/standard_realnumb_width"
+        android:layout_height="@dimen/standard_listview_row_height"
+        android:singleLine="true"
+        android:textSize="@dimen/standard_listview_text_size"/>
+</LinearLayout>

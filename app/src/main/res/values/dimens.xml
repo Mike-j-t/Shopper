@@ -1,0 +1,83 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">28dp</dimen>
+    <dimen name="activity_vertical_margin">8dp</dimen>
+
+    <!-- Shopper specific dimenstions                               -->
+    <dimen name="standard_button_width">90dp</dimen>
+    <dimen name="standard_button_height">45dp</dimen>
+    <dimen name="standard_button_horizontal_margin">2.5dp</dimen>
+    <dimen name="standard_button_vertical_margin">5dp</dimen>
+    <dimen name="standard_idref_width">50dp</dimen>
+    <dimen name="standard_realnumb_width">75dp</dimen>
+    <dimen name="standard_monetary_width">90dp</dimen>
+    <dimen name="standard_timestamp_width">150dp</dimen>
+    <dimen name="standard_ddmmyy_width">120dp</dimen>
+    <dimen name="standard_itemorder_width">75dp</dimen>
+    <dimen name="standard_counter_width">75dp</dimen>
+    <dimen name="standard_itemname_width">200dp</dimen>
+    <dimen name="standard_longeritemname_width">350dp</dimen>
+    <dimen name="standard_heading_horizontal_label_width">200dp</dimen>
+    <dimen name="standard_heading_vertical_label_width">750dp</dimen>
+
+    <dimen name="help_button_width">@dimen/standard_button_width</dimen>
+    <dimen name="help_button_height">35dp</dimen>
+
+    <dimen name="standard_dummy_size">0dp</dimen>
+    <dimen name="standard_dummy_width">0dp</dimen>
+
+    <dimen name="standard_listview_width">750dp</dimen>
+    <dimen name="standard_listview_height">950dp</dimen>
+    <dimen name="standard_listview_height_small">750dp</dimen>
+    <dimen name="standard_listview_titlemargin">16dp</dimen>
+    <dimen name="standard_listview_padding_top">8dp</dimen>
+    <dimen name="standard_listview_padding_bottom">8sp</dimen>
+    <dimen name="standard_listview_padding_right">16dp</dimen>
+    <dimen name="standard_listview_padding_left">16dp</dimen>
+    <dimen name="standard_listview_text_size">18sp</dimen>
+    <dimen name="standard_listview_row_height">32dp</dimen>
+    <dimen name="standard_listview_row_padding_vertical">3dp</dimen>
+    <dimen name="standard_listview_row_padding_horizontal">3dp</dimen>
+    <dimen name="shoppinglist_listview_button_height">28dp</dimen>
+
+    <dimen name="standard_heading_height">26dp</dimen>
+    <dimen name="standard_heading_text_size">20sp</dimen>
+    <dimen name="required_heading_height">26dp</dimen>
+    <dimen name="required_heading_text_size">20sp</dimen>
+    <dimen name="standard_subheading_height">26dp</dimen>
+    <dimen name="standard_subheading_text_size">20sp</dimen>
+    <dimen name="standard_subsubheading_height">26dp</dimen>
+    <dimen name="standard_subsubheading_text_size">18sp</dimen>
+    <dimen name="standard_subsubsubheading_height">24dp</dimen>
+    <dimen name="standard_subsubsubheading_text_size">16sp</dimen>
+    <dimen name="standard_height">24dp</dimen>
+    <dimen name="standard_text_size">16sp</dimen>
+
+    <dimen name="standard_spinner_text_size">16sp</dimen>
+    <dimen name="standard_spinner_layout_height">45dp</dimen>
+    <dimen name="standard_spinner_margin">5dp</dimen>
+    <dimen name="standard_spinner_row_padding_vertical">3dp</dimen>
+    <dimen name="standard_spinner_row_padding_horizontal">3dp</dimen>
+    <dimen name="standard_spinner_padding_left">8dp</dimen>
+    <dimen name="standard_spinner_padding_right">32dp</dimen>
+    <dimen name="standard_spinner_width">750dp</dimen>
+
+    <dimen name="shopname_text_size">200sp</dimen>
+    <!-- <dimen name="shoporder_text_size">80sp</dimen> -->
+    <dimen name="shopstreet_text_size">330sp</dimen>
+    <dimen name="shopstreet_text_size_partial">150sp</dimen>
+    <dimen name="shopcity_text_size">150sp</dimen>
+    <!-- <dimen name="shopstate_text_size">150sp</dimen> -->
+    <!-- <dimen name="shopphone_text_size">150sp</dimen> -->
+    <!-- <dimen name="shopnotes_text_size">300sp</dimen> -->
+
+    <dimen name="ailsename_text_size">300sp</dimen>
+    <dimen name="ailseorder_text_size">80sp</dimen>
+
+    <dimen name="productname_text_size">300sp</dimen>
+    <dimen name="productnotes_text_size">300sp</dimen>
+    <dimen name="rowheight">30dp</dimen>
+    <dimen name="smallrowheight">20dp</dimen>
+
+    <!-- <dimen name="fab_margin">16dp</dimen> -->
+</resources>

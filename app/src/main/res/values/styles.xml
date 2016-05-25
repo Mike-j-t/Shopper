@@ -1,0 +1,105 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    
+    <style name="spinner_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/standard_spinner_margin</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">32dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:background">@android:drawable/btn_dropdown</item>
+    </style>
+    <style name="textviewbutton">
+        <item name="android:layout_width">@dimen/standard_button_width</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorNormalButtonText</item>
+        <item name="android:background">@drawable/textviewbuttonborder</item>
+        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+    <style name="textviewhelpbutton">
+        <item name="android:layout_width">@dimen/standard_button_width</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorNormalButtonText</item>
+        <item name="android:background">@drawable/textviewhelpbuttonborder</item>
+        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+    <style name="textviewwarnbutton">
+        <item name="android:layout_width">@dimen/standard_button_width</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorNormalButtonText</item>
+        <item name="android:background">@drawable/textviewwarnbuttonborder</item>
+        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+    <style name="edittext_style">
+        <item name="android:layout_width">@dimen/standard_dummy_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/standard_dummy_size</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:lines">1</item>
+        <item name="android:textSize">@dimen/standard_subsubsubheading_text_size</item>
+        <item name="android:hint">@string/standardedittexthint</item>
+        <item name="android:background">@drawable/edittextbackgroundborder_required</item>
+    </style>
+    <style name="edittext_required_style">
+        <item name="android:layout_width">@dimen/standard_dummy_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/standard_dummy_size</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:lines">1</item>
+        <item name="android:textSize">@dimen/standard_heading_text_size</item>
+        <item name="android:hint">@string/standardedittexthint</item>
+        <item name="android:background">@drawable/edittextbackgroundborder_required</item>
+    </style>
+    <style name="edittext_optional_style">
+        <item name="android:layout_width">@dimen/standard_dummy_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/standard_dummy_size</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:lines">1</item>
+        <item name="android:textSize">@dimen/standard_heading_text_size</item>
+        <item name="android:hint">@string/standardedittexthint</item>
+        <item name="android:background">@drawable/edittextbackgroundborder_optional</item>
+    </style>
+    <style name="spinner_style_old">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/standard_spinner_margin</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:popupBackground">@color/colorstandardspinnerpopupbackground</item>
+    </style>
+</resources>

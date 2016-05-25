@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+    <RelativeLayout
+        android:id="@+id/amrl10"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/amll_actionbuttons"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/standard_button_height"
+            android:gravity="center_horizontal">
+            <TextView
+                android:id="@+id/am_stores_button"
+                style="@style/textviewbutton"
+                android:text="@string/mainbutton_stores"
+                android:onClick="buttonClicked"/>
+            <TextView
+                android:id="@+id/am_aisles_button"
+                style="@style/textviewbutton"
+                android:text="@string/mainbutton_aisles"
+                android:onClick="buttonClicked" />
+            <TextView
+                android:id="@+id/am_produce_button"
+                style="@style/textviewbutton"
+                android:text="@string/mainbutton_products"
+                android:onClick="buttonClicked" />
+            <TextView
+                android:id="@+id/am_toget_button"
+                style="@style/textviewbutton"
+                android:text="@string/mainbutton_addtoshoppinglist"
+                android:onClick="buttonClicked" />
+            <TextView
+                android:id="@+id/am_shop_button"
+                style="@style/textviewbutton"
+                android:text="@string/mainbutton_shoppinglist"
+                android:onClick="buttonClicked" />
+            <TextView
+                android:id="@+id/am_ruleadd_button"
+                style="@style/textviewbutton"
+                android:text="@string/mainbutton_rules"
+                android:onClick="buttonClicked" />
+            <TextView
+                android:id="@+id/am_data_button"
+                style="@style/textviewbutton"
+                android:text="@string/mainbutton_dbdata"
+                android:onClick="buttonClicked" />
+            <TextView
+                android:id="@+id/am_schema_button"
+                style="@style/textviewbutton"
+                android:text="@string/mainbutton_dbschema"
+                android:onClick="buttonClicked" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/amll_helpbuttons"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/standard_button_height"
+            android:layout_below="@id/amll_actionbuttons"
+            android:gravity="center_horizontal">
+            <TextView
+                android:id="@+id/am_storeshelp_button"
+                style="@style/textviewhelpbutton"
+                android:text="@string/mainbutton_stores"
+                android:onClick="buttonClicked" />
+            <TextView
+                android:id="@+id/am_aisleshelp_button"
+                style="@style/textviewhelpbutton"
+                android:text="@string/mainbutton_aisles"
+                android:onClick="buttonClicked" />
+            <TextView
+                android:id="@+id/am_producehelp_button"
+                style="@style/textviewhelpbutton"
+                android:text="@string/mainbutton_products"
+                android:onClick="buttonClicked" />
+            <TextView
+                android:id="@+id/am_togethelp_button"
+                style="@style/textviewhelpbutton"
+                android:text="@string/mainbutton_addtoshoppinglist"
+                android:onClick="buttonClicked" />
+            <TextView
+                android:id="@+id/am_shophelp_button"
+                style="@style/textviewhelpbutton"
+                android:text="@string/mainbutton_shoppinglist"
+                android:onClick="buttonClicked" />
+            <TextView
+                android:id="@+id/am_ruleaddhelp_button"
+                style="@style/textviewhelpbutton"
+                android:text="@string/mainbutton_rules"
+                android:onClick="buttonClicked" />
+            <TextView
+                android:id="@+id/am_datahelp_button"
+                style="@style/textviewhelpbutton"
+                android:text="@string/mainbutton_dbdata"
+                android:onClick="buttonClicked" />
+            <TextView
+                android:id="@+id/am_schemahelp_button"
+                style="@style/textviewhelpbutton"
+                android:text="@string/mainbutton_dbschema"
+                android:onClick="buttonClicked" />
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/amrl20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/amrl10"
+        android:paddingTop="50sp">
+        <ImageView
+            android:id="@+id/amimg10"
+            android:contentDescription="@string/mainscreen_imagedescription"
+            android:layout_width="700sp"
+            android:layout_height="350sp"
+            android:layout_centerHorizontal="true"
+            android:background="#EEEEEE"/>
+        <TextView
+            android:id="@+id/amtv10"
+            android:layout_width="wrap_content"
+            android:layout_height="50sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/amimg10"
+            android:text="@string/mainscreen_welcomemessage1"
+            android:textSize="40sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/amtv20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/amtv10"
+            android:textAlignment="center"
+            android:text="@string/mainscreen_welcomemessage2"
+            android:textSize="25sp"
+            android:textStyle="italic"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/amrl30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/amrl20">
+        <TextView
+            android:id="@+id/amtv30"
+            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+</RelativeLayout>

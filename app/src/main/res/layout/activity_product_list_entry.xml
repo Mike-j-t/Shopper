@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/standard_listview_row_padding_vertical"
+    android:paddingBottom="@dimen/standard_listview_row_padding_vertical"
+    android:paddingLeft="@dimen/standard_listview_row_padding_horizontal"
+    android:paddingRight="@dimen/standard_listview_row_padding_horizontal">
+    <TextView
+        android:id="@+id/product_id_entry"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="@dimen/standard_heading_height"
+        android:singleLine="true"
+        android:textSize="@dimen/standard_listview_text_size"
+        android:textStyle="italic"/>
+    <TextView
+        android:id="@+id/product_name_entry"
+        android:layout_width="@dimen/productname_text_size"
+        android:layout_height="@dimen/standard_heading_height"
+        android:singleLine="true"
+        android:textSize="@dimen/standard_listview_text_size"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/product_notes_entry"
+        android:layout_width="@dimen/productnotes_text_size"
+        android:layout_height="@dimen/standard_heading_height"
+        android:singleLine="true"
+        android:textSize="@dimen/standard_listview_text_size" />
+    <TextView
+        android:id="@+id/product_order_entry"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="@dimen/standard_heading_height"
+        android:singleLine="true"
+        android:textSize="@dimen/standard_listview_text_size"/>
+    <TextView
+        android:id="@+id/product_aisle_entry"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="@dimen/standard_heading_height"
+        android:singleLine="true"
+        android:textSize="@dimen/standard_listview_text_size"/>
+    <TextView
+        android:id="@+id/product_uses_entry"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="@dimen/standard_heading_height"
+        android:singleLine="true"
+        android:textSize="@dimen/standard_listview_text_size"/>
+</LinearLayout>

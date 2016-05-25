@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="1dp">
+    <LinearLayout
+        android:id="@+id/shoplist_row1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/standard_heading_height">
+        <TextView
+            android:id="@+id/adise_shopsdb_id"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:gravity="end"
+            android:singleLine="true"
+            android:textColor="@color/colorRequiredLabel" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.005"/>
+        <TextView
+            android:id="@+id/adise_shopsdb_shopname"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.895"
+            android:singleLine="true"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/adise_shopsdb_order"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:singleLine="true"
+            android:textAlignment="textEnd"
+            android:gravity="end" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/shoplist_row2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/standard_heading_height">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.005"/>
+        <TextView
+            android:id="@+id/adise_shopsdb_street"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.345"
+            android:singleLine="true" />
+        <TextView
+            android:id="@+id/adise_shopsdb_city"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.35"
+            android:singleLine="true" />
+        <TextView
+            android:id="@+id/adise_shopsdb_state"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.15"
+            android:singleLine="true" />
+        <TextView
+            android:id="@+id/adise_shopsdb_phone"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.15"
+            android:gravity="end"
+            android:singleLine="true" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/shoplist_row3"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/standard_heading_height">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.005"/>
+        <TextView
+            android:id="@+id/adise_shopsdb_notes"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.995"
+            android:singleLine="true" />
+    </LinearLayout>
+</LinearLayout>

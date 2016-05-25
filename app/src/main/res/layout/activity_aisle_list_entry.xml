@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/standard_listview_row_height"
+    android:paddingBottom="@dimen/standard_listview_row_padding_vertical"
+    android:paddingLeft="@dimen/standard_listview_row_padding_horizontal"
+    android:paddingRight="@dimen/standard_listview_row_padding_horizontal"
+    android:paddingTop="@dimen/standard_listview_row_padding_vertical">
+    <!-- Aisle Name -->
+    <TextView
+        android:id="@+id/aisle_name_entry"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="match_parent"
+        android:layout_weight="0.89"
+        android:textSize="@dimen/standard_listview_text_size"
+        android:textStyle="bold" />
+    <!-- Aisle Order-->
+    <TextView
+        android:id="@+id/aisle_order_entry"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1"
+        android:gravity="end"
+        android:textSize="@dimen/standard_listview_text_size"
+        android:visibility="visible"/>
+    <TextView
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="match_parent"
+        android:layout_weight="0.01"/>
+    <!-- Aisle Shopref 4 debugging -->
+    <!-- Aisle ID 4 debugging -->
+    <TextView
+        android:id="@+id/aisle_id_entry"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="match_parent"
+        android:textSize="@dimen/standard_listview_text_size"
+        android:visibility="gone"/>
+    <TextView
+        android:id="@+id/aisle_shopref_entry"
+        android:layout_width="@dimen/standard_dummy_size"
+        android:layout_height="match_parent"
+        android:textSize="@dimen/standard_listview_text_size"
+        android:visibility="gone"/>
+</LinearLayout>
