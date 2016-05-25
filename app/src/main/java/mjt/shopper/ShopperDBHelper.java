@@ -79,7 +79,6 @@ import java.util.*;
  *    NOTE!!! ALTER statements should now not be generated if the table to which they relate does
  *    not exist in the actual database
  */
-
 class DBDatabase {
     private boolean usable;
     private String database_name;
@@ -274,10 +273,10 @@ class DBTable {
         this.table_columns = new ArrayList<DBColumn>();
         this.problem_msg = "WDBT0004 - Uninstantiated - " +
                 "Use addDBColumnToDBTable to add at least 1 usable DBColumn or " +
-                "Use addDBColumnsToDBTable to add at least 1 usable DBColumn or" +
+                "Use addDBColumnsToDBTable to add at least 1 usable DBColumn or " +
                 "Use AddMultipleColumnstoDBTable to add at least 1 usable DBColumn. " +
                 "Note any unusable DBcolumn will render table unusable. " +
-                "Also use setDBTableTableName to ste the Table Name. " +
+                "Also use setDBTableTableName to set the Table Name. " +
                 "Caller=DBTable (Default Constructor)";
     }
 
@@ -1074,7 +1073,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         //db.execSQL("DROP TABLE productusage");
 
 
-        // Get the design/schema as coded as opposed to as what exists
+        // Get the design/schema as coded as opposed to what exists
         DBDatabase shopper = generateDBSchema(db);
 
         // Check if the schema is usable
