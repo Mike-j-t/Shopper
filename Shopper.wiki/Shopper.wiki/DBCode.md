@@ -157,8 +157,80 @@ _example usage for the columns in the Aisles table (note uses predefined variabl
 | DBDatabase() | Will instantiate unusable instance.  Problem message would be set to `WDBD0100 - Uninstantiated - Use setDBDatabaseName to set the Database Name. Use addDBTableToDBDatabase to add at least 1 Table or Use addDBTablesToDBDatabase to add at least 1 Table or Use addMultipleTablesToDBDatabase to add at least 1 Table` |
 | DBDatabase(String database_name) | Instantiate unusable instance (only database name set).   Problem message would be set to `WDBD0101 - Partially Instantiated - Use addDBTableToDBDatabase to add at least 1 Table or Use addDBTablesToDBDatabase to add at least 1 Table or Use addMultipleTablesToDBDatabase to add at least 1 Table` |
 | DBDatabase(String database_name, DBTable database_table) | Instantiate single table database. Usability would depend on underlying table which is checked via `checkDBDatabaseIsUsable`. |
-| DBDatabase(String database_name, ArrayList<DBTable> database_tables ||
+| DBDatabase(String database_name, ArrayList<DBTable> database_tables | Instantiate usable instance with 1 or more tables (note only usable if all tables and columns are usable)|
 
-***
-More to Come
-***
+### Class DBDatbase - Setter Methods
+
+| Method | Notes |
+|:---|:---|
+| setDBDatabaseName(String database_name) | Set the Database name |
+| addDBTableToDBDatabase(DBTable database_table) | Add a single table to the database |
+| addDBTablesToDBDatabase(ArrayList<DBTable> database_tables) | Add 1 or more tables to the database via an ArrayList of DBTable objects |
+
+### Class DBDatabase - Getter Methods
+
+| Method | Notes |
+|:---|:---|
+| boolean isDBDatabaseUsable() | true if the Databse is flagged as usable, otherwise false. |
+| long numberOfTablesinDBDatabase() | The number of Tables in the database |
+| String getDBDatabaseName() | The Database name |
+| String getDBDatabaseProblemMsg() | The Database's Problem message, empty if none |
+| String getAllDBDatabaseProblemMsgs() | All Problem messages including any for tables and columns |
+| boolean checkDBDatabaseIsUsable(String caller) | true if database is usable, else false. Note that this performs checks rather than just returning the usable value. |
+| boolean anyEmptyDBTablesInDBDatabase(String caller) | true if all underlying tables cnd columns are usable, fasle if not and also false if there are no tables defined |
+
+### Class DBDatabase - Miscellaneous Methods
+
+| Method | Notes |
+|:---|:---|
+| ArrayList<String> (SQLiteDatabase db) | Create an ArrayList of strings containing the SQL to build the database |
+| actionDBBuildSQL(SQLiteDatabase db) | Builds the Database after invoking `generateDBBuildSQL` |
+| ArrayList<String> generateDBAlterSQL(SQLiteDatabase db) | Create and ArrayList of strings containing the SQL to Alter and existing database |
+| actionDBAlterSQL(SQLiteDatabase db) | Alters the database after invoking `generateDBAlterSQL` |
+
+### DBDatabase - Example Code
+
+#### DBDatabase - Example Code - Build the Database Schema in preparation for the it being used to cerate or amend the Real Database.
+
+    // Database
+    ArrayList<DBTable> databasetables = new ArrayList<DBTable>();
+    databasetables.add(shops);
+    databasetables.add(aisles);
+    databasetables.add(products);
+    databasetables.add(productusage);
+    databasetables.add(rules);
+    databasetables.add(shoplist);
+    databasetables.add(values);
+    return  new DBDatabase(DATABASE_NAME,databasetables);
+ 
+*Note see previous example for how the databasetables are generated. *
+*Note this is part of a method called generateDBSChema; hence the return statement.*
+
+#### DBDatabase - Example Code - Actually creating the database 
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+
+        // Generate the schema that will be used aas the basis for
+        DBDatabase shopper = generateDBSchema(db);
+        if (!shopper.isDBDatabaseUsable()) {
+            Log.e(Constants.LOG, "Unable to Create Tables -" +
+                    "The design(schema)has been marked as unusable. " +
+                    "- This is a Development Issue. Please contact the Developer.");
+            return;
+        }
+
+        ArrayList<String> SQLBuildStatements = new ArrayList<String>(shopper.generateDBBuildSQL(db));
+
+        // Build the Tables according to the generated schema
+        shopper.actionDBBuildSQL(db);
+
+        Log.i(Constants.LOG, "Shopper Database Tables created.");
+    }
+
+
+_Note! The initial part of the code checks that the Pseudo Schema is usable. The call to build the ArrayList SQLBuildStatements is for debugging purposes and is not necessary. So without error checking and debugging code the above could be :-_
+
+
+    DBDatabase shopper = generateDBSchema(db);
+    shopper.actionDBBuildSQL(db);
