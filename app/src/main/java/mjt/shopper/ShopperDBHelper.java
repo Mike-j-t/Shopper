@@ -1666,11 +1666,12 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         while(csr.moveToNext()) {
             deleteAisle(csr.getLong(AISLES_COLUMN_ID_INDEX));
         }
-        csr.close();
         db.execSQL("DELETE FROM " + SHOPS_TABLE_NAME +
                 " WHERE " + SHOPS_COLUMN_ID + " = " + shopid + " ;");
+        csr.close();
         validateRules();
         validateShoplist();
+        db.close();
     }
     //==============================================================================================
     public void updateAisle(String aisleid, String aislename, String aisleorder, long aisleshopref) {
@@ -1698,6 +1699,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         cv.put(PRODUCTS_COLUMN_NAME, productname);
         cv.put(PRODUCTS_COLUMN_NOTES, productnotes);
         db.update(PRODUCTS_TABLE_NAME, cv, PRODUCTS_COLUMN_ID + " = " + productid + " ;", null);
+        db.close();
     }
     //==============================================================================================
     // Delete a product and all references made to the product
@@ -1800,7 +1802,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
             }
         }
         shoplistcursor.close();
-        db.close();
+        //db.close();
     }
     //==============================================================================================
     // Update Rule
@@ -1870,7 +1872,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
             }
         }
         rulescursor.close();
-        db.close();
+        //db.close();
     }
     //==============================================================================================
     // Relatively generic get all rows from a table into a cursor
