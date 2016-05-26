@@ -153,8 +153,8 @@ public class ShopAddActivity extends AppCompatActivity {
 
         // Validattion of shoporder, required if not given then default value is used.
         if(storeorder.isEmpty() | storeorder.length() < 1 ) {
-            storeorder = "100";
-            Toast.makeText(this, "Store order was not given. Using the default value of 100. Note! this is just informing you; there is no error.", Toast.LENGTH_SHORT).show();
+            storeorder = "1000";
+            Toast.makeText(this, "Store order was not given. Using the default value of 1000. Note! this is just informing you; there is no error.", Toast.LENGTH_SHORT).show();
         }
 
         // Validation of shopname, required if not given do not save and position cursor to the shop name.
@@ -178,38 +178,13 @@ public class ShopAddActivity extends AppCompatActivity {
             findViewById(R.id.ase_storename_input).requestFocus();
         } else {
 
-            // Add (ie and add shop button was clicked). Use database insert and clear input data.
+            // Add (ie an add shop button was clicked). Use database insert and clear input data.
             // Additionally prompt for the addition of Aisles (TODO as below)
             if (mode == 0) {
                 shopperdb.insertShop(shopname, shoporder, shopstreet, shopcity, shopstate, shopphone, shopnotes);
                 final long lastshop = shopperdb.getLastShopId();
-                Toast.makeText(this, "Shop " + shopname + " was Added.", Toast.LENGTH_LONG).show();
-
-                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch(which) {
-                            case DialogInterface.BUTTON_POSITIVE:
-                                Intent intent = new Intent(getApplicationContext(),AisleAddActivity.class);
-                                intent.putExtra("Caller",THIS_ACTIVITY).putExtra("SHOPID",shopperdb.getLastShopId());
-                                startActivity(intent);
-                                break;
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                shopperdb.insertAisle("Default",shopperdb.getLastShopId(),"100");
-                                yesnoresult = false;
-                                break;
-                        }
-                    }
-                };
-
-                AlertDialog.Builder okdialog = new AlertDialog.Builder(this);
-                okdialog.setMessage(getString(R.string.shopaddaisletitle));
-                //okdialog.setMessage("Do you wish to add Aisles to Shop " + shopname + "?").setCancelable(true).setPositiveButton("YES", dialogClickListener).setNegativeButton("NO",dialogClickListener).show();
-                okdialog.setMessage(getString(R.string.shopaddaisletext001) + shopname + getString(R.string.shopaddaisletext002))
-                        .setCancelable(true)
-                        .setPositiveButton("YES", dialogClickListener)
-                        .setNegativeButton("NO",dialogClickListener)
-                        .show();
+                shopperdb.insertAisle("Default Aisle",lastshop,"1000");
+                Toast.makeText(this, "Shop " + shopname + " was Added. An Aisle called Default Aisle was also added.", Toast.LENGTH_LONG).show();
 
                 findViewById(R.id.asbtn02).setVisibility(View.VISIBLE);
                 findViewById(R.id.ase_storename_input).requestFocus();
