@@ -35,7 +35,7 @@
     <string name="shophint">The name of the Store you are adding goes here.</string>
     <string name="shoporderlabel">Order</string>
     <string name="shoporder_info">Shopping Order (lower numbers first)</string>
-    <string name="shoporderdefault">100</string>
+    <string name="shoporderdefault">1000</string>
     <string name="shopstreet_label">Street</string>
     <string name="shopstreet_info">Used to distinguish Stores with the same name</string>
     <string name="shopstreet">Street Address (to distinguish this from other Stores with the same name)</string>
@@ -82,9 +82,9 @@
     <string name="aislelabel">Aisle Name</string>
     <string name="aislelabel_plural">Aisles</string>
     <string name="aislenamehint">The name of the Aisle you are adding goes here.</string>
-    <string name="aisleorderlabel">Order of the Aisle (lower numbers come first, default is 100)</string>
+    <string name="aisleorderlabel">Order of the Aisle (lower numbers come first, default is 1000)</string>
     <string name="aisleorderlabelshort">Order</string>
-    <string name="aisleorderdefault">100</string>
+    <string name="aisleorderdefault">1000</string>
     <string name="aislenamenotgiventitle">Aisle Name Required</string>
     <string name="aislenamenotgiventext">Cannot add Aisle as the Aisle Name has not been given.\n\nPlease enter an Aisle Name and then click on the Save button.</string>
     <string name="aislelistclicktitle">Aisle Edit/Stock Option Selection.</string>
@@ -240,14 +240,14 @@
         \n\n<b>Shopper requires</b> at least 1 Store.
         \n\nAfter you click on <b>CONTINUE</b> you will be able to add a Store or Stores.
         \n\nAt a minimum you need the a Store name <i>(it cannot be blank)</i>.
-        \n\n<b>Order</b> will defaut 100 if you do not input a value.
+        \n\n<b>Order</b> will defaut 1000 if you do not input a value.
         \n\t<b>Order</b> determines order in which the shopping list appears; where lower ordered Stores appear first.
         \n\n<b>Street</b>, <b>City</b>, <b>State</b>, <b>Phone</b> and <b>Notes</b> are not required.
         \n\t<b>Street</b> appears frequently and can be useful for distinguishing Stores in a chain or group.
         \n\t<b>City</b> appears frequently and can be useful for distinguishing Stores in a chain or group.
         \n\n<b>State</b>, <b>Phone</b> and <b>Notes</b> are for your convenience.
         \n\nWhen you have finished inputting the Store information click on the <b>SAVE</b> button.
-        \n\n<i>Using multiples of 100 to define the order gives a great deal of scope to add/insert subsequent Stores without having to change multiple Store Orders to order them according to your requirements.
+        \n\n<i>Using multiples of 1000 to define the order gives a great deal of scope to add/insert subsequent Stores without having to change multiple Store Orders to order them according to your requirements.
         \nIf you don\'t feel like adding data for the other fields (Street, City, State, Phone No. and Notes) then click on the SAVE button without inputting the data.
         \n\nWhen you click on the SAVE button the shop will be saved but the screen will remain (although the information that you typed will be cleared and the hints shown).
         \nThere will be a new button, <b>DONE</b>. Clicking this will allow you to continue. Note! any data you have typed, since the last SAVE will not be saved.</i>
@@ -283,7 +283,7 @@
         \n even something else (refer to flexibility in the manual for more information)</i>.
     </string>
     <string name="aisleaddedit_instructions">Select the <b>Store</b> to which you want to add an <b>Aisle</b> using the <b>dropdown selector</b>.
-        \nInput or Amend the <b>Name</b> you wish to give the <b>Aisle</b> and the <b>Order</b> (<i>this will default to 100 if not input</i>).
+        \nInput or Amend the <b>Name</b> you wish to give the <b>Aisle</b> and the <b>Order</b> (<i>this will default to 1000 if not input</i>).
         \nFinally <b>Click</b> on the <b>Add Button</b> to add the new Aisle.
         \nThe <b>Aisle</b> should now appear in the list of Ailses currently in the Store.
         \n\nYou can <b>Click</b> on an Aisle in the list of Aisles currently in the Store to :-

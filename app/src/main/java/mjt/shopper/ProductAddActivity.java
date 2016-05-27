@@ -94,6 +94,7 @@ public class ProductAddActivity extends AppCompatActivity {
             productnotes_edittext.setText(passedproductnotes);
             setTitle(getResources().getString(R.string.title_activity_product_edit));
         }
+        /*
         // If no products exist then provide information
         if(shopperdb.numberOfProducts() < 1) {
             AlertDialog.Builder okdialog = new AlertDialog.Builder(this);
@@ -112,6 +113,7 @@ public class ProductAddActivity extends AppCompatActivity {
         } else {
             done_button.setVisibility(View.VISIBLE);
         }
+        */
 
     }
 

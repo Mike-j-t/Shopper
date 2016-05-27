@@ -98,7 +98,7 @@ public class ShopAddActivity extends AppCompatActivity {
             mode = 10;
             setTitle(getResources().getString(R.string.title_activity_shop_edit));
         }
-
+/*
         if(shopperdb.numberOfShops() < 1 ) {
             AlertDialog.Builder okdialog = new AlertDialog.Builder(this);
             okdialog.setTitle(getString(R.string.shopnonetitle));
@@ -117,6 +117,7 @@ public class ShopAddActivity extends AppCompatActivity {
         } else {
             findViewById(R.id.asbtn02).setVisibility(View.VISIBLE);
         }
+*/
     }
 
     @Override
@@ -127,6 +128,7 @@ public class ShopAddActivity extends AppCompatActivity {
     }
 
     public void saveClicked(View view) {
+        storeorder = "1000";
 
         storename = storename_input.getText().toString();
         storeorder = storeorder_input.getText().toString();
@@ -135,27 +137,22 @@ public class ShopAddActivity extends AppCompatActivity {
         storestate = storestate_input.getText().toString();
         storephone = storephone_input.getText().toString();
         storenotes = storenotes_input.getText().toString();
-        EditText et = (EditText) findViewById(R.id.ase_storename_input);
-        String shopname = et.getText().toString();
-        et = (EditText) findViewById(R.id.ase_storeorder_input);
-        String shoporder = et.getText().toString();
-        et = (EditText) findViewById(R.id.ase_storestreet_input);
-        String shopstreet = et.getText().toString();
-        et = (EditText) findViewById(R.id.ase_storecity_input);
-        String shopcity = et.getText().toString();
-        et = (EditText) findViewById(R.id.ase_storestate_input);
-        String shopstate = et.getText().toString();
-        et = (EditText) findViewById(R.id.ase_storephone_input);
-        String shopphone = et.getText().toString();
-        et = (EditText) findViewById(R.id.ase_storenotes_input);
-        String shopnotes = et.getText().toString();
+        //EditText et = (EditText) findViewById(R.id.ase_storename_input);
+        //String shopname = et.getText().toString();
+        //et = (EditText) findViewById(R.id.ase_storeorder_input);
+        //String shoporder = et.getText().toString();
+        //et = (EditText) findViewById(R.id.ase_storestreet_input);
+        //String shopstreet = et.getText().toString();
+        //et = (EditText) findViewById(R.id.ase_storecity_input);
+        //String shopcity = et.getText().toString();
+        //et = (EditText) findViewById(R.id.ase_storestate_input);
+        //String shopstate = et.getText().toString();
+        //et = (EditText) findViewById(R.id.ase_storephone_input);
+        //String shopphone = et.getText().toString();
+        //et = (EditText) findViewById(R.id.ase_storenotes_input);
+        //String shopnotes = et.getText().toString();
 
 
-        // Validattion of shoporder, required if not given then default value is used.
-        if(storeorder.isEmpty() | storeorder.length() < 1 ) {
-            storeorder = "1000";
-            Toast.makeText(this, "Store order was not given. Using the default value of 1000. Note! this is just informing you; there is no error.", Toast.LENGTH_SHORT).show();
-        }
 
         // Validation of shopname, required if not given do not save and position cursor to the shop name.
         if(storename.isEmpty() | storename.length() < 1) {
@@ -178,13 +175,19 @@ public class ShopAddActivity extends AppCompatActivity {
             findViewById(R.id.ase_storename_input).requestFocus();
         } else {
 
+            // Validattion of shoporder, required if not given then default value is used.
+            if(storeorder.isEmpty() | storeorder.length() < 1 ) {
+                storeorder = "1000";
+                Toast.makeText(this, "Store order was not given. Using the default value of " + storeorder + ". Note! this is just informing you; there is no error.", Toast.LENGTH_SHORT).show();
+            }
+
             // Add (ie an add shop button was clicked). Use database insert and clear input data.
             // Additionally prompt for the addition of Aisles (TODO as below)
             if (mode == 0) {
-                shopperdb.insertShop(shopname, shoporder, shopstreet, shopcity, shopstate, shopphone, shopnotes);
+                shopperdb.insertShop(storename, storeorder, storestreet, storecity, storestate, storephone, storenotes);
                 final long lastshop = shopperdb.getLastShopId();
                 shopperdb.insertAisle("Default Aisle",lastshop,"1000");
-                Toast.makeText(this, "Shop " + shopname + " was Added. An Aisle called Default Aisle was also added.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Store " + storename + " was Added. An Aisle called Default Aisle was also added.", Toast.LENGTH_LONG).show();
 
                 findViewById(R.id.asbtn02).setVisibility(View.VISIBLE);
                 findViewById(R.id.ase_storename_input).requestFocus();
@@ -199,7 +202,7 @@ public class ShopAddActivity extends AppCompatActivity {
 
             // Update (ie Shop was clicked on from the Shop list). Use database update and don't clear the input
             if (mode == 10) {
-                shopperdb.updateShop(getIntent().getStringExtra("ShopID"), shopname, shoporder, shopstreet, shopcity, shopstate, shopphone, shopnotes);
+                shopperdb.updateShop(getIntent().getStringExtra("ShopID"), storename, storeorder, storestreet, storecity, storestate, storephone, storenotes);
                 doneAdding(view);
             }
             // refresh the list of current shops
@@ -247,4 +250,3 @@ public class ShopAddActivity extends AppCompatActivity {
         shoplistcsradapter.swapCursor(shoplistcsr);
     }
 }
-
