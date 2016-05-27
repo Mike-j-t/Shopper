@@ -94,27 +94,6 @@ public class ProductAddActivity extends AppCompatActivity {
             productnotes_edittext.setText(passedproductnotes);
             setTitle(getResources().getString(R.string.title_activity_product_edit));
         }
-        /*
-        // If no products exist then provide information
-        if(shopperdb.numberOfProducts() < 1) {
-            AlertDialog.Builder okdialog = new AlertDialog.Builder(this);
-            okdialog.setTitle(getString(R.string.productsnonetitle));
-            okdialog.setMessage(getString(R.string.noproductsmessage));
-            okdialog.setCancelable(true);
-            okdialog.setPositiveButton("Continue",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-            okdialog.create();
-            okdialog.show();
-        } else {
-            done_button.setVisibility(View.VISIBLE);
-        }
-        */
-
     }
 
     protected void onDestroy() {
@@ -165,8 +144,6 @@ public class ProductAddActivity extends AppCompatActivity {
                     Toast.makeText(this,"Product " + productname + " NOT Updated - Invalid ID(" + passedproductid + ")." +
                             "\n\t Please reoprt this to the developer, as it should never happen.",Toast.LENGTH_LONG).show();
                 }
-                //doneClicked(view); TODO Remove this is safe to do so.
-                // If in it will exit as soon as update is saved rather than allow editor to check/edit the update.
             }
         }
     }
