@@ -23,7 +23,6 @@
             android:id="@+id/productaddedit_done_button"
             style="@style/textviewbutton"
             android:text="@string/standarddonebutton"
-            android:visibility="invisible"
             android:onClick="doneClicked"/>
         <TextView
             android:id="@+id/productaddedit_save_button"
