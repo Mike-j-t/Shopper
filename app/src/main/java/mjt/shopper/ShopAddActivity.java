@@ -98,26 +98,6 @@ public class ShopAddActivity extends AppCompatActivity {
             mode = 10;
             setTitle(getResources().getString(R.string.title_activity_shop_edit));
         }
-/*
-        if(shopperdb.numberOfShops() < 1 ) {
-            AlertDialog.Builder okdialog = new AlertDialog.Builder(this);
-            okdialog.setTitle(getString(R.string.shopnonetitle));
-            okdialog.setMessage(getString(R.string.noshopsmessage));
-            okdialog.setCancelable(true);
-            okdialog.setPositiveButton("Continue",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-            okdialog.create();
-            okdialog.show();
-            findViewById(R.id.asbtn02).setVisibility(View.GONE);
-        } else {
-            findViewById(R.id.asbtn02).setVisibility(View.VISIBLE);
-        }
-*/
     }
 
     @Override
@@ -137,22 +117,6 @@ public class ShopAddActivity extends AppCompatActivity {
         storestate = storestate_input.getText().toString();
         storephone = storephone_input.getText().toString();
         storenotes = storenotes_input.getText().toString();
-        //EditText et = (EditText) findViewById(R.id.ase_storename_input);
-        //String shopname = et.getText().toString();
-        //et = (EditText) findViewById(R.id.ase_storeorder_input);
-        //String shoporder = et.getText().toString();
-        //et = (EditText) findViewById(R.id.ase_storestreet_input);
-        //String shopstreet = et.getText().toString();
-        //et = (EditText) findViewById(R.id.ase_storecity_input);
-        //String shopcity = et.getText().toString();
-        //et = (EditText) findViewById(R.id.ase_storestate_input);
-        //String shopstate = et.getText().toString();
-        //et = (EditText) findViewById(R.id.ase_storephone_input);
-        //String shopphone = et.getText().toString();
-        //et = (EditText) findViewById(R.id.ase_storenotes_input);
-        //String shopnotes = et.getText().toString();
-
-
 
         // Validation of shopname, required if not given do not save and position cursor to the shop name.
         if(storename.isEmpty() | storename.length() < 1) {
