@@ -19,6 +19,11 @@
             android:id="@+id/asbtn02"
             android:text="@string/standarddonebutton"
             android:onClick="doneAdding" />
+        <TextView
+            style="@style/textviewbutton"
+            android:id="@+id/shopsavebutton"
+            android:text="@string/standardsavebutton"
+            android:onClick="saveClicked" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/shopaddeedit_help_layout"
@@ -227,18 +232,6 @@
             android:layout_weight="0.75"
             android:hint="@string/shopnoteshint"
             android:textColorHint="@color/colorstandardhint"/>
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:id="@+id/ase_savebutton"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_button_height">
-        <TextView
-            style="@style/textviewbutton"
-            android:id="@+id/shopsavebutton"
-            android:text="@string/standardsavebutton"
-            android:onClick="saveClicked" />
-
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ase_shoplist_preheader_layout"

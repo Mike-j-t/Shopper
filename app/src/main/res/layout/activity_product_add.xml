@@ -23,8 +23,12 @@
             android:id="@+id/productaddedit_done_button"
             style="@style/textviewbutton"
             android:text="@string/standarddonebutton"
-            android:visibility="invisible"
             android:onClick="doneClicked"/>
+        <TextView
+            android:id="@+id/productaddedit_save_button"
+            style="@style/textviewbutton"
+            android:text="@string/standardsavebutton"
+            android:onClick="saveClicked"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/productaddedit_help_layout"
@@ -93,17 +97,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.75"
             tools:ignore="LabelFor" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/productaddedit_savebutton_ll"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_button_height">
-        <TextView
-            android:id="@+id/productaddedit_save_button"
-            style="@style/textviewbutton"
-            android:text="@string/standardsavebutton"
-            android:onClick="saveClicked"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/productaddedit_currentproducts_listview_layout"
