@@ -128,7 +128,6 @@ public class ProductAddActivity extends AppCompatActivity {
                 final long lastproduct = shopperdb.getLastProductId();
                 Toast.makeText(this,"Product " + productname + " was Added.",Toast.LENGTH_LONG).show();
                 //TODO perhaps allow products to be assigned to shops here.
-                done_button.setVisibility(View.VISIBLE);
                 productname_edittext.requestFocus();
                 productname_edittext.setText("");
                 productnotes_edittext.setText("");
