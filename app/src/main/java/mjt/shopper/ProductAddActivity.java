@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 /**
  * Created by Mike092015 on 9/02/2016.
+ * Changed for GIT
  */
 public class ProductAddActivity extends AppCompatActivity {
     // standard definitions
