@@ -1,9 +1,7 @@
 package mjt.shopper;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -24,8 +22,6 @@ public class ShopAddActivity extends AppCompatActivity {
     public final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
 
     public int mode = 0;
-    public final Context context = this.context;
-    public boolean yesnoresult = false;
     public ListView shoplist;
     public Cursor shoplistcsr;
     public ShopsCursorAdapter shoplistcsradapter;
@@ -167,7 +163,7 @@ public class ShopAddActivity extends AppCompatActivity {
             // Update (ie Shop was clicked on from the Shop list). Use database update and don't clear the input
             if (mode == 10) {
                 shopperdb.updateShop(getIntent().getStringExtra("ShopID"), storename, storeorder, storestreet, storecity, storestate, storephone, storenotes);
-                doneAdding(view);
+                Toast.makeText(this, "Store " + storename + " Updated.",Toast.LENGTH_SHORT).show();
             }
             // refresh the list of current shops
             shoplistcsr = shopperdb.getShopsAsCursor(storelistsortorder);
