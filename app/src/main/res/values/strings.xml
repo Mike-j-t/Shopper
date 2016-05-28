@@ -286,11 +286,6 @@
         \nInput or Amend the <b>Name</b> you wish to give the <b>Aisle</b> and the <b>Order</b> (<i>this will default to 1000 if not input</i>).
         \nFinally <b>Click</b> on the <b>Add Button</b> to add the new Aisle.
         \nThe <b>Aisle</b> should now appear in the list of Ailses currently in the Store.
-        \n\nYou can <b>Click</b> on an Aisle in the list of Aisles currently in the Store to :-
-        \n\ta) <b>Edit the Aisle</b> (<i>change the Name or Order</i>)
-        \n\tb) To Add products to the Aisle.
-        \n\nYou can also <b>Long Click</b> on an Aisle to <b><u>Delete</u></b> the Aisle from the Store.
-        \n\tThis removes product assignements to the Aisle, <u>it does not delete the Product</u>.
         \n\n<i>Note the term Aisle is used loosely, it can be an area, department part of an Aisle or
         \n even something else (refer to flexibility in the manual for more information)</i>.
     </string>

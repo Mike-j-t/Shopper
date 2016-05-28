@@ -159,6 +159,8 @@ public class AisleAddActivity extends AppCompatActivity  {
         aislespershopcursoradapter =  new AislesCursorAdapter(this,aislespershopcursor,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         aislespershoplistview.setAdapter(aislespershopcursoradapter);
 
+        /*
+
         // If Item (Aisle) is clicked then allow the aisle to be edited or to be stocked
         // Note!! if edit then starts another instance of this activity as a child and as update
         // If stock then start AddProductToShop activity
@@ -242,6 +244,8 @@ public class AisleAddActivity extends AppCompatActivity  {
                 return true;
             }
         });
+
+        */
 
         //TODO click listener long click to delete
     }
