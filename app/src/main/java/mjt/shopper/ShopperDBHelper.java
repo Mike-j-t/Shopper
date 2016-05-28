@@ -1407,6 +1407,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     }
     //==============================================================================================
     public Cursor getProductsAsCursor(String orderby, String selector) {
+        selector = selector.replaceAll("'","''");
         if(orderby.length() < 1) {
             orderby = Constants.PRODUCTLISTORDER_BY_PRODUCT;
         }
@@ -1485,6 +1486,8 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
                 " ON " + AISLES_TABLE_NAME + "." + AISLES_COLUMN_SHOP + " = " +
                     SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_ID;
         if(productselect.length() > 0)  {
+            productselect = productselect.replaceAll("'","''");
+
             if(!whereclause_exists) {
                 sqlstr = sqlstr + " WHERE ";
                 whereclause_exists = true;
@@ -1492,6 +1495,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
             sqlstr = sqlstr + PRODUCTS_COLUMN_NAME + " LIKE '%" + productselect + "%' ";
         }
         if(shopselect.length() > 0) {
+            shopselect = shopselect.replaceAll("'","''");
             if (!whereclause_exists) {
                 sqlstr = sqlstr + " WHERE ";
                 whereclause_exists = true;
@@ -1584,6 +1588,8 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         if(orderby.length() < 1) {
             orderby = Constants.RULELISTORDER_BY_RULE;
         }
+        productnameselect = productnameselect.replaceAll("'","''");
+        rulenameselect = rulenameselect.replaceAll("'","''");
         SQLiteDatabase db = this.getWritableDatabase();
         String sqlstr = "SELECT " + RULES_TABLE_NAME + "." + RULES_COLUMN_ID + ", " +
                 RULES_TABLE_NAME + "." + RULES_COLUMN_NAME + ", " +
