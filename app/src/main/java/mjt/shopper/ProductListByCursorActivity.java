@@ -157,12 +157,6 @@ public class ProductListByCursorActivity extends AppCompatActivity {
                         currentpca.swapCursor(productlist_csr);
                     }
                 });
-                okdialog.setNegativeButton("FORCE(unused)", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //TODO Force delete product ie remove from ailses and rules etc
-                    }
-                });
                 okdialog.setNeutralButton("CANCEL", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
