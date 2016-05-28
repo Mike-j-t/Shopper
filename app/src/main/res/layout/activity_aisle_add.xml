@@ -27,6 +27,11 @@
             android:text="@string/standarddonebutton"
             android:visibility="invisible"
             android:onClick="doneAdding"/>
+        <Button
+            android:id="@+id/aisleaddedit_save_button"
+            style="@style/textviewbutton"
+            android:text="@string/shopsavebutton"
+            android:onClick="saveClicked" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/aisleaddedit_help_layout"
@@ -142,18 +147,6 @@
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
             android:layout_weight="0.4"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/aisleaddedit_mid_buttons"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_button_height"
-        android:layout_margin="@dimen/standard_dummy_size">
-        <Button
-            android:id="@+id/aisleaddedit_save_button"
-            style="@style/textviewbutton"
-            android:text="@string/shopsavebutton"
-            android:onClick="saveClicked" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/aisleaddedit_aislelist_header1_layout"
