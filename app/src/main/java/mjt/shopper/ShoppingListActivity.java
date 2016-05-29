@@ -34,8 +34,11 @@ public class ShoppingListActivity extends AppCompatActivity{
     public Cursor promptentriescursor;
     public ListView promptentrieslist;
     public ShoppingListPromptedRulesAdapter promptentriesadapter;
+    public TextView shoppinglisthelp;
     public long chkdate;
     public long promptentriescount = 0;
+    public String shoppinglist_normalhelp;
+    public String shoppinglist_promptedhelp;
 
     private final static String THIS_ACTIVITY = "ShoppingListActivity";
     private final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
@@ -87,6 +90,11 @@ public class ShoppingListActivity extends AppCompatActivity{
         shoppinglisthelplayout = (LinearLayout) findViewById(R.id.shoppinglist_help_layout);
         shoppinglistlv = (ListView) findViewById(R.id.shoppinglist_list);
         shoppingliststatslv = (LinearLayout) findViewById(R.id.shoppinglist_stats);
+        shoppinglisthelp = (TextView) findViewById(R.id.shoplist_help);
+        shoppinglist_normalhelp = getResources().getText(R.string.shoppinglist_instructions).toString();
+        shoppinglist_promptedhelp = getResources().getText(R.string.shoppinglist_prompted_instructions).toString();
+
+
         params = shoppinglistlv.getLayoutParams();
 
         if(!helpoffmode) {
@@ -113,10 +121,12 @@ public class ShoppingListActivity extends AppCompatActivity{
             promptentrieslist.setVisibility(View.GONE);
             shoppinglistlv.setVisibility(View.VISIBLE);
             shoppingliststatslv.setVisibility(View.VISIBLE);
+            shoppinglisthelp.setText(shoppinglist_normalhelp);
         } else {
             promptentrieslist.setVisibility(View.VISIBLE);
             shoppinglistlv.setVisibility(View.GONE);
             shoppingliststatslv.setVisibility(View.GONE);
+            shoppinglisthelp.setText(shoppinglist_promptedhelp);
         }
 
         totalspent = (TextView) findViewById(R.id.shoppinglist_purchasedamount);
@@ -225,10 +235,12 @@ public class ShoppingListActivity extends AppCompatActivity{
             currentsla.swapCursor(shoppinglistcsr);
             shoppinglistlv.setVisibility(View.VISIBLE);
             shoppingliststatslv.setVisibility(View.VISIBLE);
+            shoppinglisthelp.setText(shoppinglist_normalhelp);
         } else {
             promptentrieslist.setVisibility(View.VISIBLE);
             shoppinglistlv.setVisibility(View.GONE);
             shoppingliststatslv.setVisibility(View.GONE);
+            shoppinglisthelp.setText(shoppinglist_promptedhelp);
         }
     }
     // Handle Skipping a promted rule entry
@@ -249,10 +261,12 @@ public class ShoppingListActivity extends AppCompatActivity{
             promptentrieslist.setVisibility(View.GONE);
             shoppinglistlv.setVisibility(View.VISIBLE);
             shoppingliststatslv.setVisibility(View.VISIBLE);
+            shoppinglisthelp.setText(shoppinglist_normalhelp);
         } else {
             promptentrieslist.setVisibility(View.VISIBLE);
             shoppinglistlv.setVisibility(View.GONE);
             shoppingliststatslv.setVisibility(View.GONE);
+            shoppinglisthelp.setText(shoppinglist_promptedhelp);
         }
     }
     public Double calculateRemainingAmount(Cursor csr) {

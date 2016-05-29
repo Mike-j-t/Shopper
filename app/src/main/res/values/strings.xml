@@ -337,6 +337,12 @@
         \n\n<b>Click</b> on <b>Trim</b> to remove completed/picked <i>(theorectically purchased) </i><b>Items</b>.
         \n\tNote this, unlike <b>Delete</b>, retains a historical record of the <b>Item(s)</b> having been purchased.
     </string>
+    <string name="shoppinglist_prompted_instructions"><b>Prompted Rules Exist.
+        \n</b> Please click on <b>Add</b> or <b>Skip</b> for all listed entries.
+        \n<b>Add</b> will add the entry into the <b>Shopping List</b>
+        \n<b>Skip</b> will not add the entry into the shopping list. However, the next occurrence wil be determined.
+        \nWhen <b>All</b> listed entries have been actioned the <b>Shopping List</b> will be displayed.
+    </string>
 
     <string name="rules_instructions">Displays 2 lists. Products that are in Aisles and the Current Rules.
         \n\nFilter Products by inputting <b>Product</b> and/or <b>Store</b> data.
