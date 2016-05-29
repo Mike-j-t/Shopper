@@ -15,4 +15,5 @@
     <color name="colorlistviewroweven">#EEEEFF</color>
     <color name="colorstandardspinnerpopupbackground">#DDDDFF</color>
     <color name="advancedinputoption">#FF7700</color>
+    <color name="selectorborder">#7700FF</color>
 </resources>

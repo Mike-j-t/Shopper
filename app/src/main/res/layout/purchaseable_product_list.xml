@@ -59,7 +59,7 @@
             android:textSize="@dimen/standard_subsubheading_text_size"
             android:textStyle="bold" />
         <EditText
-            style="@style/edittext_optional_style"
+            style="@style/edittext_selection_style"
             android:id="@+id/productselector"
             android:layout_weight="0.15"
             android:singleLine="true"
@@ -76,7 +76,7 @@
             android:singleLine="true"
             android:textStyle="bold" />
         <EditText
-            style="@style/edittext_optional_style"
+            style="@style/edittext_selection_style"
             android:id="@+id/shopselector"
             android:layout_weight="0.15"
             tools:ignore="LabelFor" />

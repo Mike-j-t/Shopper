@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    android:thickness="@dimen/standard_dummy_size"
+    android:shape="rectangle">
+    <stroke
+        android:width="2dp"
+        android:color="@color/selectorborder">
+    </stroke>
+    <gradient
+        android:startColor="@color/colorlistviewrowodd"
+        android:endColor="@color/colorlistviewroweven"
+        android:type="linear"
+        android:angle="0">
+    </gradient>
+
+</shape>

@@ -47,7 +47,7 @@
             android:textSize="@dimen/standard_subsubsubheading_text_size"
             android:textStyle="bold"/>
         <EditText
-            style="@style/edittext_optional_style"
+            style="@style/edittext_selection_style"
             android:id="@+id/ruleaddeditlist_productselection"
             android:layout_weight="0.4"
             tools:ignore="LabelFor" />
@@ -60,7 +60,7 @@
             android:textSize="@dimen/standard_subsubsubheading_text_size"
             android:textStyle="bold"/>
         <EditText
-            style="@style/edittext_optional_style"
+            style="@style/edittext_selection_style"
             android:id="@+id/ruleaddeditlist_storeselection"
             android:layout_weight="0.4"
             tools:ignore="LabelFor" />
