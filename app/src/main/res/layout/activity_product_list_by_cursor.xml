@@ -52,7 +52,7 @@
             android:text="@string/productlabel"/>
         <EditText
             android:id="@+id/productlist_selection_input"
-            style="@style/edittext_optional_style"
+            style="@style/edittext_selection_style"
             android:layout_weight="0.9" />
     </LinearLayout>
     <LinearLayout
