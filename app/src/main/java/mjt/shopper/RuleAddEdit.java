@@ -196,6 +196,7 @@ public class RuleAddEdit extends AppCompatActivity {
         if(currentrulename.length() < 1 ) {
             Toast.makeText(RuleAddEdit.this,getResources().getString(R.string.norulename),Toast.LENGTH_LONG).show();
             ruleaddeditrulename.requestFocus();
+            return;
         }
 
         // validate Rule Start Date - Must be valid date in format dd/mm/yyyy
