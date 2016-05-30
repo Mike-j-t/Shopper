@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ import android.widget.Toast;
 public class AddProductToShopActivity extends AppCompatActivity {
     private final static String THIS_ACTIVITY = "AddProductToShopActivity";
     public boolean devmode;
+    public boolean helpoffmode = false;
     private final ShopperDBHelper shopperdb = new ShopperDBHelper(this, null, null, 1);
     public final static int RESUMESTATE_NOTHING = 0;
     public final static int RESUMESTATE_PRODUCTUSAGEEDIT = 1;
@@ -52,6 +54,7 @@ public class AddProductToShopActivity extends AppCompatActivity {
     public int resume_state = RESUMESTATE_NOTHING;
 
     public long currentshopid = -1;
+    public LinearLayout productusageedit_helplayout;
     public Spinner current_shoplistspinner;
     public ShopListSpinnerAdapter current_shoplistspinneradapter;
     public ShopsCursorAdapter current_shoplistcursoradapter;
@@ -87,6 +90,14 @@ public class AddProductToShopActivity extends AppCompatActivity {
         if(devmode) {
             Log.i(Constants.LOG, " onResume invoked in " + THIS_ACTIVITY + "-  Current State=" + resume_state + "-" + RESUMESTATE_DESCRIPTIONS[resume_state]);
         }
+        // Set help display mode (shouldn't be needed as mode can only be set from main activity )
+        if(!helpoffmode) {
+            productusageedit_helplayout.setVisibility(View.VISIBLE);
+        } else {
+            productusageedit_helplayout.setVisibility(View.GONE);
+        }
+
+        // Refresh Spinners, ListViews etc
         switch (resume_state) {
             case RESUMESTATE_NOTHING: {
                 break;
@@ -107,6 +118,16 @@ public class AddProductToShopActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_product_to_shop);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         devmode = sp.getBoolean(getResources().getString(R.string.sharedpreferencekey_developermode),false);
+        helpoffmode = sp.getBoolean(getResources().getString(R.string.sharedpreferencekey_showhelpmode),false);
+
+        productusageedit_helplayout = (LinearLayout) findViewById(R.id.productusageedit_help_layout);
+
+        if(!helpoffmode) {
+            productusageedit_helplayout.setVisibility(View.VISIBLE);
+        } else {
+            productusageedit_helplayout.setVisibility(View.GONE);
+        }
+
 
         //==========================================================================================
         // Setup Shoplist Spinner
