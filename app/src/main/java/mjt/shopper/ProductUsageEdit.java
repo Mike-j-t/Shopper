@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.text.ParseException;
@@ -20,6 +21,9 @@ public class ProductUsageEdit extends AppCompatActivity {
     private final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
     public ProductsPerAisleCursorAdapter plpa_adapter;
     public boolean devmode;
+    public boolean helpoffmode;
+
+    public LinearLayout productusageedit_helplayout;
 
     /*==============================================================================================
         Main processing
@@ -30,6 +34,15 @@ public class ProductUsageEdit extends AppCompatActivity {
         setContentView(R.layout.activity_productusage_edit);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         devmode = sp.getBoolean(getResources().getString(R.string.sharedpreferencekey_developermode),false);
+        helpoffmode = sp.getBoolean(getResources().getString(R.string.sharedpreferencekey_showhelpmode),false);
+
+        productusageedit_helplayout = (LinearLayout) findViewById(R.id.productlist_help_layout);
+
+        if(!helpoffmode) {
+            productusageedit_helplayout.setVisibility(View.VISIBLE);
+        } else {
+            productusageedit_helplayout.setVisibility(View.GONE);
+        }
 
         final String caller = this.getIntent().getStringExtra("CALLER");
         final long shopid = this.getIntent().getLongExtra("SHOPID", -1);
