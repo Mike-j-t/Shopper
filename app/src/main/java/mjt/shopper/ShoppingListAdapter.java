@@ -113,8 +113,8 @@ public class ShoppingListAdapter extends CursorAdapter {
         aislenametv.setText(cursor.getString(18));
         productnametv.setText(cursor.getString(30));
         quantitytv.setText(cursor.getString(3));
-        pricetv.setText(NumberFormat.getCurrencyInstance().format(cursor.getDouble(6)));
-        priceforalltv.setText(NumberFormat.getCurrencyInstance().format(cursor.getDouble(3) * cursor.getDouble(6)));
+        pricetv.setText(NumberFormat.getCurrencyInstance().format(cursor.getDouble(11)));
+        priceforalltv.setText(NumberFormat.getCurrencyInstance().format(cursor.getDouble(3) * cursor.getDouble(11)));
         shopordertv.setText(cursor.getString(23));
         shopidtv.setText(cursor.getString(21));
         aisleordertv.setText(cursor.getString(19));
