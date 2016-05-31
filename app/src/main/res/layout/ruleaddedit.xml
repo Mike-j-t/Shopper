@@ -179,13 +179,14 @@
             android:textStyle="bold">
         </TextView>
         <EditText
-            style="@style/edittext_required_style"
             android:id="@+id/ruleaddedit_startdate"
             android:layout_weight="0.23"
             android:inputType="date"
             android:digits="0123456789/"
             android:maxLength="10"
-            tools:ignore="LabelFor">
+            tools:ignore="LabelFor"
+            android:onClick="ruleAddEditDatePick"
+            style="@style/edittext_required_style">
         </EditText>
         <TextView
             android:layout_width="@dimen/standard_dummy_size"
@@ -208,7 +209,8 @@
         <TextView
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="@dimen/standard_subsubsubheading_height"
-            android:layout_weight="0.03"/>
+            android:layout_weight="0.03"
+            />
         <TextView
             android:id="@+id/ruleaddedit_periodmultiplier_label"
             android:layout_width="@dimen/standard_dummy_size"
@@ -217,15 +219,17 @@
             android:gravity="top"
             android:text="@string/rule_addedit_multiplier"
             android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            />
         <EditText
-            style="@style/edittext_required_style"
             android:id="@+id/ruleaddedit_periodmultiplier"
             android:layout_weight="0.07"
             android:maxLength="4"
             android:inputType="number"
             android:digits="0123456789"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            style="@style/edittext_required_style"
+            />
         <TextView
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="@dimen/standard_subsubsubheading_height"
@@ -239,13 +243,14 @@
             android:textSize="@dimen/standard_subsubsubheading_text_size"
             android:textStyle="bold"/>
         <EditText
-            style="@style/edittext_required_style"
             android:id="@+id/ruleaddedit_quantity"
             android:layout_weight="0.07"
             android:maxLength="4"
             android:inputType="number"
             android:digits="0123456789"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            style="@style/edittext_required_style"
+            />
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"

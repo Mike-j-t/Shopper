@@ -1,5 +1,7 @@
 package mjt.shopper;
 
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -7,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CursorAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -30,6 +34,7 @@ public class RuleAddEdit extends AppCompatActivity {
     private final static String THIS_ACTIVITY = "RuleAddEdit";
     public SimpleDateFormat sdf = new SimpleDateFormat(Constants.STANDARD_DDMMYYY_FORMAT);
     public Date currentdate = new Date();
+    public DatePickerDialog dpd;
 
     public LinearLayout ruleaddedithelplayout;
     public TextView ruleaddeditproductname;
@@ -67,6 +72,7 @@ public class RuleAddEdit extends AppCompatActivity {
     public int currentperiodmultiplier;
     public int currentquantity;
     public String currentrulelistsortorder = Constants.RULELISTORDER_BY_RULE;
+    public Date oldate;
 
 
     private final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
@@ -301,5 +307,32 @@ public class RuleAddEdit extends AppCompatActivity {
         currentrulelistsortorder = Constants.RULELISTORDER_BY_PROMPT;
         currentrulelistcursor = shopperdb.getRuleList("","",(long) 0,false,false,currentrulelistsortorder);
         currentrulelistadapter.swapCursor(currentrulelistcursor);
+    }
+
+    public void ruleAddEditDatePick(View view) {
+
+        try {
+            oldate = sdf.parse(ruleaddeditstartdate.getText().toString());
+        }
+        catch (ParseException e ) {
+            e.getStackTrace();
+
+        }
+        Calendar oldcal = Calendar.getInstance();
+        oldcal.setTime(oldate);
+
+        //Setup OnDateSetListener to apply selected date
+        OnDateSetListener odsl = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                Calendar newcal = Calendar.getInstance();
+                newcal.set(year, monthOfYear, dayOfMonth);
+                ruleaddeditstartdate.setText(sdf.format(newcal.getTime()));
+            }
+        };
+
+        DatePickerDialog dpd = new DatePickerDialog(this,odsl,oldcal.get(Calendar.YEAR),oldcal.get(Calendar.MONTH),oldcal.get(Calendar.DAY_OF_MONTH));
+        dpd.show();
     }
 }
