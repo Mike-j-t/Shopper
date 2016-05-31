@@ -260,6 +260,10 @@ public class RuleAddEdit extends AppCompatActivity {
             return;
         } else {
             currentperiodmultiplier = Integer.parseInt(ruleaddeditperiodmultiplier.getText().toString());
+            if(currentperiodmultiplier < 1) {
+                Toast.makeText(RuleAddEdit.this, getResources().getString(R.string.invalidperiodmultiplier) + " " + " Cannot be 0.",Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
         // Validate rule quantity
         emsg = mjtUtils.validateInteger(ruleaddeditquantity.getText().toString());
@@ -269,6 +273,10 @@ public class RuleAddEdit extends AppCompatActivity {
             return;
         } else {
             currentquantity = Integer.parseInt(ruleaddeditquantity.getText().toString());
+            if(currentquantity < 1) {
+                Toast.makeText(RuleAddEdit.this, getResources().getString(R.string.invalidquantity) + " " + " Cannot be 0.",Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
         //if(ruleaddeditautoadd.isChecked()) {
         //currentautoadd = false;
