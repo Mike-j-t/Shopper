@@ -1,5 +1,6 @@
 package mjt.shopper;
 
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -8,12 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CursorAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.text.NumberFormat;
 import java.util.Calendar;
 
@@ -22,6 +24,7 @@ import java.util.Calendar;
  */
 public class ShoppingListActivity extends AppCompatActivity{
     public final static int RESUMESTATE_NOTHING = 0;
+    public final static int RESUMESTATE_ADJUSTED = 1;
     public int resume_state = RESUMESTATE_NOTHING;
     public boolean devmode;
     public SharedPreferences sp;
@@ -64,6 +67,13 @@ public class ShoppingListActivity extends AppCompatActivity{
             shoppinglisthelplayout.setVisibility(View.GONE);
         }
         switch(resume_state) {
+            case RESUMESTATE_ADJUSTED: {
+                shoppinglistcsr = shopperdb.getShoppingList();
+                remainingamount = calculateRemainingAmount(shoppinglistcsr);
+                remainingcost.setText(NumberFormat.getCurrencyInstance().format(remainingamount));
+                currentsla.swapCursor(shoppinglistcsr);
+                break;
+            }
             default: {
                 resume_state = RESUMESTATE_NOTHING;
             }
@@ -274,7 +284,7 @@ public class ShoppingListActivity extends AppCompatActivity{
         double ra = 0;
         csr.moveToPosition(-1);
         while(csr.moveToNext()) {
-            ra = ra + csr.getDouble(3) * csr.getDouble(6);
+            ra = ra + csr.getDouble(11) * csr.getDouble(3);
         }
         csr.moveToPosition(-1);
         return ra;
@@ -353,5 +363,123 @@ public class ShoppingListActivity extends AppCompatActivity{
         long newdate = cal.getTimeInMillis();
         uses++;
         shopperdb.updateRuleDateAndUse(ruleid, newdate, uses);
+    }
+
+    public void actionDialogShow(View view){
+        //Intent intent = new Intent(this, CustomDialog.class);
+        //startActivity(intent);
+
+        Integer tag = (Integer)view.getTag();
+        shoppinglistcsr.moveToPosition(tag);
+
+        final Dialog actionsdialog = new Dialog(ShoppingListActivity.this);
+        actionsdialog.setContentView(R.layout.shoppinglistactionsdialog);
+
+        final TextView originalproduct = (TextView) actionsdialog.findViewById(R.id.shoppinglistactions_originaldata_product);
+        final TextView originalquantity = (TextView) actionsdialog.findViewById(R.id.shoppinglistactions_originaldata_quantity);
+        final TextView originalcost = (TextView) actionsdialog.findViewById(R.id.shoppinglistactions_originaldata_cost);
+        TextView originaltotal = (TextView) actionsdialog.findViewById(R.id.shoppinglistactions_originaldata_total);
+        final EditText newquantity = (EditText) actionsdialog.findViewById(R.id.shoppinglistaction_newquantity);
+        final EditText newcost = (EditText) actionsdialog.findViewById(R.id.shoppinglistaction_newcost);
+
+        originalproduct.setText(shoppinglistcsr.getString(30));
+        originalquantity.setText(shoppinglistcsr.getString(3));
+        newquantity.setText(shoppinglistcsr.getString(3));
+        originalcost.setText(shoppinglistcsr.getString(11));
+        newcost.setText(shoppinglistcsr.getString(11));
+        originaltotal.setText(NumberFormat.getCurrencyInstance().format(shoppinglistcsr.getDouble(3) * shoppinglistcsr.getDouble(11)));
+        actionsdialog.setTitle("Shopping List Actions");
+
+        Button donebutton = (Button) actionsdialog.findViewById(R.id.shoppinglistactions_finish_button);
+        Button savebutton = (Button) actionsdialog.findViewById(R.id.shoppinglistactions_save_button);
+        Button restorebutton = (Button) actionsdialog.findViewById(R.id.shoppinglistactions_restore_button);
+        Button increasequantity = (Button) actionsdialog.findViewById(R.id.shoppinglistactions_quantityplus_button);
+        Button decreasequantity = (Button) actionsdialog.findViewById(R.id.shoppinglistactions_quantityminus_button);
+
+        donebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(resume_state == RESUMESTATE_ADJUSTED) {
+                    Toast.makeText(actionsdialog.getContext(),"Action Dialog Shown now Dismissed",Toast.LENGTH_LONG).show();
+                    shoppinglistcsr = shopperdb.getShoppingList();
+                    remainingamount = calculateRemainingAmount(shoppinglistcsr);
+                    remainingcost.setText(NumberFormat.getCurrencyInstance().format(remainingamount));
+                    currentsla.swapCursor(shoppinglistcsr);
+                }
+                actionsdialog.dismiss();
+            }
+        });
+
+        savebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nqty = newquantity.getText().toString();
+                String oqty = originalquantity.getText().toString();
+                String ncost = newcost.getText().toString();
+                String ocost = originalcost.getText().toString();
+                Float ucost = Float.valueOf(ncost);
+                // Check to see if Updates are Required
+                if(nqty.equals("0")) {
+                    newquantity.setText("1");
+                    Toast.makeText(actionsdialog.getContext(),"New Quantity was 0. This has been changed to 1 as 0 is not allowed.",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(nqty.equals(oqty) && ncost.equals(ocost)) {
+                    // No Updates/Changes made so don't update, just issue meesage
+                    Toast.makeText(actionsdialog.getContext(),originalproduct.getText() + " Not Changed, Update Not Required.",Toast.LENGTH_LONG).show();
+                } else {
+                    resume_state = RESUMESTATE_ADJUSTED;
+                    // If quantity has changed then update the shoppinglist entry quantity
+                    if(!nqty.equals(oqty)) {
+                        shopperdb.changeShopListEntryQuantity(shoppinglistcsr.getLong(0),Integer.parseInt(nqty));
+                    }
+                    if(!ncost.equals(ocost)) {
+                        shopperdb.updateProductInAisle(shoppinglistcsr.getLong(17),shoppinglistcsr.getLong(9),ucost,
+                                shoppinglistcsr.getInt(12),shoppinglistcsr.getLong(13),shoppinglistcsr.getLong(14),shoppinglistcsr.getInt(16),shoppinglistcsr.getFloat(15));
+                    }
+                    Toast.makeText(actionsdialog.getContext(),originalproduct.getText() + " Updated."
+                                    + " New Qauntity=" + newquantity.getText() + " was(" + originalquantity.getText() + ")"
+                                    + " New Cost=$" + newcost.getText() + " was($" + originalcost.getText() + ")",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
+        // Restore original Values (Quantity and Cost)
+        restorebutton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                newquantity.setText(originalquantity.getText());
+                newcost.setText(originalcost.getText());
+            }
+        });
+
+        // Handle +1 (increment quantity) Button i.e. add 1 to quantity within bounds
+        increasequantity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer nqty = Integer.parseInt(newquantity.getText().toString()) + 1;
+                // Check bounds i.e. max allowed is 9999
+                if(nqty > 9999 ) {
+                    nqty = 9999;
+                }
+                newquantity.setText(nqty.toString());
+            }
+        });
+
+        // Handle -1 (decrement quantity) Button i.e. subtract 1 from quantity within bounds
+        decreasequantity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer nqty = Integer.parseInt(newquantity.getText().toString()) - 1;
+                //Check bounds i.e. must not drop below 1
+                if(nqty < 1 ) {
+                    nqty = 1;
+                }
+                newquantity.setText(nqty.toString());
+            }
+        });
+        actionsdialog.show();
     }
 }

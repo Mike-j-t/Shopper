@@ -198,7 +198,7 @@
     <string name="standardruleaddtext">ADDRULE</string>
     <string name="standardedittexthint"><font size="15"></font></string>
     <string name="shoppinglistpurchasedbutton">BOUGHT</string>
-    <string name="shoppinglistreplacebutton">REPLACE</string>
+    <string name="shoppinglistradjustbutton">ADJUST</string>
     <string name="standardskiptext">Skip</string>
 
     <!-- <string name="title_activity_shops">Shopper - Shops</string> -->
