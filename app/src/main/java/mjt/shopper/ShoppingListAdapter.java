@@ -81,7 +81,7 @@ public class ShoppingListAdapter extends CursorAdapter {
         TextView puprodreftv = (TextView) view.findViewById(R.id.shoppinglist_puprodref);
         TextView donebtntv = (TextView) view.findViewById(R.id.shoppinglist_donebutton);
         TextView deletebtntv = (TextView) view.findViewById(R.id.shoppinglist_deletebutton);
-        TextView replacebtntv = (TextView) view.findViewById(R.id.shoppinglist_replacebutton);
+        TextView replacebtntv = (TextView) view.findViewById(R.id.shoppinglist_adjustbutton);
 
         // Need to check for a change in Shop or Aisle by looking at previous, if changed then
         // include the respective header(s).

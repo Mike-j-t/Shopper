@@ -114,10 +114,10 @@
             android:text="@string/shoppinglistpurchasedbutton"
             android:onClick="sledone"/>
         <TextView
-            android:id="@+id/shoppinglist_replacebutton"
+            android:id="@+id/shoppinglist_adjustbutton"
             style="@style/textviewbutton"
-            android:text="@string/shoppinglistreplacebutton"
-            android:onClick="slereplace"/>
+            android:text="@string/shoppinglistradjustbutton"
+            android:onClick="actionDialogShow"/>
         <TextView
             android:id="@+id/shoppinglist_deletebutton"
             style="@style/textviewwarnbutton"
