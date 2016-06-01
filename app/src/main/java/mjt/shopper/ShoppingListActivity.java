@@ -405,6 +405,7 @@ public class ShoppingListActivity extends AppCompatActivity{
                     remainingamount = calculateRemainingAmount(shoppinglistcsr);
                     remainingcost.setText(NumberFormat.getCurrencyInstance().format(remainingamount));
                     currentsla.swapCursor(shoppinglistcsr);
+                    resume_state = RESUMESTATE_NOTHING;
                 }
                 actionsdialog.dismiss();
             }
