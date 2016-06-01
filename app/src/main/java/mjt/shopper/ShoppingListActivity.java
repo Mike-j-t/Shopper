@@ -68,10 +68,7 @@ public class ShoppingListActivity extends AppCompatActivity{
         }
         switch(resume_state) {
             case RESUMESTATE_ADJUSTED: {
-                shoppinglistcsr = shopperdb.getShoppingList();
-                remainingamount = calculateRemainingAmount(shoppinglistcsr);
-                remainingcost.setText(NumberFormat.getCurrencyInstance().format(remainingamount));
-                currentsla.swapCursor(shoppinglistcsr);
+                resume_state = RESUMESTATE_NOTHING;
                 break;
             }
             default: {
@@ -304,30 +301,35 @@ public class ShoppingListActivity extends AppCompatActivity{
         while(autoaddentriescursor.getCount() > 0) {
             // Move past initial position (Move to First would also have same effect???)
             autoaddentriescursor.moveToNext();
-            //Build report string for this entry
-            autoaddoverview = autoaddoverview + "Rule - " + autoaddentriescursor.getString(1) +
-                    "ID=" + Long.toString(autoaddentriescursor.getLong(0)) +
-                    " \n\tPRODUCT=" + autoaddentriescursor.getString(13) +
-                    " \n\tSHOP=" + autoaddentriescursor.getString(16) + " - " +
-                    autoaddentriescursor.getString(17) + " - " +
-                    autoaddentriescursor.getString(18) +
-                    " \n\t\tAISLE=" + autoaddentriescursor.getString(14) +
-                    " being ";
-            // Increment count of rules added
-            autoaddcount++;
-            // Set action (sort redundant after removing processing of promptables)
-            autoaddoverview = autoaddoverview + "ADDED\n";
-            // Add the entry to the shopping list
-            shopperdb.insertShopListEntry(autoaddentriescursor.getLong(7),
-                    autoaddentriescursor.getLong(8),
-                    autoaddentriescursor.getInt(10),
-                    autoaddentriescursor.getDouble(19),true);
-            // Change the rule's use count and the rules activeon date
-            setNextAutoAddDate(autoaddentriescursor.getLong(0),autoaddentriescursor.getLong(6),
-                    autoaddentriescursor.getInt(4),autoaddentriescursor.getInt(5),
-                    autoaddentriescursor.getInt(9));
-            //Re-Extract rules
-            autoaddentriescursor = shopperdb.getRuleList("","",chkdate,false,true,"");
+            // If the multiplier is 0 then skip as this rule is invalid (stops endless loop
+            // when using cetNextAutoAddDate as it adds nothing to date so newly created entry
+            // is then processed and so on
+            if(autoaddentriescursor.getInt(5) > 0) {
+                //Build report string for this entry
+                autoaddoverview = autoaddoverview + "Rule - " + autoaddentriescursor.getString(1) +
+                        "ID=" + Long.toString(autoaddentriescursor.getLong(0)) +
+                        " \n\tPRODUCT=" + autoaddentriescursor.getString(13) +
+                        " \n\tSHOP=" + autoaddentriescursor.getString(16) + " - " +
+                        autoaddentriescursor.getString(17) + " - " +
+                        autoaddentriescursor.getString(18) +
+                        " \n\t\tAISLE=" + autoaddentriescursor.getString(14) +
+                        " being ";
+                // Increment count of rules added
+                autoaddcount++;
+                // Set action (sort redundant after removing processing of promptables)
+                autoaddoverview = autoaddoverview + "ADDED\n";
+                // Add the entry to the shopping list
+                shopperdb.insertShopListEntry(autoaddentriescursor.getLong(7),
+                        autoaddentriescursor.getLong(8),
+                        autoaddentriescursor.getInt(10),
+                        autoaddentriescursor.getDouble(19), true);
+                // Change the rule's use count and the rules activeon date
+                setNextAutoAddDate(autoaddentriescursor.getLong(0), autoaddentriescursor.getLong(6),
+                        autoaddentriescursor.getInt(4), autoaddentriescursor.getInt(5),
+                        autoaddentriescursor.getInt(9));
+                //Re-Extract rules
+                autoaddentriescursor = shopperdb.getRuleList("", "", chkdate, false, true, "");
+            }
         }
         // Displayan overview of what has been done
         autoaddoverview = autoaddoverview + "RULE BASED ENTRIES ADDED=" + Long.toString(autoaddcount);
@@ -369,7 +371,7 @@ public class ShoppingListActivity extends AppCompatActivity{
         //Intent intent = new Intent(this, CustomDialog.class);
         //startActivity(intent);
 
-        Integer tag = (Integer)view.getTag();
+        final Integer tag = (Integer)view.getTag();
         shoppinglistcsr.moveToPosition(tag);
 
         final Dialog actionsdialog = new Dialog(ShoppingListActivity.this);
@@ -399,21 +401,21 @@ public class ShoppingListActivity extends AppCompatActivity{
         donebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                actionsdialog.dismiss();
                 if(resume_state == RESUMESTATE_ADJUSTED) {
-                    Toast.makeText(actionsdialog.getContext(),"Action Dialog Shown now Dismissed",Toast.LENGTH_LONG).show();
                     shoppinglistcsr = shopperdb.getShoppingList();
                     remainingamount = calculateRemainingAmount(shoppinglistcsr);
                     remainingcost.setText(NumberFormat.getCurrencyInstance().format(remainingamount));
                     currentsla.swapCursor(shoppinglistcsr);
                     resume_state = RESUMESTATE_NOTHING;
                 }
-                actionsdialog.dismiss();
             }
         });
 
         savebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                shoppinglistcsr.moveToPosition(tag);
                 String nqty = newquantity.getText().toString();
                 String oqty = originalquantity.getText().toString();
                 String ncost = newcost.getText().toString();
@@ -428,12 +430,14 @@ public class ShoppingListActivity extends AppCompatActivity{
                 if(nqty.equals(oqty) && ncost.equals(ocost)) {
                     // No Updates/Changes made so don't update, just issue meesage
                     Toast.makeText(actionsdialog.getContext(),originalproduct.getText() + " Not Changed, Update Not Required.",Toast.LENGTH_LONG).show();
+                    resume_state = RESUMESTATE_NOTHING;
                 } else {
                     resume_state = RESUMESTATE_ADJUSTED;
                     // If quantity has changed then update the shoppinglist entry quantity
                     if(!nqty.equals(oqty)) {
                         shopperdb.changeShopListEntryQuantity(shoppinglistcsr.getLong(0),Integer.parseInt(nqty));
                     }
+                    // If cost has changed then update the productusage entry to reflect the new cost
                     if(!ncost.equals(ocost)) {
                         shopperdb.updateProductInAisle(shoppinglistcsr.getLong(17),shoppinglistcsr.getLong(9),ucost,
                                 shoppinglistcsr.getInt(12),shoppinglistcsr.getLong(13),shoppinglistcsr.getLong(14),shoppinglistcsr.getInt(16),shoppinglistcsr.getFloat(15));

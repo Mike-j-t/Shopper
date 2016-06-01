@@ -1170,7 +1170,6 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         cv.put(RULES_COLUMN_NUMBERTOGET,quantity);
         SQLiteDatabase db = getWritableDatabase();
         db.insert(RULES_TABLE_NAME, null, cv);
-        db.close();
         return true;
     }
     //==============================================================================================
@@ -1204,7 +1203,6 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         }
         // if the count wasn't 0 then return false.
         csr.close();
-        //db.close();
         return false;
     }
     //==============================================================================================
@@ -1264,11 +1262,11 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     // quantity column
     public boolean changeShopListEntryQuantity(long id, long newquantity) {
         boolean retval = false;
+        int dbrc = 0;
         ContentValues cv = new ContentValues();
         SQLiteDatabase db = this.getWritableDatabase();
 
         if(newquantity < 0 ) {
-            db.close();
             return false;
         } else {
             String sqlstr = "SELECT * FROM " + SHOPLIST_TABLE_NAME +
@@ -1277,13 +1275,12 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
             if(csr.getCount() > 0 ) {
                 cv.put(SHOPLIST_COLUMN_NUMBERTOGET,newquantity);
                 cv.put(SHOPLIST_COLUMN_DATEGOT,System.currentTimeMillis());
-                db.update(SHOPLIST_TABLE_NAME,cv,SHOPLIST_COLUMN_ID + " = " + id + ";", null);
+                dbrc = db.update(SHOPLIST_TABLE_NAME,cv,SHOPLIST_COLUMN_ID + " = " + id + ";", null);
                 retval = true;
             } else {
                 retval = false;
             }
             csr.close();
-            db.close();
         }
         return retval;
     }
