@@ -369,8 +369,6 @@ public class ShoppingListActivity extends AppCompatActivity{
     }
 
     public void actionDialogShow(View view){
-        //Intent intent = new Intent(this, CustomDialog.class);
-        //startActivity(intent);
 
         final Integer tag = (Integer)view.getTag();
         shoppinglistcsr.moveToPosition(tag);
