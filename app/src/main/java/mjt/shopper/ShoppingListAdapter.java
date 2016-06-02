@@ -43,8 +43,8 @@ public class ShoppingListAdapter extends CursorAdapter {
             ((TextView) view.findViewById(R.id.shoppinglist_quantity)).setTextColor(ContextCompat.getColor(context,R.color.colorNormalButtonText));
             ((TextView) view.findViewById(R.id.shoppinglist_price)).setTextColor(ContextCompat.getColor(context,R.color.colorNormalButtonText));
             ((TextView) view.findViewById(R.id.shoppinglist_priceforall)).setTextColor(ContextCompat.getColor(context, R.color.colorNormalButtonText));
-            //((TextView) view.findViewById(R.id.shoppinglist_donebutton)).setText(R.string.standardrestorebutton);
             ((TextView) view.findViewById(R.id.shoppinglist_deletebutton)).setVisibility(View.INVISIBLE);
+            ((TextView) view.findViewById(R.id.shoppinglist_donebutton)).setVisibility(View.INVISIBLE);
         } else {
             TextView dummy = new TextView(context);
             ColorStateList defaultcolor = dummy.getTextColors();
@@ -52,8 +52,8 @@ public class ShoppingListAdapter extends CursorAdapter {
             ((TextView) view.findViewById(R.id.shoppinglist_quantity)).setTextColor(defaultcolor);
             ((TextView) view.findViewById(R.id.shoppinglist_price)).setTextColor(defaultcolor);
             ((TextView) view.findViewById(R.id.shoppinglist_priceforall)).setTextColor(defaultcolor);
-            //((TextView) view.findViewById(R.id.shoppinglist_donebutton)).setText(R.string.standarddonebutton);
             ((TextView) view.findViewById(R.id.shoppinglist_deletebutton)).setVisibility(View.VISIBLE);
+            ((TextView) view.findViewById(R.id.shoppinglist_donebutton)).setVisibility(View.VISIBLE);
         }
         return view;
     }

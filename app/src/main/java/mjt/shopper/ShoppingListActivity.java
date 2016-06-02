@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Calendar;
 
 /**
@@ -368,8 +369,6 @@ public class ShoppingListActivity extends AppCompatActivity{
     }
 
     public void actionDialogShow(View view){
-        //Intent intent = new Intent(this, CustomDialog.class);
-        //startActivity(intent);
 
         final Integer tag = (Integer)view.getTag();
         shoppinglistcsr.moveToPosition(tag);
@@ -383,8 +382,10 @@ public class ShoppingListActivity extends AppCompatActivity{
         TextView originaltotal = (TextView) actionsdialog.findViewById(R.id.shoppinglistactions_originaldata_total);
         final EditText newquantity = (EditText) actionsdialog.findViewById(R.id.shoppinglistaction_newquantity);
         final EditText newcost = (EditText) actionsdialog.findViewById(R.id.shoppinglistaction_newcost);
+        final EditText newname = (EditText) actionsdialog.findViewById(R.id.shoppinglistaction_newname);
 
         originalproduct.setText(shoppinglistcsr.getString(30));
+        newname.setText(shoppinglistcsr.getString(30));
         originalquantity.setText(shoppinglistcsr.getString(3));
         newquantity.setText(shoppinglistcsr.getString(3));
         originalcost.setText(shoppinglistcsr.getString(11));
@@ -420,14 +421,31 @@ public class ShoppingListActivity extends AppCompatActivity{
                 String oqty = originalquantity.getText().toString();
                 String ncost = newcost.getText().toString();
                 String ocost = originalcost.getText().toString();
-                Float ucost = Float.valueOf(ncost);
+                Float ucost;
+                try {
+                    ucost = Float.valueOf(ncost);
+                } catch (NumberFormatException e) {
+                    e.getStackTrace();
+                    newcost.setText(originalcost.getText().toString());
+                    Toast.makeText(actionsdialog.getContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                String nname = newname.getText().toString();
+                String oname = originalproduct.getText().toString();
+                String updateresults = "";
                 // Check to see if Updates are Required
                 if(nqty.equals("0")) {
                     newquantity.setText("1");
                     Toast.makeText(actionsdialog.getContext(),"New Quantity was 0. This has been changed to 1 as 0 is not allowed.",Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(nqty.equals(oqty) && ncost.equals(ocost)) {
+                if(nname.isEmpty()) {
+                    newname.setText(originalproduct.getText().toString());
+                    Toast.makeText(actionsdialog.getContext(),"New Product Name cannot be blank. Reset to Original Name",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(nqty.equals(oqty) && ncost.equals(ocost) && nname.equals(oname)) {
                     // No Updates/Changes made so don't update, just issue meesage
                     Toast.makeText(actionsdialog.getContext(),originalproduct.getText() + " Not Changed, Update Not Required.",Toast.LENGTH_LONG).show();
                     resume_state = RESUMESTATE_NOTHING;
@@ -436,16 +454,31 @@ public class ShoppingListActivity extends AppCompatActivity{
                     // If quantity has changed then update the shoppinglist entry quantity
                     if(!nqty.equals(oqty)) {
                         shopperdb.changeShopListEntryQuantity(shoppinglistcsr.getLong(0),Integer.parseInt(nqty));
+                        if(updateresults.length() > 0) {
+                            updateresults = updateresults + "\n";
+                        }
+                        updateresults = updateresults + "Qauntity adjusted from " + oqty.toString() + " to " + nqty + ".";
+
                     }
                     // If cost has changed then update the productusage entry to reflect the new cost
                     if(!ncost.equals(ocost)) {
                         shopperdb.updateProductInAisle(shoppinglistcsr.getLong(17),shoppinglistcsr.getLong(9),ucost,
                                 shoppinglistcsr.getInt(12),shoppinglistcsr.getLong(13),shoppinglistcsr.getLong(14),shoppinglistcsr.getInt(16),shoppinglistcsr.getFloat(15));
+                        if(updateresults.length() > 0) {
+                            updateresults = updateresults + "\n";
+                        }
+                        updateresults = updateresults + "Cost adjusted from " + ocost.toString() + " to " + ncost + ".";
+
                     }
-                    Toast.makeText(actionsdialog.getContext(),originalproduct.getText() + " Updated."
-                                    + " New Qauntity=" + newquantity.getText() + " was(" + originalquantity.getText() + ")"
-                                    + " New Cost=$" + newcost.getText() + " was($" + originalcost.getText() + ")",
-                            Toast.LENGTH_LONG).show();
+                    if(!nname.equals(oname)) {
+                        shopperdb.updateProduct(shoppinglistcsr.getLong(1),nname.toString(),shoppinglistcsr.getString(34));
+                        if(updateresults.length() > 0 ) {
+                            updateresults = updateresults + "\n";
+                        }
+                        updateresults = updateresults + "Porduct Name change from :-" + oname + " to :-" + nname + ".";
+
+                    }
+                    Toast.makeText(actionsdialog.getContext(), updateresults, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -457,6 +490,7 @@ public class ShoppingListActivity extends AppCompatActivity{
             public void onClick(View v) {
                 newquantity.setText(originalquantity.getText());
                 newcost.setText(originalcost.getText());
+                newname.setText(originalproduct.getText());
             }
         });
 
