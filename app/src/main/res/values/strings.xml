@@ -177,8 +177,6 @@
     <!-- values -->
     <string name="values_label">Values</string>
 
-
-
     <!--========== Buttons ========-->
     <string name="standarddonebutton">DONE</string>
     <string name="standardsavebutton">SAVE</string>
@@ -332,10 +330,21 @@
         \n<b>Click</b> on the respective <b>Bought</b> button when you have picked an <b>Item</b>.
         \n\tRepeat for each <b>Item</b> if you have a quantity greater than 1 <b>Items</b>.
         \n\tThe <b>Item\'s</b> text will change to white when all have been picked.
-        \n\n<b>Click</b> on <b>Replace</b> if you return an <b>Item</b>, or to increase the quantity to get.
+        \n\n<b>Click</b> on <b>Adjust</b> to change an <b>Item</b>, <b>Quantity</b>, <b>Cost</b> and <b>Product Name</b> can be changed.
         \n\n<b>Click</b> on <b><u>Delete</u></b> to remove an <b>Item</b> from the <b>Shopping List</b>.
         \n\n<b>Click</b> on <b>Trim</b> to remove completed/picked <i>(theorectically purchased) </i><b>Items</b>.
         \n\tNote this, unlike <b>Delete</b>, retains a historical record of the <b>Item(s)</b> having been purchased.
+    </string>
+    <string name="shoppinglistadjustdialog_instructions"><b>Adjustments</b>
+        \n<b>Click</b> on <b>+1</b> or <b>-1</b> buttons to increment or decrement the <b>Quantity</b> respectively.
+        \nThe <b>Quantity</b> can also be entered into the <b>New Quantity</b> field.
+        \nChange the <b>Cost</b> by entering the new value into the <b>New Cost</b> field.
+        \nChange the <b>Product Name</b> by entering the new value into the <b>New Product</b> field.
+        \n\nClick the <b>SAVE</b> button to <b>Save</b> new values.
+        \n<b>Click</b> the <b>RESTORE</b> button to revert to the <b>Original</b> values.
+        \n\tNote the <b>Original</b> values are displayed above the <b>Actions</b> heading.
+        \n<b>Click</b> the <b>DONE</b> button to return to the <b>Shopping List</b>.
+        \n\tNote, <b>remember</b> to <b>Save</b> before <b>clicking DONE</b>.
     </string>
     <string name="shoppinglist_prompted_instructions"><b>Prompted Rules Exist.
         \n</b> Please click on <b>Add</b> or <b>Skip</b> for all listed entries.
@@ -343,6 +352,7 @@
         \n<b>Skip</b> will not add the entry into the shopping list. However, the next occurrence wil be determined.
         \nWhen <b>All</b> listed entries have been actioned the <b>Shopping List</b> will be displayed.
     </string>
+
 
     <string name="rules_instructions">Displays 2 lists. Products that are in Aisles and the Current Rules.
         \n\nFilter Products by inputting <b>Product</b> and/or <b>Store</b> data.

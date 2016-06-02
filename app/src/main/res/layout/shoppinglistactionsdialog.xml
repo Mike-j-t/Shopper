@@ -98,7 +98,12 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin">
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:background="@color/colorHelpButton">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/shoppinglistadjustdialog_instructions"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/shoppinglistactions_heading_layout"
