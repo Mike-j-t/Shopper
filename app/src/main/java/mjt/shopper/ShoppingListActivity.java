@@ -376,6 +376,14 @@ public class ShoppingListActivity extends AppCompatActivity{
         final Dialog actionsdialog = new Dialog(ShoppingListActivity.this);
         actionsdialog.setContentView(R.layout.shoppinglistactionsdialog);
 
+        LinearLayout adjusthelplayout = (LinearLayout) actionsdialog.findViewById(R.id.shoppinglistactions_help_layout);
+
+        if(!helpoffmode) {
+            adjusthelplayout.setVisibility(View.VISIBLE);
+        } else {
+            adjusthelplayout.setVisibility(View.GONE);
+        }
+
         final TextView originalproduct = (TextView) actionsdialog.findViewById(R.id.shoppinglistactions_originaldata_product);
         final TextView originalquantity = (TextView) actionsdialog.findViewById(R.id.shoppinglistactions_originaldata_quantity);
         final TextView originalcost = (TextView) actionsdialog.findViewById(R.id.shoppinglistactions_originaldata_cost);
