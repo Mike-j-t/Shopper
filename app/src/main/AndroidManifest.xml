@@ -55,7 +55,7 @@
                 android:parentActivityName=".MainActivity"
                 android:screenOrientation="portrait">
             </activity>
-            <activity android:name=".DatabaseInformation"
+            <activity android:name=".DatabaseSchema"
                 android:label="Database Information"
                 android:parentActivityName=".MainActivity"
                 android:screenOrientation="portrait">

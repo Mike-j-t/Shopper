@@ -14,7 +14,7 @@ import android.widget.TextView;
 /**
  * Created by Mike092015 on 24/02/2016.
  */
-public class DatabaseInformation extends AppCompatActivity {
+public class DatabaseSchema extends AppCompatActivity {
     final ShopperDBHelper db = new ShopperDBHelper(this,null,null,1);
 
     protected void onCreate(Bundle savedInstanceState) {

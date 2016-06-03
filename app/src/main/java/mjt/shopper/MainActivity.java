@@ -207,8 +207,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Only show ShoppingList button if there are shops and there are products and there are
         // products in aisles.
-        //TODO restrict to only show shopping list if there are active/shoppable entries
-        //TODO not urgent as
         if(shoppinglistcount < 1 & rulecount < 1) {
             shoppinglistbutton.setVisibility(View.GONE);
             shoppinglisthelpbutton.setVisibility(View.GONE);
@@ -329,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.am_schema_button:
-                intent = new Intent(this,DatabaseInformation.class);
+                intent = new Intent(this,DatabaseSchema.class);
                 intent.putExtra("Caller",THIS_ACTIVITY);
                 intent.putExtra("DEVELOPERMODE",developermode);
                 startActivity(intent);
