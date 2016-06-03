@@ -57,7 +57,7 @@
         \n\n\tBACK to return to the Store List.
         \n\n\t\t\tNote! STOCK option will not be present when a Store has no Aisles.
     </string>
-    <string name="shoplistlongclicktitle">Confirm Shop Delete!</string>
+    <string name="shoplistlongclicktitle">Confirm Store Delete!</string>
     <string name="shoplistclicknoproductsmessage">
         Select the appropriate option:-
         \n\n\tEDIT to change Store details.
@@ -66,7 +66,7 @@
     <string name="shoplistlongclickmessage">Please confirm, by clicking DELETE, that you want to Delete Store:-\n\t</string>
     <string name="shoplistlongclickmessageextra">\n\n\tNote! This will delete Aisles and underlying Produce in the Store.
         \n\n\t\tThe produce is only removed from the Aisles not from the list of Produce.
-        \n\n\t\tHowever, shop specific information for the Produce, such as the cost, will be deleted.</string>
+        \n\n\t\tHowever, store specific information for the Produce, such as the cost, will be deleted.</string>
     <string name="shopnonetitle">No Stores!</string>
     <string name="shopnonametitle">Store Name Required!</string>
     <string name="shopnonametext001">A Store cannot be added without a Name.
@@ -93,7 +93,7 @@
     \n\n\tSTOCK to add products to the Aisle.
     \n\n\tBACK to return to the Store List.\n\n</string>
     <string name="shophasnoaislestitle">Store has no Aisles - Products cannot be added.</string>
-    <string name="shophasnoaislestext001">Shop\u0020</string>
+    <string name="shophasnoaislestext001">Store\u0020</string>
     <string name="shophasnoaislestext002">\u0020in\u0020</string>
     <string name="shophasnoaislestext003">\u0020has no aisles!
         \n\nDo you wish to add Aisles?
@@ -247,7 +247,7 @@
         \n\nWhen you have finished inputting the Store information click on the <b>SAVE</b> button.
         \n\n<i>Using multiples of 1000 to define the order gives a great deal of scope to add/insert subsequent Stores without having to change multiple Store Orders to order them according to your requirements.
         \nIf you don\'t feel like adding data for the other fields (Street, City, State, Phone No. and Notes) then click on the SAVE button without inputting the data.
-        \n\nWhen you click on the SAVE button the shop will be saved but the screen will remain (although the information that you typed will be cleared and the hints shown).
+        \n\nWhen you click on the SAVE button the store will be saved but the screen will remain (although the information that you typed will be cleared and the hints shown).
         \nThere will be a new button, <b>DONE</b>. Clicking this will allow you to continue. Note! any data you have typed, since the last SAVE will not be saved.</i>
     </string>
     <string name="shoplist_instructions"><b>Click</b> on the <b>Add</b> button to add a <b>Store</b>.
@@ -293,7 +293,7 @@
         \n\ta) <b>Edit</b> the <b>Product</b> (<i>Change the Name or Notes</i>)or
         \n\tb) <b>Stock</b> to add the product to an <b>Aisle</b>
         \n\n<b>Long Click</b> on a <b>Product</b> to <b>Delete</b> a <b>Product</b>.
-        \n\t<u><b>NOTE</b> if you <b>Delete</b> a <b>Product</b> then that <b>Product</b> will be removed from all <b>Shop Aisles</b></u>
+        \n\t<u><b>NOTE</b> if you <b>Delete</b> a <b>Product</b> then that <b>Product</b> will be removed from all <b>Store Aisles</b></u>
     </string>
     <string name="addeditproduct_instructions">Input/Amend the <b>Product\'s</b> name and notes (<i>notes are not required</i>) and then click on the <b>Save</b> button.
         \nWhen complete click on the <b>Done</b> button to return/go back.
@@ -309,11 +309,11 @@
     </string>
     <string name="purchaseableproductlist_instructions"><b>Click</b> on an Item in the list to <b>Add</b> it to the <b>Shopping List</b>
         \n\tNote that the Item is added immediately and that 1 is added. To add more of the same Item repeat.
-        \n\nFilter List by inputting <b>Product</b> or <b>Shop</b> data.
+        \n\nFilter List by inputting <b>Product</b> or <b>Store</b> data.
         \n\te.g. Entering b in the <b>Product</b> input, will then only show <b>Products</b> that have b or B in them.
-        \n\t\tLikewise for the <b>Shops</b> input.
+        \n\t\tLikewise for the <b>Stores</b> input.
         \n\n<b>Done</b> will return/go back.
-        \n\n<i>Use the <b>Shop</b> button from the Main screen to view the <b>Shopping List.</b></i>
+        \n\n<i>Use the <b>Shopping</b> button from the Main screen to view the <b>Shopping List.</b></i>
     </string>
     <string name="rules_ruleaddedit_instructions"><b>Rule Name</b> is required.
         \n<b>Prompt</b> will default to not prompting before adding rule
@@ -323,7 +323,7 @@
         \n<b>Frequency</b> is used in combination with <b>Multiplier</b> (e.g. Days 2 = every 2 Days).
         \n<b>Quantity</b>, which defaults to 1, specifies how many of the product are to be purchased.
         \n\n<b>Click</b> on <b>Save</b> to save the rule.
-        \n\tYou can then add additional rules for the same product/aisle/shop combination.
+        \n\tYou can then add additional rules for the same product/aisle/store combination.
         \n<b>Click Done</b> to return to the Product/Current Rule List.
     </string>
     <string name="shoppinglist_instructions">This is the <b>Shopping List</b>
@@ -406,11 +406,11 @@
         \nOverall this will give a more display space.
         \nIt is only advisable to disable help displays when you are comfortable with using Shopper.
     </string>
-    <string name="dbinspect_shopcols_line1">ID - Order - Shop Name - Street (2nd Line) City - Phone (3rd Line) Notes</string>
-    <string name="dbinspect_shopcols_l1">ID - Order - Shop Name</string>
+    <string name="dbinspect_shopcols_line1">ID - Order - Store Name - Street (2nd Line) City - Phone (3rd Line) Notes</string>
+    <string name="dbinspect_shopcols_l1">ID - Store Name - Order </string>
     <string name="dbinspect_shocols_l2">Street - City - State - Phone</string>
     <string name="dbinspect_shopcols_l3">Notes</string>
-    <string name="dbinspect_aislecols_line1">ID - Shop ID - Order - Aisle Name</string>
+    <string name="dbinspect_aislecols_line1">ID - Store ID - Order - Aisle Name</string>
     <string name="dbinspect_productcols_line1">ID - Product Name - (*)Order - (*)Aisle - (*)Uses - Notes (* inidcates unused)</string>
     <string name="dbinspect_productcols_l1">ID - Product Name</string>
     <string name="dbinspect_productcols_l2">(*)Order - (*)Aisle - (*)Uses - Notes (* inidcates unused)</string>
