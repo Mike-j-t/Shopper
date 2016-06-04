@@ -15,13 +15,27 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.Date;
 
+// MainActivity - Application Starts Here
+// Perform inital checks
+// Database exists, if not creates database
+// Retrieves Settings (Disable Help Screens boolean and Developermode boolean)
+// Gets database stats (row counts of the tables), displays them id inn developer mode
+// Displays context relevant buttons including extra buttons if in developer mode
+// Compore actual DB against design and add tables/columns if necessary
+// If no stores then invoke add store directly
+// Setup Values table (if already done then duplicates won't be added)
+// Button handling as per xml then handle selection of options
 public class MainActivity extends AppCompatActivity {
-    private final static String THIS_ACTIVITY = "MainActivity";
+
+    // Activity/Shared preferences variables
+    private final static String THIS_ACTIVITY = "MainActivity"; // Allows ActivityNsame to be sent
     private SharedPreferences sharedPreferences;
     private boolean developermode = false;
     private boolean helpoffmode = false;
+    //private boolean developermode;
 
 
+    // Data/DB variables (generally in unset state)
     public ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
     private int shopcount;
     private int aislecount;
@@ -29,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private int productsinaisles;
     private int rulecount;
     private int shoppinglistcount;
+
+    // View variables (in unset state)
     private TextView stats;
     private TextView storesbutton;
     private TextView storeshelpbutton;
@@ -46,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView dbdatahelpbutton;
     private TextView dbschemabutton;
     private TextView dbschemahelpbutton;
-    private boolean devmode;
 
     //==============================================================================================
     //==============================================================================================
@@ -59,14 +74,18 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(false);
         PreferenceManager.setDefaultValues(this, R.xml.usersettings, false);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        devmode = sharedPreferences.getBoolean(getResources().getString(R.string.sharedpreferencekey_developermode), false);
+        developermode = sharedPreferences.getBoolean(getResources().getString(R.string.sharedpreferencekey_developermode), false);
         helpoffmode = sharedPreferences.getBoolean(getResources().getString(R.string.sharedpreferencekey_showhelpmode), false);
-        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG, "Primary Activity Initialisation Complete", THIS_ACTIVITY, "onCreate",devmode);
+        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,
+                "Primary Activity Initialisation Complete", THIS_ACTIVITY, "onCreate",developermode);
 
         // Check to see if database exists
         if(!doesDatabaseExist(this,ShopperDBHelper.DATABASE_NAME)) {
-            Toast.makeText(this,"Welcome to Shopper. Creating Shopper Database and underlying tables.",Toast.LENGTH_LONG).show();
-            mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG, "Shopper Database will be created as it didn't exist", THIS_ACTIVITY, "onCreate",devmode);
+            Toast.makeText(this,"Welcome to Shopper. Creating Shopper Database and underlying tables.",
+                    Toast.LENGTH_LONG).show();
+            mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,
+                    "Shopper Database will be created as it didn't exist",
+                    THIS_ACTIVITY, "onCreate",developermode);
         }
 
         // Get Button id's
@@ -88,12 +107,12 @@ public class MainActivity extends AppCompatActivity {
         dbschemahelpbutton = (TextView) this.findViewById(R.id.am_schemahelp_button);
         stats = (TextView) this.findViewById(R.id.amtv30);
 
+        // Perform Initialisation
         getSettings();
         handleStats();
         selectButtons();
         initialisationChecks();
         ShopperDBHelper valuesdb = new ShopperDBHelper(this,null,null,1);
-
 
 
         //Setup AutoAdd Periods for dropdown selection
@@ -111,17 +130,23 @@ public class MainActivity extends AppCompatActivity {
         valuesdb.close();
     }
 
+    //==============================================================================================
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"onCreateOptionsMenu",devmode);
+        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
+                THIS_ACTIVITY,"onCreateOptionsMenu",developermode);
+        super.onCreateOptionsMenu(menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.usersettingsmenu, menu);
         return true;
     }
 
+    //==============================================================================================
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"onOptionsItemSelected",devmode);
+        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
+                THIS_ACTIVITY,"onOptionsItemSelected",developermode);
+        super.onOptionsItemSelected(menuItem);
         Intent intent = new Intent(this,UserSettings.class);
         startActivity(intent);
         return true;
@@ -130,7 +155,8 @@ public class MainActivity extends AppCompatActivity {
     //==============================================================================================
     @Override
     protected  void onResume() {
-        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"onResume",devmode);
+        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
+                THIS_ACTIVITY,"onResume",developermode);
         super.onResume();
         getSettings();
         handleStats();
@@ -140,13 +166,20 @@ public class MainActivity extends AppCompatActivity {
     //==============================================================================================
     @Override
     protected void onDestroy() {
-        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"onDestroy",devmode);
+        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
+                THIS_ACTIVITY,"onDestroy",developermode);
         //SQLiteStudioService.instance().stop();
         super.onDestroy();
         shopperdb.close();
     }
+
+    //==============================================================================================
+    // retrieve settings from sharedpreferences
+    // developer mode boolean if on turns on extra logging and addtitional main display options
+    // helpoffmode if on turns off help displays
     private void getSettings() {
-        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"getSettings",devmode);
+        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
+                THIS_ACTIVITY,"getSettings",developermode);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         developermode = sharedPreferences.getBoolean(getString(R.string.sharedpreferencekey_developermode),false);
         helpoffmode = sharedPreferences.getBoolean(getString(R.string.sharedpreferencekey_showhelpmode),false);
@@ -154,8 +187,14 @@ public class MainActivity extends AppCompatActivity {
 
     //==============================================================================================
     // Select Buttons that are to be dissplayed
+    // Displays buttons relevant to the current state/context i.e. DB state and developermode
+    // e.g. if no stores or products then only Stores and Products buttons as other information is
+    // dependany up stores or products (and so on as per comments)
+    // developer mode is independant of stores/products etc if true then display DATA and SCHEMA
+    // buttons else display neither.
     private void selectButtons() {
-        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"selectButtons",devmode);
+        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
+                THIS_ACTIVITY,"selectButtons",developermode);
 
         // Always show Stores Button
         storesbutton.setVisibility(View.VISIBLE);
@@ -186,8 +225,8 @@ public class MainActivity extends AppCompatActivity {
             productshelpbutton.setVisibility(View.GONE);
         }
 
-
-        // Only Show ProductUsage button if products exist
+        // Only Show ProductUsage (TO GET) and Rules buttons if products are in aisles
+        // This requires products and aisles to exist
         if(productcount < 1  | productcount < 1 | aislecount < 1 | productsinaisles < 1) {
             productusagebutton.setVisibility(View.GONE);
             productusagehelpbutton.setVisibility(View.GONE);
@@ -244,7 +283,8 @@ public class MainActivity extends AppCompatActivity {
     // Get statistics # of shops, aisles, products, products in aisles, rules and shopping list entries.
     // Also show date and time and then timestamp. Only shown in developer mode.
     private void handleStats() {
-        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"handleStats",devmode);
+        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
+                THIS_ACTIVITY,"handleStats",developermode);
 
         shopcount = shopperdb.numberOfShops();
         aislecount = shopperdb.numberOfAisles();
@@ -277,7 +317,8 @@ public class MainActivity extends AppCompatActivity {
     // expand database (add any new tables and/or columns)
     // if no stores(shops) then invoke store add
     private void initialisationChecks() {
-        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"initialisationChecks",devmode);
+        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
+                THIS_ACTIVITY,"initialisationChecks",developermode);
 
         ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
         shopperdb.onExpand();
@@ -291,9 +332,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //==============================================================================================
-    // Button Clicks Handled Here
+    // Button Clicks Handled Here note onClick instigated via layout
     public void buttonClicked(View view) {
-        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"buttonClicked",devmode);
+        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
+                THIS_ACTIVITY,"buttonClicked",developermode);
 
         switch (view.getId()) {
             case R.id.am_stores_button:
@@ -344,6 +386,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("DEVELOPERMODE",developermode);
                 startActivity(intent);
                 break;
+            // Note redundant as removed from layout
             case R.id.am_storeshelp_button:
                 break;
             case R.id.am_aisleshelp_button:
@@ -365,21 +408,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onStart() {
-        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"onStart",devmode);
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"onStop",devmode);
-        super.onStop();
-    }
-
+    // Check if Database exists
     public boolean doesDatabaseExist(Context context, String dbName) {
-        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"doesDatabaseExist",devmode);
+        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
+                THIS_ACTIVITY,"doesDatabaseExist",developermode);
         File dbFile = context.getDatabasePath(dbName);
         return dbFile.exists();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    // Unimplemented/Unused methods
+    @Override
+    public void onStart() {
+        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
+                THIS_ACTIVITY,"onStart",developermode);
+        super.onStart();
+    }
+    @Override
+    public void onStop() {
+        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
+                THIS_ACTIVITY,"onStop",developermode);
+        super.onStop();
     }
 }
