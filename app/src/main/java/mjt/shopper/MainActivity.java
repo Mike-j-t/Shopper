@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.Date;
 
 // MainActivity - Application Starts Here
@@ -322,6 +328,26 @@ public class MainActivity extends AppCompatActivity {
 
         ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
         shopperdb.onExpand();
+        //File path = getFilesDir();
+        //File file = new File(path,"ShopperExportSQL.txt");
+        //Log.d("ShopperExport","Starting Shopper Export Test");
+        //try {
+        //    Log.d("ShopperExport","Trying PrinWriter Method");
+        //    FileOutputStream fos = new FileOutputStream(file);
+        //    //PrintWriter pw = new PrintWriter(fos);
+        //    //pw.write("Testing");
+        //    //pw.flush();
+        //    //pw.close();
+        //    //fos.close();
+        //    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fos);
+        //    outputStreamWriter.write("TestDate");
+        //    outputStreamWriter.close();
+        //    fos.close();
+        //}
+        //catch (IOException e) {
+        //    Log.e("Exception", "File Write Failed " + e.toString());
+        //}
+        //Log.d("ShopperExport","Ended Shopper Export Test");
 
         if(shopcount < 1 ) {
             Intent intent = new Intent(this, ShopAddActivity.class);
