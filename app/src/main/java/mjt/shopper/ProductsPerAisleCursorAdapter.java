@@ -16,6 +16,20 @@ import java.text.NumberFormat;
  * Created by Mike092015 on 27/02/2016.
  */
 public class ProductsPerAisleCursorAdapter extends CursorAdapter implements Serializable {
+    public static int productidoffset;
+    public static int productnameoffset;
+    public static int productorderoffset;
+    public static int productaisleoffset;
+    public static int productusesoffset;
+    public static int productnotesoffset;
+    public static int productusageaislerefoffset;
+    public static int productusageproductrefoffset;
+    public static int productusagecostoffset;
+    public static int productusagebuycountoffset;
+    public static int productusagefirstbuydateoffset;
+    public static int productusagelastbuydateoffset;
+    public static int productusagemincostoffset;
+    public static int productusageorderinaisleoffset;
     public ProductsPerAisleCursorAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, FLAG_REGISTER_CONTENT_OBSERVER);
     }
@@ -34,6 +48,22 @@ public class ProductsPerAisleCursorAdapter extends CursorAdapter implements Seri
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        if(cursor.getPosition() == 0) {
+            productidoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_ID);
+            productnameoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NAME);
+            productorderoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_ORDER);
+            productaisleoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_AISLE);
+            productusesoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NOTES);
+            productnotesoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NOTES);
+            productusageaislerefoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_AISLEREF);
+            productusageproductrefoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_PRODUCTREF);
+            productusagecostoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_COST);
+            productusagebuycountoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_BUYCOUNT);
+            productusagefirstbuydateoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_FIRSTBUYDATE);
+            productusagelastbuydateoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_LATESTBUYDATE);
+            productusagemincostoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_MINCOST);
+            productusageorderinaisleoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_ORDER);
+        }
         TextView textviewproductid = (TextView) view.findViewById(R.id.product_id_entry);
         TextView textviewproductname = (TextView) view.findViewById(R.id.product_name_entry);
         TextView textviewproductorder = (TextView) view.findViewById(R.id.product_order_entry);
@@ -49,21 +79,20 @@ public class ProductsPerAisleCursorAdapter extends CursorAdapter implements Seri
         TextView textviewproductusagemincost = (TextView) view.findViewById(R.id.productusage_mincost_entry);
         TextView textviewproductusageorderinaisle = (TextView) view.findViewById(R.id.productusage_orderinaisle_entry);
 
-        textviewproductid.setText(cursor.getString(ShopperDBHelper.PRODUCTS_COLUMN_ID_INDEX));
-        textviewproductname.setText(cursor.getString(ShopperDBHelper.PRODUCTS_COLUMN_NAME_INDEX));
-        textviewproductorder.setText(cursor.getString(ShopperDBHelper.PRODUCTS_COLUMN_ORDER_INDEX));
-        textviewproductasile.setText(cursor.getString(ShopperDBHelper.PRODUCTS_COLUMN_AISLE_INDEX));
-        textviewproductuses.setText(cursor.getString(ShopperDBHelper.PRODUCTS_COLUMN_USES_INDEX));
-        textviewproductnotes.setText(cursor.getString(ShopperDBHelper.PRODUCTS_COLUMN_NOTES_INDEX));
-        int joinoffset = ShopperDBHelper.PRODUCTS_COLUMN_NOTES_INDEX + 1;
-        textviewproductusageaisleref.setText(cursor.getString((joinoffset + ShopperDBHelper.PRODUCTUSAGE_COLUMN_AISLEREF_INDEX)));
-        textviewproductusageproductref.setText(cursor.getString((joinoffset + ShopperDBHelper.PRODUCTUSAGE_COLUMN_PRODUCTREF_INDEX)));
-        textviewproductusagecost.setText((NumberFormat.getCurrencyInstance().format(cursor.getFloat((joinoffset + ShopperDBHelper.PRODUCTUSAGE_COLUMN_COST_INDEX)))));
-        textviewproductusagebuycount.setText(cursor.getString((joinoffset + ShopperDBHelper.PRODUCTUSAGE_COLUMN_BUYCOUNT_INDEX)));
-        textviewproductusagefirstbuydate.setText(DateFormat.format(Constants.STANDARD_DDMMYYY_FORMAT,cursor.getLong((joinoffset + ShopperDBHelper.PRODUCTUSAGE_COLUMN_FIRSTBUYDATE_INDEX))));
-        textviewproductusagelastbuydate.setText(DateFormat.format(Constants.STANDARD_DDMMYYY_FORMAT, cursor.getLong((joinoffset + ShopperDBHelper.PRODUCTUSAGE_COLUMN_LASTBUYDATE_INDEX))));
-        textviewproductusagemincost.setText(cursor.getString((joinoffset + ShopperDBHelper.PRODUCTUSAGE_COLUMN_MINCOST_INDEX)));
-        textviewproductusageorderinaisle.setText(cursor.getString((joinoffset + ShopperDBHelper.PRODUCTUSAGE_COLUMN_ORDER_INDEX)));
+        textviewproductid.setText(cursor.getString(productidoffset));
+        textviewproductname.setText(cursor.getString(productnameoffset));
+        textviewproductorder.setText(cursor.getString(productorderoffset));
+        textviewproductasile.setText(cursor.getString(productaisleoffset));
+        textviewproductuses.setText(cursor.getString(productusesoffset));
+        textviewproductnotes.setText(cursor.getString(productnotesoffset));
+        textviewproductusageaisleref.setText(cursor.getString(productusageaislerefoffset));
+        textviewproductusageproductref.setText(cursor.getString(productusageproductrefoffset));
+        textviewproductusagecost.setText((NumberFormat.getCurrencyInstance().format(cursor.getFloat(productusagecostoffset))));
+        textviewproductusagebuycount.setText(cursor.getString(productusagebuycountoffset));
+        textviewproductusagefirstbuydate.setText(DateFormat.format(Constants.STANDARD_DDMMYYY_FORMAT,cursor.getLong(productusagefirstbuydateoffset)));
+        textviewproductusagelastbuydate.setText(DateFormat.format(Constants.STANDARD_DDMMYYY_FORMAT, cursor.getLong(productusagelastbuydateoffset)));
+        textviewproductusagemincost.setText(cursor.getString(productusagemincostoffset));
+        textviewproductusageorderinaisle.setText(cursor.getString(productusageorderinaisleoffset));
     }
 
     @Override

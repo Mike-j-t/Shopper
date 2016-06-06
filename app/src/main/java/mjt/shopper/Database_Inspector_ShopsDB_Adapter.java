@@ -13,6 +13,15 @@ import android.widget.TextView;
  * Created by Mike092015 on 17/02/2016.
  */
 class Database_Inspector_ShopsDB_Adapter extends CursorAdapter {
+    public static int storeidfoffset;
+    public static int storenameoffset;
+    public static int storeorderoffset;
+    public static int storestreetofffset;
+    public static int storecityoffset;
+    public static int storestateoffset;
+    public static int storephoneoffset;
+    public static int storenotesoffset;
+
     public Database_Inspector_ShopsDB_Adapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
     }
@@ -33,6 +42,18 @@ class Database_Inspector_ShopsDB_Adapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        // get column offsets from cursor (once to reduce overheads)
+        if(cursor.getPosition() == 0 ) {
+            storeidfoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_ID);
+            storenameoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NAME);
+            storeorderoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_ORDER);
+            storestreetofffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
+            storecityoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_CITY);
+            storestateoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STATE);
+            storephoneoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_PHONE);
+            storenotesoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NOTES);
+        }
+
         TextView textviewshopid = (TextView) view.findViewById(R.id.adise_shopsdb_id);
         TextView textviewshoporder = (TextView) view.findViewById(R.id.adise_shopsdb_order);
         TextView textviewshopname = (TextView) view.findViewById(R.id.adise_shopsdb_shopname);
@@ -42,14 +63,14 @@ class Database_Inspector_ShopsDB_Adapter extends CursorAdapter {
         TextView textviewshopphone = (TextView) view.findViewById(R.id.adise_shopsdb_phone);
         TextView textviewshopnotes = (TextView) view.findViewById(R.id.adise_shopsdb_notes);
 
-        textviewshopid.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMNN_ID_INDEX));
-        textviewshoporder.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMN_ORDER_INDEX));
-        textviewshopname.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMN_NAME_INDEX));
-        textviewshopstreet.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMN_STREET_INDEX));
-        textviewshopcity.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMN_CITY_INDEX));
-        textviewshopstate.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMN_STATE_INDEX));
-        textviewshopphone.setText(cursor.getString(ShopperDBHelper.SHOPS_COULMN_PHONE_INDEX));
-        textviewshopnotes.setText(cursor.getString(ShopperDBHelper.SHOPS_COULMN_NOTES_INDEX));
+        textviewshopid.setText(cursor.getString(storeidfoffset));
+        textviewshoporder.setText(cursor.getString(storeorderoffset));
+        textviewshopname.setText(cursor.getString(storenameoffset));
+        textviewshopstreet.setText(cursor.getString(storestreetofffset));
+        textviewshopcity.setText(cursor.getString(storecityoffset));
+        textviewshopstate.setText(cursor.getString(storestateoffset));
+        textviewshopphone.setText(cursor.getString(storephoneoffset));
+        textviewshopnotes.setText(cursor.getString(storenotesoffset));
     }
 
     @Override

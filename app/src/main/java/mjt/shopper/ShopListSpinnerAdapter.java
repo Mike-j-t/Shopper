@@ -12,6 +12,14 @@ import android.widget.TextView;
  * Created by Mike092015 on 5/02/2016.
  */
 public class ShopListSpinnerAdapter extends CursorAdapter{
+    public static int storeidfoffset;
+    public static int storenameoffset;
+    public static int storeorderoffset;
+    public static int storestreetofffset;
+    public static int storecityoffset;
+    public static int storestateoffset;
+    public static int storephoneoffset;
+    public static int storenotesoffset;
 
     public ShopListSpinnerAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, FLAG_REGISTER_CONTENT_OBSERVER);
@@ -23,12 +31,22 @@ public class ShopListSpinnerAdapter extends CursorAdapter{
     }
     @Override
     public void bindView(View view,Context context, Cursor cursor) {
+        if(cursor.getPosition() == 0 ) {
+            storeidfoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_ID);
+            storenameoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NAME);
+            storeorderoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_ORDER);
+            storestreetofffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
+            storecityoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_CITY);
+            storestateoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STATE);
+            storephoneoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_PHONE);
+            storenotesoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NOTES);
+        }
         TextView textViewShopName = (TextView) view.findViewById(R.id.aasletv01);
         TextView textViewShopStreet = (TextView) view.findViewById(R.id.aasletv03);
         TextView textViewShopCity = (TextView) view.findViewById(R.id.aasletv02);
 
-        textViewShopName.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMN_NAME_INDEX));
-        textViewShopStreet.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMN_STREET_INDEX));
-        textViewShopCity.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMN_CITY_INDEX));
+        textViewShopName.setText(cursor.getString(storenameoffset));
+        textViewShopStreet.setText(cursor.getString(storestreetofffset));
+        textViewShopCity.setText(cursor.getString(storecityoffset));
     }
 }

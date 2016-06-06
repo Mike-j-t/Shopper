@@ -1,5 +1,6 @@
 package mjt.shopper;
 
+import android.app.Application;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -8,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -192,6 +194,86 @@ class DBDatabase {
             //generatedSQLStatements.add(dbt.getSQLCreateString(db));
         }
         return generatedSQLStatements;
+    }
+    // Generate SQL that could be used to Build Database and Tables elsewhere (part 1 of export)
+    public String generateExportSchemaSQL() {
+        String sql = "";
+        String tablesql = "";
+        if(this.usable) {
+            sql = " CREATE DATABASE IF NOT EXISTS `" + this.database_name + "` ;\n" +
+                    " USE `" + this.database_name + "`;" ;
+            for(DBTable dbt : this.database_tables) {
+                tablesql = dbt.getSQLTableCreateAsString(true);
+                if(tablesql.length() > 0) {
+                    sql = sql + "\n " + tablesql;
+                }
+            }
+        }
+        return sql;
+    }
+    // Export All Table Data (not expect to work as no escaping as yet)
+    //TODO Getting close 1 issues.
+    //TODO 1 Need to do equiv to MYSQL_REAL_ESCAPE otherwise OK load
+    public String generateExportDataSQL(SQLiteDatabase db) {
+        String sql = "";
+        Cursor csr;
+        String coldata = "";
+        if(!this.usable) { return sql; }
+        sql = " USE `" + this.database_name + "`;\n";
+        for(DBTable dbt : this.database_tables) {
+            String sqlstr = " SELECT * FROM " + dbt.getDBTableName() + ";";
+            csr = db.rawQuery(sqlstr,null);
+            if(csr.getCount() > 0 ){
+                sql = sql + " INSERT INTO `" + dbt.getDBTableName() + "` (";
+                int coli = 0;
+                ArrayList<Integer> coltype = new ArrayList();
+                for(DBColumn dbtc : dbt.getTableDBColumns()) {
+                    if(coli++ > 0) {
+                        sql = sql + ", ";
+                    }
+                    if(dbtc.getDBColumnType().equals("TEXT")) {
+                        coltype.add(1);
+                    } else {
+                        coltype.add(0);
+                    }
+                    sql = sql + "`" + dbtc.getDBColumnName() + "` ";
+                }
+                sql = sql + ") VALUES \n ";
+                csr.moveToPosition(-1);
+                while(csr.moveToNext()) {
+                    sql = sql + "( ";
+                    for(int i=0; i < coli;i++) {
+                        coldata = csr.getString(i);
+                        if(coldata == null) {coldata = ""; }
+                        if(coltype.get(i) == 1) {
+                            if(coldata.length() > 0) {
+                                try {
+                                    coldata = coldata.replaceAll("\'", "#@APOST@#")
+                                            .replaceAll("\"", "#@QUOTE@#");
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            sql = sql + "'" + coldata + "'";
+                        } else {
+                            sql = sql + csr.getString(i);
+                        }
+                        if(i < (coltype.size()-1)) {
+                            sql = sql + ", ";
+                        }
+                    }
+                    sql = sql + " )";
+                    if(csr.getPosition() < (csr.getCount() - 1) ) {
+                        sql = sql + ", \n";
+                    } else {
+                        sql = sql + "; \n";
+                    }
+                }
+            } else {
+                sql = sql + "-- ERROR - TABLE " + dbt.getDBTableName() + " IS EMPTY SKIPPED \n";
+            }
+        }
+        return sql;
     }
     //==============================================================================================
     // Actually perform the Table create statments (note CREATE IF NOT EXISTS) so will
@@ -435,6 +517,59 @@ class DBTable {
         // Main Loop through the columns
         for(DBColumn dc : this.table_columns) {
             part1 = part1 + dc.getDBColumnName() + " " + dc.getDBColumnType() + " ";
+            // Apply the default value if required
+            if(dc.getDBColumnDefaultValue().length() > 0 ) {
+                part1 = part1 + " DEFAULT " + dc.getDBColumnDefaultValue() + " ";
+            }
+            // if only 1 PRIMARY INDEX and this is it then add it
+            if(dc.getDBColumnIsPrimaryIndex() & indexes.size() == 1) {
+                part1 = part1 + " PRIMARY KEY ";
+            }
+            // If more to do then include comma separator
+            dccount++;
+            if (dccount < this.table_columns.size()) {
+                part1 = part1 + ", ";
+            }
+        }
+        // Handle multiple PRIMARY INDEXES ie add PRIMARY KEY (<col>, <col> .....)
+        int ixcount = 1;
+        if(indexes.size() > 1 ) {
+            part1 = part1 + ", PRIMARY KEY (";
+            for(String ix : indexes) {
+                part1 = part1 + ix;
+                if(ixcount < (indexes.size() ) ) {
+                    part1 = part1 + ", ";
+                }
+                ixcount++;
+            }
+            part1 = part1 + ")";
+        }
+        part1 = part1 + ") ;";
+        return part1;
+    }
+    //==============================================================================================
+    public String getSQLTableCreateAsString(Boolean doasmysql) {
+
+        // Extract Columns that are flagged as PRIMARY INDEXES so we have a count
+        // More than one has to be handled differently
+        ArrayList<String> indexes = new ArrayList<String>();
+        for(DBColumn dc : this.table_columns) {
+            if(dc.getDBColumnIsPrimaryIndex()) {
+                indexes.add(dc.getDBColumnName());
+            }
+        }
+        // Build the CREATE SQL
+        String part1 = " CREATE  TABLE IF NOT EXISTS `" + this.table_name + "` (";
+        int dccount = 0;
+        // Main Loop through the columns
+        for(DBColumn dc : this.table_columns) {
+            // FOR mysql export need to use BIGINT(20) instead of INTEGER
+            if(doasmysql && dc.getDBColumnType().equals("INTEGER")) {
+                part1 = part1 + "`" + dc.getDBColumnName() + "` BIGINT(20) NOT NULL ";
+            } else {
+                part1 = part1 + "`" + dc.getDBColumnName() + "` " + dc.getDBColumnType() + " ";
+            }
+
             // Apply the default value if required
             if(dc.getDBColumnDefaultValue().length() > 0 ) {
                 part1 = part1 + " DEFAULT " + dc.getDBColumnDefaultValue() + " ";
@@ -893,6 +1028,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     public static final int    VALUES_COLUMN_VALUESETTINGSINFO_INDEX = 7;
     public static final String VALUES_COLUMN_VALUESETTINGSINFO_TYPE = "TEXT";
 
+
     public ShopperDBHelper(Context ctxt, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(ctxt, DATABASE_NAME, factory, 1); }
 
@@ -1083,6 +1219,18 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
                     "- This is a Development Issue. Please contact the Developer.");
             return;
         }
+        //NOTE! Following lines can be used to export data in a fashion
+        // that is uncomment 5 lines of code put breakpoint on last String testx = ""
+        // and run in debug mode then copy value of exportschemasql to create database elsewhere
+        // e.g. phpmyadmin (paste in SQL at db level)
+        // do same for exportdatasql  to copy data.
+        // Note! not 100% e.g. apostrophes converted to #@APOST@# double quotes converted to #@QUOTE@#
+        //Following allows DB structure to be exported
+        //String exportschemasql = shopper.generateExportSchemaSQL();
+        //String exportdatasql = shopper.generateExportDataSQL(db);
+        //String test = exportschemasql;
+        //String test2 = exportdatasql;
+        //String testx = "";
 
         // Create a set of the SQL statments that would build ALL tables but due to IF NOT EXISTS
         // would only add new tables.
@@ -1465,9 +1613,9 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         String sqlstr = "SELECT " + PRODUCTUSAGE_COLUMN_AISLEREF + " AS _id, " +
             PRODUCTUSAGE_COLUMN_PRODUCTREF + ", " +
             PRODUCTUSAGE_COLUMN_COST + ", " +
-            PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_ID + " AS products_id, " +
+            PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_ID + " AS " + PRODUCTS_TABLE_NAME + PRODUCTS_COLUMN_ID + ", " +
             PRODUCTS_COLUMN_NAME + ", " +
-            AISLES_TABLE_NAME + "." + AISLES_COLUMN_ID + " AS aisles_id, " +
+            AISLES_TABLE_NAME + "." + AISLES_COLUMN_ID + " AS "+ AISLES_TABLE_NAME+AISLES_COLUMN_ID + ", " +
             AISLES_COLUMN_NAME + ", " +
             SHOPS_COLUMN_NAME + ", " +
             SHOPS_COLUMN_CITY + ", " +

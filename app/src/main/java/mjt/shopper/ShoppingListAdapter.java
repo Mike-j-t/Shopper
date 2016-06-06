@@ -18,6 +18,41 @@ import java.text.NumberFormat;
  * Created by Mike092015 on 21/03/2016.
  */
 public class ShoppingListAdapter extends CursorAdapter {
+    public static int shoplistidoffset;
+    public static int shoplistproductrefoffset;
+    public static int shoplistdateaddedoffset;
+    public static int shoplistnumbertogetoffset;
+    public static int shoplistdoneoffset;
+    public static int shoplistdategotoffset;
+    public static int shoplistcostoffset;
+    public static int shoplistproductusagerefoffset;
+    public static int shoplistaislerefoffset;
+    public static int productusageproductrefoffset; // NOTE SQL uses AS productusageid
+    public static int productusageaislerefoffset;
+    public static int productusagecostoffset;
+    public static int productusagebuycountoffset;
+    public static int productusagefirstbuydateoffset;
+    public static int productusagelatestbuydateoffset;
+    public static int productusagemincostoffset;
+    public static int productusageorderoffset;
+    public static int aisleidoffset; // NOTE SQL uses AS aisleid
+    public static int aislenameoffset;
+    public static int aisleorderoffset;
+    public static int aisleshopoffset;
+    public static int shopsidoffset; // NOTE SQL uses  AS shopid
+    public static int shopnameoffset;
+    public static int shoporderoffset;
+    public static int shopstreetoffset;
+    public static int shopcityoffset;
+    public static int shopstateoffset;
+    public static int shopphoneoffset;
+    public static int shopnotesoffset;
+    public static int productidoffset; // NOTE SQL uses AS productid
+    public static int productnameoffset;
+    public static int productorderoffset;
+    public static int productaisleoffset;
+    public static int productusesoffset;
+    public static int productnotesoffset;
 
     public ShoppingListAdapter(Context context, Cursor cursor, int flags, int myvar) {
         super(context, cursor, FLAG_REGISTER_CONTENT_OBSERVER);
@@ -62,6 +97,45 @@ public class ShoppingListAdapter extends CursorAdapter {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         int pos = cursor.getPosition();
 
+        if(pos == 0) {
+            shoplistidoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_ID);
+            shoplistproductrefoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_PRODUCTREF);
+            shoplistdateaddedoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_DATEADDED);
+            shoplistnumbertogetoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_NUMBERTOGET);
+            shoplistdoneoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_DONE);
+            shoplistdategotoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_DATEGOT);
+            shoplistcostoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_COST);
+            shoplistproductusagerefoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_PRODUCTUSAGEREF);
+            shoplistaislerefoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_AISLEREF);
+            productusageproductrefoffset = cursor.getColumnIndex("productusageid");
+            productusageaislerefoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_AISLEREF);
+            productusagecostoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_AISLEREF);
+            productusagecostoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_COST);
+            productusagebuycountoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_BUYCOUNT);
+            productusagefirstbuydateoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_FIRSTBUYDATE);
+            productusagelatestbuydateoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_LATESTBUYDATE);
+            productusagemincostoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_MINCOST);
+            productusageorderoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_ORDER);
+            aisleidoffset = cursor.getColumnIndex("aisleid");
+            aislenameoffset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_NAME);
+            aisleorderoffset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_ORDER);
+            aisleshopoffset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_SHOP);
+            shopsidoffset = cursor.getColumnIndex("shopid");
+            shopnameoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NAME);
+            shoporderoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_ORDER);
+            shopstreetoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
+            shopcityoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_CITY);
+            shopstateoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STATE);
+            shopphoneoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_PHONE);
+            shopnotesoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NOTES);
+            productidoffset = cursor.getColumnIndex("productid");
+            productnameoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NAME);
+            productorderoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_ORDER);
+            productaisleoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_AISLE);
+            productusesoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_USES);
+            productnotesoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NOTES);
+        }
+
         LinearLayout shophdrll = (LinearLayout) view.findViewById(R.id.shoppinglist_shopheader);
         LinearLayout aislehdrll = (LinearLayout) view.findViewById(R.id.shoppinglist_aisleheader);
 
@@ -91,36 +165,36 @@ public class ShoppingListAdapter extends CursorAdapter {
         // and prevaisle to 0 (no such id's) will force this (as won't be changed)
         if(pos > 0 ) {
             cursor.moveToPrevious();
-            prevshop = cursor.getLong(21); //  shopid column
-            prevaisle = cursor.getLong(17); // aisleid column
+            prevshop = cursor.getLong(shopsidoffset); //  shopid column
+            prevaisle = cursor.getLong(aisleidoffset); // aisleid column
             cursor.moveToNext(); // Restore cursor position to current
         }
-        if(prevshop != cursor.getLong(21)) {
+        if(prevshop != cursor.getLong(shopsidoffset)) {
             shophdrll.setVisibility(View.VISIBLE);
             shophdrll.setBackgroundColor(ContextCompat.getColor(context, R.color.colorlistviewheading));
         } else {
             shophdrll.setVisibility(View.GONE);
         }
-        if(prevaisle != cursor.getLong(17)) {
+        if(prevaisle != cursor.getLong(aisleidoffset)) {
             aislehdrll.setVisibility(View.VISIBLE);
             aislehdrll.setBackgroundColor(ContextCompat.getColor(context, R.color.colorlistviewsubheading));
         } else {
             aislehdrll.setVisibility(View.GONE);
         }
-        shopnametv.setText(cursor.getString(22));
-        shopcitytv.setText(cursor.getString(25));
-        shopstreettv.setText(cursor.getString(24));
-        aislenametv.setText(cursor.getString(18));
-        productnametv.setText(cursor.getString(30));
-        quantitytv.setText(cursor.getString(3));
-        pricetv.setText(NumberFormat.getCurrencyInstance().format(cursor.getDouble(11)));
-        priceforalltv.setText(NumberFormat.getCurrencyInstance().format(cursor.getDouble(3) * cursor.getDouble(11)));
-        shopordertv.setText(cursor.getString(23));
-        shopidtv.setText(cursor.getString(21));
-        aisleordertv.setText(cursor.getString(19));
-        aisleidtv.setText(cursor.getString(17));
-        puordertv.setText(cursor.getString(16));
-        puprodreftv.setText(cursor.getString(9));
+        shopnametv.setText(cursor.getString(shopnameoffset));
+        shopcitytv.setText(cursor.getString(shopcityoffset));
+        shopstreettv.setText(cursor.getString(shopstreetoffset));
+        aislenametv.setText(cursor.getString(aislenameoffset));
+        productnametv.setText(cursor.getString(productnameoffset));
+        quantitytv.setText(cursor.getString(shoplistnumbertogetoffset));
+        pricetv.setText(NumberFormat.getCurrencyInstance().format(cursor.getDouble(productusagecostoffset)));
+        priceforalltv.setText(NumberFormat.getCurrencyInstance().format(cursor.getDouble(shoplistnumbertogetoffset) * cursor.getDouble(productusagecostoffset)));
+        shopordertv.setText(cursor.getString(shoporderoffset));
+        shopidtv.setText(cursor.getString(shopsidoffset));
+        aisleordertv.setText(cursor.getString(aisleorderoffset));
+        aisleidtv.setText(cursor.getString(aisleidoffset));
+        puordertv.setText(cursor.getString(productusageorderoffset));
+        puprodreftv.setText(cursor.getString(productusageproductrefoffset));
         // Set tags to enable onClick to determine the cursor position of the clicked entry
         donebtntv.setTag(pos);
         deletebtntv.setTag(pos);
