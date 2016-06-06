@@ -1028,6 +1028,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     public static final int    VALUES_COLUMN_VALUESETTINGSINFO_INDEX = 7;
     public static final String VALUES_COLUMN_VALUESETTINGSINFO_TYPE = "TEXT";
 
+
     public ShopperDBHelper(Context ctxt, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(ctxt, DATABASE_NAME, factory, 1); }
 
@@ -1612,9 +1613,9 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         String sqlstr = "SELECT " + PRODUCTUSAGE_COLUMN_AISLEREF + " AS _id, " +
             PRODUCTUSAGE_COLUMN_PRODUCTREF + ", " +
             PRODUCTUSAGE_COLUMN_COST + ", " +
-            PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_ID + " AS products_id, " +
+            PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_ID + " AS " + PRODUCTS_TABLE_NAME + PRODUCTS_COLUMN_ID + ", " +
             PRODUCTS_COLUMN_NAME + ", " +
-            AISLES_TABLE_NAME + "." + AISLES_COLUMN_ID + " AS aisles_id, " +
+            AISLES_TABLE_NAME + "." + AISLES_COLUMN_ID + " AS "+ AISLES_TABLE_NAME+AISLES_COLUMN_ID + ", " +
             AISLES_COLUMN_NAME + ", " +
             SHOPS_COLUMN_NAME + ", " +
             SHOPS_COLUMN_CITY + ", " +

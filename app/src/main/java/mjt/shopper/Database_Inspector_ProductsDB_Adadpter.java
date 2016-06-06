@@ -13,6 +13,13 @@ import android.widget.TextView;
  * Created by Mike092015 on 17/02/2016.
  */
 public class Database_Inspector_ProductsDB_Adadpter extends CursorAdapter {
+    public static int productidoffset;
+    public static int productnameoffset;
+    public static int productorderoffset;
+    public static int productaisleoffset;
+    public static int productnotesoffset;
+    public static int productusesoffset;
+
     public Database_Inspector_ProductsDB_Adadpter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
     }
@@ -33,6 +40,15 @@ public class Database_Inspector_ProductsDB_Adadpter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
+        if(cursor.getPosition() == 0) {
+            productidoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_ID);
+            productnameoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NAME);
+            productorderoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_ORDER);
+            productaisleoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_AISLE);
+            productnotesoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NOTES);
+            productusesoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_USES);
+        }
+
         TextView textviewproductid = (TextView) view.findViewById(R.id.adipe_productsdb_id);
         TextView textviewproductname = (TextView) view.findViewById(R.id.adipe_productsdb_name);
         TextView textviewproductorder = (TextView) view.findViewById(R.id.adipe_productsdb_order);
@@ -40,12 +56,12 @@ public class Database_Inspector_ProductsDB_Adadpter extends CursorAdapter {
         TextView textviewproductuses = (TextView) view.findViewById(R.id.adipe_productsdb_uses);
         TextView textviewproductnotes = (TextView) view.findViewById(R.id.adipe_productsdb_notes);
 
-        textviewproductid.setText(cursor.getString(ShopperDBHelper.PRODUCTS_COLUMN_ID_INDEX));
-        textviewproductname.setText(cursor.getString(ShopperDBHelper.PRODUCTS_COLUMN_NAME_INDEX));
-        textviewproductorder.setText(cursor.getString(ShopperDBHelper.PRODUCTS_COLUMN_ORDER_INDEX));
-        textviewproductaisle.setText(cursor.getString(ShopperDBHelper.PRODUCTS_COLUMN_AISLE_INDEX));
-        textviewproductuses.setText(cursor.getString(ShopperDBHelper.PRODUCTS_COLUMN_USES_INDEX));
-        textviewproductnotes.setText(cursor.getString(ShopperDBHelper.PRODUCTS_COLUMN_NOTES_INDEX));
+        textviewproductid.setText(cursor.getString(productidoffset));
+        textviewproductname.setText(cursor.getString(productnameoffset));
+        textviewproductorder.setText(cursor.getString(productorderoffset));
+        textviewproductaisle.setText(cursor.getString(productaisleoffset));
+        textviewproductuses.setText(cursor.getString(productusesoffset));
+        textviewproductnotes.setText(cursor.getString(productnotesoffset));
 
     }
     @Override

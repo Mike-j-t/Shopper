@@ -13,6 +13,11 @@ import android.widget.TextView;
  * Created by Mike092015 on 6/02/2016.
         */
 class AislesCursorAdapter extends CursorAdapter {
+    public static int aisleidoffset;
+    public static int aislenameoffset;
+    public static int aisleorderoffset;
+    public static int aisleshoprefoffset;
+
     public AislesCursorAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
     }
@@ -30,15 +35,22 @@ class AislesCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        // get column offsets from cursor (once to reduce overheads)
+        if(cursor.getPosition() == 0) {
+            aisleidoffset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_ID);
+            aislenameoffset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_NAME);
+            aisleorderoffset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_ORDER);
+            aisleshoprefoffset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_SHOP);
+        }
         TextView textviewaisleid = (TextView) view.findViewById(R.id.aisle_id_entry);
         TextView textviewaislename = (TextView) view.findViewById(R.id.aisle_name_entry);
         TextView textviewaisleorder = (TextView) view.findViewById(R.id.aisle_order_entry);
         TextView textviewaisleshopref = (TextView) view.findViewById(R.id.aisle_shopref_entry);
 
-        textviewaisleid.setText(cursor.getString(ShopperDBHelper.AISLES_COLUMN_ID_INDEX));
-        textviewaislename.setText(cursor.getString(ShopperDBHelper.AISLES_COLUMN_NAME_INDEX));
-        textviewaisleorder.setText(cursor.getString(ShopperDBHelper.AISLES_COLUMN_ORDER_INDEX));
-        textviewaisleshopref.setText(cursor.getString(ShopperDBHelper.AISLES_COLUMN_SHOP_INDEX));
+        textviewaisleid.setText(cursor.getString(aisleidoffset));
+        textviewaislename.setText(cursor.getString(aislenameoffset));
+        textviewaisleorder.setText(cursor.getString(aisleorderoffset));
+        textviewaisleshopref.setText(cursor.getString(aisleshoprefoffset));
     }
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
