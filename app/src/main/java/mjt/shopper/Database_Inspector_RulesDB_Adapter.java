@@ -13,20 +13,6 @@ import android.widget.TextView;
  * Created by Mike092015 on 25/02/2016.
  */
 public class Database_Inspector_RulesDB_Adapter extends CursorAdapter {
-    public static int ruleidoffset;
-    public static int rulenameoffset;
-    public static int ruletypeoffset;
-    public static int rulepromptflagoffset;
-    public static int ruleperiodoffset;
-    public static int rulemultiplieroffset;
-    public static int ruleactiveonoffset;
-    public static int ruleproductrefoffset;
-    public static int ruleaislerefoffset;
-    public static int ruleusesoffset;
-    public static int rulenumbertogetoffset;
-    public static int rulemincostoffset;
-    public static int rulemaxcostoffset;
-
     public Database_Inspector_RulesDB_Adapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
     }
@@ -43,21 +29,6 @@ public class Database_Inspector_RulesDB_Adapter extends CursorAdapter {
     }
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        if(cursor.getPosition() == 0) {
-            ruleidoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_ID);
-            rulenameoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_NAME);
-            ruletypeoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_TYPE);
-            rulepromptflagoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_PROMPTFLAG);
-            ruleperiodoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_PERIOD);
-            rulemultiplieroffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_MULTIPLIER);
-            ruleactiveonoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_ACTIVEON);
-            ruleproductrefoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_PRODUCTREF);
-            ruleaislerefoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_AISLEREF);
-            ruleusesoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_USES);
-            rulenumbertogetoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_NUMBERTOGET);
-            rulemincostoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_MINCOST);
-            rulemaxcostoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_MAXCOST);
-        }
         TextView textviewrulesid = (TextView) view.findViewById(R.id.adire_rulesdb_id);
         TextView textviewrulesrulename = (TextView) view.findViewById(R.id.adire_rulesdb_rulename);
         TextView textviewrulesruletype = (TextView) view.findViewById(R.id.adire_rulesdb_ruletype);
@@ -71,18 +42,19 @@ public class Database_Inspector_RulesDB_Adapter extends CursorAdapter {
         TextView textviewrulesmincost = (TextView) view.findViewById(R.id.adire_rulesdb_mincost);
         TextView textviewrulesmaxcost = (TextView) view.findViewById(R.id.adire_rulesdb_maxcost);
 
-        textviewrulesid.setText(cursor.getString(ruleidoffset));
-        textviewrulesrulename.setText(cursor.getString(rulenameoffset));
-        textviewrulesruletype.setText(cursor.getString(ruletypeoffset));
-        textviewrulesrulepromtflag.setText(cursor.getString(rulepromptflagoffset));
-        textviewrulesruleperiod.setText(cursor.getString(ruleperiodoffset));
-        textviewrulesrulemultiplier.setText(cursor.getString(rulemultiplieroffset));
-        textviewrulesruleactiveon.setText(cursor.getString(ruleactiveonoffset));
-        textviewrulesruleproductref.setText(cursor.getString(ruleproductrefoffset));
-        textviewrulesruleaisleref.setText(cursor.getString(ruleaislerefoffset));
-        textviewrulesruleuses.setText(cursor.getString(ruleusesoffset));
-        textviewrulesmincost.setText(cursor.getString(rulemincostoffset));
-        textviewrulesmaxcost.setText(cursor.getString(rulemaxcostoffset));
+        textviewrulesid.setText(cursor.getString(ShopperDBHelper.RULES_COLUMN_ID_INDEX));
+        textviewrulesrulename.setText(cursor.getString(ShopperDBHelper.RULES_COLUMN_NAME_INDEX));
+        textviewrulesruletype.setText(cursor.getString(ShopperDBHelper.RULES_COLUMN_TYPE_INDEX));
+        textviewrulesrulepromtflag.setText(cursor.getString(ShopperDBHelper.RULES_COLUMN_PROMPTFLAG_INDEX));
+        textviewrulesruleperiod.setText(cursor.getString(ShopperDBHelper.RULES_COLUMN_PERIOD_INDEX));
+        textviewrulesrulemultiplier.setText(cursor.getString(ShopperDBHelper.RULES_COLUMN_MULTIPLIER_INDEX));
+        textviewrulesruleactiveon.setText(cursor.getString(ShopperDBHelper.RULES_COLUMN_ACTIVEON_INDEX));
+        textviewrulesruleproductref.setText(cursor.getString(ShopperDBHelper.RULES_COLUMN_PRODUCTREF_INDEX));
+        textviewrulesruleaisleref.setText(cursor.getString(ShopperDBHelper.RULES_COLUMN_AISLEREF_INDEX));
+        textviewrulesruleuses.setText(cursor.getString(ShopperDBHelper.RULES_COLUMN_USES_INDEX));
+        textviewrulesruleactiveon.setText(cursor.getString(ShopperDBHelper.RULES_COLUMN_ACTIVEON_INDEX));
+        textviewrulesmincost.setText(cursor.getString(ShopperDBHelper.RULES_COLUMN_MINCOST_INDEX));
+        textviewrulesmaxcost.setText(cursor.getString(ShopperDBHelper.RULES_COLUMN_MAXCOST_INDEX));
 
     }
     @Override
