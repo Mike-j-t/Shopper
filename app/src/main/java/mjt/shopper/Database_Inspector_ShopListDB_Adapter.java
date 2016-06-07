@@ -14,16 +14,6 @@ import java.text.NumberFormat;
  * Created by Mike092015 on 8/03/2016.
  */
 public class Database_Inspector_ShopListDB_Adapter extends CursorAdapter {
-    public static int shoplistidoffset;
-    public static int shoplistproductrefoffset;
-    public static int shoplistdateaddedoffset;
-    public static int shoplistnumbertogetoffset;
-    public static int shoplistdoneoffset;
-    public static int shoplistdategotoffset;
-    public static int shoplistcostoffset;
-    public static int shoplistproductusagerefoffset;
-    public static int shoplistaislerefoffset;
-
     public Database_Inspector_ShopListDB_Adapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, FLAG_REGISTER_CONTENT_OBSERVER);
     }
@@ -41,17 +31,6 @@ public class Database_Inspector_ShopListDB_Adapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        if(cursor.getPosition() == 0) {
-            shoplistidoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_ID);
-            shoplistproductrefoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_PRODUCTREF);
-            shoplistdateaddedoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_DATEADDED);
-            shoplistnumbertogetoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_NUMBERTOGET);
-            shoplistdoneoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_DONE);
-            shoplistdategotoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_DATEGOT);
-            shoplistcostoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_COST);
-            shoplistproductusagerefoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_PRODUCTUSAGEREF);
-            shoplistproductusagerefoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_AISLEREF);
-        }
         TextView tvshoplistid = (TextView) view.findViewById(R.id.adise_shoplistdb_id);
         TextView tvshoplistproductref = (TextView) view.findViewById(R.id.adise_shoplistdb_productref);
         TextView tvshoplistdateadded = (TextView) view.findViewById(R.id.adise_shoplistdb_dateadded);
@@ -62,15 +41,15 @@ public class Database_Inspector_ShopListDB_Adapter extends CursorAdapter {
         TextView tvshoplistproductusageref = (TextView) view.findViewById(R.id.adise_shoplistdb_productusageref);
         TextView tvshoplistaisleref = (TextView) view.findViewById(R.id.adise_shoplistdb_aisleref);
 
-        tvshoplistid.setText(cursor.getString(shoplistidoffset));
-        tvshoplistproductref.setText(cursor.getString(shoplistproductrefoffset));
-        tvshoplistdateadded.setText(cursor.getString(shoplistdateaddedoffset));
-        tvshoplistnumbertoget.setText(cursor.getString(shoplistnumbertogetoffset));
-        tvshoplistdone.setText(cursor.getString(shoplistdoneoffset));
-        tvshoplistdategot.setText(cursor.getString(shoplistdategotoffset));
-        tvshoplistcost.setText(NumberFormat.getCurrencyInstance().format(cursor.getFloat(shoplistcostoffset)));
-        tvshoplistproductusageref.setText(cursor.getString(shoplistproductusagerefoffset));
-        tvshoplistaisleref.setText(cursor.getString(shoplistaislerefoffset));
+        tvshoplistid.setText(cursor.getString(ShopperDBHelper.SHOPLIST_COLUMN_ID_INDEX));
+        tvshoplistproductref.setText(cursor.getString(ShopperDBHelper.SHOPLIST_COLUMN_PRODUCTREF_INDEX));
+        tvshoplistdateadded.setText(cursor.getString(ShopperDBHelper.SHOPLIST_COLUMN_DATEADDED_INDEX));
+        tvshoplistnumbertoget.setText(cursor.getString(ShopperDBHelper.SHOPLIST_COLUMN_NUMBERTOGET_INDEX));
+        tvshoplistdone.setText(cursor.getString(ShopperDBHelper.SHOPLIST_COLUMN_DONE_INDEX));
+        tvshoplistdategot.setText(cursor.getString(ShopperDBHelper.SHOPLIST_COLUMN_DATEGOT_INDEX));
+        tvshoplistcost.setText(NumberFormat.getCurrencyInstance().format(cursor.getFloat(ShopperDBHelper.SHOPLIST_COLUMN_COST_INDEX)));
+        tvshoplistproductusageref.setText(cursor.getString(ShopperDBHelper.SHOPLIST_COLUMN_PRODUCTUSAGEREF_INDEX));
+        tvshoplistaisleref.setText(cursor.getString(ShopperDBHelper.SHOPLIST_COLUMN_AISLEREF_INDEX));
     }
 
     @Override

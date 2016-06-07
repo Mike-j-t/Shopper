@@ -13,15 +13,11 @@ import android.widget.TextView;
  */
 
 public class RuleAddEditPeriodSpinnerCursorAdapter extends CursorAdapter {
-    public static int valuetextdataoffset;
     public RuleAddEditPeriodSpinnerCursorAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
     }
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        if(cursor.getPosition() == 0) {
-            valuetextdataoffset = cursor.getColumnIndex(ShopperDBHelper.VALUES_COLUMN_VALUETEXT);
-        }
         //TextView textviewvalueid = (TextView) view.findViewById(R.id.adi_appvaluesdb_valueid);
         //TextView textviewvaluename = (TextView) view.findViewById(R.id.adi_appvaluesdb_valuename);
         //TextView textviewvaluetype = (TextView) view.findViewById(R.id.adi_appvaluesdb_valuetype);
@@ -36,7 +32,7 @@ public class RuleAddEditPeriodSpinnerCursorAdapter extends CursorAdapter {
         //textviewvaluetype.setText(cursor.getString(ShopperDBHelper.VALUES_COLUMN_VALUETYPE_INDDEX));
         //textviewvalueint.setText(cursor.getString(ShopperDBHelper.VALUES_COLUMN_VALUEINT_INDEX));
         //textviewvaluereal.setText(cursor.getString(ShopperDBHelper.VALUES_COLUMN_VALUEREAL_INDEX));
-        textviewvaluestr.setText(cursor.getString(valuetextdataoffset));
+        textviewvaluestr.setText(cursor.getString(ShopperDBHelper.VALUES_COLUMN_VALUETEXT_INDEX));
         //textviewvaluesettingsincl.setText(cursor.getString(ShopperDBHelper.VALUES_COLUMN_VALUEINCLUDEINSETTINGS_INDEX));
         //textviewvaluesettingsinfo.setText(cursor.getString(ShopperDBHelper.VALUES_COLUMN_VALUESETTINGSINFO_INDEX));
     }

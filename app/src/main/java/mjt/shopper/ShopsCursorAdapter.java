@@ -13,15 +13,6 @@ import android.widget.TextView;
  * Created by Mike092015 on 2/02/2016.
  */
 class ShopsCursorAdapter extends CursorAdapter {
-    public static int storeidfoffset;
-    public static int storenameoffset;
-    public static int storeorderoffset;
-    public static int storestreetofffset;
-    public static int storecityoffset;
-    public static int storestateoffset;
-    public static int storephoneoffset;
-    public static int storenotesoffset;
-
     public ShopsCursorAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
     }
@@ -43,17 +34,6 @@ class ShopsCursorAdapter extends CursorAdapter {
     }
     @Override
     public void bindView(View view,Context context, Cursor cursor) {
-        // get column offsets from cursor (once to reduce overheads)
-        if(cursor.getPosition() == 0 ) {
-            storeidfoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_ID);
-            storenameoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NAME);
-            storeorderoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_ORDER);
-            storestreetofffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
-            storecityoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_CITY);
-            storestateoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STATE);
-            storephoneoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_PHONE);
-            storenotesoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NOTES);
-        }
         //TextView textviewShopid = (TextView) view.findViewById(R.id.shop_id_entry);
         TextView textViewShopName = (TextView) view.findViewById(R.id.shop_name_entry);
         TextView textViewShopOrder = (TextView) view.findViewById(R.id.shop_order_entry);
@@ -64,12 +44,12 @@ class ShopsCursorAdapter extends CursorAdapter {
         TextView textViewShopNotes = (TextView) view.findViewById(R.id.shop_notes_entry);
 
         //textviewShopid.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMNN_ID_INDEX));
-        textViewShopName.setText(cursor.getString(storenameoffset));
-        textViewShopOrder.setText(cursor.getString(storeorderoffset));
-        textViewShopStreet.setText(cursor.getString(storestreetofffset));
-        textViewShopCity.setText(cursor.getString(storecityoffset));
-        textViewShopState.setText(cursor.getString(storestateoffset));
-        textViewShopPhone.setText(cursor.getString(storephoneoffset));
-        textViewShopNotes.setText(cursor.getString(storenotesoffset));
+        textViewShopName.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMN_NAME_INDEX));
+        textViewShopOrder.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMN_ORDER_INDEX));
+        textViewShopStreet.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMN_STREET_INDEX));
+        textViewShopCity.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMN_CITY_INDEX));
+        textViewShopState.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMN_STATE_INDEX));
+        textViewShopPhone.setText(cursor.getString(ShopperDBHelper.SHOPS_COULMN_PHONE_INDEX));
+        textViewShopNotes.setText(cursor.getString(ShopperDBHelper.SHOPS_COULMN_NOTES_INDEX));
     }
 }

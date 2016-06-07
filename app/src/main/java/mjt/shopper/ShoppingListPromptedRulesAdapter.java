@@ -17,26 +17,6 @@ import java.text.SimpleDateFormat;
  * Created by Mike092015 on 29/04/2016.
  */
 public class ShoppingListPromptedRulesAdapter extends CursorAdapter {
-    public static int ruleidoffset;
-    public static int rulenameoffset;
-    public static int ruletypeoffset;
-    public static int rulepromptflagoffset;
-    public static int ruleperiodoffset;
-    public static int rulemultipleroffset;
-    public static int ruleactiveonoffset;
-    public static int ruleproductrefoffset;
-    public static int ruleaislerefoffset;
-    public static int ruleusesoffset;
-    public static int rulenumbertogetoffset;
-    public static int rulemincostoffset;
-    public static int rulemaxcostoffset;
-    public static int productsnameoffset;
-    public static int aislenameoffset;
-    public static int aisleshopoffset;
-    public static int shopnameoffset;
-    public static int shopcityoffset;
-    public static int shopstreetoffset;
-    public static int productusagecostoffset;
 
     public SimpleDateFormat sdf = new SimpleDateFormat(Constants.EXTENDED__DATE_DORMAT);
 
@@ -62,33 +42,11 @@ public class ShoppingListPromptedRulesAdapter extends CursorAdapter {
     }
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        if(cursor.getPosition() == 0) {
-            ruleidoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_ID);
-            rulenameoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_NAME);
-            ruletypeoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_TYPE);
-            rulepromptflagoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_PROMPTFLAG);
-            ruleperiodoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_PERIOD);
-            rulemultipleroffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_MULTIPLIER);
-            ruleactiveonoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_ACTIVEON);
-            ruleproductrefoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_PRODUCTREF);
-            ruleaislerefoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_AISLEREF);
-            ruleusesoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_USES);
-            rulenumbertogetoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_NUMBERTOGET);
-            rulemincostoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_MINCOST);
-            rulemaxcostoffset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_MAXCOST);
-            productsnameoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NAME);
-            aislenameoffset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_NAME);
-            aisleshopoffset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_SHOP);
-            shopnameoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NAME);
-            shopcityoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_CITY);
-            shopstreetoffset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
-            productusagecostoffset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_COST);
-        }
 
 
         String periodstr;
-        if(cursor.getInt(rulemultipleroffset) > 1) {
-            switch(cursor.getInt(ruleperiodoffset)) {
+        if(cursor.getInt(5) > 1) {
+            switch(cursor.getInt(4)) {
                 case Constants.PERIOD_DAYSASINT:
                     periodstr = Constants.PERIOD_DAYS;
                     break;
@@ -111,7 +69,7 @@ public class ShoppingListPromptedRulesAdapter extends CursorAdapter {
                     periodstr = "UNKNOWN!!!";
             }
         } else {
-            switch(cursor.getInt(ruleperiodoffset)) {
+            switch(cursor.getInt(4)) {
                 case Constants.PERIOD_DAYSASINT:
                     periodstr = Constants.PERIOD_DAYS_SINGULAR;
                     break;
@@ -140,16 +98,16 @@ public class ShoppingListPromptedRulesAdapter extends CursorAdapter {
         TextView ruledate = (TextView) view.findViewById(R.id.autoaddprompt_ruledate);
         TextView ruleastext = (TextView) view.findViewById(R.id.autoprompt_ruleastext);
 
-        String ruleastextstr = "Get <font color=\"BLACK\">" + cursor.getString(rulenumbertogetoffset) + " </font>" +
-                "<font color=\"BLUE\">" + cursor.getString(productsnameoffset) + "</font>" +
-                " every <font color=\"BLACK\">" + cursor.getString(rulemultipleroffset) + " </font>" +
+        String ruleastextstr = "Get <font color=\"BLACK\">" + cursor.getString(10) + " </font>" +
+                "<font color=\"BLUE\">" + cursor.getString(13) + "</font>" +
+                " every <font color=\"BLACK\">" + cursor.getString(5) + " </font>" +
                 "<font color=\"BLUE\">" + periodstr + "</font>" +
-                " from Ailse " + "<font color=\"BLUE\">" + cursor.getString(aislenameoffset) + "</font>" +
-                " at " + "<font color=\"BLUE\">" + cursor.getString(shopnameoffset) + "</font>" +
-                " <font color=\"#4169E1\"><i>(" + cursor.getString(shopcityoffset) +
-                " - " + cursor.getString(shopstreetoffset) + ")</i></font>";
-        rulename.setText(cursor.getString(rulenameoffset));
-        ruledate.setText(sdf.format(cursor.getLong(ruleactiveonoffset)));
+                " from Ailse " + "<font color=\"BLUE\">" + cursor.getString(14) + "</font>" +
+                " at " + "<font color=\"BLUE\">" + cursor.getString(16) + "</font>" +
+                " <font color=\"#4169E1\"><i>(" + cursor.getString(17) +
+                " - " + cursor.getString(18) + ")</i></font>";
+        rulename.setText(cursor.getString(1));
+        ruledate.setText(sdf.format(cursor.getLong(6)));
         ruleastext.setText(Html.fromHtml(ruleastextstr));
     }
     @Override
