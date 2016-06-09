@@ -19,8 +19,32 @@ import android.widget.Toast;
 
 /**
  * Created by Mike092015 on 16/03/2016.
+ * AddPurchasableProductsToShopList AKA TO GET
+ * Displays List of Products that can be purchased i.e. productusage rows
+ * If clicked then a Shopping List entry is made if one doesn't exist or
+ *  the quantity is increased by 1 (handled by insertShoppingListEntry )
  */
-public class AddPurchaseableProductsToShopList extends AppCompatActivity{
+public class AddPurchasableProductsToShopList extends AppCompatActivity{
+
+    //==============================================================================================
+    // Cursor Offsets.
+    // Cursor offsets are set to the offset ino the respective cursor. They are set, once when the
+    // respective cursor is invoked, by obtaining the actual index via the columns name, thus
+    // negating a need to alter offsets if column orders are changed (e.g. column added/deleted)
+    // Note! column use changes may still be required if adding or deleting columns from tables or
+    //     queries.
+
+    //Purchasable Products Query
+    public static int purchasableproducts_productusageaisleref_offset = -1; //**
+    public static int purchasableproducts_productusageproductref_offset;
+    public static int purchasableproducts_productusagecost_offset;
+    public static int purchasableproducts_productid_offset; //**
+    public static int purchasableproducts_productname_offset;
+    public static int purchasableproducts_aisleid_offset; //**
+    public static int purchasableproducts_aislename_offset;
+    public static int purchasableproducts_shopname_offset;
+    public static int purchasableproducts_shopcity_offset;
+    public static int purchasableproducts_shopstreet_offset;
 
     public final static int RESUMESTATE_NOTHING = 0;
     public final static int RESUMESTATE_PRODUCTADDTOSHOPLIST = 1;
@@ -36,7 +60,7 @@ public class AddPurchaseableProductsToShopList extends AppCompatActivity{
     private EditText productselect;
     private EditText shopselect;
     private LinearLayout purchaseableproductslist_help_layout;
-    public String purchaseableproductslistsortorder = Constants.PURCHASEABLEPRODUCTSLISTORDER_BY_PRODUCT;
+    public String purchaseableproductslistsortorder = Constants.PURCHASABLEPRODUCTSLISTORDER_BY_PRODUCT;
     public String currentshopid = "";
     public String currentproductid = "";
 
@@ -69,7 +93,8 @@ public class AddPurchaseableProductsToShopList extends AppCompatActivity{
             purchaseableproductslist_help_layout.setVisibility(View.GONE);
         }
 
-        csr = shopperdb.getPurchaseableProducts("","",purchaseableproductslistsortorder);
+        csr = shopperdb.getPurchasableProducts("","",purchaseableproductslistsortorder);
+        setPurchasableProductsOffsets(csr);
         currentppa = new PurchaseableProductsAdapter(this, csr, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         currentppalv = (ListView) findViewById(R.id.purchaseable_product_list);
         currentppalv.setAdapter(currentppa);
@@ -87,7 +112,7 @@ public class AddPurchaseableProductsToShopList extends AppCompatActivity{
             public void afterTextChanged(Editable s) {
                 currentproductid = productselect.getText().toString();
                 currentshopid = shopselect.getText().toString();
-                csr = shopperdb.getPurchaseableProducts(currentproductid,currentshopid,purchaseableproductslistsortorder);
+                csr = shopperdb.getPurchasableProducts(currentproductid,currentshopid,purchaseableproductslistsortorder);
                 currentppa.swapCursor(csr);
             }
         });
@@ -102,7 +127,7 @@ public class AddPurchaseableProductsToShopList extends AppCompatActivity{
             public void afterTextChanged(Editable s) {
                 currentproductid = productselect.getText().toString();
                 currentshopid = shopselect.getText().toString();
-                csr = shopperdb.getPurchaseableProducts(currentproductid,currentshopid,purchaseableproductslistsortorder);
+                csr = shopperdb.getPurchasableProducts(currentproductid,currentshopid,purchaseableproductslistsortorder);
                 currentppa.swapCursor(csr);
             }
         });
@@ -114,10 +139,14 @@ public class AddPurchaseableProductsToShopList extends AppCompatActivity{
                 Context context = view.getContext();
                 Toast.makeText(context,"You clicked on a product to add the product",Toast.LENGTH_LONG).show();
                 csr.moveToPosition(position);
-                long currentproductid = csr.getLong(1);
-                long currentaisleid = csr.getLong(0);
-                double currentprice = csr.getDouble(2);
-                shopperdb.insertShopListEntry(csr.getLong(1),csr.getLong(0),1,csr.getDouble(2),true);
+                long currentproductid = csr.getLong(purchasableproducts_productusageproductref_offset);
+                long currentaisleid = csr.getLong(purchasableproducts_aisleid_offset);
+                double currentprice = csr.getDouble(purchasableproducts_productusagecost_offset);
+                shopperdb.insertShopListEntry(csr.getLong(purchasableproducts_productusageproductref_offset),
+                        csr.getLong(purchasableproducts_aisleid_offset),
+                        1,
+                        csr.getDouble(purchasableproducts_productusagecost_offset),
+                        true);
                 int test = 0;
 
             }
@@ -132,33 +161,33 @@ public class AddPurchaseableProductsToShopList extends AppCompatActivity{
     }
 
     public void orderByProduct(View view) {
-        purchaseableproductslistsortorder = Constants.PURCHASEABLEPRODUCTSLISTORDER_BY_PRODUCT;
-        csr = shopperdb.getPurchaseableProducts(currentproductid,currentshopid,purchaseableproductslistsortorder);
+        purchaseableproductslistsortorder = Constants.PURCHASABLEPRODUCTSLISTORDER_BY_PRODUCT;
+        csr = shopperdb.getPurchasableProducts(currentproductid,currentshopid,purchaseableproductslistsortorder);
         currentppa.swapCursor(csr);
     }
     public void orderByStore(View view) {
         purchaseableproductslistsortorder = Constants.PURCHASEABLEPRODUCTSLISTORDER_BY_STORE;
-        csr = shopperdb.getPurchaseableProducts(currentproductid,currentshopid,purchaseableproductslistsortorder);
+        csr = shopperdb.getPurchasableProducts(currentproductid,currentshopid,purchaseableproductslistsortorder);
         currentppa.swapCursor(csr);
     }
     public void orderByCity(View view) {
         purchaseableproductslistsortorder = Constants.PURCHASEABLEPRODUCTSLISTORDER_BY_CITY;
-        csr = shopperdb.getPurchaseableProducts(currentproductid,currentshopid,purchaseableproductslistsortorder);
+        csr = shopperdb.getPurchasableProducts(currentproductid,currentshopid,purchaseableproductslistsortorder);
         currentppa.swapCursor(csr);
     }
     public void orderByCost(View view) {
         purchaseableproductslistsortorder = Constants.PURCHASEABLEPRODUCTSLISTORDER_BY_COST;
-        csr = shopperdb.getPurchaseableProducts(currentproductid,currentshopid,purchaseableproductslistsortorder);
+        csr = shopperdb.getPurchasableProducts(currentproductid,currentshopid,purchaseableproductslistsortorder);
         currentppa.swapCursor(csr);
     }
     public void orderByStreet(View view) {
         purchaseableproductslistsortorder = Constants.PURCHASEABLEPRODUCTSLISTORDER_BY_STREET;
-        csr = shopperdb.getPurchaseableProducts(currentproductid,currentshopid,purchaseableproductslistsortorder);
+        csr = shopperdb.getPurchasableProducts(currentproductid,currentshopid,purchaseableproductslistsortorder);
         currentppa.swapCursor(csr);
     }
     public void orderByAisle(View view) {
         purchaseableproductslistsortorder = Constants.PURCHASEABLEPRODUCTSLISTORDER_BY_AISLE;
-        csr = shopperdb.getPurchaseableProducts(currentproductid,currentshopid,purchaseableproductslistsortorder);
+        csr = shopperdb.getPurchasableProducts(currentproductid,currentshopid,purchaseableproductslistsortorder);
         currentppa.swapCursor(csr);
     }
 
@@ -168,5 +197,21 @@ public class AddPurchaseableProductsToShopList extends AppCompatActivity{
     }
     public void ppl_show_shoplist(View view) {
         Toast.makeText(getApplicationContext(),"This will show the shopping list",Toast.LENGTH_LONG).show();
+    }
+
+    public void setPurchasableProductsOffsets(Cursor cursor) {
+        if(purchasableproducts_productusageaisleref_offset != -1) {
+            return;
+        }
+        purchasableproducts_productusageaisleref_offset = cursor.getColumnIndex(ShopperDBHelper.PRIMARY_KEY_NAME);
+        purchasableproducts_productusageproductref_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_PRODUCTREF);
+        purchasableproducts_productusagecost_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_COST);
+        purchasableproducts_productid_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_ID_FULL);
+        purchasableproducts_productname_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NAME);
+        purchasableproducts_aisleid_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_ID_FULL);
+        purchasableproducts_aislename_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_NAME);
+        purchasableproducts_shopname_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NAME);
+        purchasableproducts_shopcity_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_CITY);
+        purchasableproducts_shopstreet_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
     }
 }

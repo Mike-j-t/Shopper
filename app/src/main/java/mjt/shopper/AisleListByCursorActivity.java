@@ -44,11 +44,38 @@ public class AisleListByCursorActivity extends AppCompatActivity {
     public Cursor shopspinnercursor;
     private int shopid = 0;
 
+    //==============================================================================================
+    // Cursor Offsets.
+    // Cursor offsets are set to the offset ino the respective cursor. They are set, once when the
+    // respective cursor is invoked, by obtaining the actual index via the columns name, thus
+    // negating a need to alter offsets if column orders are changed (e.g. column added/deleted)
+    // Note! column use changes may still be required if adding or deleting columns from tables or
+    //     queries.
+
+    // Variables to store shops table offsets as obtained via the defined column names by
+    // call to setShopsOffsets (shops_shopid_offset set -1 to act as notdone flag )
+    public static int shops_shopid_offset = -1;
+    public static int shops_shopname_offset;
+    public static int shops_shoporder_offset;
+    public static int shops_shopstreet_offset;
+    public static int shops_shopcity_offset;
+    public static int shops_shopstate_offset;
+    public static int shops_shopphone_offset;
+    public static int shops_shopnotes_offset;
+
+    // Variables to store aisles table offsets as obtained via the defined column names by
+    // call to setAislesOffsets (aisles_aisleid_offset set -1 to act as notdone flag )
+    public static int aisles_aisleid_offset = -1;
+    public static int aisles_aislename_offset;
+    public static int aisles_aisleorder_offset;
+    public static int aisles_aisleshopref_offset;
+
     protected void onResume() {
         super.onResume();
         switch (resume_state) {
             case RESUMESTATE_AISLEADD:case RESUMESTATE_AISLEUPDATE: {
                 aislelistcursor = shopperdb.getAislesPerShopAsCursor(currentshopid, aislelistsortorder);
+                setAislesOffsets(aislelistcursor);
                 currentaca.swapCursor(aislelistcursor);
                 resume_state = RESUMESTATE_NOTHING;
                 break;
@@ -82,6 +109,7 @@ public class AisleListByCursorActivity extends AppCompatActivity {
 
         final Spinner aisleshopname = (Spinner) findViewById(R.id.aislelist_storeselect_selector);
         shopspinnercursor = shopperdb.getShopsAsCursor("");
+        setShopsOffsets(shopspinnercursor);
         final ShopListSpinnerAdapter adapter = new ShopListSpinnerAdapter(this, shopspinnercursor, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         aisleshopname.setAdapter(adapter);
 
@@ -91,8 +119,9 @@ public class AisleListByCursorActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 shopspinnercursor.moveToPosition(position);
-                currentshopid = shopspinnercursor.getLong(ShopperDBHelper.SHOPS_COLUMNN_ID_INDEX);
-                aislelistcursor = shopperdb.getAislesPerShopAsCursor(shopspinnercursor.getInt(ShopperDBHelper.SHOPS_COLUMNN_ID_INDEX), aislelistsortorder);
+                currentshopid = shopspinnercursor.getLong(shops_shopid_offset);
+                aislelistcursor = shopperdb.getAislesPerShopAsCursor(currentshopid, aislelistsortorder);
+                setAislesOffsets(aislelistcursor);
                 final ListView lv = (ListView) findViewById(R.id.aislelist_listview);
                 AislesCursorAdapter aisleadapter = new AislesCursorAdapter(lv.getContext(), aislelistcursor, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
                 currentaca = aisleadapter;
@@ -201,6 +230,7 @@ public class AisleListByCursorActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             shopperdb.deleteAisle(aisleid);
                             aislelistcursor = shopperdb.getAislesPerShopAsCursor(aisleshopref, aislelistsortorder);
+                            setAislesOffsets(aislelistcursor);
                             aisleadapter.swapCursor(aislelistcursor);
                             resume_state = RESUMESTATE_NOTHING;
                             dialog.cancel();
@@ -247,4 +277,31 @@ public class AisleListByCursorActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void aalbcdone(View view) { this.finish(); }
+
+    // Set Shops Table query offsets into returned cursor, if not already set
+    public void setShopsOffsets(Cursor cursor) {
+        // If not -1 then already done
+        if(shops_shopid_offset != -1) {
+            return;
+        }
+        shops_shopid_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_ID);
+        shops_shopname_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NAME);
+        shops_shoporder_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_ORDER);
+        shops_shopstreet_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
+        shops_shopcity_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_CITY);
+        shops_shopstate_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STATE);
+        shops_shopphone_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_PHONE);
+        shops_shopnotes_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NOTES);
+    }
+
+    // Set Aisles Table query offsets into returned cursor, if not already set
+    public void setAislesOffsets(Cursor cursor) {
+        if(aisles_aisleid_offset != -1) {
+            return;
+        }
+        aisles_aisleid_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_ID);
+        aisles_aislename_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_NAME);
+        aisles_aisleorder_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_ORDER);
+        aisles_aisleshopref_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_SHOP);
+    }
 }

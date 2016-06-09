@@ -1,6 +1,5 @@
 package mjt.shopper;
 
-import android.app.Application;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -9,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.io.File;
 import java.util.*;
 
 /**
@@ -858,6 +856,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     // Table shops
     public static final String SHOPS_TABLE_NAME = "shops";
     public static final String SHOPS_COLUMN_ID = PRIMARY_KEY_NAME;
+    public static final String SHOPS_COLUMN_ID_FULL = SHOPS_TABLE_NAME + SHOPS_COLUMN_ID;
     public static final int SHOPS_COLUMNN_ID_INDEX = 0;
     public static final String SHOPS_COLUMN_NAME = "shopname";
     public static final int SHOPS_COLUMN_NAME_INDEX = 1;
@@ -878,6 +877,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     // Table Aisles
     public static final String AISLES_TABLE_NAME = "aisles";
     public static final String AISLES_COLUMN_ID = PRIMARY_KEY_NAME;
+    public static final String AISLES_COLUMN_ID_FULL = AISLES_TABLE_NAME + AISLES_COLUMN_ID;
     public static final int AISLES_COLUMN_ID_INDEX = 0;
     public static final String AISLES_COLUMN_NAME = "aislename";
     public static final int AISLES_COLUMN_NAME_INDEX = 1;
@@ -890,6 +890,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     // Table Products
     public static final String PRODUCTS_TABLE_NAME = "products";
     public static final String PRODUCTS_COLUMN_ID = PRIMARY_KEY_NAME;
+    public static final String PRODUCTS_COLUMN_ID_FULL = PRODUCTS_TABLE_NAME + AISLES_COLUMN_ID;
     public static final int PRODUCTS_COLUMN_ID_INDEX = 0;
     public static final String PRODUCTS_COLUMN_NAME = "productname";
     public static final int PRODUCTS_COLUMN_NAME_INDEX = 1;
@@ -908,6 +909,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     public static final String PRODUCTUSAGE_COLUMN_AISLEREF = "productailseref";
     public static final int PRODUCTUSAGE_COLUMN_AISLEREF_INDEX = 0;
     public static final String PRODUCTUSAGE_COLUMN_PRODUCTREF = "productproductref";
+    public static final String PRODUCTUSAGE_COLUMN_PRODUCTREF_FULL = PRODUCTUSAGE_TABLE_NAME + PRODUCTUSAGE_COLUMN_PRODUCTREF;
     public static final int PRODUCTUSAGE_COLUMN_PRODUCTREF_INDEX = 1;
     public static final String PRODUCTUSAGE_COLUMN_COST = "productcost";
     public static final int PRODUCTUSAGE_COLUMN_COST_INDEX = 2;
@@ -929,6 +931,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     // Rules
     public static final String RULES_TABLE_NAME = "rules";
     public static final String RULES_COLUMN_ID = PRIMARY_KEY_NAME;
+    public static final String RULES_COLUMN_ID_FULL = RULES_TABLE_NAME + RULES_COLUMN_ID;
     public static final int    RULES_COLUMN_ID_INDEX = 0;
     public static final String RULES_COLUMN_ID_TYPE = "INTEGER";
     public static final String RULES_COLUMN_NAME = "rulename";
@@ -972,6 +975,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     // Shoplist
     public static final String SHOPLIST_TABLE_NAME = "shoplist";
     public static final String SHOPLIST_COLUMN_ID = PRIMARY_KEY_NAME;
+    public static final String SHOPLIST_COLUMN_ID_FULL = SHOPLIST_TABLE_NAME + SHOPLIST_COLUMN_ID;
     public static final int    SHOPLIST_COLUMN_ID_INDEX = 0;
     public static final String SHOPLIST_COLUMN_ID_TYPE = "INTEGER";
     public static final String SHOPLIST_COLUMN_PRODUCTREF = "slproductid";
@@ -1004,6 +1008,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     //APPValues
     public static final String VALUES_TABLE_NAME = "appvalues";
     public static final String VALUES_COLUMN_ID = PRIMARY_KEY_NAME;
+    public static final String VALUES_COLUMN_ID_FULL = VALUES_TABLE_NAME + VALUES_COLUMN_ID;
     public static final int    VALUES_COLUMN_ID_INDEX = 0;
     public static final String VALUES_COLUMN_ID_TYPE = "INTEGER";
     public static final String VALUES_COLUMN_VALUENAME = "valuename";
@@ -1603,18 +1608,21 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         return db.rawQuery(sqlstr, null);
     }
     //==============================================================================================
-    public Cursor getPurchaseableProducts(String productselect, String shopselect, String orderby) {
+    public Cursor getPurchasableProducts(String productselect, String shopselect, String orderby) {
         if(orderby.length() < 1) {
-            orderby = Constants.PURCHASEABLEPRODUCTSLISTORDER_BY_PRODUCT;
+            orderby = Constants.PURCHASABLEPRODUCTSLISTORDER_BY_PRODUCT;
         }
         boolean whereclause_exists = false;
         SQLiteDatabase db = this.getReadableDatabase();
-        String sqlstr = "SELECT " + PRODUCTUSAGE_COLUMN_AISLEREF + " AS _id, " +
+        String sqlstr = "SELECT " + PRODUCTUSAGE_COLUMN_AISLEREF +
+                " AS " + PRIMARY_KEY_NAME + ", " +
             PRODUCTUSAGE_COLUMN_PRODUCTREF + ", " +
             PRODUCTUSAGE_COLUMN_COST + ", " +
-            PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_ID + " AS products_id, " +
+            PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_ID +
+                " AS " + PRODUCTS_COLUMN_ID_FULL + ", " +
             PRODUCTS_COLUMN_NAME + ", " +
-            AISLES_TABLE_NAME + "." + AISLES_COLUMN_ID + " AS aisles_id, " +
+            AISLES_TABLE_NAME + "." + AISLES_COLUMN_ID +
+                " AS " + AISLES_COLUMN_ID_FULL + ", " +
             AISLES_COLUMN_NAME + ", " +
             SHOPS_COLUMN_NAME + ", " +
             SHOPS_COLUMN_CITY + ", " +
@@ -1664,7 +1672,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
                 SHOPLIST_TABLE_NAME + "." + SHOPLIST_COLUMN_COST + ", " +
                 SHOPLIST_TABLE_NAME + "." + SHOPLIST_COLUMN_PRODUCTUSAGEREF + ", " +
                 SHOPLIST_TABLE_NAME + "." + SHOPLIST_COLUMN_AISLEREF + ", " +
-                PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_PRODUCTREF + " AS productusageid, " +
+                PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_PRODUCTREF + " AS " + PRODUCTUSAGE_COLUMN_PRODUCTREF_FULL + ", " +
                 PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_AISLEREF + ", " +
                 PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_COST + ", " +
                 PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_BUYCOUNT + ", " +
@@ -1672,11 +1680,11 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
                 PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_LATESTBUYDATE + ", " +
                 PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_MINCOST + ", " +
                 PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_ORDER + ", " +
-                AISLES_TABLE_NAME + "." + AISLES_COLUMN_ID + " AS aisleid, " +
+                AISLES_TABLE_NAME + "." + AISLES_COLUMN_ID + " AS " + AISLES_COLUMN_ID_FULL + ", " +
                 AISLES_TABLE_NAME + "." + AISLES_COLUMN_NAME + ", " +
                 AISLES_TABLE_NAME + "." + AISLES_COLUMN_ORDER + ", " +
                 AISLES_TABLE_NAME + "." + AISLES_COLUMN_SHOP + ", " +
-                SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_ID + " AS shopid, " +
+                SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_ID + " AS " +  SHOPS_COLUMN_ID_FULL + ", " +
                 SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_NAME + ", " +
                 SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_ORDER + ", " +
                 SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_STREET + ", " +
@@ -1684,7 +1692,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
                 SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_STATE + ", " +
                 SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_PHONE + ", " +
                 SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_NOTES + ", " +
-                PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_ID + " AS productid, " +
+                PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_ID + " AS " + PRODUCTS_COLUMN_ID_FULL + ", " +
                 PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_NAME + ", " +
                 PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_ORDER + ", " +
                 PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_AISLE + ", " +

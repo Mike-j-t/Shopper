@@ -36,6 +36,55 @@ public class RuleAddEdit extends AppCompatActivity {
     public Date currentdate = new Date();
     public DatePickerDialog dpd;
 
+    //==============================================================================================
+    // Cursor Offsets.
+    // Cursor offsets are set to the offset ino the respective cursor. They are set, once when the
+    // respective cursor is invoked, by obtaining the actual index via the columns name, thus
+    // negating a need to alter offsets if column orders are changed (e.g. column added/deleted)
+    // Note! column use changes may still be required if adding or deleting columns from tables or
+    //     queries.
+
+    public static int purchasableproducts_productusageaisleref_offset = -1; //**
+    public static int purchasableproducts_productusageproductref_offset;
+    public static int purchasableproducts_productusagecost_offset;
+    public static int purchasableproducts_productid_offset; //**
+    public static int purchasableproducts_productname_offset;
+    public static int purchasableproducts_aisleid_offset; //**
+    public static int purchasableproducts_aislename_offset;
+    public static int purchasableproducts_shopname_offset;
+    public static int purchasableproducts_shopcity_offset;
+    public static int purchasableproducts_shopstreet_offset;
+
+    public static int ruleslist_ruleid_offset = -1;
+    public static int ruleslist_rulename_offset;
+    public static int rulelist_ruletype_offset;
+    public static int rulelist_rulepromptflag_offset;
+    public static int rulelist_ruleperiod_offset;
+    public static int rulelist_rulemultiplier_offset;
+    public static int rulelist_ruleactiveon_offset;
+    public static int rulelist_ruleproductref_offset;
+    public static int rulelist_ruleaisleref_offset;
+    public static int rulelist_ruleuses_offset;
+    public static int rulelist_rulenumbertoget_offset;
+    public static int rulelist_rulemincost_offset;
+    public static int rulelist_rulemaxcost_offset;
+    public static int rulelist_productname_offset;
+    public static int rulelist_aislename_offset;
+    public static int rulelist_aisleshopref_offset;
+    public static int rulelist_shopname_offset;
+    public static int rulelist_shopcity_offset;
+    public static int rulelist_shopstreet_offset;
+    public static int rulelist_productusagecost_offset;
+
+    public static int values_valueid_offset = -1;
+    public static int values_valuename_offset;
+    public static int values_valuetype_offset;
+    public static int values_valueint_offset;
+    public static int values_valuereal_offset;
+    public static int values_valuetext_offset;
+    public static int values_valueincludeinsettings_offset;
+    public static int values_valuesettingsinfro_offset;
+
     public LinearLayout ruleaddedithelplayout;
     public TextView ruleaddeditproductname;
     public int ruleaddeditproductid = -1;
@@ -123,6 +172,7 @@ public class RuleAddEdit extends AppCompatActivity {
 
         //Populate the period selector spinner
         ruleaddeditperiodselectorcursor = shopperdb.getCursorvalue(Constants.RULEPERIODS,false);
+        setValuesOffsets(ruleaddeditperiodselectorcursor);
         ruleaddeditperiodselectoradapter = new RuleAddEditPeriodSpinnerCursorAdapter(this,ruleaddeditperiodselectorcursor, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         ruleaddeditperiodselector.setAdapter(ruleaddeditperiodselectoradapter);
 
@@ -133,6 +183,7 @@ public class RuleAddEdit extends AppCompatActivity {
             ruleaddedithelplayout.setVisibility(View.GONE);
         }
         currentrulelistcursor = shopperdb.getRuleList("","",(long)0,false,false,currentrulelistsortorder);
+        setRuleListOffsfets(currentrulelistcursor);
         currentrulelistlistview = (ListView) findViewById(R.id.ruleaddedit_currentrules);
         currentrulelistadapter = new RuleListAdapter(this,currentrulelistcursor,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         currentrulelistlistview.setAdapter(currentrulelistadapter);
@@ -220,7 +271,7 @@ public class RuleAddEdit extends AppCompatActivity {
             }
         }
         // validate Rule Period (should be OK as selector holds values)
-        currentperiod = ruleaddeditperiodselectorcursor.getString(ShopperDBHelper.VALUES_COLUMN_VALUETEXT_INDEX);
+        currentperiod = ruleaddeditperiodselectorcursor.getString(values_valuetext_offset);
         if(currentperiod.length() < 1) {
             Toast.makeText(RuleAddEdit.this,getResources().getString(R.string.noruleperiod),Toast.LENGTH_LONG).show();
             ruleaddeditperiodselector.requestFocus();
@@ -342,5 +393,61 @@ public class RuleAddEdit extends AppCompatActivity {
 
         DatePickerDialog dpd = new DatePickerDialog(this,odsl,oldcal.get(Calendar.YEAR),oldcal.get(Calendar.MONTH),oldcal.get(Calendar.DAY_OF_MONTH));
         dpd.show();
+    }
+
+    public void setPurchasableProductsOffsets(Cursor cursor) {
+        if(purchasableproducts_productusageaisleref_offset != -1) {
+            return;
+        }
+        purchasableproducts_productusageaisleref_offset = cursor.getColumnIndex(ShopperDBHelper.PRIMARY_KEY_NAME);
+        purchasableproducts_productusageproductref_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_PRODUCTREF);
+        purchasableproducts_productusagecost_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_COST);
+        purchasableproducts_productid_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_ID_FULL);
+        purchasableproducts_productname_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NAME);
+        purchasableproducts_aisleid_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_ID_FULL);
+        purchasableproducts_aislename_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_NAME);
+        purchasableproducts_shopname_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NAME);
+        purchasableproducts_shopcity_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_CITY);
+        purchasableproducts_shopstreet_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
+    }
+
+    public void setRuleListOffsfets(Cursor cursor) {
+        if(ruleslist_ruleid_offset != -1) {
+            return;
+        }
+        ruleslist_ruleid_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_ID);
+        ruleslist_rulename_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_NAME);
+        rulelist_ruletype_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_TYPE);
+        rulelist_rulepromptflag_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_PROMPTFLAG);
+        rulelist_ruleperiod_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_PERIOD);
+        rulelist_rulemultiplier_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_MULTIPLIER);
+        rulelist_ruleactiveon_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_ACTIVEON);
+        rulelist_ruleproductref_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_PRODUCTREF);
+        rulelist_ruleaisleref_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_AISLEREF);
+        rulelist_ruleuses_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_USES);
+        rulelist_rulenumbertoget_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_NUMBERTOGET);
+        rulelist_rulemincost_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_MINCOST);
+        rulelist_rulemaxcost_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_MAXCOST);
+        rulelist_productname_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NAME);
+        rulelist_aislename_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_NAME);
+        rulelist_aisleshopref_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_SHOP);
+        rulelist_shopname_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NAME);
+        rulelist_shopcity_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_CITY);
+        rulelist_shopstreet_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
+        rulelist_productusagecost_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_COST);
+    }
+
+    public void setValuesOffsets(Cursor cursor) {
+        if(values_valueid_offset != -1) {
+            return;
+        }
+        values_valueid_offset = cursor.getColumnIndex(ShopperDBHelper.VALUES_COLUMN_ID);
+        values_valuename_offset = cursor.getColumnIndex(ShopperDBHelper.VALUES_COLUMN_VALUENAME);
+        values_valuetype_offset = cursor.getColumnIndex(ShopperDBHelper.VALUES_COLUMN_VALUETYPE);
+        values_valueint_offset = cursor.getColumnIndex(ShopperDBHelper.VALUES_COLUMN_VALUEINT);
+        values_valuereal_offset = cursor.getColumnIndex(ShopperDBHelper.VALUES_COLUMN_VALUEREAL);
+        values_valuetext_offset = cursor.getColumnIndex(ShopperDBHelper.VALUES_COLUMN_VALUETEXT);
+        values_valueincludeinsettings_offset = cursor.getColumnIndex(ShopperDBHelper.VALUES_COLUMN_VALUEINCLUDEINSETTINGS);
+        values_valuesettingsinfro_offset = cursor.getColumnIndex(ShopperDBHelper.VALUES_COLUMN_VALUESETTINGSINFO);
     }
 }

@@ -85,6 +85,58 @@ public class AddProductToShopActivity extends AppCompatActivity {
     public EditText productselectioninput;
     public TextView addbutton;
 
+    //==============================================================================================
+    // Cursor Offsets.
+    // Cursor offsets are set to the offset ino the respective cursor. They are set, once when the
+    // respective cursor is invoked, by obtaining the actual index via the columns name, thus
+    // negating a need to alter offsets if column orders are changed (e.g. column added/deleted)
+    // Note! column use changes may still be required if adding or deleting columns from tables or
+    //     queries.
+
+    // Variables to store shops table offsets as obtained via the defined column names by
+    // call to setShopsOffsets (shops_shopid_offset set -1 to act as notdone flag )
+    public static int shops_shopid_offset = -1;
+    public static int shops_shopname_offset;
+    public static int shops_shoporder_offset;
+    public static int shops_shopstreet_offset;
+    public static int shops_shopcity_offset;
+    public static int shops_shopstate_offset;
+    public static int shops_shopphone_offset;
+    public static int shops_shopnotes_offset;
+
+    // Variables to store aisles table offsets as obtained via the defined column names by
+    // call to setAislesOffsets (aisles_aisleid_offset set -1 to act as notdone flag )
+    public static int aisles_aisleid_offset = -1;
+    public static int aisles_aislename_offset;
+    public static int aisles_aisleorder_offset;
+    public static int aisles_aisleshopref_offset;
+
+    // Variables to store products table offsets as obtained via the defined column names by
+    // call to setProductsOffsets (products_productid_offset set -1 to act as notdone flag )
+    public static int products_productid_offset = -1;
+    public static int products_productname_offset;
+    public static int products_productorder_offset;
+    public static int products_productaisleref_offset;
+    public static int products_productuses_offset;
+    public static int products_productnotes_offset;
+
+    // Variables to store productsperaisle query offsets as obtained via the defined column names by
+    // call to setProductsPerAisleOffsets (productsperaisle_productid_offset set -1 to act as notdone flag )
+    public static int productsperaisle_productid_offset = -1;
+    public static int productsperaisle_productname_offset;
+    public static int productsperaisle_productorder_offset;
+    public static int productsperaisle_productaisleref_offset;
+    public static int productsperaisle_productuses_offset;
+    public static int productsperaisle_productnotes_offset;
+    public static int productsperaisle_productusageaisleref_offset;
+    public static int productsperaisle_productusageproductref_offset;
+    public static int productsperaisle_productusagecost_offset;
+    public static int productsperaisle_productusagebuycount_offset;
+    public static int productsperaisle_productusagefirstbuydate_offset;
+    public static int proudctsperaisle_productusagelatestbuydate_offset;
+    public static int productsaperaisle_productusagemincost_offset;
+    public static int productsperaisle_productusageorder_offset;
+
     protected void onResume() {
         super.onResume();
         if(devmode) {
@@ -105,6 +157,7 @@ public class AddProductToShopActivity extends AppCompatActivity {
             case RESUMESTATE_PRODUCTUSAGEEDIT: {
                 // Get cursor from Database
                 currentproductsperaisleecursor = shopperdb.getProductsperAisle(currentaisleid,productsperaislesortorder);
+                setProductsPerAisleOffsets(currentproductsperaisleecursor);
                 // Swap to this cursor
                 current_productsperaislecursoradapter.swapCursor(currentproductsperaisleecursor);
                 resume_state = RESUMESTATE_NOTHING;
@@ -149,6 +202,7 @@ public class AddProductToShopActivity extends AppCompatActivity {
 
         // Shoplist Spinner Creation
         currentshoplistcursor = shopperdb.getShopsAsCursor("");
+        setShopsOffsets(currentshoplistcursor);
         current_shoplistspinner = (Spinner) findViewById(R.id.productusageedit_storeselector);
         current_shoplistspinneradapter = new ShopListSpinnerAdapter(this,currentshoplistcursor,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         current_shoplistspinner.setAdapter(current_shoplistspinneradapter);
@@ -174,7 +228,7 @@ public class AddProductToShopActivity extends AppCompatActivity {
                             "-Processing cursor to find passed shopid(" + passedshopid +
                             ") within the cursor. Cursor row=" + currentshoplistcursor.getPosition());
                 }
-                if(currentshoplistcursor.getLong(ShopperDBHelper.SHOPS_COLUMNN_ID_INDEX) == passedshopid ) {
+                if(currentshoplistcursor.getLong(shops_shopid_offset) == passedshopid ) {
                     if(devmode) {
                         Log.d(Constants.LOG,"ACTIVITY: " + THIS_ACTIVITY + " SECTION: onCreate - SETUP SHOPLIST SPINNER" +
                                 "-Matched passed shopid(" + passedshopid + "). Cursor row=" + currentshoplistcursor.getPosition());
@@ -221,12 +275,13 @@ public class AddProductToShopActivity extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         currentshoplistcursor.moveToPosition(position);
-                        currentshopid = currentshoplistcursor.getLong(ShopperDBHelper.SHOPS_COLUMNN_ID_INDEX);
+                        currentshopid = currentshoplistcursor.getLong(shops_shopid_offset);
                         if(devmode) {
                             Log.d(Constants.LOG,"ACTIVITY: " + THIS_ACTIVITY + " SECTION: Running - SHOPLIST OnItemSelectedLIstener" +
                                     "- SHOPID Extracted=" + currentshopid);
                         }
                         currentaislelistcursor = shopperdb.getAislesPerShopAsCursor(currentshopid,"");
+                        setAislesOffsets(currentaislelistcursor);
                         current_aislelistspinneradapter.swapCursor(currentaislelistcursor);
                         // if no aisles for this shop then don't show any products
                         // TODO dialog to allow Aisle Add???
@@ -236,15 +291,18 @@ public class AddProductToShopActivity extends AppCompatActivity {
                         }
                         if(currentaislelistcursor.getCount() < 1) {
                             currentproductlistcursor = shopperdb.getNoProductsAsCursor();
+                            setProductsOffsets(currentproductlistcursor);
                             current_productlistspinneradapter.swapCursor(currentproductlistcursor);
                             // Also need to clear products per aisle as no ailse so no products
                             // So use -1 as the aisleid when getting new cursor
                             currentproductsperaisleecursor = shopperdb.getProductsperAisle(-1,productsperaislesortorder);
+                            setProductsPerAisleOffsets(currentproductsperaisleecursor);
                             current_productsperaislecursoradapter.swapCursor(currentproductsperaisleecursor);
                             // Disable the ADD button as cannot add if no aisle or prodcuts
                             addbutton.setVisibility(View.INVISIBLE);
                         } else {
                             currentproductlistcursor = shopperdb.getProductsAsCursor("",productselectionstr);
+                            setProductsOffsets(currentproductlistcursor);
                             current_productlistspinneradapter.swapCursor(currentproductlistcursor);
                             addbutton.setVisibility(View.VISIBLE);
                             //Note!! as aislelist spinner has a new selecteditem it's listener will
@@ -270,9 +328,11 @@ public class AddProductToShopActivity extends AppCompatActivity {
             Toast.makeText(this,errmsg,Toast.LENGTH_LONG).show();
             finish();
         }
+
         // Aislelist Spinner Creation
         long passedaisleid = getIntent().getLongExtra("AISLEID",-1);
         currentaislelistcursor = shopperdb.getAislesPerShopAsCursor(currentshopid,"");
+        setAislesOffsets(currentaislelistcursor);
         current_aislelistspinner = (Spinner) findViewById(R.id.productusageedit_aisleselector);
         current_aislelistspinneradapter = new AisleListSpinnerAdapter(this,currentaislelistcursor,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         current_aislelistspinner.setAdapter(current_aislelistspinneradapter);
@@ -337,12 +397,13 @@ public class AddProductToShopActivity extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         currentaislelistcursor.moveToPosition(position);
-                        currentaisleid = currentaislelistcursor.getLong(ShopperDBHelper.AISLES_COLUMN_ID_INDEX);
+                        currentaisleid = currentaislelistcursor.getLong(aisles_aisleid_offset);
                         if(devmode) {
                             Log.d(Constants.LOG,"ACTIVITY: " + THIS_ACTIVITY + " SECTION: Running - AISLELIST OnItemSelectedLIstener" +
                                     "- AILSEID Extracted=" + currentaisleid);
                         }
                         currentproductsperaisleecursor = shopperdb.getProductsperAisle(currentaisleid,productsperaislesortorder);
+                        setProductsPerAisleOffsets(currentproductsperaisleecursor);
                         current_productsperaislecursoradapter.swapCursor(currentproductsperaisleecursor);
                         current_productsperaislecursoradapter.notifyDataSetChanged();
                     }
@@ -382,6 +443,7 @@ public class AddProductToShopActivity extends AppCompatActivity {
         long passedproductid = getIntent().getLongExtra("PRODUCTID",-1);
         // Create and populate Product List Spinner
         currentproductlistcursor = shopperdb.getProductsAsCursor("",productselectionstr);
+        setProductsOffsets(currentproductlistcursor);
         current_productlistspinner = (Spinner) findViewById(R.id.productuseageedit_productselector);
         current_productlistspinneradapter = new ProductListSpinnerAdapter(this,currentproductlistcursor,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         current_productlistspinner.setAdapter(current_productlistspinneradapter);
@@ -403,7 +465,7 @@ public class AddProductToShopActivity extends AppCompatActivity {
                             ") within the cursor. Cursor row=" + currentproductlistcursor.getPosition());
                 }
                 // Check for match with this row
-                if(currentproductlistcursor.getLong(ShopperDBHelper.PRODUCTS_COLUMN_ID_INDEX) == passedproductid) {
+                if(currentproductlistcursor.getLong(products_productid_offset) == passedproductid) {
                     if(devmode) {
                         Log.d(Constants.LOG, "ACTIVITY: " + THIS_ACTIVITY + " SECTION: onCreate - SETUP PRODUCTLIST SPINNER" +
                                 "-Matched passed productid(" + passedproductid + "). Cursor row=" + currentproductlistcursor.getPosition());
@@ -445,7 +507,7 @@ public class AddProductToShopActivity extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         currentproductlistcursor.moveToPosition(position);
-                        currentproductid = currentproductlistcursor.getLong(ShopperDBHelper.PRODUCTS_COLUMN_ID_INDEX);
+                        currentproductid = currentproductlistcursor.getLong(products_productid_offset);
                         if(devmode) {
                             Log.d(Constants.LOG,"ACTIVITY: " + THIS_ACTIVITY + " SECTION: Running - PRODUCTLIST OnItemSelectedLIstener" +
                                     "- PRODUCTID Extracted=" + currentproductid);
@@ -486,6 +548,7 @@ public class AddProductToShopActivity extends AppCompatActivity {
         //==========================================================================================
         // Create and populate Products per Aisle List
         currentproductsperaisleecursor = shopperdb.getProductsperAisle(currentaisleid,productsperaislesortorder);
+        setProductsPerAisleOffsets(currentproductsperaisleecursor);
         current_productsperaislelistview = (ListView) findViewById(R.id.productusageedit_currentproductslist);
         current_productsperaislecursoradapter = new ProductsPerAisleCursorAdapter(this,currentproductsperaisleecursor,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         current_productsperaislelistview.setAdapter(current_productsperaislecursoradapter);
@@ -499,8 +562,8 @@ public class AddProductToShopActivity extends AppCompatActivity {
                 AlertDialog.Builder okdialog = new AlertDialog.Builder(current_productsperaislelistview.getContext());
                 okdialog.setTitle("Confirm Edit Product in Aisle");
                 okdialog.setMessage("Do you really wish to Edit Product :-\n\t"
-                        + currentproductsperaisleecursor.getString(ShopperDBHelper.PRODUCTS_COLUMN_NAME_INDEX)
-                        + " in Aisle " + currentaislelistcursor.getString(ShopperDBHelper.AISLES_COLUMN_NAME_INDEX));
+                        + currentproductsperaisleecursor.getString(productsperaisle_productname_offset)
+                        + " in Aisle " + currentaislelistcursor.getString(aisles_aislename_offset));
                 okdialog.setCancelable(true);
 
                 okdialog.setNegativeButton(R.string.standardcanceltext, new DialogInterface.OnClickListener() {
@@ -515,21 +578,18 @@ public class AddProductToShopActivity extends AppCompatActivity {
                         Intent intent = new Intent(current_productsperaislelistview.getContext(), ProductUsageEdit.class);
                         intent.putExtra("CALLER", THIS_ACTIVITY);
                         intent.putExtra("CALLERCALLER", caller);
-                        intent.putExtra("AISLENAME", currentaislelistcursor.getString(ShopperDBHelper.AISLES_COLUMN_NAME_INDEX));
+                        intent.putExtra("AISLENAME", currentaislelistcursor.getString(aisles_aislename_offset));
                         intent.putExtra("AISLEID", currentaisleid);
                         intent.putExtra("SHOPID", currentshopid);
-                        intent.putExtra("SHOPNAME", currentshoplistcursor.getString(ShopperDBHelper.SHOPS_COLUMN_NAME_INDEX));
-                        intent.putExtra("PRODUCTNAME", currentproductsperaisleecursor.getString(ShopperDBHelper.PRODUCTS_COLUMN_NAME_INDEX));
-                        intent.putExtra("PRODUCTID", currentproductsperaisleecursor.getLong(ShopperDBHelper.PRODUCTS_COLUMN_ID_INDEX));
-                        //Note! as the tables are joined need to offset the second (productusage)
-                        // relative to the first (products) table in the join
-                        int productusageoffsetintocursor = ShopperDBHelper.PRODUCTS_COLUMN_NOTES_INDEX + 1;
-                        intent.putExtra("PRODUCTPRICE", currentproductsperaisleecursor.getFloat(ShopperDBHelper.PRODUCTUSAGE_COLUMN_COST_INDEX + productusageoffsetintocursor));
-                        intent.putExtra("PRODUCTORDER", currentproductsperaisleecursor.getLong(ShopperDBHelper.PRODUCTUSAGE_COLUMN_ORDER_INDEX + productusageoffsetintocursor));
-                        intent.putExtra("PRODUCTPURCHASECOUNT", currentproductsperaisleecursor.getLong(ShopperDBHelper.PRODUCTUSAGE_COLUMN_BUYCOUNT_INDEX + productusageoffsetintocursor));
-                        intent.putExtra("PRODUCTFIRSTPURCHASED", currentproductsperaisleecursor.getLong(ShopperDBHelper.PRODUCTUSAGE_COLUMN_FIRSTBUYDATE_INDEX + productusageoffsetintocursor));
-                        intent.putExtra("PRODUCTLASTPURCHASED", currentproductsperaisleecursor.getLong(ShopperDBHelper.PRODUCTUSAGE_COLUMN_LASTBUYDATE_INDEX + productusageoffsetintocursor));
-                        intent.putExtra("PRODUCTMINCOST", currentproductsperaisleecursor.getLong(ShopperDBHelper.PRODUCTUSAGE_COLUMN_MINCOST_INDEX + productusageoffsetintocursor));
+                        intent.putExtra("SHOPNAME", currentshoplistcursor.getString(shops_shopname_offset));
+                        intent.putExtra("PRODUCTNAME", currentproductsperaisleecursor.getString(productsperaisle_productname_offset));
+                        intent.putExtra("PRODUCTID", currentproductsperaisleecursor.getLong(productsperaisle_productid_offset));
+                        intent.putExtra("PRODUCTPRICE", currentproductsperaisleecursor.getFloat(productsperaisle_productusagecost_offset));
+                        intent.putExtra("PRODUCTORDER", currentproductsperaisleecursor.getLong(productsperaisle_productusageorder_offset));
+                        intent.putExtra("PRODUCTPURCHASECOUNT", currentproductsperaisleecursor.getLong(productsperaisle_productusagebuycount_offset));
+                        intent.putExtra("PRODUCTFIRSTPURCHASED", currentproductsperaisleecursor.getLong(productsperaisle_productusagefirstbuydate_offset));
+                        intent.putExtra("PRODUCTLASTPURCHASED", currentproductsperaisleecursor.getLong(proudctsperaisle_productusagelatestbuydate_offset));
+                        intent.putExtra("PRODUCTMINCOST", currentproductsperaisleecursor.getLong(productsaperaisle_productusagemincost_offset));
                         startActivity(intent);
                         dialog.cancel();
                     }
@@ -541,12 +601,12 @@ public class AddProductToShopActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 currentaislelistcursor.moveToPosition(current_aislelistspinner.getSelectedItemPosition());
-                String aislename = currentaislelistcursor.getString(ShopperDBHelper.AISLES_COLUMN_NAME_INDEX);
+                String aislename = currentaislelistcursor.getString(aisles_aislename_offset);
                 currentproductsperaisleecursor.moveToPosition(position);
                 AlertDialog.Builder okdialog = new AlertDialog.Builder(current_productsperaislelistview.getContext());
                 okdialog.setTitle(R.string.productconfirmdeletetitle);
                 okdialog.setMessage(getString(R.string.productconfirmdeletetext001) +
-                        currentproductsperaisleecursor.getString(ShopperDBHelper.PRODUCTS_COLUMN_NAME_INDEX)
+                        currentproductsperaisleecursor.getString(products_productname_offset)
                         + " in Aisle " + aislename + " #=" + currentaisleid);
                 okdialog.setCancelable(true);
                 okdialog.setNegativeButton(R.string.standardcanceltext, new DialogInterface.OnClickListener() {
@@ -558,7 +618,7 @@ public class AddProductToShopActivity extends AppCompatActivity {
                 okdialog.setPositiveButton(R.string.standarddeletetext, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        shopperdb.deleteSingleProductFromAisle(currentaisleid, currentproductsperaisleecursor.getLong(ShopperDBHelper.PRODUCTS_COLUMN_ID_INDEX));
+                        shopperdb.deleteSingleProductFromAisle(currentaisleid, currentproductsperaisleecursor.getLong(products_productid_offset));
                         currentproductsperaisleecursor = shopperdb.getProductsperAisle(currentaisleid,productsperaislesortorder);
                         current_productsperaislecursoradapter.swapCursor(currentproductsperaisleecursor);
                         dialog.cancel();
@@ -635,12 +695,12 @@ public class AddProductToShopActivity extends AppCompatActivity {
 
         // Report on the status ie Aisle added or Aisle not added (assuming the latter is due to duplicate (product already added to that aisle)
         if(addedok) {
-            Toast.makeText(view.getContext(), "Product " + currentproductlistcursor.getString(ShopperDBHelper.PRODUCTS_COLUMN_NAME_INDEX) +
-                    " Added to " + currentaislelistcursor.getString(ShopperDBHelper.AISLES_COLUMN_NAME_INDEX),Toast.LENGTH_LONG).show();
+            Toast.makeText(view.getContext(), "Product " + currentproductlistcursor.getString(products_productname_offset) +
+                    " Added to " + currentaislelistcursor.getString(aisles_aislename_offset),Toast.LENGTH_LONG).show();
             refreshProductsInAisle(currentshopid);
         } else {
-            Toast.makeText(view.getContext(), "Product " + currentproductlistcursor.getString(ShopperDBHelper.PRODUCTS_COLUMN_NAME_INDEX) +
-                    " NOT added to " + currentaislelistcursor.getString(ShopperDBHelper.AISLES_COLUMN_NAME_INDEX)
+            Toast.makeText(view.getContext(), "Product " + currentproductlistcursor.getString(products_productname_offset) +
+                    " NOT added to " + currentaislelistcursor.getString(aisles_aislename_offset)
                     + "; as it already exists in the aisle.", Toast.LENGTH_LONG).show();
         }
     }
@@ -658,5 +718,66 @@ public class AddProductToShopActivity extends AppCompatActivity {
         productsperaislesortorder = Constants.PRODUCTSPERAISLELISTORDER_BY_ORDER;
         currentproductsperaisleecursor = shopperdb.getProductsperAisle(currentaisleid,productsperaislesortorder);
         current_productsperaislecursoradapter.swapCursor(currentproductsperaisleecursor);
+    }
+
+    // Set Shops Table query offsets into returned cursor, if not already set
+    public void setShopsOffsets(Cursor cursor) {
+        // If not -1 then already done
+        if(shops_shopid_offset != -1) {
+            return;
+        }
+        shops_shopid_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_ID);
+        shops_shopname_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NAME);
+        shops_shoporder_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_ORDER);
+        shops_shopstreet_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
+        shops_shopcity_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_CITY);
+        shops_shopstate_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STATE);
+        shops_shopphone_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_PHONE);
+        shops_shopnotes_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NOTES);
+    }
+
+    // Set Aisles Table query offsets into returned cursor, if not already set
+    public void setAislesOffsets(Cursor cursor) {
+        if(aisles_aisleid_offset != -1) {
+            return;
+        }
+        aisles_aisleid_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_ID);
+        aisles_aislename_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_NAME);
+        aisles_aisleorder_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_ORDER);
+        aisles_aisleshopref_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_SHOP);
+    }
+
+    // Set Products Table query offsets into returned cursor, if not already set
+    public void setProductsOffsets(Cursor cursor) {
+        if(products_productid_offset != -1) {
+            return;
+        }
+        products_productid_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_ID);
+        products_productname_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NAME);
+        products_productorder_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_ORDER);
+        products_productaisleref_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_AISLE);
+        products_productuses_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_USES);
+        products_productnotes_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NOTES);
+    }
+
+    // Set ProductsPerAisle query offsets into returned cursor, if not already set
+    public void setProductsPerAisleOffsets(Cursor cursor) {
+        if(productsperaisle_productid_offset != -1) {
+            return;
+        }
+        productsperaisle_productid_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_ID);
+        productsperaisle_productname_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NAME);
+        productsperaisle_productorder_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_ORDER);
+        productsperaisle_productaisleref_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_AISLE);
+        productsperaisle_productuses_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_USES);
+        productsperaisle_productnotes_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NOTES);
+        productsperaisle_productusageaisleref_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_AISLEREF);
+        productsperaisle_productusageproductref_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_PRODUCTREF);
+        productsperaisle_productusagecost_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_COST);
+        productsperaisle_productusagebuycount_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_BUYCOUNT);
+        productsperaisle_productusagefirstbuydate_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_FIRSTBUYDATE);
+        proudctsperaisle_productusagelatestbuydate_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_LATESTBUYDATE);
+        productsaperaisle_productusagemincost_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_MINCOST);
+        productsperaisle_productusageorder_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_ORDER);
     }
 }

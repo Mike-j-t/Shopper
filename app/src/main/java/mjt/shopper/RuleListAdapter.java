@@ -18,10 +18,40 @@ import java.text.SimpleDateFormat;
  */
 public class RuleListAdapter extends CursorAdapter {
 
+    //==============================================================================================
+    // Cursor Offsets.
+    // Cursor offsets are set to the offset ino the respective cursor. They are set, once when the
+    // respective cursor is invoked, by obtaining the actual index via the columns name, thus
+    // negating a need to alter offsets if column orders are changed (e.g. column added/deleted)
+    // Note! column use changes may still be required if adding or deleting columns from tables or
+    //     queries.
+
+    public static int ruleslist_ruleid_offset = -1;
+    public static int ruleslist_rulename_offset;
+    public static int rulelist_ruletype_offset;
+    public static int rulelist_rulepromptflag_offset;
+    public static int rulelist_ruleperiod_offset;
+    public static int rulelist_rulemultiplier_offset;
+    public static int rulelist_ruleactiveon_offset;
+    public static int rulelist_ruleproductref_offset;
+    public static int rulelist_ruleaisleref_offset;
+    public static int rulelist_ruleuses_offset;
+    public static int rulelist_rulenumbertoget_offset;
+    public static int rulelist_rulemincost_offset;
+    public static int rulelist_rulemaxcost_offset;
+    public static int rulelist_productname_offset;
+    public static int rulelist_aislename_offset;
+    public static int rulelist_aisleshopref_offset;
+    public static int rulelist_shopname_offset;
+    public static int rulelist_shopcity_offset;
+    public static int rulelist_shopstreet_offset;
+    public static int rulelist_productusagecost_offset;
+
     public SimpleDateFormat sdf = new SimpleDateFormat(Constants.EXTENDED__DATE_DORMAT);
 
     public RuleListAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, FLAG_REGISTER_CONTENT_OBSERVER);
+        setRuleListOffsfets(cursor);
     }
 
     @Override
@@ -45,22 +75,32 @@ public class RuleListAdapter extends CursorAdapter {
         CheckedTextView ruleprompt = (CheckedTextView) view.findViewById(R.id.rulelistentry_ruleprompttoadd);
         TextView ruleperiod = (TextView) view.findViewById(R.id.rulelistentry_ruleperiod);
 
-        rulename.setText(cursor.getString(1));
-        ruledate.setText(sdf.format(cursor.getLong(6)));
-        String freq = "Get <b><font color=\"BLACK\">" + cursor.getInt(10) + "</font></b> <b><font color=\"BLUE\">" + cursor.getString(13) + "</font></b> every ";
+        rulename.setText(cursor.getString(ruleslist_rulename_offset));
+        ruledate.setText(sdf.format(cursor.getLong(rulelist_ruleactiveon_offset)));
+        String freq = "Get <b><font color=\"BLACK\">" +
+                cursor.getInt(rulelist_rulenumbertoget_offset) +
+                "</font></b> <b><font color=\"BLUE\">" +
+                cursor.getString(rulelist_productname_offset) +
+                "</font></b> every ";
         String periodasstr = "";
-        String loc = " from Aisle <b><font color=\"BLUE\">" + cursor.getString(14) + "</font></b> at <b><font color=\"BLUE\">" + cursor.getString(16) +
-                "</font></b> <font color=\"#4169E1\"><i>(" + cursor.getString(17) + " - " + cursor.getString(18) + ")</i></font>";
-        int promptstate = cursor.getInt(3);
+        String loc = " from Aisle <b><font color=\"BLUE\">" +
+                cursor.getString(rulelist_aislename_offset) +
+                "</font></b> at <b><font color=\"BLUE\">" +
+                cursor.getString(rulelist_shopname_offset) +
+                "</font></b> <font color=\"#4169E1\"><i>(" +
+                cursor.getString(rulelist_shopcity_offset) + " - " +
+                cursor.getString(rulelist_shopstreet_offset) +
+                ")</i></font>";
+        int promptstate = cursor.getInt(rulelist_rulepromptflag_offset);
         if (promptstate < 1) {
             ruleprompt.setChecked(true);
         } else {
             ruleprompt.setChecked(false);
         }
-        int period = cursor.getInt(4);
-        if (cursor.getInt(5) > 1) {
-            freq = freq + "<b><font color=\"BLACK\">" + cursor.getInt(5) + "</font></b> ";
-            switch (cursor.getInt(4)) {
+        int period = cursor.getInt(rulelist_ruleperiod_offset);
+        if (cursor.getInt(rulelist_rulemultiplier_offset) > 1) {
+            freq = freq + "<b><font color=\"BLACK\">" + cursor.getInt(rulelist_rulemultiplier_offset) + "</font></b> ";
+            switch (cursor.getInt(rulelist_ruleperiod_offset)) {
                 case Constants.PERIOD_DAYSASINT:
                     periodasstr = Constants.PERIOD_DAYS;
                     break;
@@ -83,7 +123,7 @@ public class RuleListAdapter extends CursorAdapter {
                     periodasstr = "UNKNOWN!!!";
             }
         } else {
-            switch (cursor.getInt(4)) {
+            switch (cursor.getInt(rulelist_ruleperiod_offset)) {
                 case Constants.PERIOD_DAYSASINT:
                     periodasstr = Constants.PERIOD_DAYS_SINGULAR;
                     break;
@@ -107,11 +147,39 @@ public class RuleListAdapter extends CursorAdapter {
             }
 
         }
-        ruleperiod.setText(Html.fromHtml(freq + "<b><font color=\"BLUE\">" + periodasstr + "</font></b>" + loc));
+        ruleperiod.setText(Html.fromHtml(freq +
+                "<b><font color=\"BLUE\">" +
+                periodasstr + "</font></b>" + loc));
 
     }
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         return LayoutInflater.from(context).inflate(R.layout.rulelistentry, parent,false);
+    }
+
+    public void setRuleListOffsfets(Cursor cursor) {
+        if(ruleslist_ruleid_offset != -1) {
+            return;
+        }
+        ruleslist_ruleid_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_ID);
+        ruleslist_rulename_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_NAME);
+        rulelist_ruletype_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_TYPE);
+        rulelist_rulepromptflag_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_PROMPTFLAG);
+        rulelist_ruleperiod_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_PERIOD);
+        rulelist_rulemultiplier_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_MULTIPLIER);
+        rulelist_ruleactiveon_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_ACTIVEON);
+        rulelist_ruleproductref_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_PRODUCTREF);
+        rulelist_ruleaisleref_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_AISLEREF);
+        rulelist_ruleuses_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_USES);
+        rulelist_rulenumbertoget_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_NUMBERTOGET);
+        rulelist_rulemincost_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_MINCOST);
+        rulelist_rulemaxcost_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_MAXCOST);
+        rulelist_productname_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NAME);
+        rulelist_aislename_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_NAME);
+        rulelist_aisleshopref_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_SHOP);
+        rulelist_shopname_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NAME);
+        rulelist_shopcity_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_CITY);
+        rulelist_shopstreet_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
+        rulelist_productusagecost_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_COST);
     }
 }

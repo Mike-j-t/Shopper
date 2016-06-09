@@ -19,7 +19,6 @@ import java.util.Date;
 public class ProductUsageEdit extends AppCompatActivity {
     private final static String THIS_ACTIVITY = "ProductUsageEdit";
     private final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
-    public ProductsPerAisleCursorAdapter plpa_adapter;
     public boolean devmode;
     public boolean helpoffmode;
 

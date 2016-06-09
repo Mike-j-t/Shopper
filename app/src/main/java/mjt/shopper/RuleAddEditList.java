@@ -23,6 +23,47 @@ import android.widget.Toast;
  * Created by Mike092015 on 21/04/2016.
  */
 public class RuleAddEditList extends AppCompatActivity {
+
+    //==============================================================================================
+    // Cursor Offsets.
+    // Cursor offsets are set to the offset ino the respective cursor. They are set, once when the
+    // respective cursor is invoked, by obtaining the actual index via the columns name, thus
+    // negating a need to alter offsets if column orders are changed (e.g. column added/deleted)
+    // Note! column use changes may still be required if adding or deleting columns from tables or
+    //     queries.
+
+    public static int purchasableproducts_productusageaisleref_offset = -1; //**
+    public static int purchasableproducts_productusageproductref_offset;
+    public static int purchasableproducts_productusagecost_offset;
+    public static int purchasableproducts_productid_offset; //**
+    public static int purchasableproducts_productname_offset;
+    public static int purchasableproducts_aisleid_offset; //**
+    public static int purchasableproducts_aislename_offset;
+    public static int purchasableproducts_shopname_offset;
+    public static int purchasableproducts_shopcity_offset;
+    public static int purchasableproducts_shopstreet_offset;
+
+    public static int ruleslist_ruleid_offset = -1;
+    public static int ruleslist_rulename_offset;
+    public static int rulelist_ruletype_offset;
+    public static int rulelist_rulepromptflag_offset;
+    public static int rulelist_ruleperiod_offset;
+    public static int rulelist_rulemultiplier_offset;
+    public static int rulelist_ruleactiveon_offset;
+    public static int rulelist_ruleproductref_offset;
+    public static int rulelist_ruleaisleref_offset;
+    public static int rulelist_ruleuses_offset;
+    public static int rulelist_rulenumbertoget_offset;
+    public static int rulelist_rulemincost_offset;
+    public static int rulelist_rulemaxcost_offset;
+    public static int rulelist_productname_offset;
+    public static int rulelist_aislename_offset;
+    public static int rulelist_aisleshopref_offset;
+    public static int rulelist_shopname_offset;
+    public static int rulelist_shopcity_offset;
+    public static int rulelist_shopstreet_offset;
+    public static int rulelist_productusagecost_offset;
+
     public final static int RESUMESTATE_NOTHING = 0;
     public final static int RESUMESTATE_ADD = 1;
     public final static int RESUMESTATE_UPDATE = 2;
@@ -52,7 +93,7 @@ public class RuleAddEditList extends AppCompatActivity {
     public String currentaislename = "";
     public long currentstoreid = -1;
     public String currentstorename = "";
-    public String potentialruleslistsortorder = Constants.PURCHASEABLEPRODUCTSLISTORDER_BY_PRODUCT;
+    public String potentialruleslistsortorder = Constants.PURCHASABLEPRODUCTSLISTORDER_BY_PRODUCT;
     public String rulelistsortorder = Constants.RULELISTORDER_BY_RULE;
 
 
@@ -73,8 +114,10 @@ public class RuleAddEditList extends AppCompatActivity {
         }
 
         potentialruleslist = (ListView) findViewById(R.id.ruleaddeditlist_potentialruleslist);
-        potentialrulescursor = shopperdb.getPurchaseableProducts(potentialrulesproductsearcharg,
-                potentialrulesstoresearcharg,potentialruleslistsortorder);
+        potentialrulescursor = shopperdb.getPurchasableProducts(potentialrulesproductsearcharg,
+                potentialrulesstoresearcharg,
+                potentialruleslistsortorder);
+        setPurchasableProductsOffsets(potentialrulescursor);
         potentialruleslistadapter = new PurchaseableProductsAdapter(this,
                 potentialrulescursor, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         potentialruleslist.setAdapter(potentialruleslistadapter);
@@ -95,7 +138,7 @@ public class RuleAddEditList extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 potentialrulesproductsearcharg = potentialrulesproductinput.getText().toString();
                 potentialrulesstoresearcharg = potentialrulesstoreinput.getText().toString();
-                potentialrulescursor = shopperdb.getPurchaseableProducts(potentialrulesproductsearcharg,
+                potentialrulescursor = shopperdb.getPurchasableProducts(potentialrulesproductsearcharg,
                         potentialrulesstoresearcharg,potentialruleslistsortorder);
                 potentialruleslistadapter.swapCursor(potentialrulescursor);
             }
@@ -115,7 +158,7 @@ public class RuleAddEditList extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 potentialrulesproductsearcharg = potentialrulesproductinput.getText().toString();
                 potentialrulesstoresearcharg = potentialrulesstoreinput.getText().toString();
-                potentialrulescursor = shopperdb.getPurchaseableProducts(potentialrulesproductsearcharg,
+                potentialrulescursor = shopperdb.getPurchasableProducts(potentialrulesproductsearcharg,
                         potentialrulesstoresearcharg,potentialruleslistsortorder);
                 potentialruleslistadapter.swapCursor(potentialrulescursor);
             }
@@ -131,22 +174,23 @@ public class RuleAddEditList extends AppCompatActivity {
                 Intent intent = new Intent(context, RuleAddEdit.class);
                 intent.putExtra(getResources().getString(R.string.intentkey_activitycaller), THIS_ACTIVITY + "_ADD");
                 potentialrulescursor.moveToPosition(position);
-                currentstorename = potentialrulescursor.getString(7);
-                currentaisleid = potentialrulescursor.getLong(5);
-                currentaislename = potentialrulescursor.getString(6);
-                intent.putExtra(getResources().getString(R.string.intentkey_productid), potentialrulescursor.getLong(3));
-                intent.putExtra(getResources().getString(R.string.intentkey_productname), potentialrulescursor.getString(4));
-                intent.putExtra(getResources().getString(R.string.intentkey_aislseid), potentialrulescursor.getLong(5));
-                intent.putExtra(getResources().getString(R.string.intentkey_aislename), potentialrulescursor.getString(6));
-                intent.putExtra(getResources().getString(R.string.intentkey_storename), potentialrulescursor.getString(7));
-                intent.putExtra(getResources().getString(R.string.intentkey_storecity), potentialrulescursor.getString(8));
-                intent.putExtra(getResources().getString(R.string.intentkey_storestreet), potentialrulescursor.getString(9));
+                currentstorename = potentialrulescursor.getString(purchasableproducts_shopname_offset);
+                currentaisleid = potentialrulescursor.getLong(purchasableproducts_aisleid_offset);
+                currentaislename = potentialrulescursor.getString(purchasableproducts_aislename_offset);
+                intent.putExtra(getResources().getString(R.string.intentkey_productid), potentialrulescursor.getLong(purchasableproducts_productid_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_productname), potentialrulescursor.getString(purchasableproducts_productname_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_aislseid), potentialrulescursor.getLong(purchasableproducts_aisleid_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_aislename), potentialrulescursor.getString(purchasableproducts_aislename_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_storename), potentialrulescursor.getString(purchasableproducts_shopname_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_storecity), potentialrulescursor.getString(purchasableproducts_shopcity_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_storestreet), potentialrulescursor.getString(purchasableproducts_shopstreet_offset));
                 startActivity(intent);
             }
         });
 
         currentruleslist = (ListView) findViewById(R.id.ruleaddeditlist_currentrileslist);
         currentrulescursor = shopperdb.getRuleList("","",(long) 0,false,false,rulelistsortorder);
+        setRuleListOffsfets(currentrulescursor);
         currentruleslistadapter = new RuleListAdapter(this,currentrulescursor,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         currentruleslist.setAdapter(currentruleslistadapter);
 
@@ -159,24 +203,24 @@ public class RuleAddEditList extends AppCompatActivity {
                 Intent intent = new Intent(context,RuleAddEdit.class);
                 intent.putExtra(getResources().getString(R.string.intentkey_activitycaller),THIS_ACTIVITY + "_UPDATE");
                 currentrulescursor.moveToPosition(position);
-                intent.putExtra(getResources().getString(R.string.intentkey_productid),currentrulescursor.getLong(7));
-                intent.putExtra(getResources().getString(R.string.intentkey_productname),currentrulescursor.getString(13));
-                intent.putExtra(getResources().getString(R.string.intentkey_aislseid),currentrulescursor.getLong(8));
-                intent.putExtra(getResources().getString(R.string.intentkey_aislename),currentrulescursor.getString(14));
-                intent.putExtra(getResources().getString(R.string.intentkey_storename),currentrulescursor.getString(16));
-                intent.putExtra(getResources().getString(R.string.intentkey_storecity),currentrulescursor.getString(17));
-                intent.putExtra(getResources().getString(R.string.intentkey_storestreet),currentrulescursor.getString(18));
-                intent.putExtra(getResources().getString(R.string.intentkey_ruleid),currentrulescursor.getLong(0));
-                intent.putExtra(getResources().getString(R.string.intentkey_rulename),currentrulescursor.getString(1));
-                intent.putExtra(getResources().getString(R.string.intentkey_ruletype),currentrulescursor.getLong(2));
-                intent.putExtra(getResources().getString(R.string.intentkey_ruleprompt),currentrulescursor.getInt(3));
-                intent.putExtra(getResources().getString(R.string.intentkey_ruleperiod),currentrulescursor.getInt(4));
-                intent.putExtra(getResources().getString(R.string.intentkey_rulemultiplier),currentrulescursor.getInt(5));
-                intent.putExtra(getResources().getString(R.string.intentkey_ruleactiveon),currentrulescursor.getLong(6));
-                intent.putExtra(getResources().getString(R.string.intentkey_ruleuses),currentrulescursor.getLong(9));
-                intent.putExtra(getResources().getString(R.string.intentkey_rulequantity),currentrulescursor.getInt(10));
-                intent.putExtra(getResources().getString(R.string.intentkey_rulemincost),currentrulescursor.getDouble(11));
-                intent.putExtra(getResources().getString(R.string.intentkey_rulemaxcost),currentrulescursor.getDouble(12));
+                intent.putExtra(getResources().getString(R.string.intentkey_productid),currentrulescursor.getLong(rulelist_ruleproductref_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_productname),currentrulescursor.getString(rulelist_productname_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_aislseid),currentrulescursor.getLong(rulelist_ruleaisleref_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_aislename),currentrulescursor.getString(rulelist_aislename_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_storename),currentrulescursor.getString(rulelist_shopname_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_storecity),currentrulescursor.getString(rulelist_shopcity_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_storestreet),currentrulescursor.getString(rulelist_shopstreet_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_ruleid),currentrulescursor.getLong(ruleslist_ruleid_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_rulename),currentrulescursor.getString(ruleslist_rulename_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_ruletype),currentrulescursor.getLong(rulelist_ruletype_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_ruleprompt),currentrulescursor.getInt(rulelist_rulepromptflag_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_ruleperiod),currentrulescursor.getInt(rulelist_ruleperiod_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_rulemultiplier),currentrulescursor.getInt(rulelist_rulemultiplier_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_ruleactiveon),currentrulescursor.getLong(rulelist_ruleactiveon_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_ruleuses),currentrulescursor.getLong(rulelist_ruleuses_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_rulequantity),currentrulescursor.getInt(rulelist_rulenumbertoget_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_rulemincost),currentrulescursor.getDouble(rulelist_rulemincost_offset));
+                intent.putExtra(getResources().getString(R.string.intentkey_rulemaxcost),currentrulescursor.getDouble(rulelist_rulemaxcost_offset));
                 startActivity(intent);
             }
         });
@@ -188,13 +232,13 @@ public class RuleAddEditList extends AppCompatActivity {
                 Context context = view.getContext();
                 currentrulescursor.moveToPosition(position);
                 AlertDialog.Builder okdialog = new AlertDialog.Builder(view.getContext());
-                okdialog.setTitle(getResources().getString(R.string.rule_delete) + " " + currentrulescursor.getString(1));
+                okdialog.setTitle(getResources().getString(R.string.rule_delete) + " " + currentrulescursor.getString(ruleslist_rulename_offset));
                 okdialog.setMessage(getResources().getString(R.string.rule_delete_message));
                 okdialog.setCancelable(true);
                 okdialog.setPositiveButton(getResources().getString(R.string.standarddeletetext), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        shopperdb.deleteRule(currentrulescursor.getLong(0));
+                        shopperdb.deleteRule(currentrulescursor.getLong(ruleslist_ruleid_offset));
                         currentrulescursor = shopperdb.getRuleList("","",(long) 0,false,false,rulelistsortorder);
                         currentruleslistadapter.swapCursor(currentrulescursor);
                         dialog.cancel();
@@ -223,6 +267,7 @@ public class RuleAddEditList extends AppCompatActivity {
         switch(resume_state) {
             case RESUMESTATE_ADD: case RESUMESTATE_UPDATE: {
                 currentrulescursor = shopperdb.getRuleList("","",(long) 0,false,false,rulelistsortorder);
+                setRuleListOffsfets(currentrulescursor);
                 currentruleslistadapter.swapCursor(currentrulescursor);
                 resume_state = RESUMESTATE_NOTHING;
                 break;
@@ -249,33 +294,33 @@ public class RuleAddEditList extends AppCompatActivity {
         finish();
     }
     public void potentialrulesorderbyProduct(View view) {
-        potentialruleslistsortorder = Constants.PURCHASEABLEPRODUCTSLISTORDER_BY_PRODUCT;
-        potentialrulescursor = shopperdb.getPurchaseableProducts(potentialrulesstoresearcharg,potentialrulesstoresearcharg,potentialruleslistsortorder);
+        potentialruleslistsortorder = Constants.PURCHASABLEPRODUCTSLISTORDER_BY_PRODUCT;
+        potentialrulescursor = shopperdb.getPurchasableProducts(potentialrulesstoresearcharg,potentialrulesstoresearcharg,potentialruleslistsortorder);
         potentialruleslistadapter.swapCursor(potentialrulescursor);
     }
     public void potentialrulesorderbyStore(View view) {
         potentialruleslistsortorder = Constants.PURCHASEABLEPRODUCTSLISTORDER_BY_STORE;
-        potentialrulescursor = shopperdb.getPurchaseableProducts(potentialrulesstoresearcharg,potentialrulesstoresearcharg,potentialruleslistsortorder);
+        potentialrulescursor = shopperdb.getPurchasableProducts(potentialrulesstoresearcharg,potentialrulesstoresearcharg,potentialruleslistsortorder);
         potentialruleslistadapter.swapCursor(potentialrulescursor);
     }
     public void potentialrulesorderbyStreet(View view) {
         potentialruleslistsortorder = Constants.PURCHASEABLEPRODUCTSLISTORDER_BY_STREET;
-        potentialrulescursor = shopperdb.getPurchaseableProducts(potentialrulesstoresearcharg,potentialrulesstoresearcharg,potentialruleslistsortorder);
+        potentialrulescursor = shopperdb.getPurchasableProducts(potentialrulesstoresearcharg,potentialrulesstoresearcharg,potentialruleslistsortorder);
         potentialruleslistadapter.swapCursor(potentialrulescursor);
     }
     public void potentialrulesorderbyCity(View view) {
         potentialruleslistsortorder = Constants.PURCHASEABLEPRODUCTSLISTORDER_BY_CITY;
-        potentialrulescursor = shopperdb.getPurchaseableProducts(potentialrulesstoresearcharg,potentialrulesstoresearcharg,potentialruleslistsortorder);
+        potentialrulescursor = shopperdb.getPurchasableProducts(potentialrulesstoresearcharg,potentialrulesstoresearcharg,potentialruleslistsortorder);
         potentialruleslistadapter.swapCursor(potentialrulescursor);
     }
     public void potentialrulesorderbyCost(View view) {
         potentialruleslistsortorder = Constants.PURCHASEABLEPRODUCTSLISTORDER_BY_COST;
-        potentialrulescursor = shopperdb.getPurchaseableProducts(potentialrulesstoresearcharg,potentialrulesstoresearcharg,potentialruleslistsortorder);
+        potentialrulescursor = shopperdb.getPurchasableProducts(potentialrulesstoresearcharg,potentialrulesstoresearcharg,potentialruleslistsortorder);
         potentialruleslistadapter.swapCursor(potentialrulescursor);
     }
     public void potentialrulesorderbyAisle(View view) {
         potentialruleslistsortorder = Constants.PURCHASEABLEPRODUCTSLISTORDER_BY_AISLE;
-        potentialrulescursor = shopperdb.getPurchaseableProducts(potentialrulesstoresearcharg,potentialrulesstoresearcharg,potentialruleslistsortorder);
+        potentialrulescursor = shopperdb.getPurchasableProducts(potentialrulesstoresearcharg,potentialrulesstoresearcharg,potentialruleslistsortorder);
         potentialruleslistadapter.swapCursor(potentialrulescursor);
     }
     public void rulelistorderByRule(View view) {
@@ -292,5 +337,47 @@ public class RuleAddEditList extends AppCompatActivity {
         rulelistsortorder = Constants.RULELISTORDER_BY_PROMPT;
         currentrulescursor = shopperdb.getRuleList("","",(long) 0,false,false,rulelistsortorder);
         currentruleslistadapter.swapCursor(currentrulescursor);
+    }
+
+    public void setPurchasableProductsOffsets(Cursor cursor) {
+        if(purchasableproducts_productusageaisleref_offset != -1) {
+            return;
+        }
+        purchasableproducts_productusageaisleref_offset = cursor.getColumnIndex(ShopperDBHelper.PRIMARY_KEY_NAME);
+        purchasableproducts_productusageproductref_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_PRODUCTREF);
+        purchasableproducts_productusagecost_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_COST);
+        purchasableproducts_productid_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_ID_FULL);
+        purchasableproducts_productname_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NAME);
+        purchasableproducts_aisleid_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_ID_FULL);
+        purchasableproducts_aislename_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_NAME);
+        purchasableproducts_shopname_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NAME);
+        purchasableproducts_shopcity_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_CITY);
+        purchasableproducts_shopstreet_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
+    }
+
+    public void setRuleListOffsfets(Cursor cursor) {
+        if(ruleslist_ruleid_offset != -1) {
+            return;
+        }
+        ruleslist_ruleid_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_ID);
+        ruleslist_rulename_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_NAME);
+        rulelist_ruletype_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_TYPE);
+        rulelist_rulepromptflag_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_PROMPTFLAG);
+        rulelist_ruleperiod_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_PERIOD);
+        rulelist_rulemultiplier_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_MULTIPLIER);
+        rulelist_ruleactiveon_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_ACTIVEON);
+        rulelist_ruleproductref_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_PRODUCTREF);
+        rulelist_ruleaisleref_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_AISLEREF);
+        rulelist_ruleuses_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_USES);
+        rulelist_rulenumbertoget_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_NUMBERTOGET);
+        rulelist_rulemincost_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_MINCOST);
+        rulelist_rulemaxcost_offset = cursor.getColumnIndex(ShopperDBHelper.RULES_COLUMN_MAXCOST);
+        rulelist_productname_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NAME);
+        rulelist_aislename_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_NAME);
+        rulelist_aisleshopref_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_SHOP);
+        rulelist_shopname_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NAME);
+        rulelist_shopcity_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_CITY);
+        rulelist_shopstreet_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
+        rulelist_productusagecost_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_COST);
     }
 }

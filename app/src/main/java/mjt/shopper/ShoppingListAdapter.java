@@ -19,8 +19,54 @@ import java.text.NumberFormat;
  */
 public class ShoppingListAdapter extends CursorAdapter {
 
+    //==============================================================================================
+    // Cursor Offsets.
+    // Cursor offsets are set to the offset ino the respective cursor. They are set, once when the
+    // respective cursor is invoked, by obtaining the actual index via the columns name, thus
+    // negating a need to alter offsets if column orders are changed (e.g. column added/deleted)
+    // Note! column use changes may still be required if adding or deleting columns from tables or
+    //     queries.
+
+    public static int shoppinglist_shoplistid_offset = -1;
+    public static int shoppinglist_shoplistproductref_offset;
+    public static int shoppinglist_shoplistdateadded_offset;
+    public static int shoppinglist_shoplistnumbertoget_offset;
+    public static int shoppinglist_shoplistdone_offset;
+    public static int shoppinglist_shoplistdategot_offset;
+    public static int shoppinglist_shoplistcost_offset;
+    public static int shoppinglist_shoplistproductusageref_offset;
+    public static int shoppinglist_shoplistaisleref_offset;
+    public static int shoppinglist_productusageproductref_offset;
+    public static int shoppinglist_productusageaisleref_offset;
+    public static int shoppinglist_productusagecost_offset;
+    public static int shoppinglist_productusagebuycount_offset;
+    public static int shoppinglist_productusagefirstbuydate_offset;
+    public static int shoppinglist_productusagelatestbuydate_offset;
+    public static int shoppinglist_productusagemincost_offset;
+    public static int shoppinglist_productusageorder_offset;
+    public static int shoppinglist_aisleid_offset;
+    public static int shoppinglist_aislename_offset;
+    public static int shoppinglist_aisleorder_offset;
+    public static int shoppinglist_aisleshopref_offest;
+    public static int shoppinglist_shopid_offset;
+    public static int shoppinglist_shopname_offset;
+    public static int shopponglist_shoporder_offset;
+    public static int shopponglist_shopstreet_offset;
+    public static int shoppinglist_shopcity_offset;
+    public static int shoppinglist_shopstate_offset;
+    public static int shoppinglist_shopphone_offset;
+    public static int shoppinglist_shopnotes_offset;
+    public static int shoppinglist_productid_offset;
+    public static int shoppinglist_productname_offset;
+    public static int shoppinglist_productorder_offset;
+    public static int shoppinglist_productaisleref_offset;
+    public static int shoppinglist_productuses_offset;
+    public static int shoppinglist_productnotes_offset;
+
+
     public ShoppingListAdapter(Context context, Cursor cursor, int flags, int myvar) {
         super(context, cursor, FLAG_REGISTER_CONTENT_OBSERVER);
+        setShoppingListOffsets(cursor);
     }
     @Override
     public View getView(int position, View convertview, ViewGroup parent) {
@@ -28,7 +74,7 @@ public class ShoppingListAdapter extends CursorAdapter {
         Context context = view.getContext();
 
         // Get the quantity (numbertoget) for this entry. 0 equates to all purchased so flag as such
-        long quantity = this.getCursor().getLong(3);
+        long quantity = this.getCursor().getLong(shoppinglist_shoplistnumbertoget_offset);
         if (position % 2 == 0) {
             view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorlistviewroweven));
         } else {
@@ -91,36 +137,36 @@ public class ShoppingListAdapter extends CursorAdapter {
         // and prevaisle to 0 (no such id's) will force this (as won't be changed)
         if(pos > 0 ) {
             cursor.moveToPrevious();
-            prevshop = cursor.getLong(21); //  shopid column
-            prevaisle = cursor.getLong(17); // aisleid column
+            prevshop = cursor.getLong(shoppinglist_shopid_offset); //  shopid column
+            prevaisle = cursor.getLong(shoppinglist_aisleid_offset); // aisleid column
             cursor.moveToNext(); // Restore cursor position to current
         }
-        if(prevshop != cursor.getLong(21)) {
+        if(prevshop != cursor.getLong(shoppinglist_shopid_offset)) {
             shophdrll.setVisibility(View.VISIBLE);
             shophdrll.setBackgroundColor(ContextCompat.getColor(context, R.color.colorlistviewheading));
         } else {
             shophdrll.setVisibility(View.GONE);
         }
-        if(prevaisle != cursor.getLong(17)) {
+        if(prevaisle != cursor.getLong(shoppinglist_aisleid_offset)) {
             aislehdrll.setVisibility(View.VISIBLE);
             aislehdrll.setBackgroundColor(ContextCompat.getColor(context, R.color.colorlistviewsubheading));
         } else {
             aislehdrll.setVisibility(View.GONE);
         }
-        shopnametv.setText(cursor.getString(22));
-        shopcitytv.setText(cursor.getString(25));
-        shopstreettv.setText(cursor.getString(24));
-        aislenametv.setText(cursor.getString(18));
-        productnametv.setText(cursor.getString(30));
-        quantitytv.setText(cursor.getString(3));
-        pricetv.setText(NumberFormat.getCurrencyInstance().format(cursor.getDouble(11)));
-        priceforalltv.setText(NumberFormat.getCurrencyInstance().format(cursor.getDouble(3) * cursor.getDouble(11)));
-        shopordertv.setText(cursor.getString(23));
-        shopidtv.setText(cursor.getString(21));
-        aisleordertv.setText(cursor.getString(19));
-        aisleidtv.setText(cursor.getString(17));
-        puordertv.setText(cursor.getString(16));
-        puprodreftv.setText(cursor.getString(9));
+        shopnametv.setText(cursor.getString(shoppinglist_shopname_offset));
+        shopcitytv.setText(cursor.getString(shoppinglist_shopcity_offset));
+        shopstreettv.setText(cursor.getString(shopponglist_shopstreet_offset));
+        aislenametv.setText(cursor.getString(shoppinglist_aislename_offset));
+        productnametv.setText(cursor.getString(shoppinglist_productname_offset));
+        quantitytv.setText(cursor.getString(shoppinglist_shoplistnumbertoget_offset));
+        pricetv.setText(NumberFormat.getCurrencyInstance().format(cursor.getDouble(shoppinglist_productusagecost_offset)));
+        priceforalltv.setText(NumberFormat.getCurrencyInstance().format(cursor.getDouble(shoppinglist_shoplistnumbertoget_offset) * cursor.getDouble(shoppinglist_productusagecost_offset)));
+        shopordertv.setText(cursor.getString(shopponglist_shoporder_offset));
+        shopidtv.setText(cursor.getString(shoppinglist_shopid_offset));
+        aisleordertv.setText(cursor.getString(shoppinglist_aisleorder_offset));
+        aisleidtv.setText(cursor.getString(shoppinglist_aisleid_offset));
+        puordertv.setText(cursor.getString(shoppinglist_productusageorder_offset));
+        puprodreftv.setText(cursor.getString(shoppinglist_productusageproductref_offset));
         // Set tags to enable onClick to determine the cursor position of the clicked entry
         donebtntv.setTag(pos);
         deletebtntv.setTag(pos);
@@ -130,5 +176,46 @@ public class ShoppingListAdapter extends CursorAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         //totalcost = 0;
         return LayoutInflater.from(context).inflate(R.layout.shopping_list_entry, parent, false);
+    }
+
+    public void setShoppingListOffsets(Cursor cursor) {
+        if(shoppinglist_shoplistid_offset != -1) {
+            return;
+        }
+        shoppinglist_shoplistid_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_ID);
+        shoppinglist_shoplistproductref_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_PRODUCTREF);
+        shoppinglist_shoplistdateadded_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_DATEADDED);
+        shoppinglist_shoplistnumbertoget_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_NUMBERTOGET);
+        shoppinglist_shoplistdone_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_DONE);
+        shoppinglist_shoplistdategot_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_DATEGOT);
+        shoppinglist_shoplistcost_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_COST);
+        shoppinglist_shoplistproductusageref_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_PRODUCTUSAGEREF);
+        shoppinglist_shoplistaisleref_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPLIST_COLUMN_AISLEREF);
+        shoppinglist_productusageproductref_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_PRODUCTREF_FULL);
+        shoppinglist_productusageaisleref_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_AISLEREF);
+        shoppinglist_productusagecost_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_COST);
+        shoppinglist_productusagebuycount_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_BUYCOUNT);
+        shoppinglist_productusagefirstbuydate_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_FIRSTBUYDATE);
+        shoppinglist_productusagelatestbuydate_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_LATESTBUYDATE);
+        shoppinglist_productusagemincost_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_MINCOST);
+        shoppinglist_productusageorder_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_ORDER);
+        shoppinglist_aisleid_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_ID_FULL);
+        shoppinglist_aislename_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_NAME);
+        shoppinglist_aisleorder_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_ORDER);
+        shoppinglist_aisleshopref_offest = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_SHOP);
+        shoppinglist_shopid_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_ID_FULL);
+        shoppinglist_shopname_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NAME);
+        shopponglist_shoporder_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_ORDER);
+        shopponglist_shopstreet_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
+        shoppinglist_shopcity_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_CITY);
+        shoppinglist_shopstate_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STATE);
+        shoppinglist_shopphone_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_PHONE);
+        shoppinglist_shopnotes_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NOTES);
+        shoppinglist_productid_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_ID_FULL);
+        shoppinglist_productname_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NAME);
+        shoppinglist_productorder_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_ORDER);
+        shoppinglist_productaisleref_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_AISLE);
+        shoppinglist_productuses_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_USES);
+        shoppinglist_productnotes_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NOTES);
     }
 }
