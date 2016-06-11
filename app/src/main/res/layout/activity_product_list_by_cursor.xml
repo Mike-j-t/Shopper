@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:id="@+id/aplbc_layout"
     android:layout_width="match_parent"
@@ -53,7 +54,8 @@
         <EditText
             android:id="@+id/productlist_selection_input"
             style="@style/edittext_selection_style"
-            android:layout_weight="0.9" />
+            android:layout_weight="0.9"
+            tools:ignore="LabelFor" />
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"

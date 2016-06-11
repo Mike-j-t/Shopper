@@ -324,7 +324,7 @@
         android:background="@color/colorlistviewheading">
         <TextView
             android:id="@+id/currentrules_ruleasstring"
-            android:layout_width="@dimen/standard_dummy_size"
+            android:layout_width="0dp"
             android:layout_height="@dimen/standard_subsubsubheading_height"
             android:layout_weight="0.5"
             android:text="@string/rule_addedit_asstring"

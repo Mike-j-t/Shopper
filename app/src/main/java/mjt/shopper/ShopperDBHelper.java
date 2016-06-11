@@ -88,7 +88,7 @@ class DBDatabase {
     public DBDatabase() {
         this.usable = false;
         this.database_name = "";
-        this.database_tables = new ArrayList<DBTable>();
+        this.database_tables = new ArrayList<>();
         this.problem_msg = "WDBD0100 - Uninstantiated - " +
                 "Use setDBDatabaseName to set the Database Name. " +
                 "Use addDBTableToDBDatabase to add at least 1 Table or " +
@@ -224,7 +224,7 @@ class DBDatabase {
             if(csr.getCount() > 0 ){
                 sql = sql + " INSERT INTO `" + dbt.getDBTableName() + "` (";
                 int coli = 0;
-                ArrayList<Integer> coltype = new ArrayList();
+                ArrayList<Integer> coltype = new ArrayList<>();
                 for(DBColumn dbtc : dbt.getTableDBColumns()) {
                     if(coli++ > 0) {
                         sql = sql + ", ";
@@ -270,6 +270,7 @@ class DBDatabase {
             } else {
                 sql = sql + "-- ERROR - TABLE " + dbt.getDBTableName() + " IS EMPTY SKIPPED \n";
             }
+            csr.close();
         }
         return sql;
     }
@@ -631,8 +632,6 @@ class DBTable {
 
             csr.moveToPosition(-1);
             while(csr.moveToNext()) {
-                String testx = csr.getString(1);
-                String test2 = csr.getString(2);
                 if(csr.getString(1).equals(columntofind)) {
                     columnmatch = true;
                 }
@@ -735,7 +734,6 @@ class DBColumn {
         column_name = column_name.toLowerCase();
 
         // Lots of potential values for the column type; so validate
-        boolean column_ok = false;
         this.problem_msg = "";
         this.column_type = simplifyColumnType(column_type);
         this.column_name = column_name;

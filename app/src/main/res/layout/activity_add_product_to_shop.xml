@@ -53,7 +53,8 @@
         <EditText
             android:id="@+id/productusageedit_selection_input"
             style="@style/edittext_selection_style"
-            android:layout_weight="0.9" />
+            android:layout_weight="0.9"
+            tools:ignore="LabelFor" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/productuseageedit_storeselector_heading"

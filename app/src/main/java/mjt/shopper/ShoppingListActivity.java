@@ -17,9 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.Calendar;
-import java.util.logging.SocketHandler;
 
 /**
  * Created by Mike092015 on 21/03/2016.
@@ -426,22 +424,22 @@ public class ShoppingListActivity extends AppCompatActivity{
         cal.setTimeInMillis(currentdate);
         switch(period) {
             case Constants.PERIOD_DAYSASINT:
-                cal.add(cal.DAY_OF_MONTH,(multiplier));
+                cal.add(Calendar.DAY_OF_MONTH,(multiplier));
                 break;
             case Constants.PERIOD_WEEKSASINT:
-                cal.add(cal.DAY_OF_MONTH, (multiplier * 7));
+                cal.add(Calendar.DAY_OF_MONTH, (multiplier * 7));
                 break;
             case Constants.PERIOD_FORTNIGHTSASINT:
-                cal.add(cal.DAY_OF_MONTH, (multiplier * 14));
+                cal.add(Calendar.DAY_OF_MONTH, (multiplier * 14));
                 break;
             case Constants.PERIOD_MONTHSASINT:
-                cal.add(cal.MONTH, multiplier);
+                cal.add(Calendar.MONTH, multiplier);
                 break;
             case Constants.PERIOD_QUARTERSASINT:
-                cal.add(cal.MONTH, (multiplier * 3));
+                cal.add(Calendar.MONTH, (multiplier * 3));
                 break;
             case Constants.PERIOD_YEARSASINT:
-                cal.add(cal.YEAR,multiplier);
+                cal.add(Calendar.YEAR,multiplier);
                 break;
         }
         long newdate = cal.getTimeInMillis();
@@ -546,7 +544,7 @@ public class ShoppingListActivity extends AppCompatActivity{
                         if(updateresults.length() > 0) {
                             updateresults = updateresults + "\n";
                         }
-                        updateresults = updateresults + "Qauntity adjusted from " + oqty.toString() + " to " + nqty + ".";
+                        updateresults = updateresults + "Qauntity adjusted from " + oqty + " to " + nqty + ".";
 
                     }
                     // If cost has changed then update the productusage entry to reflect the new cost
@@ -562,12 +560,12 @@ public class ShoppingListActivity extends AppCompatActivity{
                         if(updateresults.length() > 0) {
                             updateresults = updateresults + "\n";
                         }
-                        updateresults = updateresults + "Cost adjusted from " + ocost.toString() + " to " + ncost + ".";
+                        updateresults = updateresults + "Cost adjusted from " + ocost + " to " + ncost + ".";
 
                     }
                     if(!nname.equals(oname)) {
                         shopperdb.updateProduct(shoppinglistcsr.getLong(shoppinglist_shoplistproductref_offset),
-                                nname.toString(),
+                                nname,
                                 shoppinglistcsr.getString(shoppinglist_productnotes_offset));
                         if(updateresults.length() > 0 ) {
                             updateresults = updateresults + "\n";
