@@ -357,7 +357,7 @@ public class AddProductToShopActivity extends AppCompatActivity {
                             ") within the cursor. Cursor row=" + currentaislelistcursor.getPosition());
                 }
                 // Check for match with this row
-                if(currentaislelistcursor.getLong(ShopperDBHelper.AISLES_COLUMN_ID_INDEX) == passedaisleid ) {
+                if(currentaislelistcursor.getLong(aisles_aisleid_offset) == passedaisleid ) {
                     if(devmode) {
                         Log.d(Constants.LOG, "ACTIVITY: " + THIS_ACTIVITY + " SECTION: onCreate - SETUP AISLELIST SPINNER" +
                                 "-Matched passed aisleid(" + passedaisleid + "). Cursor row=" + currentaislelistcursor.getPosition());

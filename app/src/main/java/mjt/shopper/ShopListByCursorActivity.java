@@ -123,8 +123,8 @@ public class ShopListByCursorActivity extends AppCompatActivity {
         shoplistlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String shopname = currentsca.getCursor().getString(ShopperDBHelper.SHOPS_COLUMN_NAME_INDEX);
-                long shopid = currentsca.getCursor().getLong(ShopperDBHelper.SHOPS_COLUMNN_ID_INDEX);
+                String shopname = currentsca.getCursor().getString(shops_shopname_offset);
+                final long shopid = currentsca.getCursor().getLong(shops_shopid_offset);
                 //String msg = getString(R.string.shoplistclicknoproductsmessage);
                 boolean products_exist = false;
                 boolean aisles_exist = false;
@@ -148,22 +148,22 @@ public class ShopListByCursorActivity extends AppCompatActivity {
                         resume_state = RESUMESTATE_SHOPUPDATE;
                         Intent intent = new Intent(findViewById(R.id.storelist).getContext(), ShopAddActivity.class);
                         intent.putExtra("Caller", THIS_ACTIVITY + "Update");
-                        intent.putExtra("ShopID", currentsca.getCursor().getString(ShopperDBHelper.SHOPS_COLUMNN_ID_INDEX));
-                        intent.putExtra(getResources().getString(R.string.intentkey_storeid), currentsca.getCursor().getString(ShopperDBHelper.SHOPS_COLUMNN_ID_INDEX));
-                        intent.putExtra(getResources().getString(R.string.intentkey_storename), currentsca.getCursor().getString(ShopperDBHelper.SHOPS_COLUMN_NAME_INDEX));
-                        intent.putExtra(getResources().getString(R.string.intentkey_storeorder), currentsca.getCursor().getString(ShopperDBHelper.SHOPS_COLUMN_ORDER_INDEX));
-                        intent.putExtra(getResources().getString(R.string.intentkey_storestreet), currentsca.getCursor().getString(ShopperDBHelper.SHOPS_COLUMN_STREET_INDEX));
-                        intent.putExtra(getResources().getString(R.string.intentkey_storecity), currentsca.getCursor().getString(ShopperDBHelper.SHOPS_COLUMN_CITY_INDEX));
-                        intent.putExtra(getResources().getString(R.string.intentkey_storestate), currentsca.getCursor().getString(ShopperDBHelper.SHOPS_COLUMN_STATE_INDEX));
-                        intent.putExtra(getResources().getString(R.string.intentkey_storephone), currentsca.getCursor().getString(ShopperDBHelper.SHOPS_COULMN_PHONE_INDEX));
-                        intent.putExtra(getResources().getString(R.string.intentkey_storenotes), currentsca.getCursor().getString(ShopperDBHelper.SHOPS_COULMN_NOTES_INDEX));
-                        intent.putExtra("ShopName", currentsca.getCursor().getString(ShopperDBHelper.SHOPS_COLUMN_NAME_INDEX));
-                        intent.putExtra("ShopOrder", currentsca.getCursor().getString(ShopperDBHelper.SHOPS_COLUMN_ORDER_INDEX));
-                        intent.putExtra("ShopStreet", currentsca.getCursor().getString(ShopperDBHelper.SHOPS_COLUMN_STREET_INDEX));
-                        intent.putExtra("ShopCity", currentsca.getCursor().getString(ShopperDBHelper.SHOPS_COLUMN_CITY_INDEX));
-                        intent.putExtra("ShopState", currentsca.getCursor().getString(ShopperDBHelper.SHOPS_COLUMN_STATE_INDEX));
-                        intent.putExtra("ShopPhone", currentsca.getCursor().getString(ShopperDBHelper.SHOPS_COULMN_PHONE_INDEX));
-                        intent.putExtra("ShopNotes", currentsca.getCursor().getString(ShopperDBHelper.SHOPS_COULMN_NOTES_INDEX));
+                        intent.putExtra("ShopID", currentsca.getCursor().getString(shops_shopid_offset));
+                        intent.putExtra(getResources().getString(R.string.intentkey_storeid), currentsca.getCursor().getString(shops_shopid_offset));
+                        intent.putExtra(getResources().getString(R.string.intentkey_storename), currentsca.getCursor().getString(shops_shopname_offset));
+                        intent.putExtra(getResources().getString(R.string.intentkey_storeorder), currentsca.getCursor().getString(shops_shoporder_offset));
+                        intent.putExtra(getResources().getString(R.string.intentkey_storestreet), currentsca.getCursor().getString(shops_shopstreet_offset));
+                        intent.putExtra(getResources().getString(R.string.intentkey_storecity), currentsca.getCursor().getString(shops_shopcity_offset));
+                        intent.putExtra(getResources().getString(R.string.intentkey_storestate), currentsca.getCursor().getString(shops_shopstate_offset));
+                        intent.putExtra(getResources().getString(R.string.intentkey_storephone), currentsca.getCursor().getString(shops_shopphone_offset));
+                        intent.putExtra(getResources().getString(R.string.intentkey_storenotes), currentsca.getCursor().getString(shops_shopnotes_offset));
+                        intent.putExtra("ShopName", currentsca.getCursor().getString(shops_shopname_offset));
+                        intent.putExtra("ShopOrder", currentsca.getCursor().getString(shops_shoporder_offset));
+                        intent.putExtra("ShopStreet", currentsca.getCursor().getString(shops_shopstreet_offset));
+                        intent.putExtra("ShopCity", currentsca.getCursor().getString(shops_shopcity_offset));
+                        intent.putExtra("ShopState", currentsca.getCursor().getString(shops_shopstate_offset));
+                        intent.putExtra("ShopPhone", currentsca.getCursor().getString(shops_shopphone_offset));
+                        intent.putExtra("ShopNotes", currentsca.getCursor().getString(shops_shopnotes_offset));
                         startActivity(intent);
                         dialog.cancel();
                     }

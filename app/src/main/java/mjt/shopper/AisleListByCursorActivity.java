@@ -163,12 +163,12 @@ public class AisleListByCursorActivity extends AppCompatActivity {
                         Intent intent = new Intent(findViewById(R.id.aislelist_listview).getContext(), AisleAddActivity.class);
                         AislesCursorAdapter aisleadapter = (AislesCursorAdapter) ((ListView) findViewById(R.id.aislelist_listview)).getAdapter();
                         intent.putExtra("Caller", THIS_ACTIVITY + "Update");
-                        intent.putExtra("AisleID", aisleadapter.getCursor().getString(ShopperDBHelper.AISLES_COLUMN_ID_INDEX));
-                        intent.putExtra("AISLEID", aisleadapter.getCursor().getLong(ShopperDBHelper.AISLES_COLUMN_ID_INDEX));
-                        intent.putExtra("AisleName", aisleadapter.getCursor().getString(ShopperDBHelper.AISLES_COLUMN_NAME_INDEX));
-                        intent.putExtra("AisleOrder", aisleadapter.getCursor().getString(ShopperDBHelper.AISLES_COLUMN_ORDER_INDEX));
-                        intent.putExtra("AisleShopRef", aisleadapter.getCursor().getString(ShopperDBHelper.AISLES_COLUMN_SHOP_INDEX));
-                        intent.putExtra("SHOPID", aisleadapter.getCursor().getLong(ShopperDBHelper.AISLES_COLUMN_SHOP_INDEX));
+                        intent.putExtra("AisleID", aisleadapter.getCursor().getString(aisles_aisleid_offset));
+                        intent.putExtra("AISLEID", aisleadapter.getCursor().getLong(aisles_aisleid_offset));
+                        intent.putExtra("AisleName", aisleadapter.getCursor().getString(aisles_aislename_offset));
+                        intent.putExtra("AisleOrder", aisleadapter.getCursor().getString(aisles_aisleorder_offset));
+                        intent.putExtra("AisleShopRef", aisleadapter.getCursor().getString(aisles_aisleshopref_offset));
+                        intent.putExtra("SHOPID", aisleadapter.getCursor().getLong(aisles_aisleshopref_offset));
                         startActivity(intent);
                         dialog.cancel();
                     }
@@ -182,13 +182,13 @@ public class AisleListByCursorActivity extends AppCompatActivity {
                             Intent intent = new Intent(findViewById(R.id.aislelist_listview).getContext(), AddProductToShopActivity.class);
                             AislesCursorAdapter aisleadapter = (AislesCursorAdapter) ((ListView) findViewById(R.id.aislelist_listview)).getAdapter();
                             intent.putExtra("Caller", THIS_ACTIVITY + "Stock");
-                            intent.putExtra("AisleID", aisleadapter.getCursor().getString(ShopperDBHelper.AISLES_COLUMN_ID_INDEX));
-                            intent.putExtra("AISLEID", aisleadapter.getCursor().getLong(ShopperDBHelper.AISLES_COLUMN_ID_INDEX));
-                            intent.putExtra("AisleName", aisleadapter.getCursor().getString(ShopperDBHelper.AISLES_COLUMN_NAME_INDEX));
-                            intent.putExtra("AisleOrder", aisleadapter.getCursor().getString(ShopperDBHelper.AISLES_COLUMN_ORDER_INDEX));
-                            intent.putExtra("AisleShopRef", aisleadapter.getCursor().getString(ShopperDBHelper.AISLES_COLUMN_SHOP_INDEX));
-                            intent.putExtra("AISLESHOPREF", aisleadapter.getCursor().getLong(ShopperDBHelper.AISLES_COLUMN_SHOP_INDEX));
-                            intent.putExtra("SHOPID", aisleadapter.getCursor().getLong(ShopperDBHelper.AISLES_COLUMN_SHOP_INDEX));
+                            intent.putExtra("AisleID", aisleadapter.getCursor().getString(aisles_aisleid_offset));
+                            intent.putExtra("AISLEID", aisleadapter.getCursor().getLong(aisles_aisleid_offset));
+                            intent.putExtra("AisleName", aisleadapter.getCursor().getString(aisles_aislename_offset));
+                            intent.putExtra("AisleOrder", aisleadapter.getCursor().getString(aisles_aisleorder_offset));
+                            intent.putExtra("AisleShopRef", aisleadapter.getCursor().getString(aisles_aisleshopref_offset));
+                            intent.putExtra("AISLESHOPREF", aisleadapter.getCursor().getLong(aisles_aisleshopref_offset));
+                            intent.putExtra("SHOPID", aisleadapter.getCursor().getLong(aisles_aisleshopref_offset));
                             startActivity(intent);
                             dialog.cancel();
                         }
@@ -215,10 +215,10 @@ public class AisleListByCursorActivity extends AppCompatActivity {
                 long aislespershopcount = shopperdb.aislesPerShop(currentshopid);
                 resume_state = RESUMESTATE_AISLEDELETE;
                 final AislesCursorAdapter aisleadapter = (AislesCursorAdapter) ((ListView) findViewById(R.id.aislelist_listview)).getAdapter();
-                final String aisleidasstring = aisleadapter.getCursor().getString(ShopperDBHelper.AISLES_COLUMN_ID_INDEX);
-                final long aisleid = aisleadapter.getCursor().getLong(ShopperDBHelper.AISLES_COLUMN_ID_INDEX);
-                final String aislename = aisleadapter.getCursor().getString(ShopperDBHelper.AISLES_COLUMN_NAME_INDEX);
-                final int aisleshopref = aisleadapter.getCursor().getInt(ShopperDBHelper.AISLES_COLUMN_SHOP_INDEX);
+                final String aisleidasstring = aisleadapter.getCursor().getString(aisles_aisleid_offset);
+                final long aisleid = aisleadapter.getCursor().getLong(aisles_aisleid_offset);
+                final String aislename = aisleadapter.getCursor().getString(aisles_aislename_offset);
+                final int aisleshopref = aisleadapter.getCursor().getInt(aisles_aisleshopref_offset);
                 if(aislespershopcount > 1) {
                     AlertDialog.Builder okdialog = new AlertDialog.Builder(findViewById(R.id.aislelist_listview).getContext());
                     okdialog.setTitle(getString(R.string.aisleconfirmdeletetitle));
