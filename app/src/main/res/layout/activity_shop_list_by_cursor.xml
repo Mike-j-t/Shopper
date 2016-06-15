@@ -37,121 +37,85 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/shoplist_help"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/shoplist_instructions"
-            android:textSize="@dimen/standard_listview_text_size"
-            android:background="@color/colorHelpButton"/>
+            style="@style/textview_help_style"
+            android:text="@string/shoplist_instructions" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/shoplist_heading1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/required_heading_height"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/colorlistviewheading">
         <TextView
             android:id="@+id/storelist_store_heading"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.89"
             android:text="@string/shoplabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"
-            android:textColor="@color/colorNormalButtonText"
             android:onClick="orderByStore"/>
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.005"/>
         <TextView
             android:id="@+id/storelist_order_heading"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.1"
             android:text="@string/shoporderlabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"
-            android:textColor="@color/colorNormalButtonText"
             android:onClick="orderByOrder"/>
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.005"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/shoplist_heading2"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/required_heading_height"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/colorlistviewheading">
         <TextView
             android:id="@+id/storelist_city_heading"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.3"
             android:text="@string/shopcitylabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"
-            android:textColor="@color/colorNormalButtonText"
             android:onClick="orderByCity"/>
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.005"/>
         <TextView
             android:id="@+id/storelist_street_heading"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.4"
             android:text="@string/shopstreetlabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"
-            android:textColor="@color/colorNormalButtonText"
             android:onClick="orderByStreet"/>
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.005"/>
         <TextView
             android:id="@+id/storelist_state_heading"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.1"
             android:text="@string/shopstatelabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"
-            android:textColor="@color/colorNormalButtonText"
             android:onClick="orderByState"/>
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.005"/>
         <TextView
             android:id="@+id/storelist_phone_heading"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight=".185"
             android:text="@string/shopphone"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"
-            android:textColor="@color/colorNormalButtonText"
             android:onClick="orderByPhone"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/shoplist_heading3"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/required_heading_height"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/colorlistviewheading">
         <TextView
             android:id="@+id/storelist_notes_heading"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="1"
             android:text="@string/shopnotes"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"
-            android:textColor="@color/colorNormalButtonText"
             android:onClick="orderByNotes"/>
     </LinearLayout>
     <ListView

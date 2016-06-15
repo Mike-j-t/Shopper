@@ -181,7 +181,7 @@
     <string name="standarddonebutton">DONE</string>
     <string name="standardsavebutton">SAVE</string>
     <string name="standardaddbuttontext">ADD</string>
-    <string name="standardcanceltext">CANCEL</string>
+    <string name="standardcanceltext">@android:string/cancel</string>
     <string name="standardedittext">EDIT</string>
     <string name="standarddeletetext">DELETE</string>
     <string name="standardstockaisletext">Stock Aisle</string>
@@ -197,7 +197,7 @@
     <string name="standardedittexthint"><font size="15"></font></string>
     <string name="shoppinglistpurchasedbutton">BOUGHT</string>
     <string name="shoppinglistradjustbutton">ADJUST</string>
-    <string name="standardskiptext">Skip</string>
+    <string name="standardskiptext">SKIP</string>
 
     <!-- <string name="title_activity_shops">Shopper - Shops</string> -->
     <string name="title_activity_main">Shopper</string>

@@ -152,8 +152,8 @@
             android:layout_height="match_parent"
             android:layout_weight="0.05"/>
         <EditText
-            style="@style/edittext_optional_style"
             android:id="@+id/apue_productcost_data"
+            style="@style/edittext_optional_style"
             android:layout_weight="0.1"
             android:singleLine="true"
             android:inputType="numberDecimal"
@@ -193,8 +193,8 @@
             android:layout_height="match_parent"
             android:layout_weight="0.05"/>
         <EditText
-            style="@style/edittext_optional_style"
             android:id="@+id/apue_productusage_orderinaisle_data"
+            style="@style/edittext_optional_style"
             android:layout_weight="0.1"
             android:inputType="number"
             android:digits="01234567899"
@@ -251,8 +251,8 @@
             android:layout_height="match_parent"
             android:layout_weight="0.05"/>
         <EditText
-            style="@style/edittext_optional_style"
             android:id="@+id/apue_productusage_buycount_data"
+            style="@style/edittext_optional_style"
             android:layout_weight="0.1"
             android:singleLine="true"
             android:inputType="number"
@@ -294,8 +294,8 @@
             android:layout_height="match_parent"
             android:layout_weight="0.05"/>
         <EditText
-            style="@style/edittext_optional_style"
             android:id="@+id/apue_productusage_firstbuydate_data"
+            style="@style/edittext_optional_style"
             android:layout_weight="0.2"
             android:singleLine="true"
             android:text=""
@@ -336,8 +336,8 @@
             android:layout_height="match_parent"
             android:layout_weight="0.05"/>
         <EditText
-            style="@style/edittext_optional_style"
             android:id="@+id/apue_productusage_lastbuydate_data"
+            style="@style/edittext_optional_style"
             android:layout_weight="0.2"
             android:singleLine="true"
             android:text=""
@@ -378,8 +378,8 @@
             android:layout_height="match_parent"
             android:layout_weight="0.05"/>
         <EditText
-            style="@style/edittext_optional_style"
             android:id="@+id/apue_productusage_mincost_data"
+            style="@style/edittext_optional_style"
             android:layout_weight="0.2"
             android:singleLine="true"
             android:text=""

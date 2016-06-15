@@ -12,86 +12,73 @@
         android:id="@+id/shoplist_row1"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_heading_height">
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/shop_name_entry"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listentryimportant_style"
             android:layout_weight="0.89"
-            android:singleLine="true"
-            android:textStyle="bold"
-            android:textSize="@dimen/standard_listview_text_size"/>
+            />
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listentry_style"
             android:layout_weight="0.005"/>
         <TextView
             android:id="@+id/shop_order_entry"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listentry_style"
             android:layout_weight="0.1"
             android:gravity="end"
-            android:textSize="@dimen/standard_listview_text_size"/>
+            />
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listentry_style"
             android:layout_weight="0.005"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/shoplist_row2"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_heading_height">
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/shop_city_entry"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listentry_style"
             android:layout_weight="0.3"
-            android:singleLine="true"
-            android:textSize="@dimen/standard_listview_text_size"/>
+            />
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.005"/>
+            style="@style/textview_listentry_style"
+            android:layout_weight="0.005"
+            />
         <TextView
             android:id="@+id/shop_street_entry"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listentry_style"
             android:layout_weight="0.4"
-            android:singleLine="true"
-            android:textSize="@dimen/standard_listview_text_size"/>
+            />
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.005"/>
+            style="@style/textview_listentry_style"
+            android:layout_weight="0.005"
+            />
         <TextView
             android:id="@+id/shop_state_entry"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listentry_style"
             android:layout_weight="0.1"
-            android:textSize="@dimen/standard_listview_text_size"/>
+            />
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.005"/>
+            style="@style/textview_listentry_style"
+            android:layout_weight="0.005"
+            />
         <TextView
             android:id="@+id/shop_phone_entry"
-            android:layout_width="0dp"
+            style="@style/textview_listentry_style"
             android:layout_weight=".185"
-            android:layout_height="match_parent"
-            android:textSize="@dimen/standard_listview_text_size"/>
+            />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/shoplist_row3"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/help_button_height">
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/shop_notes_entry"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listentry_style"
             android:layout_weight="1"
-            android:textSize="@dimen/standard_listview_text_size"/>
+            />
     </LinearLayout>
 </LinearLayout>
 

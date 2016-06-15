@@ -1,5 +1,6 @@
 package mjt.shopper;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.SharedPreferences;
@@ -32,6 +33,7 @@ public class RuleAddEdit extends AppCompatActivity {
     public boolean helpoffmode;
     public SharedPreferences sp;
     private final static String THIS_ACTIVITY = "RuleAddEdit";
+    @SuppressLint("SimpleDateFormat")
     public SimpleDateFormat sdf = new SimpleDateFormat(Constants.STANDARD_DDMMYYY_FORMAT);
     public Date currentdate = new Date();
     public DatePickerDialog dpd;
@@ -244,6 +246,7 @@ public class RuleAddEdit extends AppCompatActivity {
 
     // Rule Save
     public void ruleaddedit_save(View view) {
+        @SuppressLint("SimpleDateFormat")
         final SimpleDateFormat sdf = new SimpleDateFormat(Constants.STANDARD_DDMMYYY_FORMAT);
         Emsg emsg;
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"ruleaddedit_save",devmode);

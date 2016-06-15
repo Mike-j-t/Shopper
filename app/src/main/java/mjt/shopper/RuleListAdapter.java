@@ -1,5 +1,6 @@
 package mjt.shopper;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.content.ContextCompat;
@@ -47,6 +48,7 @@ public class RuleListAdapter extends CursorAdapter {
     public static int rulelist_shopstreet_offset;
     public static int rulelist_productusagecost_offset;
 
+    @SuppressLint("SimpleDateFormat")
     public SimpleDateFormat sdf = new SimpleDateFormat(Constants.EXTENDED__DATE_DORMAT);
 
     public RuleListAdapter(Context context, Cursor cursor, int flags) {

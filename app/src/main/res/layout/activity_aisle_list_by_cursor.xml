@@ -33,33 +33,27 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/aislelist_help"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/aislelist_instructions"
-            android:textSize="@dimen/standard_listview_text_size"
-            android:background="@color/colorHelpButton"/>
+            style="@style/textview_help_style"
+            android:text="@string/aislelist_instructions" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/aislelist_selectstore_heading"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/required_heading_height"
         android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/standard_dummy_size"
         android:background="@color/colorlistviewheading">
         <TextView
             android:id="@+id/aislelist_storeselect_label"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="1"
             android:text="@string/shoplabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"
-            android:textColor="@color/colorNormalButtonText"/>
+            />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/aislelist_storeselect"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_spinner_layout_height"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_margin="@dimen/standard_dummy_size">
         <Spinner
@@ -72,33 +66,24 @@
     <LinearLayout
         android:id="@+id/aislelist_listheading"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/required_heading_height"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:background="@color/colorlistviewheading">
         <TextView
             android:id="@+id/aislelist_listheading_aislename"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.89"
             android:text="@string/aislelabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"
-            android:textColor="@color/colorNormalButtonText"
             android:onClick="orderByAisle"/>
         <TextView
             android:id="@+id/aislelist_listheading_aisleorder"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.1"
             android:text="@string/aisleorderlabelshort"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"
-            android:textColor="@color/colorNormalButtonText"
             android:onClick="orderByOrder"/>
         <TextView
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.01"/>
     </LinearLayout>
     <ListView

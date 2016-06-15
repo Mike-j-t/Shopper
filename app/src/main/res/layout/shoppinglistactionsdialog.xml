@@ -152,10 +152,10 @@
             android:background="@color/colorlistviewheading"/>
         <EditText
             android:id="@+id/shoppinglistaction_newquantity"
+            style="@style/edittext_optional_style"
             android:layout_width="0dp"
             android:layout_weight="20"
             android:digits="0123456789"
-            style="@style/edittext_optional_style"
             tools:ignore="LabelFor" />
         <TextView
             android:layout_width="0dp"
@@ -191,10 +191,10 @@
             android:background="@color/colorlistviewheading"/>
         <EditText
             android:id="@+id/shoppinglistaction_newcost"
+            style="@style/edittext_optional_style"
             android:layout_width="0dp"
             android:layout_weight="20"
             android:digits="0123456789."
-            style="@style/edittext_optional_style"
             tools:ignore="LabelFor" />
         <TextView
             android:layout_width="0dp"
@@ -230,9 +230,9 @@
             android:background="@color/colorlistviewheading"/>
         <EditText
             android:id="@+id/shoppinglistaction_newname"
+            style="@style/edittext_optional_style"
             android:layout_width="0dp"
             android:layout_weight="65"
-            style="@style/edittext_optional_style"
             tools:ignore="LabelFor" />
     </LinearLayout>
     <LinearLayout
