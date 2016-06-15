@@ -33,52 +33,37 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/productusageedit_help"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/addproducttoshop_instructions"
-            android:textSize="@dimen/standard_listview_text_size"
-            android:background="@color/colorHelpButton"/>
+            style="@style/textview_help_style"
+            android:text="@string/addproducttoshop_instructions" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/productuseageedit_selection"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_heading_height"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin">
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_selecttitle_style"
             android:layout_weight="0.1"
             android:text="@string/productlabel"/>
         <EditText
             android:id="@+id/productusageedit_selection_input"
             style="@style/edittext_selection_style"
-            android:layout_weight="0.9" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/productuseageedit_storeselector_heading"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_heading_height"
-        android:background="@color/colorlistviewheading"
-        android:visibility="gone">
+            android:layout_weight="0.9"
+            tools:ignore="LabelFor" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/productusageedit_storeselector_ll"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_spinner_layout_height">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin">
         <TextView
             android:id="@+id/productusageedit_selector_headings_store_label"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.205"
             android:text="@string/shoplabel"
-            android:singleLine="true"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"
-            android:textColor="@color/colorNormalButtonText"
-            android:background="@color/colorlistviewheading"/>
+            />
         <Spinner
             style="@style/spinner_style"
             android:id="@+id/productusageedit_storeselector"
@@ -90,18 +75,13 @@
         android:id="@+id/productusageedit_ailseselector_ll"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_spinner_layout_height">
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/productusageedit_selector_headings_aisle_label"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.205"
-            android:singleLine="true"
             android:text="@string/aislelabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"
-            android:textColor="@color/colorNormalButtonText"
-            android:background="@color/colorlistviewheading"/>
+            />
         <Spinner
             style="@style/spinner_style"
             android:id="@+id/productusageedit_aisleselector"
@@ -113,18 +93,13 @@
         android:id="@+id/productusageedit_productselector_ll"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_spinner_layout_height">
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/productusageedit_selector_headings_product_label"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.205"
-            android:singleLine="true"
             android:text="@string/productlabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"
-            android:textColor="@color/colorNormalButtonText"
-            android:background="@color/colorlistviewheading"/>
+            />
         <Spinner
             style="@style/spinner_style"
             android:id="@+id/productuseageedit_productselector"
@@ -136,60 +111,49 @@
         android:id="@+id/apue_input"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_heading_height">
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/productusageedit_priceinput_label"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
+            style="@style/textview_important_style"
             android:layout_weight="0.16"
             android:text="@string/productusage_cost_label"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"
-            android:textColor="@color/colorNormalButtonText"
-            android:background="@color/colorlistviewheading"/>
+            />
         <TextView
-            android:padding="@dimen/standard_dummy_size"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
-            android:layout_weight="0.01"/>
+            style="@style/textview_normal_style"
+            android:layout_weight="0.01"
+            />
         <EditText
-            style="@style/edittext_required_style"
             android:id="@+id/productusageedit_priceinput"
+            style="@style/edittext_required_style"
             android:layout_weight="0.1"
             android:inputType="numberDecimal"
             android:digits="0123456789."
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            />
         <TextView
-            android:padding="@dimen/standard_dummy_size"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
-            android:layout_weight="0.23"/>
+            style="@style/textview_normal_style"
+            android:layout_weight="0.23"
+            />
         <TextView
             android:id="@+id/productusageedit_orderinput_label"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
+            style="@style/textview_normal_style"
             android:layout_weight="0.16"
             android:text="@string/aisleorderlabelshort"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"
-            android:textColor="@color/colorNormalButtonText"
-            android:background="@color/colorlistviewheading"/>
+            />
         <TextView
-            android:padding="@dimen/standard_dummy_size"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
-            android:layout_weight="0.01"/>
+            style="@style/textview_normal_style"
+            android:layout_weight="0.01"
+            />
         <EditText
-            style="@style/edittext_optional_style"
             android:id="@+id/productusageedit_orderinput"
+            style="@style/edittext_optional_style"
             android:layout_weight="0.1"
             android:inputType="number"
             tools:ignore="LabelFor" />
         <TextView
-            android:padding="@dimen/standard_dummy_size"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
-            android:layout_weight="0.23"/>
+            style="@style/textview_normal_style"
+            android:layout_weight="0.23"
+            />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/productusageedit_addbutton"
@@ -206,54 +170,43 @@
         android:id="@+id/productusageedit_currentaisleproducts_headings"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_heading_height"
+        android:layout_height="wrap_content"
         android:background="@color/colorlistviewheading">
         <TextView
             android:id="@+id/productusageedit_currentaisleproducts_heading1"
-            android:layout_margin="@dimen/standard_dummy_width"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
-            android:singleLine="true"
+            style="@style/textview_listheadingtitle_style"
+            android:layout_weight="1"
             android:text="@string/productsinthisaisle"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"
-            android:textColor="@color/colorNormalButtonText" />
+            />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/productusageedit_currentaisleproducts_heading2"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_heading_height"
+        android:layout_height="wrap_content"
         android:background="@color/colorlistviewheading">
         <TextView
             android:id="@+id/productusageedit_currentaisleproducts_product"
-            android:layout_width="@dimen/productname_text_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
-            android:singleLine="true"
+            style="@style/textview_listheading_style"
+            android:layout_weight=".44"
             android:text="@string/productlabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="bold"
             android:onClick="orderByProduct"/>
         <TextView
+            android:id="@+id/productusageedit_currentaisleproducts_notes"
+            style="@style/textview_listheading_style"
+            android:layout_weight="0.42"
+            android:text="@string/productnoteslabel"/>
+        <TextView
             android:id="@+id/productusageedit_currentaisleproducts_price"
-            android:layout_width="@dimen/standard_realnumb_width"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
-            android:singleLine="true"
+            style="@style/textview_listheading_style"
+            android:layout_weight=".08"
             android:text="@string/productusage_cost_label"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="bold"
             android:onClick="orderByCost"/>
         <TextView
             android:id="@+id/productusageedit_currentaisleproducts_order"
-            android:layout_width="@dimen/standard_realnumb_width"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
-            android:singleLine="true"
+            style="@style/textview_listheading_style"
+            android:layout_weight="0.08"
             android:text="@string/productusage_orderinaisle_label"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="bold"
             android:onClick="orderByOrder"/>
     </LinearLayout>
     <ListView

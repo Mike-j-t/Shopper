@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,11 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.util.Date;
 
 // MainActivity - Application Starts Here
@@ -349,6 +343,7 @@ public class MainActivity extends AppCompatActivity {
         //}
         //Log.d("ShopperExport","Ended Shopper Export Test");
 
+
         if(shopcount < 1 ) {
             Intent intent = new Intent(this, ShopAddActivity.class);
             intent.putExtra("Caller",THIS_ACTIVITY);
@@ -383,7 +378,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.am_toget_button:
-                intent = new Intent(this,AddPurchaseableProductsToShopList.class);
+                intent = new Intent(this,AddPurchasableProductsToShopList.class);
                 intent.putExtra("Caller",THIS_ACTIVITY);
                 intent.putExtra("DEVELOPERMODE",developermode);
                 startActivity(intent);

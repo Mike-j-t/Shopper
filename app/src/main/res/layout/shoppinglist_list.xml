@@ -19,12 +19,6 @@
             android:text="@string/standarddonebutton"
             android:onClick="sladone"/>
         <TextView
-            android:id="@+id/shoppinglist_addrules"
-            style="@style/textviewbutton"
-            android:text="@string/standardruleaddtext"
-            android:onClick="slaaddrules"
-            android:visibility="gone"/>
-        <TextView
             android:id="@+id/shopplist_organise"
             style="@style/textviewbutton"
             android:text="@string/standardreorgbutton"
@@ -37,11 +31,9 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/shoplist_help"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/textview_help_style"
             android:text="@string/shoppinglist_instructions"
-            android:textSize="@dimen/standard_listview_text_size"
-            android:background="@color/colorHelpButton"/>
+            />
     </LinearLayout>
     <ListView
         android:id="@+id/autoaddpromptlist"
@@ -55,56 +47,43 @@
         android:id="@+id/shoppinglist_stats"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_heading_height"
+        android:layout_height="wrap_content"
         android:background="@color/colorlistviewheading">
         <TextView
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listentry_style"
             android:layout_weight="0.003"
-            android:background="@color/colorlistviewheading"/>
+            />
         <TextView
             android:id="@+id/shoppinglist_purchasedamount_prefix"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listentry_style"
             android:layout_weight="0.385"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
             android:text="@string/shoppinglist_totalspent"
-            android:background="@color/colorlistviewheading"
-            android:textColor="@color/colorNormalButtonText"/>
+            android:textColor="@color/colorNormalButtonText"
+            />
         <TextView
             android:id="@+id/shoppinglist_purchasedamount"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listentry_style"
             android:layout_weight="0.1"
-            android:singleLine="true"
             android:gravity="end"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
             android:textColor="@color/colorNormalButtonText"
-            android:background="@color/colorlistviewheading"/>
+            />
         <TextView
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listentry_style"
             android:layout_weight="0.03"
-            android:background="@color/colorlistviewheading"/>
+            />
         <TextView
             android:id="@+id/shoppinglist_remainingcost_prefix"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listentry_style"
             android:layout_weight="0.385"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
             android:text="@string/shoppinglist_totalcostremaining"
-            android:background="@color/colorlistviewheading"
             android:textColor="@color/colorNormalButtonText"/>
         <TextView
             android:id="@+id/shoppinglist_remainingcost"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listentry_style"
             android:layout_weight="0.1"
-            android:singleLine="true"
             android:gravity="end"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
             android:textColor="@color/colorNormalButtonText"
-            android:background="@color/colorlistviewheading"/>
+            />
     </LinearLayout>
     <ListView
         android:id="@+id/shoppinglist_list"

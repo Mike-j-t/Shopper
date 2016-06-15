@@ -29,6 +29,21 @@ public class ProductAddActivity extends AppCompatActivity {
     public boolean devmode;
     public boolean helpoffmode;
 
+    //==============================================================================================
+    // Cursor Offsets.
+    // Cursor offsets are set to the offset ino the respective cursor. They are set, once when the
+    // respective cursor is invoked, by obtaining the actual index via the columns name, thus
+    // negating a need to alter offsets if column orders are changed (e.g. column added/deleted)
+    // Note! column use changes may still be required if adding or deleting columns from tables or
+    //     queries.
+
+    public static int products_productid_offset = -1;
+    public static int products_productname_offset;
+    public static int products_productorder_offset;
+    public static int products_productaisleref_offset;
+    public static int products_productuses_offset;
+    public static int products_productnotes_offset;
+
     // Layout based variables - created here to allow access throughout this activity
     public TextView productname_label;
     public EditText productname_edittext;
@@ -79,6 +94,7 @@ public class ProductAddActivity extends AppCompatActivity {
         currentproductslist = (ListView) findViewById(R.id.productaddedit_currentproducts_listview);
 
         currentproductlistcsr = shopperdb.getProductsAsCursor(productlistsortorder,"");
+        setProductsOffsets(currentproductlistcsr);
         currentproductslistadapter = new ProductsCursorAdapter(this,currentproductlistcsr, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         currentproductslist.setAdapter(currentproductslistadapter);
 
@@ -161,5 +177,18 @@ public class ProductAddActivity extends AppCompatActivity {
     public void orderByNotes(View view) {
         productlistsortorder = Constants.PRODUCTLISTORDER_BY_NOTES;
         refreshCurrentProductsList();
+    }
+
+    // Set Products Table query offsets into returned cursor, if not already set
+    public void setProductsOffsets(Cursor cursor) {
+        if(products_productid_offset != -1) {
+            return;
+        }
+        products_productid_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_ID);
+        products_productname_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NAME);
+        products_productorder_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_ORDER);
+        products_productaisleref_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_AISLE);
+        products_productuses_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_USES);
+        products_productnotes_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NOTES);
     }
 }

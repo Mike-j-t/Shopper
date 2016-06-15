@@ -1,5 +1,6 @@
 package mjt.shopper;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -19,7 +20,6 @@ import java.util.Date;
 public class ProductUsageEdit extends AppCompatActivity {
     private final static String THIS_ACTIVITY = "ProductUsageEdit";
     private final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
-    public ProductsPerAisleCursorAdapter plpa_adapter;
     public boolean devmode;
     public boolean helpoffmode;
 
@@ -58,7 +58,7 @@ public class ProductUsageEdit extends AppCompatActivity {
         //final long shopid = sidcsr.getLong(ShopperDBHelper.AISLES_COLUMN_SHOP_INDEX);
         final Date firstpurchased = new Date(productfirstpurchased);
         final Date lastpurchased = new Date(productlastpurchased);
-        final SimpleDateFormat sdf = new SimpleDateFormat(Constants.STANDARD_DDMMYYY_FORMAT);
+        @SuppressLint("SimpleDateFormat") final SimpleDateFormat sdf = new SimpleDateFormat(Constants.STANDARD_DDMMYYY_FORMAT);
 
         ((TextView) this.findViewById(R.id.apue_shopname_data)).setText(getIntent().getStringExtra("SHOPNAME"));
         ((TextView) this.findViewById(R.id.apue_aislename_data)).setText(getIntent().getStringExtra("AISLENAME"));
@@ -253,7 +253,7 @@ public class ProductUsageEdit extends AppCompatActivity {
         int bc =0;
         float mc = 0.0f;
         int oia = 0;
-        final SimpleDateFormat sdf = new SimpleDateFormat(Constants.STANDARD_DDMMYYY_FORMAT);
+        @SuppressLint("SimpleDateFormat") final SimpleDateFormat sdf = new SimpleDateFormat(Constants.STANDARD_DDMMYYY_FORMAT);
 
         // Check that the firstbuydate is a valid date, if not set message, issue Toast and return
         EditText fbd_et = (EditText) findViewById(R.id.apue_productusage_firstbuydate_data);

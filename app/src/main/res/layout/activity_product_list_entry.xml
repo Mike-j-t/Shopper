@@ -8,40 +8,27 @@
     android:paddingRight="@dimen/standard_listview_row_padding_horizontal">
     <TextView
         android:id="@+id/product_id_entry"
-        android:layout_width="@dimen/standard_dummy_size"
-        android:layout_height="@dimen/standard_heading_height"
-        android:singleLine="true"
-        android:textSize="@dimen/standard_listview_text_size"
-        android:textStyle="italic"/>
+        style="@style/textview_listentry_style" />
     <TextView
         android:id="@+id/product_name_entry"
-        android:layout_width="@dimen/productname_text_size"
-        android:layout_height="@dimen/standard_heading_height"
-        android:singleLine="true"
-        android:textSize="@dimen/standard_listview_text_size"
-        android:textStyle="bold"/>
+        style="@style/textview_listentryimportant_style"
+        android:layout_weight="0.45"
+        />
     <TextView
         android:id="@+id/product_notes_entry"
-        android:layout_width="@dimen/productnotes_text_size"
-        android:layout_height="@dimen/standard_heading_height"
-        android:singleLine="true"
-        android:textSize="@dimen/standard_listview_text_size" />
+        style="@style/textview_listentry_style"
+        android:layout_weight="0.55"
+        />
     <TextView
         android:id="@+id/product_order_entry"
-        android:layout_width="@dimen/standard_dummy_size"
-        android:layout_height="@dimen/standard_heading_height"
-        android:singleLine="true"
-        android:textSize="@dimen/standard_listview_text_size"/>
+        style="@style/textview_listentry_style"
+        />
     <TextView
         android:id="@+id/product_aisle_entry"
-        android:layout_width="@dimen/standard_dummy_size"
-        android:layout_height="@dimen/standard_heading_height"
-        android:singleLine="true"
-        android:textSize="@dimen/standard_listview_text_size"/>
+        style="@style/textview_listentry_style"
+        />
     <TextView
         android:id="@+id/product_uses_entry"
-        android:layout_width="@dimen/standard_dummy_size"
-        android:layout_height="@dimen/standard_heading_height"
-        android:singleLine="true"
-        android:textSize="@dimen/standard_listview_text_size"/>
+        style="@style/textview_listentry_style"
+        />
 </LinearLayout>

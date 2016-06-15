@@ -11,103 +11,75 @@
     <LinearLayout
         android:id="@+id/shoppinglist_shopheader"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_listview_row_height"
+        android:layout_height="wrap_content"
         android:padding="@dimen/standard_dummy_size"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/shoppinglist_shopname"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/standard_listview_row_height"
+            style="@style/textview_listentryimportant_style"
             android:layout_weight="0.25"
-            android:singleLine="true"
-            android:textSize="@dimen/standard_listview_text_size"
-            android:textStyle="bold"
             android:textColor="@color/colorNormalButtonText"/>
         <TextView
             android:id="@+id/shoppinglist_shopcity"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_listview_row_height"
+            style="@style/textview_listentry_style"
             android:layout_weight="0.25"
-            android:singleLine="true"
-            android:textSize="@dimen/standard_listview_text_size"
-            android:textStyle="italic"
             android:textColor="@color/colorNormalButtonText"/>
         <TextView
             android:id="@+id/shoppinglist_shopstreet"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listentry_style"
             android:layout_weight="0.5"
-            android:singleLine="true"
-            android:textSize="@dimen/standard_listview_text_size"
-            android:textStyle="italic"
             android:textColor="@color/colorNormalButtonText"/>
     </LinearLayout>
     <!--  Aisle Display - Note adapter (ShoppingListAdapter) set/unsets visibility on new aisle -->
     <LinearLayout
         android:id="@+id/shoppinglist_aisleheader"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_listview_row_height"
+        android:layout_height="wrap_content"
         android:padding="@dimen/standard_dummy_size"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/shoppinglist_aislename"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            style="@style/textview_listentry_style"
             android:layout_weight="1"
-            android:singleLine="true"
-            android:textSize="@dimen/standard_listview_text_size"
-            android:textStyle="bold"
             android:textColor="@color/colorNormalButtonText"/>
     </LinearLayout>
     <!--  Main Data ie Display a Shopping List Item (Product quantity unit cost total cost and Done and Delete buttons -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_button_height"
+        android:layout_height="wrap_content"
         android:padding="@dimen/standard_dummy_size"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:gravity="center_vertical"
         android:orientation="horizontal">
         <TextView
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
-            android:layout_weight="0.010"/>
+            style="@style/textview_listentry_style"
+            android:layout_weight="0.010"
+            />
         <TextView
             android:id="@+id/shoppinglist_productname"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
+            style="@style/textview_listentryimportant_style"
             android:layout_weight="0.25"
-            android:singleLine="true"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"/>
+            />
         <TextView
             android:id="@+id/shoppinglist_quantity"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
+            style="@style/textview_listentry_style"
             android:layout_weight="0.025"
-            android:singleLine="true"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"/>
+            />
         <TextView
             android:id="@+id/shoppinglist_price"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
+            style="@style/textview_listentry_style"
             android:layout_weight="0.05"
-            android:singleLine="true"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="normal"/>
+            />
         <TextView
             android:id="@+id/shoppinglist_priceforall"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
+            style="@style/textview_listentry_style"
             android:layout_weight="0.05"
-            android:singleLine="true"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold|italic"/>
+            />
         <TextView
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
-            android:layout_weight="0.005"/>
+            style="@style/textview_listentry_style"
+            android:layout_weight="0.005"
+            />
         <TextView
             android:id="@+id/shoppinglist_donebutton"
             style="@style/textviewbutton"
@@ -124,8 +96,7 @@
             android:text="@string/standarddeletetext"
             android:onClick="sledelete"/>
         <TextView
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listentry_style"
             android:layout_weight="0.005"/>
     </LinearLayout>
     <!--  Footer Display Approx Remaining Cost -->

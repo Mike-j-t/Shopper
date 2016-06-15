@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -151,10 +152,11 @@
             android:background="@color/colorlistviewheading"/>
         <EditText
             android:id="@+id/shoppinglistaction_newquantity"
+            style="@style/edittext_optional_style"
             android:layout_width="0dp"
             android:layout_weight="20"
             android:digits="0123456789"
-            style="@style/edittext_optional_style" />
+            tools:ignore="LabelFor" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -189,10 +191,11 @@
             android:background="@color/colorlistviewheading"/>
         <EditText
             android:id="@+id/shoppinglistaction_newcost"
+            style="@style/edittext_optional_style"
             android:layout_width="0dp"
             android:layout_weight="20"
             android:digits="0123456789."
-            style="@style/edittext_optional_style" />
+            tools:ignore="LabelFor" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -227,9 +230,10 @@
             android:background="@color/colorlistviewheading"/>
         <EditText
             android:id="@+id/shoppinglistaction_newname"
+            style="@style/edittext_optional_style"
             android:layout_width="0dp"
             android:layout_weight="65"
-            style="@style/edittext_optional_style" />
+            tools:ignore="LabelFor" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/shoppinglistactions_finish_layout"

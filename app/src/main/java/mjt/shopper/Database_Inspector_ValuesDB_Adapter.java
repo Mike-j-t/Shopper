@@ -13,8 +13,19 @@ import android.widget.TextView;
  * Created by Mike092015 on 30/03/2016.
  */
 public class Database_Inspector_ValuesDB_Adapter extends CursorAdapter {
+
+    public static int values_valueid_offset = -1;
+    public static int values_valuename_offset;
+    public static int values_valuetype_offset;
+    public static int values_valueint_offset;
+    public static int values_valuereal_offset;
+    public static int values_valuetext_offset;
+    public static int values_valueincludeinsettings_offset;
+    public static int values_valuesettingsinfro_offset;
+
     public Database_Inspector_ValuesDB_Adapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
+        setValuesOffsets(cursor);
     }
     @Override
     public View getView(int position, View convertview, ViewGroup parent) {
@@ -38,17 +49,31 @@ public class Database_Inspector_ValuesDB_Adapter extends CursorAdapter {
         TextView textviewvaluesettingsincl = (TextView) view.findViewById(R.id.adi_appvaluesdb_valueincludeinsettings);
         TextView textviewvaluesettingsinfo = (TextView) view.findViewById(R.id.adi_appvaluesdb_settingsinfo);
 
-        textviewvalueid.setText(cursor.getString(ShopperDBHelper.VALUES_COLUMN_ID_INDEX));
-        textviewvaluename.setText(cursor.getString(ShopperDBHelper.VALUES_COLUMN_VALUENAME_INDEX));
-        textviewvaluetype.setText(cursor.getString(ShopperDBHelper.VALUES_COLUMN_VALUETYPE_INDDEX));
-        textviewvalueint.setText(cursor.getString(ShopperDBHelper.VALUES_COLUMN_VALUEINT_INDEX));
-        textviewvaluereal.setText(cursor.getString(ShopperDBHelper.VALUES_COLUMN_VALUEREAL_INDEX));
-        textviewvaluestr.setText(cursor.getString(ShopperDBHelper.VALUES_COLUMN_VALUETEXT_INDEX));
-        textviewvaluesettingsincl.setText(cursor.getString(ShopperDBHelper.VALUES_COLUMN_VALUEINCLUDEINSETTINGS_INDEX));
-        textviewvaluesettingsinfo.setText(cursor.getString(ShopperDBHelper.VALUES_COLUMN_VALUESETTINGSINFO_INDEX));
+        textviewvalueid.setText(cursor.getString(values_valueid_offset));
+        textviewvaluename.setText(cursor.getString(values_valuename_offset));
+        textviewvaluetype.setText(cursor.getString(values_valuetype_offset));
+        textviewvalueint.setText(cursor.getString(values_valueint_offset));
+        textviewvaluereal.setText(cursor.getString(values_valuereal_offset));
+        textviewvaluestr.setText(cursor.getString(values_valuetext_offset));
+        textviewvaluesettingsincl.setText(cursor.getString(values_valueincludeinsettings_offset));
+        textviewvaluesettingsinfo.setText(cursor.getString(values_valuesettingsinfro_offset));
     }
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         return LayoutInflater.from(context).inflate(R.layout.activity_database_inspect_appvaluesdb_entry, parent, false);
+    }
+
+    public void setValuesOffsets(Cursor cursor) {
+        if(values_valueid_offset != -1) {
+            return;
+        }
+        values_valueid_offset = cursor.getColumnIndex(ShopperDBHelper.VALUES_COLUMN_ID);
+        values_valuename_offset = cursor.getColumnIndex(ShopperDBHelper.VALUES_COLUMN_VALUENAME);
+        values_valuetype_offset = cursor.getColumnIndex(ShopperDBHelper.VALUES_COLUMN_VALUETYPE);
+        values_valueint_offset = cursor.getColumnIndex(ShopperDBHelper.VALUES_COLUMN_VALUEINT);
+        values_valuereal_offset = cursor.getColumnIndex(ShopperDBHelper.VALUES_COLUMN_VALUEREAL);
+        values_valuetext_offset = cursor.getColumnIndex(ShopperDBHelper.VALUES_COLUMN_VALUETEXT);
+        values_valueincludeinsettings_offset = cursor.getColumnIndex(ShopperDBHelper.VALUES_COLUMN_VALUEINCLUDEINSETTINGS);
+        values_valuesettingsinfro_offset = cursor.getColumnIndex(ShopperDBHelper.VALUES_COLUMN_VALUESETTINGSINFO);
     }
 }

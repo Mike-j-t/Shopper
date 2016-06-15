@@ -38,77 +38,66 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/aislelist_help"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/rules_ruleaddedit_instructions"
-            android:textSize="@dimen/standard_listview_text_size"
-            android:background="@color/colorHelpButton"/>
+            style="@style/textview_help_style"
+            android:layout_weight="1"
+            android:text="@string/rules_ruleaddedit_instructions" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ruleaddedit_productheader"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_heading_height"
-        android:baselineAligned="false">
+        android:layout_height="wrap_content"
+        >
         <TextView
             android:id="@+id/ruleaddedit_productlabel"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:singleLine="true"
+            style="@style/textview_normal_style"
+            android:layout_weight="0.15"
             android:text="@string/productlabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"/>
+            />
         <TextView
             android:id="@+id/ruleaddedit_product"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
-            android:layout_weight="0.8"
+            style="@style/textview_important_style"
+            android:layout_weight="0.85"
             android:maxLines="1"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"/>
+            />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ruleaddedit_storeheader"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_heading_height"
-        android:baselineAligned="false">
+        android:layout_height="wrap_content"
+        >
         <TextView
             android:id="@+id/ruleaddedit_storelabel"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:singleLine="true"
+            style="@style/textview_normal_style"
+            android:layout_weight="0.15"
             android:text="@string/shoplabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"/>
+            />
         <TextView
             android:id="@+id/ruleaddedit_store"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
-            android:layout_weight="0.8"
+            style="@style/textview_important_style"
+            android:layout_weight="0.85"
             android:maxLines="1"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"/>
+            />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ruleaddedit_aisleheader"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_heading_height"
-        android:baselineAligned="false">
+        android:layout_height="wrap_content"
+        >
         <TextView
             android:id="@+id/ruleaddedit_aislelabel"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:singleLine="true"
+            style="@style/textview_normal_style"
+            android:layout_weight="0.15"
             android:text="@string/aislelabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"/>
+            />
         <TextView
             android:id="@+id/ruleaddedit_ailse"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
-            android:layout_weight="0.8"
+            style="@style/textview_important_style"
+            android:layout_weight="0.85"
             android:maxLines="1"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"/>
+            />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ruleaddedit_inputrulename"
@@ -118,38 +107,28 @@
         android:layout_margin="@dimen/standard_dummy_size">
             <TextView
                 android:id="@+id/ruleaddedit_rulenamelabel"
-                android:layout_width="@dimen/standard_dummy_size"
-                android:layout_height="@dimen/standard_subsubsubheading_height"
+                style="@style/textview_normal_style"
                 android:layout_weight="0.15"
                 android:singleLine="true"
-                android:layout_margin="@dimen/standard_dummy_size"
                 android:text="@string/rulename_label"
-                android:textStyle="bold"
-                android:textSize="@dimen/standard_subsubsubheading_text_size"/>
+                />
             <EditText
-                style="@style/edittext_style"
                 android:id="@+id/ruleaddedit_rulename"
-                android:layout_weight="0.75"
+                style="@style/edittext_required_style"
+                android:layout_weight="0.85"
                 android:maxLength="@integer/rulename_maxcharacters"
                 tools:ignore="LabelFor" />
-        <TextView
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
-            android:layout_weight="0.2"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ruleaddedit_inputautoadd"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_button_height">
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/ruleaddedit_autoadd_label"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="wrap_content"
+            style="@style/textview_normal_style"
             android:layout_weight="0.95"
-            android:padding="@dimen/standard_dummy_size"
             android:text="@string/rule_addeditpromptextra"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"/>
+            />
         <Switch
             android:id="@+id/ruleaddedit_autoadd"
             android:layout_width="@dimen/standard_dummy_size"
@@ -157,7 +136,6 @@
             android:layout_weight="0.5"
             android:layout_gravity="top"
             android:text=""
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
             android:hint="">
 
         </Switch>
@@ -166,102 +144,74 @@
         android:id="@+id/ruleaddedit_inputstartdate"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_button_height"
+        android:layout_height="wrap_content"
         android:baselineAligned="false">
         <TextView
             android:id="@+id/ruleaddedit_startdate_label"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
-            android:layout_weight="0.16"
-            android:gravity="top"
+            style="@style/textview_normal_style"
+            android:layout_weight="0.15"
             android:text="@string/rule_addedit_acton_label"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold">
+            >
         </TextView>
         <EditText
             android:id="@+id/ruleaddedit_startdate"
-            android:layout_weight="0.23"
+            style="@style/edittext_required_style"
+            android:layout_weight="0.15"
             android:inputType="date"
             android:digits="0123456789/"
             android:maxLength="10"
             tools:ignore="LabelFor"
-            android:onClick="ruleAddEditDatePick"
-            style="@style/edittext_required_style">
+            android:onClick="ruleAddEditDatePick">
         </EditText>
         <TextView
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
-            android:layout_weight="0.03"/>
+            style="@style/textview_normal_style"
+            android:layout_weight="0.015"
+            />
         <TextView
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
-            android:layout_weight="0.15"
-            android:gravity="top"
-            android:text="@string/rule_addedit_frequency"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"/>
+            style="@style/textview_normal_style"
+            android:layout_weight="0.1"
+            android:text="@string/rule_addedit_frequency" />
         <Spinner
             style="@style/spinner_style"
             android:id="@+id/ruleaddedit_periodselector"
             android:layout_width="@dimen/standard_dummy_size"
-            android:layout_weight="0.24">
+            android:layout_weight="0.25">
         </Spinner>
         <TextView
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
-            android:layout_weight="0.03"
+            style="@style/textview_normal_style"
+            android:layout_weight="0.015"
             />
         <TextView
             android:id="@+id/ruleaddedit_periodmultiplier_label"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
-            android:layout_weight="0.15"
-            android:gravity="top"
+            style="@style/textview_normal_style"
+            android:layout_weight="0.1"
             android:text="@string/rule_addedit_multiplier"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"
             />
         <EditText
             android:id="@+id/ruleaddedit_periodmultiplier"
-            android:layout_weight="0.07"
+            style="@style/edittext_required_style"
+            android:layout_weight="0.05"
             android:maxLength="4"
             android:inputType="number"
             android:digits="0123456789"
             tools:ignore="LabelFor"
-            style="@style/edittext_required_style"
             />
         <TextView
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
-            android:layout_weight="0.03"/>
+            style="@style/textview_normal_style"
+            android:layout_weight="0.015"/>
         <TextView
-            android:layout_width="@dimen/standard_dummy_width"
-            android:layout_height="wrap_content"
-            android:height="@dimen/standard_subsubsubheading_height"
-            android:layout_weight="0.13"
-            android:text="@string/rule_addedit_quantity"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"/>
+            style="@style/textview_normal_style"
+            android:layout_weight="0.1"
+            android:text="@string/rule_addedit_quantity" />
         <EditText
             android:id="@+id/ruleaddedit_quantity"
-            android:layout_weight="0.07"
+            style="@style/edittext_required_style"
+            android:layout_weight="0.05"
             android:maxLength="4"
             android:inputType="number"
             android:digits="0123456789"
             tools:ignore="LabelFor"
-            style="@style/edittext_required_style"
             />
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/ruleaddedit_error"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorRequiredLabel"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ruleaddedit_currentrules_heading1"
@@ -271,49 +221,29 @@
         android:background="@color/colorlistviewheading">
         <TextView
             android:id="@+id/currentrules_rulename"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.5"
             android:text="@string/rulelabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="bold"
             android:onClick="ruleaddeditOrderByRule"/>
         <TextView
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.025"/>
         <TextView
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
-            android:layout_weight="0.1"
-            android:text=""
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="italic" />
+            style="@style/textview_listheading_style"
+            android:layout_weight="0.1" />
         <TextView
             android:id="@+id/rulelistentry_ruledate"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.2"
-            android:text="@string/rule_addedit_date"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="bold"
-            android:onClick="ruleaddeditOrderByDate"/>
+            android:text="@string/rule_addedit_date" />
         <TextView
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.025"/>
         <TextView
             android:id="@+id/rulelistentry_ruleprompttoadd"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.125"
             android:text="@string/prompt_label"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="bold"
             android:onClick="ruleaddeditOrderByPrompt"/>
     </LinearLayout>
     <LinearLayout
@@ -324,13 +254,9 @@
         android:background="@color/colorlistviewheading">
         <TextView
             android:id="@+id/currentrules_ruleasstring"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.5"
-            android:text="@string/rule_addedit_asstring"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="bold"/>
+            android:text="@string/rule_addedit_asstring" />
     </LinearLayout>
     <ListView
         android:id="@+id/ruleaddedit_currentrules"

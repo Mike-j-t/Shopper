@@ -1,6 +1,5 @@
 package mjt.shopper;
 
-import android.app.Application;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -9,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.io.File;
 import java.util.*;
 
 /**
@@ -90,7 +88,7 @@ class DBDatabase {
     public DBDatabase() {
         this.usable = false;
         this.database_name = "";
-        this.database_tables = new ArrayList<DBTable>();
+        this.database_tables = new ArrayList<>();
         this.problem_msg = "WDBD0100 - Uninstantiated - " +
                 "Use setDBDatabaseName to set the Database Name. " +
                 "Use addDBTableToDBDatabase to add at least 1 Table or " +
@@ -226,7 +224,7 @@ class DBDatabase {
             if(csr.getCount() > 0 ){
                 sql = sql + " INSERT INTO `" + dbt.getDBTableName() + "` (";
                 int coli = 0;
-                ArrayList<Integer> coltype = new ArrayList();
+                ArrayList<Integer> coltype = new ArrayList<>();
                 for(DBColumn dbtc : dbt.getTableDBColumns()) {
                     if(coli++ > 0) {
                         sql = sql + ", ";
@@ -272,6 +270,7 @@ class DBDatabase {
             } else {
                 sql = sql + "-- ERROR - TABLE " + dbt.getDBTableName() + " IS EMPTY SKIPPED \n";
             }
+            csr.close();
         }
         return sql;
     }
@@ -633,8 +632,6 @@ class DBTable {
 
             csr.moveToPosition(-1);
             while(csr.moveToNext()) {
-                String testx = csr.getString(1);
-                String test2 = csr.getString(2);
                 if(csr.getString(1).equals(columntofind)) {
                     columnmatch = true;
                 }
@@ -737,7 +734,6 @@ class DBColumn {
         column_name = column_name.toLowerCase();
 
         // Lots of potential values for the column type; so validate
-        boolean column_ok = false;
         this.problem_msg = "";
         this.column_type = simplifyColumnType(column_type);
         this.column_name = column_name;
@@ -858,70 +854,48 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     // Table shops
     public static final String SHOPS_TABLE_NAME = "shops";
     public static final String SHOPS_COLUMN_ID = PRIMARY_KEY_NAME;
-    public static final int SHOPS_COLUMNN_ID_INDEX = 0;
+    public static final String SHOPS_COLUMN_ID_FULL = SHOPS_TABLE_NAME + SHOPS_COLUMN_ID;
     public static final String SHOPS_COLUMN_NAME = "shopname";
-    public static final int SHOPS_COLUMN_NAME_INDEX = 1;
     public static final String SHOPS_COLUMN_ORDER = "shoporder";
-    public static final int SHOPS_COLUMN_ORDER_INDEX = 2;
     public static final String SHOPS_COLUMN_STREET = "shopstreet";
-    public static final int SHOPS_COLUMN_STREET_INDEX = 3;
     public static final String SHOPS_COLUMN_CITY = "shopcity";
-    public static final int SHOPS_COLUMN_CITY_INDEX = 4;
     public static final String SHOPS_COLUMN_STATE = "shopstate";
-    public static final int SHOPS_COLUMN_STATE_INDEX = 5;
     public static final String SHOPS_COLUMN_PHONE = "shopphone";
-    public static final int SHOPS_COULMN_PHONE_INDEX = 6;
     public static final String SHOPS_COLUMN_NOTES = "shopnotes";
-    public static final int SHOPS_COULMN_NOTES_INDEX = 7;
     public static int SHOPS_COLUMN_COUNT = -1;
 
     // Table Aisles
     public static final String AISLES_TABLE_NAME = "aisles";
     public static final String AISLES_COLUMN_ID = PRIMARY_KEY_NAME;
-    public static final int AISLES_COLUMN_ID_INDEX = 0;
+    public static final String AISLES_COLUMN_ID_FULL = AISLES_TABLE_NAME + AISLES_COLUMN_ID;
     public static final String AISLES_COLUMN_NAME = "aislename";
-    public static final int AISLES_COLUMN_NAME_INDEX = 1;
     public static final String AISLES_COLUMN_ORDER = "aisleorder";
-    public static final int AISLES_COLUMN_ORDER_INDEX = 2;
     public static final String AISLES_COLUMN_SHOP = "aisleshopref";
-    public static final int AISLES_COLUMN_SHOP_INDEX = 3;
     public static int AISLES_COLUMN_COUNT = -1;
 
     // Table Products
     public static final String PRODUCTS_TABLE_NAME = "products";
     public static final String PRODUCTS_COLUMN_ID = PRIMARY_KEY_NAME;
-    public static final int PRODUCTS_COLUMN_ID_INDEX = 0;
+    public static final String PRODUCTS_COLUMN_ID_FULL = PRODUCTS_TABLE_NAME + AISLES_COLUMN_ID;
     public static final String PRODUCTS_COLUMN_NAME = "productname";
-    public static final int PRODUCTS_COLUMN_NAME_INDEX = 1;
     public static final String PRODUCTS_COLUMN_ORDER = "productorder"; //redundant
-    public static final int PRODUCTS_COLUMN_ORDER_INDEX = 2;
     public static final String PRODUCTS_COLUMN_AISLE = "productaisleref"; //redundant
-    public static final int PRODUCTS_COLUMN_AISLE_INDEX = 3;
     public static final String PRODUCTS_COLUMN_USES = "productuses"; //redundant
-    public static final int PRODUCTS_COLUMN_USES_INDEX = 4;
     public static final String PRODUCTS_COLUMN_NOTES = "productnotes";
-    public static final int PRODUCTS_COLUMN_NOTES_INDEX = 5;
     public static int PRODUCTS_COLUMN_COUNT = -1;
 
     // Table ProductUsage
     public static final String PRODUCTUSAGE_TABLE_NAME = "productusage";
     public static final String PRODUCTUSAGE_COLUMN_AISLEREF = "productailseref";
-    public static final int PRODUCTUSAGE_COLUMN_AISLEREF_INDEX = 0;
     public static final String PRODUCTUSAGE_COLUMN_PRODUCTREF = "productproductref";
-    public static final int PRODUCTUSAGE_COLUMN_PRODUCTREF_INDEX = 1;
+    public static final String PRODUCTUSAGE_COLUMN_PRODUCTREF_FULL = PRODUCTUSAGE_TABLE_NAME + PRODUCTUSAGE_COLUMN_PRODUCTREF;
     public static final String PRODUCTUSAGE_COLUMN_COST = "productcost";
-    public static final int PRODUCTUSAGE_COLUMN_COST_INDEX = 2;
     public static final String PRODUCTUSAGE_COLUMN_BUYCOUNT = "productbuycount";
-    public static final int PRODUCTUSAGE_COLUMN_BUYCOUNT_INDEX = 3;
     public static final String PRODUCTUSAGE_COLUMN_FIRSTBUYDATE = "productfirstbuydate";
-    public static final int PRODUCTUSAGE_COLUMN_FIRSTBUYDATE_INDEX = 4;
     public static final String PRODUCTUSAGE_COLUMN_LATESTBUYDATE = "productlatestbuydate";
-    public static final int PRODUCTUSAGE_COLUMN_LASTBUYDATE_INDEX = 5;
     public static final String PRODUCTUSAGE_COLUMN_MINCOST = "mincost";
-    public static final int PRODUCTUSAGE_COLUMN_MINCOST_INDEX = 6;
     public static final String PRODUCUSAGE_COLUMN_MINCOST_TYPE = "REAL";
     public static final String PRODUCTUSAGE_COLUMN_ORDER = "orderinaisle";
-    public static final int PRODUCTUSAGE_COLUMN_ORDER_INDEX = 7;
     public static final String PRODUCTUSAGE_COLUMN_ORDER_TYPE = "INTEGER";
     public static int PRODUCTUSAGE_COLUMN_COUNT = -1;
 
@@ -929,74 +903,54 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     // Rules
     public static final String RULES_TABLE_NAME = "rules";
     public static final String RULES_COLUMN_ID = PRIMARY_KEY_NAME;
-    public static final int    RULES_COLUMN_ID_INDEX = 0;
+    public static final String RULES_COLUMN_ID_FULL = RULES_TABLE_NAME + RULES_COLUMN_ID;
     public static final String RULES_COLUMN_ID_TYPE = "INTEGER";
     public static final String RULES_COLUMN_NAME = "rulename";
-    public static final int    RULES_COLUMN_NAME_INDEX = 1;
     public static final String RULES_COULMN_NAME_TYPE = "TEXT";
     public static final String RULES_COLUMN_TYPE = "ruletype";
-    public static final int    RULES_COLUMN_TYPE_INDEX = 2;
     public static final String RULES_COLUMN_TYPE_TYPE = "INTEGER";
     public static final String RULES_COLUMN_PROMPTFLAG = "rulepromptflag";
-    public static final int    RULES_COLUMN_PROMPTFLAG_INDEX = 3;
     public static final String RULES_COLUMN_PROMPTFLAG_TYPE = "INTEGER";
     public static final String RULES_COLUMN_PERIOD = "ruleperiod";
-    public static final int    RULES_COLUMN_PERIOD_INDEX = 4;
     public static final String RULES_COLUMN_PERIOD_TYPE = "INTEGER";
     public static final String RULES_COLUMN_MULTIPLIER = "rulemultiplier";
-    public static final int    RULES_COLUMN_MULTIPLIER_INDEX = 5;
     public static final String RULES_COLUMN_MULTIPLIER_TYPE = "INTEGER";
     public static final String RULES_COLUMN_ACTIVEON = "ruleactiveon";
-    public static final int    RULES_COLUMN_ACTIVEON_INDEX = 6;
     public static final String RULES_COLUMN_ACTIVEON_TYPE = "INTEGER";
     public static final String RULES_COLUMN_PRODUCTREF = "ruleproductref";
-    public static final int    RULES_COLUMN_PRODUCTREF_INDEX = 7;
     public static final String RULES_COLUMN_PRODUCTREF_TYPE = "INTEGER";
     public static final String RULES_COLUMN_AISLEREF = "ruleaisleref";
-    public static final int    RULES_COLUMN_AISLEREF_INDEX = 8;
     public static final String RULES_COLUMN_AISLREF_TYPE = "INTEGER";
     public static final String RULES_COLUMN_USES = "ruleuses";
-    public static final int    RULES_COLUMN_USES_INDEX = 9;
     public static final String RULES_COLUMN_USES_TYPE = "INTEGER";
     public static final String RULES_COLUMN_MINCOST = "mincost";
-    public static final int    RULES_COLUMN_MINCOST_INDEX = 10;
     public static final String RULES_COLUMN_MINCOST_TYPE = "REAL";
     public static final String RULES_COLUMN_MAXCOST = "maxcost";
-    public static final int    RULES_COLUMN_MAXCOST_INDEX = 11;
     public static final String RULES_COLUMN_MAXCOST_TYPE = "REAL";
     public static final String RULES_COLUMN_NUMBERTOGET = "rulesnumbettoget";
-    public static final int    RULES_COLUMN_NUMBERTOGET_INDEX = 12;
     public static final String RULES_COLUMN_NUMBERTOGET_TYPE = "INTEGER";
     public static int RULES_COLUMN_COUNT = -1;
 
     // Shoplist
     public static final String SHOPLIST_TABLE_NAME = "shoplist";
     public static final String SHOPLIST_COLUMN_ID = PRIMARY_KEY_NAME;
-    public static final int    SHOPLIST_COLUMN_ID_INDEX = 0;
+    public static final String SHOPLIST_COLUMN_ID_FULL = SHOPLIST_TABLE_NAME + SHOPLIST_COLUMN_ID;
     public static final String SHOPLIST_COLUMN_ID_TYPE = "INTEGER";
     public static final String SHOPLIST_COLUMN_PRODUCTREF = "slproductid";
-    public static final int    SHOPLIST_COLUMN_PRODUCTREF_INDEX = 1;
     public static final String SHOPLIST_COLUMN_PRODUCTREF_TYPE = "INTEGER";
     public static final String SHOPLIST_COLUMN_DATEADDED = "sldateadded";
-    public static final int    SHOPLIST_COLUMN_DATEADDED_INDEX = 2;
     public static final String SHOPLIST_COLUMN_DATEADDED_TYPE = "INTEGER";
     public static final String SHOPLIST_COLUMN_NUMBERTOGET = "slnumbertoget";
-    public static final int    SHOPLIST_COLUMN_NUMBERTOGET_INDEX = 3;
     public static final String SHOPLIST_COLUMN_NUMBERTOGET_TYPE = "INTEGER";
     public static final String SHOPLIST_COLUMN_DONE = "sldone";
-    public static final int    SHOPLIST_COLUMN_DONE_INDEX = 4;
     public static final String SHOPLIST_COLUMN_DONE_TYPE = "INTEGER";
     public static final String SHOPLIST_COLUMN_DATEGOT = "sldategot";
-    public static final int    SHOPLIST_COLUMN_DATEGOT_INDEX = 5;
     public static final String SHOPLIST_COLUMN_DATEGOT_TYPE = "INTEGER";
     public static final String SHOPLIST_COLUMN_COST = "slcost";
-    public static final int    SHOPLIST_COLUMN_COST_INDEX = 6;
     public static final String SHOPLIST_COLUMN_COST_TYPE = "REAL";
     public static final String SHOPLIST_COLUMN_PRODUCTUSAGEREF = "productusageref";
-    public static final int    SHOPLIST_COLUMN_PRODUCTUSAGEREF_INDEX = 7;
     public static final String SHOPLIST_COLUMN_PRODUCTUSAGE_TYPE = "INTEGER";
     public static final String SHOPLIST_COLUMN_AISLEREF = "aisleref";
-    public static final int    SHOPLIST_COLUMN_AISLEREF_INDEX = 8;
     public static final String SHOPLIST_COLUMN_AISLEREF_TYPE = "INTEGER";
     public static int SHOPLIST_COLUMN_COUNT = -1;
 
@@ -1004,28 +958,21 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     //APPValues
     public static final String VALUES_TABLE_NAME = "appvalues";
     public static final String VALUES_COLUMN_ID = PRIMARY_KEY_NAME;
-    public static final int    VALUES_COLUMN_ID_INDEX = 0;
+    public static final String VALUES_COLUMN_ID_FULL = VALUES_TABLE_NAME + VALUES_COLUMN_ID;
     public static final String VALUES_COLUMN_ID_TYPE = "INTEGER";
     public static final String VALUES_COLUMN_VALUENAME = "valuename";
-    public static final int    VALUES_COLUMN_VALUENAME_INDEX = 1;
     public static final String VALUES_COLUMN_VALUENAME_TYPE = "TEXT";
     public static final String VALUES_COLUMN_VALUETYPE = "valuetype";
-    public static final int    VALUES_COLUMN_VALUETYPE_INDDEX = 2;
     public static final String VALUES_COLUMN_VALUETYPE_TYPE = "TEXT";
     public static final String VALUES_COLUMN_VALUEINT = "valueint";
-    public static final int    VALUES_COLUMN_VALUEINT_INDEX = 3;
     public static final String VALUES_COLUMN_VALUEINT_TYPE = "INTEGER";
     public static final String VALUES_COLUMN_VALUEREAL = "valuereal";
-    public static final int    VALUES_COLUMN_VALUEREAL_INDEX = 4;
     public static final String VALUES_COLUMN_VALUEREAL_TYPE = "REAL";
     public static final String VALUES_COLUMN_VALUETEXT = "valuetext";
-    public static final int    VALUES_COLUMN_VALUETEXT_INDEX = 5;
     public static final String VALUES_COLUMN_VALUETEXT_TYPE = "TEXT";
     public static final String VALUES_COLUMN_VALUEINCLUDEINSETTINGS = "valueincludeinsettings";
-    public static final int    VALUES_COLUMN_VALUEINCLUDEINSETTINGS_INDEX = 6;
     public static final String VALUES_COLUMN_VALUEINCLUDEINSETTINGS_TYPE = "INTEGER";
     public static final String VALUES_COLUMN_VALUESETTINGSINFO = "valuesettingsinfo";
-    public static final int    VALUES_COLUMN_VALUESETTINGSINFO_INDEX = 7;
     public static final String VALUES_COLUMN_VALUESETTINGSINFO_TYPE = "TEXT";
 
     public ShopperDBHelper(Context ctxt, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -1041,7 +988,6 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     //      1) Create the appropriate variable definitions as above (not required)
     //          public static final String <UCTABLENAME>_TABLE_NAME = "<tablename>"; 1 for table
     //          public static final String <UCTABELNAME>_COLUMN_<UCCOLUMNNAME> = "<columnname>" 1 per col
-    //          public static final int    <UCTABLENAME>_COLUMN_<UCCOLUMNNAME>_INDEX = nn (sequential order within this list starts with 0) 1 per col
     //          public static final String <UCTABLENAME>_COLUMN_<UCCOLUMNNAME>_TYPE = "??" (?? = valid SQLite DATATYPE) 1 per col
     //              repeat previous three lines for each column.
     //              UCTABLENAME is the table name in Uppercase. TABLENAME is the table name as required case wise.
@@ -1369,7 +1315,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
             if(csr.getCount() > 0) {
                 incremented = true;
                 csr.moveToFirst();
-                long qty = (csr.getLong(SHOPLIST_COLUMN_NUMBERTOGET_INDEX)) + numbertoget;
+                long qty = (csr.getLong(csr.getColumnIndex(SHOPLIST_COLUMN_NUMBERTOGET))) + numbertoget;
                 cv.put(SHOPLIST_COLUMN_PRODUCTREF,productref);
                 cv.put(SHOPLIST_COLUMN_AISLEREF, aisleref);
                 cv.put(SHOPLIST_COLUMN_NUMBERTOGET, qty);
@@ -1603,18 +1549,21 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         return db.rawQuery(sqlstr, null);
     }
     //==============================================================================================
-    public Cursor getPurchaseableProducts(String productselect, String shopselect, String orderby) {
+    public Cursor getPurchasableProducts(String productselect, String shopselect, String orderby) {
         if(orderby.length() < 1) {
-            orderby = Constants.PURCHASEABLEPRODUCTSLISTORDER_BY_PRODUCT;
+            orderby = Constants.PURCHASABLEPRODUCTSLISTORDER_BY_PRODUCT;
         }
         boolean whereclause_exists = false;
         SQLiteDatabase db = this.getReadableDatabase();
-        String sqlstr = "SELECT " + PRODUCTUSAGE_COLUMN_AISLEREF + " AS _id, " +
+        String sqlstr = "SELECT " + PRODUCTUSAGE_COLUMN_AISLEREF +
+                " AS " + PRIMARY_KEY_NAME + ", " +
             PRODUCTUSAGE_COLUMN_PRODUCTREF + ", " +
             PRODUCTUSAGE_COLUMN_COST + ", " +
-            PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_ID + " AS products_id, " +
+            PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_ID +
+                " AS " + PRODUCTS_COLUMN_ID_FULL + ", " +
             PRODUCTS_COLUMN_NAME + ", " +
-            AISLES_TABLE_NAME + "." + AISLES_COLUMN_ID + " AS aisles_id, " +
+            AISLES_TABLE_NAME + "." + AISLES_COLUMN_ID +
+                " AS " + AISLES_COLUMN_ID_FULL + ", " +
             AISLES_COLUMN_NAME + ", " +
             SHOPS_COLUMN_NAME + ", " +
             SHOPS_COLUMN_CITY + ", " +
@@ -1664,7 +1613,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
                 SHOPLIST_TABLE_NAME + "." + SHOPLIST_COLUMN_COST + ", " +
                 SHOPLIST_TABLE_NAME + "." + SHOPLIST_COLUMN_PRODUCTUSAGEREF + ", " +
                 SHOPLIST_TABLE_NAME + "." + SHOPLIST_COLUMN_AISLEREF + ", " +
-                PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_PRODUCTREF + " AS productusageid, " +
+                PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_PRODUCTREF + " AS " + PRODUCTUSAGE_COLUMN_PRODUCTREF_FULL + ", " +
                 PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_AISLEREF + ", " +
                 PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_COST + ", " +
                 PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_BUYCOUNT + ", " +
@@ -1672,11 +1621,11 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
                 PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_LATESTBUYDATE + ", " +
                 PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_MINCOST + ", " +
                 PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_ORDER + ", " +
-                AISLES_TABLE_NAME + "." + AISLES_COLUMN_ID + " AS aisleid, " +
+                AISLES_TABLE_NAME + "." + AISLES_COLUMN_ID + " AS " + AISLES_COLUMN_ID_FULL + ", " +
                 AISLES_TABLE_NAME + "." + AISLES_COLUMN_NAME + ", " +
                 AISLES_TABLE_NAME + "." + AISLES_COLUMN_ORDER + ", " +
                 AISLES_TABLE_NAME + "." + AISLES_COLUMN_SHOP + ", " +
-                SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_ID + " AS shopid, " +
+                SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_ID + " AS " +  SHOPS_COLUMN_ID_FULL + ", " +
                 SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_NAME + ", " +
                 SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_ORDER + ", " +
                 SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_STREET + ", " +
@@ -1684,7 +1633,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
                 SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_STATE + ", " +
                 SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_PHONE + ", " +
                 SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_NOTES + ", " +
-                PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_ID + " AS productid, " +
+                PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_ID + " AS " + PRODUCTS_COLUMN_ID_FULL + ", " +
                 PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_NAME + ", " +
                 PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_ORDER + ", " +
                 PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_AISLE + ", " +
@@ -1814,7 +1763,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
                 " WHERE " + AISLES_COLUMN_SHOP + " = " + shopid + "; ";
         Cursor csr = db.rawQuery(sqlstr, null);
         while(csr.moveToNext()) {
-            deleteAisle(csr.getLong(AISLES_COLUMN_ID_INDEX));
+            deleteAisle(csr.getLong(csr.getColumnIndex(AISLES_COLUMN_ID)));
         }
         db.execSQL("DELETE FROM " + SHOPS_TABLE_NAME +
                 " WHERE " + SHOPS_COLUMN_ID + " = " + shopid + " ;");
@@ -1938,12 +1887,12 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         Cursor aislecsr;
         Cursor prdusecsr;
         while(shoplistcursor.moveToNext()) {
-            productcsr = getProductFromProductId(shoplistcursor.getLong(SHOPLIST_COLUMN_PRODUCTREF_INDEX));
-            aislecsr = getAisleFromAisleId(shoplistcursor.getLong(SHOPLIST_COLUMN_AISLEREF_INDEX));
-            prdusecsr = getProductUsage(shoplistcursor.getLong(SHOPLIST_COLUMN_AISLEREF_INDEX),
-                    shoplistcursor.getLong(SHOPLIST_COLUMN_PRODUCTREF_INDEX));
+            productcsr = getProductFromProductId(shoplistcursor.getLong(shoplistcursor.getColumnIndex(SHOPLIST_COLUMN_PRODUCTREF)));
+            aislecsr = getAisleFromAisleId(shoplistcursor.getLong(shoplistcursor.getColumnIndex(SHOPLIST_COLUMN_AISLEREF)));
+            prdusecsr = getProductUsage(shoplistcursor.getLong(shoplistcursor.getColumnIndex(SHOPLIST_COLUMN_AISLEREF)),
+                    shoplistcursor.getLong(shoplistcursor.getColumnIndex(SHOPLIST_COLUMN_PRODUCTREF)));
             if(productcsr.getCount() < 1 | aislecsr.getCount() < 1 | prdusecsr.getCount() < 1) {
-                deleteShopListEntry(shoplistcursor.getLong(SHOPLIST_COLUMN_ID_INDEX));
+                deleteShopListEntry(shoplistcursor.getLong(shoplistcursor.getColumnIndex(SHOPLIST_COLUMN_ID)));
             }
             if(shoplistcursor.isLast()) {
                 prdusecsr.close();
@@ -1952,7 +1901,6 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
             }
         }
         shoplistcursor.close();
-        //db.close();
     }
     //==============================================================================================
     // Update Rule
@@ -2007,12 +1955,12 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         Cursor rulescursor = getAllRowsFromTable(RULES_TABLE_NAME);
         while(rulescursor.moveToNext()) {
-            Cursor productcsr = getProductFromProductId(rulescursor.getLong(RULES_COLUMN_PRODUCTREF_INDEX));
-            Cursor aislecsr = getAisleFromAisleId(rulescursor.getLong(RULES_COLUMN_AISLEREF_INDEX));
-            Cursor prdusecsr = getProductUsage(rulescursor.getLong(RULES_COLUMN_AISLEREF_INDEX),
-                    rulescursor.getLong(RULES_COLUMN_PRODUCTREF_INDEX));
+            Cursor productcsr = getProductFromProductId(rulescursor.getLong(rulescursor.getColumnIndex(RULES_COLUMN_PRODUCTREF)));
+            Cursor aislecsr = getAisleFromAisleId(rulescursor.getLong(rulescursor.getColumnIndex(RULES_COLUMN_AISLEREF)));
+            Cursor prdusecsr = getProductUsage(rulescursor.getLong(rulescursor.getColumnIndex(RULES_COLUMN_AISLEREF)),
+                    rulescursor.getLong(rulescursor.getColumnIndex(RULES_COLUMN_PRODUCTREF)));
             if(productcsr.getCount() < 1 | aislecsr.getCount() < 1 | prdusecsr.getCount() < 1) {
-                deleteRule(rulescursor.getLong(RULES_COLUMN_ID_INDEX));
+                deleteRule(rulescursor.getLong(rulescursor.getColumnIndex(RULES_COLUMN_ID)));
             }
             if(rulescursor.isLast()) {
                 prdusecsr.close();

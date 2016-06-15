@@ -13,8 +13,17 @@ import android.widget.TextView;
  * Created by Mike092015 on 17/02/2016.
  */
 public class Database_Inspector_AislesDB_Adapter extends CursorAdapter {
+
+    // Variables to store aisles table offsets as obtained via the defined column names by
+    // call to setAislesOffsets (aisles_aisleid_offset set -1 to act as notdone flag )
+    public static int aisles_aisleid_offset = -1;
+    public static int aisles_aislename_offset;
+    public static int aisles_aisleorder_offset;
+    public static int aisles_aisleshopref_offset;
+
     public Database_Inspector_AislesDB_Adapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
+        setAislesOffsets(cursor);
     }
     @Override
     public View getView(int position, View convertview, ViewGroup parent) {
@@ -35,12 +44,23 @@ public class Database_Inspector_AislesDB_Adapter extends CursorAdapter {
         TextView textviewaislesorder = (TextView) view.findViewById(R.id.adiae_aislesdb_order);
         TextView textviewaislesaislename = (TextView) view.findViewById(R.id.adiae_aislesdb_aislename);
 
-        textviewaisleid.setText(cursor.getString(ShopperDBHelper.AISLES_COLUMN_ID_INDEX));
-        textviewaislesaislename.setText(cursor.getString(ShopperDBHelper.AISLES_COLUMN_NAME_INDEX));
-        textviewaislesorder.setText(cursor.getString(ShopperDBHelper.AISLES_COLUMN_ORDER_INDEX));
-        textviewaisleshopref.setText(cursor.getString(ShopperDBHelper.AISLES_COLUMN_SHOP_INDEX));
+        textviewaisleid.setText(cursor.getString(aisles_aisleid_offset));
+        textviewaislesaislename.setText(cursor.getString(aisles_aislename_offset));
+        textviewaislesorder.setText(cursor.getString(aisles_aisleorder_offset));
+        textviewaisleshopref.setText(cursor.getString(aisles_aisleshopref_offset));
     }
     public View newView(Context context, Cursor cursos, ViewGroup parent) {
         return LayoutInflater.from(context).inflate(R.layout.activity_database_inspect_aislesdb_entry, parent, false);
+    }
+
+    // Set Aisles Table query offsets into returned cursor, if not already set
+    public void setAislesOffsets(Cursor cursor) {
+        if(aisles_aisleid_offset != -1) {
+            return;
+        }
+        aisles_aisleid_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_ID);
+        aisles_aislename_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_NAME);
+        aisles_aisleorder_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_ORDER);
+        aisles_aisleshopref_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_SHOP);
     }
 }

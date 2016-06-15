@@ -27,41 +27,34 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/aislelist_help"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/rules_instructions"
-            android:textSize="@dimen/standard_listview_text_size"
-            android:background="@color/colorHelpButton"/>
+            style="@style/textview_help_style"
+            android:text="@string/rules_instructions" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ruleaddeditlist_selectioninput"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_heading_height">
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/ruleaddeditlist_productselection_label"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_selecttitle_style"
             android:layout_weight="0.1"
             android:text="@string/productlabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"/>
+            />
         <EditText
-            style="@style/edittext_selection_style"
             android:id="@+id/ruleaddeditlist_productselection"
+            style="@style/edittext_selection_style"
             android:layout_weight="0.4"
             tools:ignore="LabelFor" />
         <TextView
             android:id="@+id/ruleaddeditlist_storeselection_label"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_selecttitle_style"
             android:layout_weight="0.1"
             android:text="@string/shoplabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="bold"/>
+            />
         <EditText
-            style="@style/edittext_selection_style"
             android:id="@+id/ruleaddeditlist_storeselection"
+            style="@style/edittext_selection_style"
             android:layout_weight="0.4"
             tools:ignore="LabelFor" />
     </LinearLayout>
@@ -73,33 +66,23 @@
         android:background="@color/colorlistviewheading">
         <TextView
             android:id="@+id/ruleaddeditlist_potentialruleslist_header_productname"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_heading_height"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.1"
             android:text="@string/productlabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="bold"
-            android:onClick="potentialrulesorderbyProduct"/>
+            android:onClick="potentialrulesorderbyProduct"
+            />
         <TextView
             android:id="@+id/ruleaddeditlist_potentialruleslist_header_storename"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_heading_height"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.1"
             android:text="@string/shoplabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="bold"
-            android:onClick="potentialrulesorderbyStore"/>
+            android:onClick="potentialrulesorderbyStore"
+            />
         <TextView
             android:id="@+id/ruleaddeditlist_potentialruleslist_header_storeciity"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_heading_height"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.1"
             android:text="@string/shopcitylabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="bold"
             android:onClick="potentialrulesorderbyCity"/>
     </LinearLayout>
     <LinearLayout
@@ -109,39 +92,29 @@
         android:layout_height="wrap_content"
         android:background="@color/colorlistviewheading">
         <TextView
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.005"/>
         <TextView
             android:id="@+id/ruleaddeditlist_potentialruleslist_subheader_aislename"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_heading_height"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.1"
             android:text="@string/aislelabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="italic"
-            android:onClick="potentialrulesorderbyAisle"/>
+            android:onClick="potentialrulesorderbyAisle"
+            />
         <TextView
             android:id="@+id/ruleaddeditlist_potentialruleslist_subheader_storestreetname"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_heading_height"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.1"
             android:text="@string/shopstreetlabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="italic"
-            android:onClick="potentialrulesorderbyStreet"/>
+            android:onClick="potentialrulesorderbyStreet"
+            />
         <TextView
             android:id="@+id/ruleaddedit_potentialruleslist_subheader_cost"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/standard_heading_height"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.025"
             android:text="@string/productusage_cost_label"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="bold"
-            android:onClick="potentialrulesorderbyCost"/>
+            android:onClick="potentialrulesorderbyCost"
+            />
     </LinearLayout>
     <ListView
         android:id="@+id/ruleaddeditlist_potentialruleslist"
@@ -157,13 +130,10 @@
         android:background="@color/colorlistviewheading">
         <TextView
             android:id="@+id/ruleaddeditlist_currentrules_header_title"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/standard_heading_height"
+            style="@style/textview_listheadingtitle_style"
             android:layout_weight="1"
             android:text="@string/currentrulelisttitle"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="bold"/>
+            />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ruleaddeditlist_currentrules_heading1"
@@ -173,50 +143,38 @@
         android:background="@color/colorlistviewheading">
         <TextView
             android:id="@+id/currentrules_rulename"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.5"
             android:text="@string/rulelabel"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="bold"
-            android:onClick="rulelistorderByRule"/>
+            android:onClick="rulelistorderByRule"
+            />
         <TextView
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
-            android:layout_weight="0.025"/>
+            style="@style/textview_listheading_style"
+            android:layout_weight="0.025"
+            />
         <TextView
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.1"
             android:text=""
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="italic" />
+            />
         <TextView
             android:id="@+id/rulelistentry_ruledate"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.2"
             android:text="@string/rule_addedit_date"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="bold"
-            android:onClick="rulelistorderByDate"/>
+            android:onClick="rulelistorderByDate"
+            />
         <TextView
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
-            android:layout_weight="0.025"/>
+            style="@style/textview_listheading_style"
+            android:layout_weight="0.025"
+            />
         <TextView
             android:id="@+id/rulelistentry_ruleprompttoadd"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="match_parent"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.125"
             android:text="@string/prompt_label"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="bold"
-            android:onClick="rulelistorderByPrompt"/>
+            android:onClick="rulelistorderByPrompt"
+            />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ruleaddeditlist_currentrules_heading2"
@@ -226,13 +184,10 @@
         android:background="@color/colorlistviewheading">
         <TextView
             android:id="@+id/currentrules_ruleasstring"
-            android:layout_width="@dimen/standard_dummy_size"
-            android:layout_height="@dimen/standard_subsubsubheading_height"
+            style="@style/textview_listheading_style"
             android:layout_weight="0.5"
             android:text="@string/rule_addedit_asstring"
-            android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorNormalButtonText"
-            android:textStyle="bold"/>
+            />
     </LinearLayout>
     <ListView
         android:id="@+id/ruleaddeditlist_currentrileslist"
