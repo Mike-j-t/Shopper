@@ -8,7 +8,6 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
@@ -214,12 +213,6 @@ public class ShoppingListActivity extends AppCompatActivity{
 
         currentsla = new ShoppingListAdapter(this,shoppinglistcsr, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER,0);
         shoppinglistlv.setAdapter(currentsla);
-        shoppinglistlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(view.getContext(), "ListView clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
     protected void onDestroy() {
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"onDestroy",devmode);
@@ -230,10 +223,13 @@ public class ShoppingListActivity extends AppCompatActivity{
     }
 
     // Button handling (called via XML onCLick)
+    // Activiities DONE button
     public void sladone(View view) {
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"sladone",devmode);
         this.finish();
     }
+
+    // Entry BOUGHT button
     public void sledone(View view) {
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"sledone",devmode);
         // Get tag, which is set in ShoppingListAdapter, as it is the position in the list and
@@ -251,6 +247,8 @@ public class ShoppingListActivity extends AppCompatActivity{
         remainingcost.setText(NumberFormat.getCurrencyInstance().format(remainingamount));
         currentsla.swapCursor(shoppinglistcsr);
     }
+
+    // was Entry REPLACE Button - now redundant due to use of ADJUST button
     public void slereplace(View view) {
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"slereplace",devmode);
         Integer tag = (Integer) view.getTag();
@@ -266,6 +264,8 @@ public class ShoppingListActivity extends AppCompatActivity{
         remainingcost.setText(NumberFormat.getCurrencyInstance().format(remainingamount));
         currentsla.swapCursor(shoppinglistcsr);
     }
+
+    // Entry DELETE button
     public void sledelete(View view) {
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"sledelete",devmode);
         Integer tag = (Integer)view.getTag();
@@ -276,7 +276,7 @@ public class ShoppingListActivity extends AppCompatActivity{
         remainingcost.setText(NumberFormat.getCurrencyInstance().format(remainingamount));
         currentsla.swapCursor(shoppinglistcsr);
     }
-    //Trim Button
+    //Tidy Button
     public void slareorg(View view) {
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"slareorg",devmode);
         shopperdb.reorgShopList();
@@ -285,9 +285,7 @@ public class ShoppingListActivity extends AppCompatActivity{
         remainingcost.setText(NumberFormat.getCurrencyInstance().format(remainingamount));
         currentsla.swapCursor(shoppinglistcsr);
     }
-    public void slaaddrules(View view) {
-        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"slaaddrules",devmode);
-    }
+
     // Handle Adding a prompted rule entry
     public void slaaddpromptautoadd(View view) {
         // Move to appropriate cursor row (as per button's tag)
@@ -324,7 +322,7 @@ public class ShoppingListActivity extends AppCompatActivity{
             shoppinglisthelp.setText(shoppinglist_promptedhelp);
         }
     }
-    // Handle Skipping a promted rule entry
+    // Handle Skipping a prompted rule entry
     public void slaskippromptautoadd(View view) {
         // Move to the appropriate cursor row  (as per button's tag)
         int position = (Integer) view.getTag();
@@ -352,6 +350,8 @@ public class ShoppingListActivity extends AppCompatActivity{
             shoppinglisthelp.setText(shoppinglist_promptedhelp);
         }
     }
+
+    // Routines (Methods)
     public Double calculateRemainingAmount(Cursor csr) {
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"calculateRemainingAmount",devmode);
         double ra = 0;
@@ -447,6 +447,7 @@ public class ShoppingListActivity extends AppCompatActivity{
         shopperdb.updateRuleDateAndUse(ruleid, newdate, uses);
     }
 
+    // ADJUST Button handler i.e display dialog with various actions
     public void actionDialogShow(View view){
 
         final Integer tag = (Integer)view.getTag();
