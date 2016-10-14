@@ -2248,7 +2248,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     //==============================================================================================
     // GetCursorValue
     //NOTE!! returns all columns, so up to the caller to determine what is valid data
-    //NOTE!! onlyifsetting will only return "user settable" values (for settings)
+    //NOTE!! only ifsetting will only return "user settable" values (for settings)
     public Cursor getCursorvalue(String valuename, boolean onlyifsetting) {
         SQLiteDatabase db = this.getReadableDatabase();
         String sqlstr = " SELECT * FROM " + VALUES_TABLE_NAME +
