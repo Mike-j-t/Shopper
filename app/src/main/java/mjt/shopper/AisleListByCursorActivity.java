@@ -203,6 +203,7 @@ public class AisleListByCursorActivity extends AppCompatActivity {
                     }
                 });
                 okdialog.show();
+
             }
         });
 
