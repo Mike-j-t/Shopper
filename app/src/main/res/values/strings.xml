@@ -390,6 +390,7 @@
     <string name="intentkey_rulemaxcost">RULEMAXCOST</string>
 
     <string name="usersettingslabel">Settings</string>
+    <string name="datalabel">Data Handling</string>
     <string name="activitycaller">Caller</string>
     <string name="sharedpreferencekey_developermode">devmode</string>
     <string name="developermode_label">Developer Mode</string>

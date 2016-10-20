@@ -17,12 +17,14 @@ import java.util.*;
  *
  * OOTAD out_of-the-actual-database classes/methods/schema
  * AKA relatively simple database changes
- * =================================================================================================
- * Also includes complemetary Database classes DBDatabase, DBTable & DBColumn and methods
- * This allowing an out-of-the-actual-database (OOTAD) schema that can be used for relatively simple table
- * and column definition, thier use in the SQLite onCreate, onUpgrade and onDowngrade if overidden.
- * methods actionDBAlterSQL and actionDBBuildSQL can be used to implment and alter actual schema
- * based upon the OOTAD.
+ * ============================================================================
+ * Also includes complementary Database classes DBDatabase, DBTable & DBColumn
+ * and associated methods.
+ * This allowing an out-of-the-actual-database (OOTAD) schema that can be used
+ * for relatively simple table and column definition, thier use in the SQLite
+ * onCreate, onUpgrade and onDowngrade overidden.
+ * Methods actionDBAlterSQL and actionDBBuildSQL can be used to implment and
+ * alter actual schema based upon the OOTAD.
  *
  * More specifically actionDBBuilSQL generates and actions CREATE ??? IF NOT EXISTS ... SQL
  * so if a new table is added to the respective OOTAB (DBColumn objects fed into a DBTable object)
