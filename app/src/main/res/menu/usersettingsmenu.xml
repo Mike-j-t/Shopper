@@ -3,4 +3,7 @@
     <item android:id="@+id/usersettings_menu"
         android:icon="@android:drawable/ic_menu_add"
         android:title="@string/usersettingslabel" />
+    <item android:id="@+id/dataoptions_menu"
+        android:icon="@android:drawable/ic_menu_call"
+        android:title="@string/datalabel" />
 </menu>

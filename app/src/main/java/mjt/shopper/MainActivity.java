@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView dbschemabutton;
     private TextView dbschemahelpbutton;
 
+    private MenuItem usersettingsmenu;
+
     //==============================================================================================
     //==============================================================================================
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,10 +148,19 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
                 THIS_ACTIVITY,"onOptionsItemSelected",developermode);
-        super.onOptionsItemSelected(menuItem);
-        Intent intent = new Intent(this,UserSettings.class);
-        startActivity(intent);
-        return true;
+
+        switch (menuItem.getItemId()) {
+            case R.id.usersettings_menu: {
+                Intent intent = new Intent(this,UserSettings.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.dataoptions_menu: {
+                //TODO Backup Data etc here.
+                Toast.makeText(this,"Data Options on the horizon.",Toast.LENGTH_SHORT).show();
+            }
+        }
+        return super.onOptionsItemSelected(menuItem);
     }
 
     //==============================================================================================
