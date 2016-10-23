@@ -90,5 +90,10 @@
             android:label="Add/Edit Rule"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".MainDataHandlingActivity"
+            android:label="@string/datalabel"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 </manifest>
