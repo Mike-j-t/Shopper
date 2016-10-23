@@ -401,4 +401,36 @@ class StoreData {
         }
         return rv;
     }
+
+    /**
+     * Method: getDirectory - get the backup directory as a String
+     * @return Directory as a String
+     */
+    public String getDirectory() {
+        return this.directory;
+    }
+
+    /**
+     * Method: getFilename - get the filename of the object as a String
+     * @return Filename as a String
+     */
+    public String getFilename() {
+        return this.filename;
+    }
+
+    /**
+     * Method: getSubDirectory - get the sub-directory as a string
+     * @return Sub-Directory as a String
+     */
+    public String getSubDirectory() {
+        return this.subdirectory;
+    }
+
+    /**
+     * Method: getFilesInDirectory - return an ArrayList of type File
+     * @return List of files in the directory as an ArrayList<File>
+     */
+    public ArrayList<File> getFilesInDirectory() {
+        return this.otherfilesindirectory;
+    }
 }

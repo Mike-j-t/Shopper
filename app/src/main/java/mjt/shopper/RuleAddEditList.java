@@ -231,7 +231,7 @@ public class RuleAddEditList extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Context context = view.getContext();
                 currentrulescursor.moveToPosition(position);
-                AlertDialog.Builder okdialog = new AlertDialog.Builder(view.getContext());
+                AlertDialog. Builder okdialog = new AlertDialog.Builder(view.getContext());
                 okdialog.setTitle(getResources().getString(R.string.rule_delete) + " " + currentrulescursor.getString(ruleslist_rulename_offset));
                 okdialog.setMessage(getResources().getString(R.string.rule_delete_message));
                 okdialog.setCancelable(true);

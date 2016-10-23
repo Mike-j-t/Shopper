@@ -156,8 +156,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case R.id.dataoptions_menu: {
-                //TODO Backup Data etc here.
-                Toast.makeText(this,"Data Options on the horizon.",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this,MainDataHandlingActivity.class);
+                startActivity(intent);
             }
         }
         return super.onOptionsItemSelected(menuItem);
