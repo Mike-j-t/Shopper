@@ -1,6 +1,10 @@
 package mjt.shopper;
 
 import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,11 +18,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -160,11 +168,11 @@ public class MainDataHandlingActivity extends AppCompatActivity {
                 restoreDB();
                 break;
             case R.id.dh_sqlsave:
-                Toast.makeText(this,"SQL Save button clicked",Toast.LENGTH_SHORT).show();
+                saveSQL();
                 refreshspinners = true;
                 break;
             case R.id.dh_sqlrestore:
-                Toast.makeText(this,"SQL Restore button clicked",Toast.LENGTH_SHORT).show();
+                restoreSQL();
                 break;
             case R.id.dh_dumpsave:
                 Toast.makeText(this,"Data Backup button clicked",Toast.LENGTH_SHORT).show();
@@ -363,7 +371,7 @@ public class MainDataHandlingActivity extends AppCompatActivity {
                 "A database restore has been requested." +
                 "\n\nThe request will use the following file to recover from:" +
                 "\n\t" + bkpfilename + " ." +
-                "\n\nIf the standard provided file names are used then the database will be" +
+                "\n\nIf the standard provided filenames are used then the database will be" +
                 " recovered to the date/time as per the file." +
                 "\n\nAs part of the restore process, a copy of the current database will " +
                 "be created. This will be named:" +
@@ -378,7 +386,7 @@ public class MainDataHandlingActivity extends AppCompatActivity {
         okdialog.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                doRestore(currentdbfilename, bkpfilename, copydbfilename);
+                doDBRestore(currentdbfilename, bkpfilename, copydbfilename);
             }
         });
         okdialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -401,7 +409,7 @@ public class MainDataHandlingActivity extends AppCompatActivity {
      * @param bkpfilename
      * @param copydbfilename
      */
-    private void doRestore(String currentdbfilename, String bkpfilename, String copydbfilename) {
+    private void doDBRestore(String currentdbfilename, String bkpfilename, String copydbfilename) {
         boolean copytaken = false;
         boolean origdeleted = false;
         boolean restoredone = false;
@@ -452,10 +460,10 @@ public class MainDataHandlingActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
             if(!copytaken) {
-                errorlist.add("Restore failed copying current database. Error was " + e.getMessage().toString());
+                errorlist.add("Restore failed copying current database. Error was " + e.getMessage());
             } else {
                 if(!origdeleted) {
-                    errorlist.add("Restore failed to delete current database. Error was " + e.getMessage().toString());
+                    errorlist.add("Restore failed to delete current database. Error was " + e.getMessage());
                 }
                 else {
                     if(!restoredone) {
@@ -488,6 +496,229 @@ public class MainDataHandlingActivity extends AppCompatActivity {
             errorlist.add("Database successfully restored.");
             resulttitle = "Restore was successful.";
 
+        }
+        String finalmessage = "";
+        for(int i = 0; i < errorlist.size(); i++){
+            if(i > 0) {
+                finalmessage = finalmessage + "\n\n";
+            }
+            finalmessage = finalmessage + errorlist.get(i);
+        }
+        AlertDialog.Builder resultdialog = new AlertDialog.Builder(this);
+        resultdialog.setTitle(resulttitle);
+        resultdialog.setMessage(finalmessage);
+        resultdialog.setCancelable(true);
+        resultdialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        resultdialog.show();
+    }
+    private void saveSQL() {
+        String backupfilename = backupdir.getText().toString() + "//" + sqlfullfilename.getText().toString();
+        String exportdata = "";
+
+        ShopperDBHelper db = new ShopperDBHelper(this,null,null,1);
+        exportdata = db.getExportSQL();
+        db.close();
+        File ssql = new File(backupfilename);
+        try {
+            ssql.createNewFile();
+            FileOutputStream fos = new FileOutputStream(ssql);
+            OutputStreamWriter osw = new OutputStreamWriter(fos);
+            osw.write(exportdata);
+            osw.flush();
+            osw.close();
+            fos.flush();
+            fos.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void restoreSQL() {
+        final String currentdbfilename = this.getDatabasePath(ShopperDBHelper.DATABASE_NAME).getPath();
+        final String copydbfilename = currentdbfilename + "OLDSQL" + getDateandTimeasYYMMDDhhmm();
+        final String bkpfilename = sqlrestore_spinner.getSelectedItem().toString();
+
+        AlertDialog.Builder okdialog = new AlertDialog.Builder(this);
+        okdialog.setTitle("SQL Database Restore Requested.");
+        okdialog.setMessage(
+                "An SQL Datbase restore has been requested." +
+                        "\n\nThe request will use the following file to restore from:" +
+                        "\n\t" + bkpfilename + " ." +
+                        "If the standard provided filenames are used, the the database will be " +
+                        "recovered to the date/time as per the file." +
+                        "As part of the process, a copy of the current database will " +
+                        "be created. This will be named:" +
+                        "\n\t" + copydbfilename +
+                        "\n\nThis will be used, should the restore fail, to recover the " +
+                        "orignal database." +
+                        "\n\nDo you wish to continue with the restore?"
+        );
+        okdialog.setCancelable(true);
+        okdialog.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                doSQLRestore(currentdbfilename,bkpfilename,copydbfilename);
+            }
+        });
+        okdialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        okdialog.show();
+    }
+
+    private void doSQLRestore(String currentdbfilename, String bkpfilename, String copydbfilename) {
+        boolean copytaken = false;
+        boolean sqlretrieved = false;
+        boolean origdeleted = false;
+        boolean restoredone = false;
+        boolean rolledback = false;
+        boolean skip_mode = false;
+        boolean concat_mode = false;
+        int buffersz = 32768;
+        int copylength = 0;
+        byte[] buffer = new byte[buffersz];
+        ArrayList<String> sqlcmds = new ArrayList<>();
+        String logtag = "SQL Restore";
+        ArrayList<String> errorlist = new ArrayList<>();
+        String resulttitle = "Restore failed.";
+        String restoresql = "";
+
+        File dbfile = new File(currentdbfilename);
+        File rstsql = new File(bkpfilename);
+        try {
+            FileInputStream fis = new FileInputStream(currentdbfilename);
+            OutputStream backup = new FileOutputStream(copydbfilename);
+            while ((copylength = fis.read(buffer)) > 0) {
+                backup.write(buffer, 0, copylength);
+            }
+            backup.flush();
+            backup.close();
+            fis.close();
+            Log.i(logtag, "Stage 1 - Complete. Copy made of the current DB.");
+            copytaken = true;
+
+            Log.i(logtag,"Stage 1A - Retrieving SQL initiated");
+            FileInputStream sqlfis = new FileInputStream(rstsql);
+            InputStreamReader sqlisr = new InputStreamReader(sqlfis);
+            BufferedReader sqlbr = new BufferedReader(sqlisr);
+            StringBuilder sqlsb = new StringBuilder();
+            String cline = null;
+            int linecount = 0;
+
+            while((cline = sqlbr.readLine()) != null) {
+                linecount++;
+                if(cline.startsWith("--CRTTB_START")) {
+                    skip_mode = true;
+                    continue;
+                }
+                if(cline.startsWith("--CRTTB_FINISH")) {
+                    skip_mode = false;
+                    continue;
+                }
+                if(cline.startsWith("--TBL_INSERTSTART")) {
+                    concat_mode = true;
+                    continue;
+                }
+                if(cline.startsWith("--TBL_INSERTFINISH")) {
+                    concat_mode = false;
+                    sqlcmds.add(sqlsb.toString());
+                    sqlsb.setLength(0);
+                    continue;
+                }
+                if(skip_mode) {continue;}
+                if(concat_mode) {
+                    sqlsb.append(cline).append("\n");
+                }
+            }
+            restoresql = sqlsb.toString();
+            sqlfis.close();
+            sqlbr.close();
+            Log.i(logtag,"Stage 1A - Complete. SQL retrieved." + Integer.toString(linecount) + " Records read.");
+            sqlretrieved = true;
+
+            //Stage 2 - Delete the database file
+            if(dbfile.delete()) {
+                Log.i(logtag, "Stage 2 - Complete. Original DB deleted.");
+                origdeleted = true;
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            if (!copytaken) {
+                errorlist.add("Restore failed copying the current databse. Error was " +
+                        e.getMessage());
+            }
+            else {
+                if(!sqlretrieved) {
+                    errorlist.add("Restore failed retrieving SQL from SQL backup file." +
+                            " Error was " + e.getMessage()
+                    );
+                }
+                else {
+                    if (!origdeleted) {
+                        errorlist.add("Restore failed to delete the current database. Error was" +
+                                e.getMessage()
+                        );
+                    }
+                }
+            }
+        }
+        if(copytaken && origdeleted) {
+            Log.i(logtag,"Stage 3 - Initiating SQL restore.");
+            ShopperDBHelper db = new ShopperDBHelper(this,null,null,1);
+            Log.i(logtag,"Stage 3 - SQLite Database created");
+            SQLiteDatabase rdb = db.getWritableDatabase();
+            Log.i(logtag,"Readying to insert " + Integer.toString(sqlcmds.size()) + " SQL commands." );
+            rdb.beginTransaction();
+            for(int i = 0; i < sqlcmds.size();i++) {
+                //Log.i(logtag,"Attempting SQL command " + Integer.toString(i + 1) + " of " + Integer.toString(sqlcmds.size()));
+                SQLiteStatement insert = rdb.compileStatement(sqlcmds.get(i));
+                try {
+                    insert.execute();
+                    if(i == (sqlcmds.size() -1)) {
+                        restoredone = true;
+                    }
+                }
+                catch (SQLiteException e) {
+                    e.printStackTrace();
+                    restoredone = false;
+                }
+            }
+            rdb.setTransactionSuccessful();
+            rdb.endTransaction();
+            rdb.close();
+        }
+        // Ouch restore not done but DB deleted so recover from
+        // copy by renaming copy
+        if (copytaken && origdeleted && !restoredone) {
+
+            Log.w(logtag, "Restore failed. Recovering DB after failed restore from backup");
+            File rcvdbfile = new File(copydbfilename);
+            rcvdbfile.renameTo(dbfile);
+            Log.w(logtag, "Restore failed. DB Recovered from backup now in original state.");
+            rolledback = true;
+            errorlist.add("Database reverted to original.");
+        }
+        if (copytaken && !origdeleted) {
+            Log.w(logtag, "Restore failed. Original DB not deleted so original" +
+                    " is being used.");
+        }
+        if(!copytaken) {
+            Log.w(logtag,"Restore failed. Attempt to Copy original DB failed." +
+                    " Original DB is being used.");
+        }
+        if(copytaken && origdeleted && restoredone) {
+            errorlist.add("Database successfully restored.");
+            resulttitle = "Restore was successful.";
         }
         String finalmessage = "";
         for(int i = 0; i < errorlist.size(); i++){
