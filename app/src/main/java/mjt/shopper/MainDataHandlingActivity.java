@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -23,7 +22,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -315,7 +313,7 @@ public class MainDataHandlingActivity extends AppCompatActivity {
             }
         }
 
-        // Set the avaiable count for display
+        // Set the available count for display
         String bcnt = "Available Backups=" + Integer.toString(reverseflist.size());
         tv.setText(bcnt);
 
@@ -516,6 +514,10 @@ public class MainDataHandlingActivity extends AppCompatActivity {
         });
         resultdialog.show();
     }
+
+    /**
+     * method saveSQL - Save Database and structure as SQL
+     */
     private void saveSQL() {
         String backupfilename = backupdir.getText().toString() + "//" + sqlfullfilename.getText().toString();
         String exportdata = "";
@@ -533,12 +535,20 @@ public class MainDataHandlingActivity extends AppCompatActivity {
             osw.close();
             fos.flush();
             fos.close();
+            Toast.makeText(this,"SQL Backup of Database File to " + backupfilename + "was OK",
+                    Toast.LENGTH_LONG).show();
         }
         catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(this,"SQL Backup failed due to IO exception.\n" +
+                    e.getMessage() + "\n",Toast.LENGTH_LONG).show();
         }
     }
 
+    /**
+     * method restoreSQL - prepare to restore database from SQL backup
+     * prompting for confirmation.
+     */
     private void restoreSQL() {
         final String currentdbfilename = this.getDatabasePath(ShopperDBHelper.DATABASE_NAME).getPath();
         final String copydbfilename = currentdbfilename + "OLDSQL" + getDateandTimeasYYMMDDhhmm();
@@ -550,9 +560,9 @@ public class MainDataHandlingActivity extends AppCompatActivity {
                 "An SQL Datbase restore has been requested." +
                         "\n\nThe request will use the following file to restore from:" +
                         "\n\t" + bkpfilename + " ." +
-                        "If the standard provided filenames are used, the the database will be " +
-                        "recovered to the date/time as per the file." +
-                        "As part of the process, a copy of the current database will " +
+                        "\n\nIf the standard provided filenames are used, the the database will be " +
+                        "recovered to the date/time as per the filename." +
+                        "\n\nAs part of the process, a copy of the current database will " +
                         "be created. This will be named:" +
                         "\n\t" + copydbfilename +
                         "\n\nThis will be used, should the restore fail, to recover the " +
@@ -575,6 +585,17 @@ public class MainDataHandlingActivity extends AppCompatActivity {
         okdialog.show();
     }
 
+    /**
+     * Method doSQLRestore - Restore the database from an SQL backup
+     * 3 stage process.
+     *      Stage 1 Copy the current database and retrieve the SQL
+     *      Stage 2 Delete the current database.
+     *      Stage 3 Run the SQL commands
+     *
+     * @param currentdbfilename
+     * @param bkpfilename
+     * @param copydbfilename
+     */
     private void doSQLRestore(String currentdbfilename, String bkpfilename, String copydbfilename) {
         boolean copytaken = false;
         boolean sqlretrieved = false;
@@ -734,7 +755,6 @@ public class MainDataHandlingActivity extends AppCompatActivity {
         resultdialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
             }
         });
         resultdialog.show();
