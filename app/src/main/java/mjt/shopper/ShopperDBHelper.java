@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -200,14 +201,18 @@ class DBDatabase {
         String sql = "";
         String tablesql = "";
         if(this.usable) {
-            sql = " CREATE DATABASE IF NOT EXISTS `" + this.database_name + "` ;\n" +
-                    " USE `" + this.database_name + "`;" ;
+            //sql = "--CRTDB_START\n";
+            //sql = sql + " CREATE DATABASE IF NOT EXISTS `" + this.database_name + "` ;\n" +
+            //        "--CRTDB_USESTART\n" +
+            //        " USE `" + this.database_name + "`;" + "\n" ;
+            //sql = sql + "--CRTDB_USEFINISH\n";
             for(DBTable dbt : this.database_tables) {
                 tablesql = dbt.getSQLTableCreateAsString(true);
                 if(tablesql.length() > 0) {
-                    sql = sql + "\n " + tablesql;
+                    sql = sql + "--CRTTB_START\n" + tablesql + "\n--CRTTB_FINISH\n";
                 }
             }
+            //sql = sql + "--CRTDB_FINISH\n";
         }
         return sql;
     }
@@ -216,32 +221,37 @@ class DBDatabase {
     //TODO 1 Need to do equiv to MYSQL_REAL_ESCAPE otherwise OK load
     public String generateExportDataSQL(SQLiteDatabase db) {
         String sql = "";
+        String sqlcols = "";
         Cursor csr;
         String coldata = "";
         if(!this.usable) { return sql; }
-        sql = " USE `" + this.database_name + "`;\n";
+        //sql =
+        //sql = "--TDL_USESTART\n USE `" + this.database_name + "`;\n--TDL_USEFINISH\n";
         for(DBTable dbt : this.database_tables) {
+            // Select all rows from the respective table into Cursor csr.
             String sqlstr = " SELECT * FROM " + dbt.getDBTableName() + ";";
             csr = db.rawQuery(sqlstr,null);
+            // Skip if no rows
             if(csr.getCount() > 0 ){
-                sql = sql + " INSERT INTO `" + dbt.getDBTableName() + "` (";
                 int coli = 0;
+                // Build Column list
                 ArrayList<Integer> coltype = new ArrayList<>();
+                sqlcols = "";
                 for(DBColumn dbtc : dbt.getTableDBColumns()) {
                     if(coli++ > 0) {
-                        sql = sql + ", ";
+                        sqlcols = sqlcols + ", ";
                     }
                     if(dbtc.getDBColumnType().equals("TEXT")) {
                         coltype.add(1);
                     } else {
                         coltype.add(0);
                     }
-                    sql = sql + "`" + dbtc.getDBColumnName() + "` ";
+                    sqlcols = sqlcols + "`" + dbtc.getDBColumnName() + "` ";
                 }
-                sql = sql + ") VALUES \n ";
+                // Process each row from the table
                 csr.moveToPosition(-1);
                 while(csr.moveToNext()) {
-                    sql = sql + "( ";
+                    sql = sql + "--TBL_INSERTSTART\nINSERT INTO " + dbt.getDBTableName() + " ( " + sqlcols + ") VALUES(";
                     for(int i=0; i < coli;i++) {
                         coldata = csr.getString(i);
                         if(coldata == null) {coldata = ""; }
@@ -262,12 +272,7 @@ class DBDatabase {
                             sql = sql + ", ";
                         }
                     }
-                    sql = sql + " )";
-                    if(csr.getPosition() < (csr.getCount() - 1) ) {
-                        sql = sql + ", \n";
-                    } else {
-                        sql = sql + "; \n";
-                    }
+                    sql = sql + " );\n--TBL_INSERTFINISH\n";
                 }
             } else {
                 sql = sql + "-- ERROR - TABLE " + dbt.getDBTableName() + " IS EMPTY SKIPPED \n";
@@ -2260,5 +2265,16 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         }
         sqlstr = sqlstr + " ;";
         return db.rawQuery(sqlstr,null);
+    }
+    public String getExportSQL() {
+
+        String savedata = "";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        DBDatabase dbschema = generateDBSchema(db);
+        savedata =  dbschema.generateExportSchemaSQL();
+        savedata = savedata + dbschema.generateExportDataSQL(db);
+        db.close();
+        return savedata;
     }
 }
