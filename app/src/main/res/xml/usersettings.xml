@@ -5,10 +5,34 @@
             android:title="@string/developermode_label"
             android:summary="@string/developermode_info"
             android:key="@string/sharedpreferencekey_developermode"
-            android:defaultValue="false"/>
+            android:defaultValue="false"
+            />
         <CheckBoxPreference
             android:title="@string/showhelpmode_label"
             android:summary="@string/showhelpmode_info"
             android:key="@string/sharedpreferencekey_showhelpmode"
-            android:defaultValue="false"/>
+            android:defaultValue="false"
+            />
+        <CheckBoxPreference
+            android:title="@string/allowrulesuggest_label"
+            android:summary="@string/allowrulesuggest_info"
+            android:key="@string/sharedpreferencekey_allowrulesuggest"
+            android:defaultValue="true"
+            />
+        <EditTextPreference
+            android:title="@string/rulesuggestfrequency_label"
+            android:summary="@string/rulesuggestfrequency_info"
+            android:key="@string/sharedpreferencekey_rulesuggestfrequency"
+            android:defaultValue="@integer/rulesuggest_frequency"
+            android:numeric="integer"
+            android:digits="0123456789"
+            android:inputType="numberDecimal"
+            android:maxLength="5"
+            />
+        <CheckBoxPreference
+            android:title="@string/rulesuggestnextfromdatewhendone_label"
+            android:summary="@string/rulesuggestnextfromdatewhendone_info"
+            android:key="@string/sharedpreferencekey_nextdatefromwhendone"
+            android:defaultValue="true"
+            />
 </PreferenceScreen>

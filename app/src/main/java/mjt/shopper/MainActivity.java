@@ -3,6 +3,7 @@ package mjt.shopper;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -25,15 +26,24 @@ import java.util.Date;
 // If no stores then invoke add store directly
 // Setup Values table (if already done then duplicates won't be added)
 // Button handling as per xml then handle selection of options
+
+//TODO change all drops downs (spinners) to have two layouts drop down alternating backgrounds
+//TODO update manual for new features added
+//TODO additional settings for Rule Selection 3; allow suggestions, freq and Next suggest
+//TODO update manual for addition actions (...) Data handling and Rule suggestions
+//TODO update manual to fully cover Datahandling
+//TODO update manual to full cover Rule Suggestion
+
 public class MainActivity extends AppCompatActivity {
 
     // Activity/Shared preferences variables
-    private final static String THIS_ACTIVITY = "MainActivity"; // Allows ActivityNsame to be sent
+    private final static String THIS_ACTIVITY = "MainActivity"; // Allows ActivityNames to be sent
     private SharedPreferences sharedPreferences;
     private boolean developermode = false;
     private boolean helpoffmode = false;
-    //private boolean developermode;
-
+    private boolean rulesuggestion = true;
+    private int rulesuggestionfrequency = 30;
+    private boolean resumestate = false;
 
     // Data/DB variables (generally in unset state)
     public ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
@@ -63,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView dbschemabutton;
     private TextView dbschemahelpbutton;
 
-    private MenuItem usersettingsmenu;
-
     //==============================================================================================
     //==============================================================================================
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,10 +82,18 @@ public class MainActivity extends AppCompatActivity {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(false);
+
+        //Need to specifically request WRITE_EXTERNAL_STORAGE (READ Implied)
+        // if API 23+
+        if(Build.VERSION.SDK_INT >= 23) {
+            ExternalStoragePermissions.verifyStoragePermissions(this);
+        }
         PreferenceManager.setDefaultValues(this, R.xml.usersettings, false);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         developermode = sharedPreferences.getBoolean(getResources().getString(R.string.sharedpreferencekey_developermode), false);
-        helpoffmode = sharedPreferences.getBoolean(getResources().getString(R.string.sharedpreferencekey_showhelpmode), false);
+        //helpoffmode = sharedPreferences.getBoolean(getResources().getString(R.string.sharedpreferencekey_showhelpmode), false);
+        //rulesuggestion = sharedPreferences.getBoolean(getResources().getString(R.string.sharedpreferencekey_allowrulesuggest),true);
+        //rulesuggestionfrequency = Integer.parseInt(sharedPreferences.getString(getResources().getString(R.string.sharedpreferencekey_rulesuggestfrequency),"30"));
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,
                 "Primary Activity Initialisation Complete", THIS_ACTIVITY, "onCreate",developermode);
 
@@ -126,10 +142,29 @@ public class MainActivity extends AppCompatActivity {
         valuesdb.insertValuesEntry(Constants.RULEPERIODS,Constants.PERIOD_MONTHS,true,false,"");
         valuesdb.insertValuesEntry(Constants.RULEPERIODS,Constants.PERIOD_QUARTERS,true,false,"");
         valuesdb.insertValuesEntry(Constants.RULEPERIODS,Constants.PERIOD_YEARS,true,false,"");
+        valuesdb.insertValuesEntry(Constants.LASTRULESUGGESTION,(long)0,false,false,"");
         // Settings
         // Debug option note sharedpreferences are used
         valuesdb.insertValuesEntry(Constants.DEBUGFLAG,(long) 0,false,true,"Turn On Debugging Options");
+
+        //Just for testing purposes
+        /*
+        valuesdb.insertValuesEntry("TESTDouble",1.56,false,false,"");
+        valuesdb.insertValuesEntry("TESTSTRING","Hello World.",false,false,"");
+        valuesdb.insertValuesEntry("TESTINTEGER",99,false,false,"");
         valuesdb.close();
+        double testdbl = valuesdb.getDoubleValue("TESTDouble");
+        valuesdb.alterDoubleValue("TESTDouble",(double) 167);
+        long testint = valuesdb.getLongValue("TESTINTEGER");
+        valuesdb.alterLongValue("TESTINTEGER",testint + 100);
+        String teststring = valuesdb.getStringValue("TESTSTRING");
+        valuesdb.alterStringValue("TESTSTRING","Goodbye World");
+        */
+
+
+        valuesdb.enableDismissedRules();
+        RuleSuggestion.checkRuleSuggestions(this, false);
+
     }
 
     //==============================================================================================
@@ -158,7 +193,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.dataoptions_menu: {
                 Intent intent = new Intent(this,MainDataHandlingActivity.class);
                 startActivity(intent);
+                break;
             }
+            case R.id.forcesuggestions:
+                RuleSuggestion.checkRuleSuggestions(this, true);
+                break;
+            default:
         }
         return super.onOptionsItemSelected(menuItem);
     }
@@ -172,6 +212,7 @@ public class MainActivity extends AppCompatActivity {
         getSettings();
         handleStats();
         selectButtons();
+        resumestate = true;
     }
 
     //==============================================================================================
@@ -194,6 +235,14 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         developermode = sharedPreferences.getBoolean(getString(R.string.sharedpreferencekey_developermode),false);
         helpoffmode = sharedPreferences.getBoolean(getString(R.string.sharedpreferencekey_showhelpmode),false);
+        rulesuggestion = sharedPreferences.getBoolean(getString(R.string.sharedpreferencekey_allowrulesuggest),true);
+        rulesuggestionfrequency =
+                Integer.parseInt(
+                        sharedPreferences.getString(getResources().getString(
+                                R.string.sharedpreferencekey_rulesuggestfrequency),
+                                "30"
+                        )
+                );
     }
 
     //==============================================================================================
@@ -333,27 +382,6 @@ public class MainActivity extends AppCompatActivity {
 
         ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
         shopperdb.onExpand();
-        //File path = getFilesDir();
-        //File file = new File(path,"ShopperExportSQL.txt");
-        //Log.d("ShopperExport","Starting Shopper Export Test");
-        //try {
-        //    Log.d("ShopperExport","Trying PrinWriter Method");
-        //    FileOutputStream fos = new FileOutputStream(file);
-        //    //PrintWriter pw = new PrintWriter(fos);
-        //    //pw.write("Testing");
-        //    //pw.flush();
-        //    //pw.close();
-        //    //fos.close();
-        //    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fos);
-        //    outputStreamWriter.write("TestDate");
-        //    outputStreamWriter.close();
-        //    fos.close();
-        //}
-        //catch (IOException e) {
-        //    Log.e("Exception", "File Write Failed " + e.toString());
-        //}
-        //Log.d("ShopperExport","Ended Shopper Export Test");
-
 
         if(shopcount < 1 ) {
             Intent intent = new Intent(this, ShopAddActivity.class);

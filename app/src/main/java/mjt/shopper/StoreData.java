@@ -1,5 +1,8 @@
 package mjt.shopper;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
 
@@ -224,12 +227,18 @@ class StoreData {
             }
         }
         if(direxists) {
-            File[] dirlist = dir.listFiles();
-            for(int i = 0; i < dirlist.length; i++) {
-                if(!(dirlist[i].getName().equals(this.filename))) {
-                    otherfilesindirectory.add(dirlist[i]);
+            refreshOtherFilesInDirectory();
+            /**
+            File[] dirlist = new File[]{};
+            dirlist = dir.listFiles();
+            if ((dirlist.length) > 0) {
+                for (int i = 0; i < dirlist.length; i++) {
+                    if (!(dirlist[i].getName().equals(this.filename))) {
+                        otherfilesindirectory.add(dirlist[i]);
+                    }
                 }
             }
+             **/
         }
 
         // File level
@@ -255,7 +264,21 @@ class StoreData {
         }
         boolean x = f.delete();
     }
-    // Write Data from a String Arraylist to the file
+
+    public boolean refreshOtherFilesInDirectory() {
+        boolean rv = true;
+        File dir = new File(directory);
+        File[] dirlist = dir.listFiles();
+        if((dirlist.length) > 0) {
+            otherfilesindirectory.clear();
+            for(int i = 0; i < dirlist.length; i++) {
+                if (!(dirlist[i].getName().equals(this.filename))) {
+                    otherfilesindirectory.add(dirlist[i]);
+                }
+            }
+        }
+        return rv;
+    }
 
     /**
      * writeData - Write data to the file from String Arraylist passed

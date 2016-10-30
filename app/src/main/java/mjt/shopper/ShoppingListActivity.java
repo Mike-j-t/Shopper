@@ -144,7 +144,10 @@ public class ShoppingListActivity extends AppCompatActivity{
     }
 
     protected void onCreate(Bundle savedInstanceState) {
-        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Shopping List (SHOP button) Invoked",THIS_ACTIVITY,"onCreate",true);
+        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,
+                "Shopping List (SHOP button) Invoked",
+                THIS_ACTIVITY,
+                "onCreate",true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shoppinglist_list);
         sp = PreferenceManager.getDefaultSharedPreferences(this);

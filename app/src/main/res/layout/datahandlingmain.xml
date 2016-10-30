@@ -16,9 +16,16 @@
             style="@style/textview_listheading_style"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="Shopper Database Data Handling Options"
-            android:layout_width="wrap_content" />
+            android:text="@string/datahandlingtitle"
+            android:layout_width="0dp"
+            />
     </LinearLayout>
+    <TextView
+        android:id="@+id/dh_done"
+        style="@style/textviewbutton"
+        android:text="@string/standarddonebutton"
+        android:onClick="onButtonClick"
+        />
     <!-- File naming information DISABLED -->
     <LinearLayout
         android:orientation="vertical"
@@ -45,7 +52,7 @@
         <TextView
             style="@style/textview_normal_style"
             android:layout_weight="0.1"
-            android:text="Backup Directory:"
+            android:text="@string/datahanglingbackupdirectory_label"
             />
         <TextView
             android:id="@+id/dh_backupdir"
@@ -67,7 +74,7 @@
         <TextView
             style="@style/textview_normal_style"
             android:layout_weight="0.1"
-            android:text="Date/Time part:"
+            android:text="@string/datahandlingdatetimepart_label"
             />
         <EditText
             android:id="@+id/dh_datetimepart"
@@ -80,7 +87,7 @@
         <TextView
             android:id="@+id/dh_datetimepartreset"
             style="@style/textviewbutton"
-            android:text="Reset"
+            android:text="@string/datahandlingdatetimepartreset_label"
             android:onClick="onButtonClick"
             />
         <TextView
@@ -123,13 +130,13 @@
         <TextView
             style="@style/textview_normal_style"
             android:layout_weight="0.1"
-            android:text="Base FileName: "
+            android:text="@string/datahandlingbasefilename_label"
             />
         <EditText
             android:id="@+id/dh_dbsave_basefilename"
             style="@style/edittext_required_style"
             android:layout_weight="0.3"
-            android:text="ShopperDB"
+            android:text="@string/datahandlingdbsavebasefilename_default"
             />
         <TextView
             style="@style/textview_normal_style"
@@ -138,13 +145,13 @@
         <TextView
             style="@style/textview_normal_style"
             android:layout_weight="0.075"
-            android:text="Extension: "
+            android:text="@string/datahandlingextension_label"
             />
         <EditText
             android:id="@+id/dh_dbsave_fileext"
             style="@style/edittext_required_style"
             android:layout_weight="0.05"
-            android:text=".bkp"
+            android:text="@string/datahandlingdbfileext_default"
             />
     </LinearLayout>
     <!-- DataBase Backup (Copy database file asis) Full Filename Display -->
@@ -159,7 +166,7 @@
         <TextView
             style="@style/textview_normal_style"
             android:layout_weight="0.1"
-            android:text="Full Filename:"
+            android:text="@string/datahandlingfullfilename_label"
             />
         <TextView
             android:id="@+id/dh_dbsave_fullfilename"
@@ -176,7 +183,7 @@
 
         <TextView
             android:id="@+id/dh_dbrestore"
-            style="@style/textviewbutton"
+            style="@style/textviewwarnbutton"
             android:text="@string/datadbrestore"
             android:onClick="onButtonClick"
             />
@@ -208,7 +215,7 @@
         <TextView
             style="@style/textview_normal_style"
             android:layout_width="@dimen/standard_button_width"
-            android:text="Restore File: "
+            android:text="@string/datahandlingrestorefile_label"
             />
         <Spinner
             android:id="@+id/dh_dbrestore_spinner"
@@ -252,13 +259,13 @@
         <TextView
             style="@style/textview_normal_style"
             android:layout_weight="0.1"
-            android:text="Base FileName: "
+            android:text="@string/datahandlingbasefilename_label"
             />
         <EditText
             android:id="@+id/dh_sqlsave_basefilename"
             style="@style/edittext_required_style"
             android:layout_weight="0.3"
-            android:text="ShopperSQL"
+            android:text="@string/datahandlingsqlsavebasefilename_default"
             />
         <TextView
             style="@style/textview_normal_style"
@@ -267,13 +274,13 @@
         <TextView
             style="@style/textview_normal_style"
             android:layout_weight="0.075"
-            android:text="Extension: "
+            android:text="@string/datahandlingextension_label"
             />
         <EditText
             android:id="@+id/dh_sqlsave_fileext"
             style="@style/edittext_required_style"
             android:layout_weight="0.05"
-            android:text=".sql"
+            android:text="@string/datahandlingsqlfileext_default"
             />
     </LinearLayout>
     <!-- SQL Backup (Generate SQL to DLT, BLD and LOAD all tables)
@@ -289,7 +296,7 @@
         <TextView
             style="@style/textview_normal_style"
             android:layout_weight="0.1"
-            android:text="Full Filename:"
+            android:text="@string/datahandlingfullfilename_label"
             />
         <TextView
             android:id="@+id/dh_sqlsave_fullfilename"
@@ -306,7 +313,7 @@
 
         <TextView
             android:id="@+id/dh_sqlrestore"
-            style="@style/textviewbutton"
+            style="@style/textviewwarnbutton"
             android:text="@string/dataloadSQL"
             android:onClick="onButtonClick"
             />
@@ -338,7 +345,7 @@
         <TextView
             style="@style/textview_normal_style"
             android:layout_width="@dimen/standard_button_width"
-            android:text="Restore File: "
+            android:text="@string/datahandlingrestorefile_label"
             />
         <Spinner
             android:id="@+id/dh_sqlrestore_spinner"
@@ -352,7 +359,8 @@
         android:id="@+id/dh_dumpsave_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_button_height">
+        android:layout_height="@dimen/standard_button_height"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/dh_dumpsave"
@@ -374,20 +382,21 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_height">
+        android:layout_height="@dimen/standard_height"
+        android:visibility="gone">
         <TextView
             android:layout_width="@dimen/standard_button_width"
             android:layout_height="match_parent" />
         <TextView
             style="@style/textview_normal_style"
             android:layout_weight="0.1"
-            android:text="Base FileName: "
+            android:text="@string/datahandlingbasefilename_label"
             />
         <EditText
             android:id="@+id/dh_dumpsave_basefilename"
             style="@style/edittext_required_style"
             android:layout_weight="0.3"
-            android:text="ShopperDump"
+            android:text="@string/datahandlingdumpsavebasefilename_default"
             />
         <TextView
             style="@style/textview_normal_style"
@@ -396,20 +405,21 @@
         <TextView
             style="@style/textview_normal_style"
             android:layout_weight="0.075"
-            android:text="Extension: "
+            android:text="@string/datahandlingextension_label"
             />
         <EditText
             android:id="@+id/dh_dumpsave_fileext"
             style="@style/edittext_required_style"
             android:layout_weight="0.05"
-            android:text=".dmp"
+            android:text="@string/datahandlingdumpfileext_default"
             />
     </LinearLayout>
     <!-- Dump (Export into custom file) Full Filename display -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_height">
+        android:layout_height="@dimen/standard_height"
+        android:visibility="gone">
         <TextView
             android:layout_width="@dimen/standard_button_width"
             android:layout_height="match_parent"
@@ -417,7 +427,7 @@
         <TextView
             style="@style/textview_normal_style"
             android:layout_weight="0.1"
-            android:text="Full Filename:"
+            android:text="@string/datahandlingfullfilename_label"
             />
         <TextView
             android:id="@+id/dh_dumpsave_fullfilename"
@@ -430,7 +440,8 @@
         android:id="@+id/dh_dumprestore_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_button_height">
+        android:layout_height="@dimen/standard_button_height"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/dh_dumprestore"
@@ -458,7 +469,8 @@
         android:id="@+id/dh_dumprestore_drpdwn_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_button_height">
+        android:layout_height="@dimen/standard_button_height"
+        android:visibility="gone">
         <TextView
             android:layout_width="@dimen/standard_button_width"
             android:layout_height="match_parent"
@@ -466,7 +478,7 @@
         <TextView
             style="@style/textview_normal_style"
             android:layout_width="@dimen/standard_button_width"
-            android:text="Restore File: "
+            android:text="@string/datahandlingrestorefile_label"
             />
         <Spinner
             android:id="@+id/dh_dumprestore_spinner"
@@ -480,7 +492,8 @@
         android:id="@+id/dh_csvsave_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_button_height">
+        android:layout_height="@dimen/standard_button_height"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/dh_csvsave"
@@ -502,20 +515,21 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_height">
+        android:layout_height="@dimen/standard_height"
+        android:visibility="gone">
         <TextView
             android:layout_width="@dimen/standard_button_width"
             android:layout_height="match_parent" />
         <TextView
             style="@style/textview_normal_style"
             android:layout_weight="0.1"
-            android:text="Base FileName: "
+            android:text="@string/datahandlingbasefilename_label"
             />
         <EditText
             android:id="@+id/dh_csvsave_basefilename"
             style="@style/edittext_required_style"
             android:layout_weight="0.3"
-            android:text="ShopperCSV"
+            android:text="@string/datahandlingcsvbasefilename_default"
             />
         <TextView
             style="@style/textview_normal_style"
@@ -524,20 +538,21 @@
         <TextView
             style="@style/textview_normal_style"
             android:layout_weight="0.075"
-            android:text="Extension: "
+            android:text="@string/datahandlingextension_label"
             />
         <EditText
             android:id="@+id/dh_csvsave_fileext"
             style="@style/edittext_required_style"
             android:layout_weight="0.05"
-            android:text=".csv"
+            android:text="@string/datahandlingcsvfileext_default"
             />
     </LinearLayout>
     <!-- CSV Save (crt CSV for a table) Full Filename -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_height">
+        android:layout_height="@dimen/standard_height"
+        android:visibility="gone">
         <TextView
             android:layout_width="@dimen/standard_button_width"
             android:layout_height="match_parent"
@@ -545,7 +560,7 @@
         <TextView
             style="@style/textview_normal_style"
             android:layout_weight="0.1"
-            android:text="Full Filename:"
+            android:text="@string/datahandlingfullfilename_label"
             />
         <TextView
             android:id="@+id/dh_csvsave_fullfilename"
