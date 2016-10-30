@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.io.File;
 import java.util.*;
 
 /**
@@ -895,7 +894,8 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     public static final String PRODUCTUSAGE_TABLE_NAME = "productusage";
     public static final String PRODUCTUSAGE_COLUMN_AISLEREF = "productailseref";
     public static final String PRODUCTUSAGE_COLUMN_PRODUCTREF = "productproductref";
-    public static final String PRODUCTUSAGE_COLUMN_PRODUCTREF_FULL = PRODUCTUSAGE_TABLE_NAME + PRODUCTUSAGE_COLUMN_PRODUCTREF;
+    public static final String PRODUCTUSAGE_COLUMN_PRODUCTREF_FULL = PRODUCTUSAGE_TABLE_NAME +
+            PRODUCTUSAGE_COLUMN_PRODUCTREF;
     public static final String PRODUCTUSAGE_COLUMN_COST = "productcost";
     public static final String PRODUCTUSAGE_COLUMN_BUYCOUNT = "productbuycount";
     public static final String PRODUCTUSAGE_COLUMN_FIRSTBUYDATE = "productfirstbuydate";
@@ -904,7 +904,12 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     public static final String PRODUCUSAGE_COLUMN_MINCOST_TYPE = "REAL";
     public static final String PRODUCTUSAGE_COLUMN_ORDER = "orderinaisle";
     public static final String PRODUCTUSAGE_COLUMN_ORDER_TYPE = "INTEGER";
+    public static final String PRODUCTUSAGE_COLUMN_RULESUGGESTFLAG = "rulesuggestflag";
     public static int PRODUCTUSAGE_COLUMN_COUNT = -1;
+
+    public static final int RULESUGGESTFLAG_CLEAR = 0;
+    public static final int RULESUGGESTFLAG_DIMISSED = 1;
+    public static final int RULESUGGESTFLAG_DISABLED = 2;
 
 
     // Rules
@@ -981,6 +986,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     public static final String VALUES_COLUMN_VALUEINCLUDEINSETTINGS_TYPE = "INTEGER";
     public static final String VALUES_COLUMN_VALUESETTINGSINFO = "valuesettingsinfo";
     public static final String VALUES_COLUMN_VALUESETTINGSINFO_TYPE = "TEXT";
+
 
     public ShopperDBHelper(Context ctxt, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(ctxt, DATABASE_NAME, factory, 1); }
@@ -1060,6 +1066,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         productusagecolumns.add(new DBColumn(PRODUCTUSAGE_COLUMN_LATESTBUYDATE,"INTEGER",false,"0"));
         productusagecolumns.add(new DBColumn(PRODUCTUSAGE_COLUMN_MINCOST,PRODUCUSAGE_COLUMN_MINCOST_TYPE,false,""));
         productusagecolumns.add(new DBColumn(PRODUCTUSAGE_COLUMN_ORDER,PRODUCTUSAGE_COLUMN_ORDER_TYPE,false,"100"));
+        productusagecolumns.add(new DBColumn(PRODUCTUSAGE_COLUMN_RULESUGGESTFLAG,"INTEGER",false,"0"));
         DBTable productusage = new DBTable(PRODUCTUSAGE_TABLE_NAME,productusagecolumns);
         PRODUCTUSAGE_COLUMN_COUNT = productusage.numberOfColumnsInTable();
 
@@ -1816,9 +1823,12 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         String sqlstr = " DELETE FROM " + PRODUCTUSAGE_TABLE_NAME +
                 " WHERE " + PRODUCTUSAGE_COLUMN_PRODUCTREF + " = " + productid + " ;";
         db.execSQL(sqlstr);
+        db.close();
+        db = this.getWritableDatabase();
         sqlstr = " DELETE FROM " + PRODUCTS_TABLE_NAME +
                 " WHERE " + PRODUCTS_COLUMN_ID + " = " + productid + " ;";
         db.execSQL(sqlstr);
+        db.close();
         validateRules();
         validateShoplist();
     }
@@ -1831,6 +1841,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         String sqlstr = " DELETE FROM " + PRODUCTUSAGE_TABLE_NAME +
                 " WHERE " + PRODUCTUSAGE_COLUMN_AISLEREF + " = " + aisleid + " ;";
         db.execSQL(sqlstr);
+        db.close();
         validateRules();
         validateShoplist();
     }
@@ -1843,6 +1854,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
                 " WHERE " + PRODUCTUSAGE_COLUMN_AISLEREF + " = " + aisleid +
                 " AND " + PRODUCTUSAGE_COLUMN_PRODUCTREF + " = " + productid + " ;";
         db.execSQL(sqlstr);
+        db.close();
         validateRules();
         validateShoplist();
     }
@@ -1862,6 +1874,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         String[] whereargs = new String[] {String.valueOf(aisleid), String.valueOf(productid)};
         SQLiteDatabase db = getWritableDatabase();
         db.update(PRODUCTUSAGE_TABLE_NAME, cv, where, whereargs);
+        db.close();
     }
     //==============================================================================================
     // Note!! rather than delete a ShopListEntry should mark it as complete so that history is
@@ -1898,16 +1911,26 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
             aislecsr = getAisleFromAisleId(shoplistcursor.getLong(shoplistcursor.getColumnIndex(SHOPLIST_COLUMN_AISLEREF)));
             prdusecsr = getProductUsage(shoplistcursor.getLong(shoplistcursor.getColumnIndex(SHOPLIST_COLUMN_AISLEREF)),
                     shoplistcursor.getLong(shoplistcursor.getColumnIndex(SHOPLIST_COLUMN_PRODUCTREF)));
-            if(productcsr.getCount() < 1 | aislecsr.getCount() < 1 | prdusecsr.getCount() < 1) {
+            if (productcsr.getCount() < 1 | aislecsr.getCount() < 1 | prdusecsr.getCount() < 1) {
+                productcsr.close();
+                aislecsr.close();
+                prdusecsr.close();
                 deleteShopListEntry(shoplistcursor.getLong(shoplistcursor.getColumnIndex(SHOPLIST_COLUMN_ID)));
+            } else {
+                productcsr.close();
+                aislecsr.close();
+                prdusecsr.close();
             }
+            /*
             if(shoplistcursor.isLast()) {
                 prdusecsr.close();
                 aislecsr.close();
                 productcsr.close();
             }
+            */
         }
         shoplistcursor.close();
+        db.close();
     }
     //==============================================================================================
     // Update Rule
@@ -1977,7 +2000,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
             }
         }
         rulescursor.close();
-        //db.close();
+        db.close();
     }
     //==============================================================================================
     // Relatively generic get all rows from a table into a cursor
@@ -2151,7 +2174,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String sqlstr = " SELECT " + VALUES_COLUMN_VALUEINT + " FROM " + VALUES_TABLE_NAME +
                 " WHERE " + VALUES_COLUMN_VALUENAME + " = '" + valuename + "' " +
-                " AND WHERE " + VALUES_COLUMN_VALUETYPE + " = 'INTEGER' ;";
+                " AND " + VALUES_COLUMN_VALUETYPE + " = 'INTEGER' ;";
         Cursor csr = db.rawQuery(sqlstr,null);
         if(csr.getCount() == 1) {
             csr.moveToFirst();
@@ -2162,13 +2185,34 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         return rv;
     }
     //==============================================================================================
-    // Get AppValue as Double according to gievn key. returns -1 if not found.
+    // Alter AppValue as Long according to given key and given value.
+    // Returns false if value not found or valuetype is not INTEGER (long).
+    public boolean alterLongValue(String valuename, long newlongvalue) {
+        boolean rv = false;
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sqlstr = " SELECT " + VALUES_COLUMN_VALUENAME + " FROM " + VALUES_TABLE_NAME +
+                " WHERE " + VALUES_COLUMN_VALUENAME + " = '" + valuename + "' " +
+                " AND " + VALUES_COLUMN_VALUETYPE  + " = 'INTEGER' ;";
+        Cursor csr = db.rawQuery(sqlstr,null);
+        if(csr.getCount() == 1) {
+            sqlstr = " UPDATE " + VALUES_TABLE_NAME + " SET " + VALUES_COLUMN_VALUEINT +
+                    " = " + Long.toString(newlongvalue) +
+                    " WHERE " + VALUES_COLUMN_VALUENAME + " = '" + valuename + "' ;";
+            db.execSQL(sqlstr);
+            rv = true;
+        }
+        csr.close();
+        db.close();
+        return rv;
+    }
+    //==============================================================================================
+    // Get AppValue as Double according to given key. returns -1 if not found.
     public double getDoubleValue(String valuename) {
         double rv = -1;
         SQLiteDatabase db = this.getReadableDatabase();
-        String sqlstr = " SELECT " + VALUES_COLUMN_VALUEINT + " FROM " + VALUES_TABLE_NAME +
+        String sqlstr = " SELECT " + VALUES_COLUMN_VALUEREAL + " FROM " + VALUES_TABLE_NAME +
                 " WHERE " + VALUES_COLUMN_VALUENAME + " = '" + valuename + "' " +
-                " AND WHERE " + VALUES_COLUMN_VALUETYPE + " = 'REAL' ;";
+                " AND " + VALUES_COLUMN_VALUETYPE + " = 'REAL' ;";
         Cursor csr = db.rawQuery(sqlstr,null);
         if(csr.getCount() == 1) {
             csr.moveToFirst();
@@ -2179,17 +2223,59 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         return rv;
     }
     //==============================================================================================
+    // Alter AppValue as Double according to given key and given value.
+    // Returns false if value not found or valuetype is not REAL (Double).
+    public boolean alterDoubleValue(String valuename, double newdoublevalue) {
+        boolean rv = false;
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sqlstr = " SELECT " + VALUES_COLUMN_VALUENAME + " FROM " + VALUES_TABLE_NAME +
+                " WHERE " + VALUES_COLUMN_VALUENAME + " = '" + valuename + "' " +
+                " AND " + VALUES_COLUMN_VALUETYPE  + " = 'REAL' ;";
+        Cursor csr = db.rawQuery(sqlstr,null);
+        if(csr.getCount() == 1) {
+            sqlstr = " UPDATE " + VALUES_TABLE_NAME + " SET " + VALUES_COLUMN_VALUEREAL +
+                    " = " + Double.toString(newdoublevalue) +
+                    " WHERE " + VALUES_COLUMN_VALUENAME + " = '" + valuename + "' ;";
+            db.execSQL(sqlstr);
+            rv = true;
+        }
+        csr.close();
+        db.close();
+        return rv;
+    }
+    //==============================================================================================
     // Get Appvalue as String according to given key. returns "" if not found.
     public String getStringValue(String valuename){
         String rv = "";
         SQLiteDatabase db = this.getReadableDatabase();
-        String sqlstr = " SELECT " + VALUES_COLUMN_VALUEINT + " FROM " + VALUES_TABLE_NAME +
+        String sqlstr = " SELECT " + VALUES_COLUMN_VALUETEXT + " FROM " + VALUES_TABLE_NAME +
                 " WHERE " + VALUES_COLUMN_VALUENAME + " = '" + valuename + "' " +
-                " AND WHERE " + VALUES_COLUMN_VALUETYPE + " = 'TEXT' ;";
+                " AND " + VALUES_COLUMN_VALUETYPE + " = 'TEXT' ;";
         Cursor csr = db.rawQuery(sqlstr,null);
         if(csr.getCount() == 1) {
             csr.moveToFirst();
             rv = csr.getString(0);
+        }
+        csr.close();
+        db.close();
+        return rv;
+    }
+    //==============================================================================================
+    // Alter AppValue as String according to given key and given value.
+    // Returns false if value not found or valuetype is not TEXT (String).
+    public boolean alterStringValue(String valuename, String newstringvalue) {
+        boolean rv = false;
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sqlstr = " SELECT " + VALUES_COLUMN_VALUENAME + " FROM " + VALUES_TABLE_NAME +
+                " WHERE " + VALUES_COLUMN_VALUENAME + " = '" + valuename + "' " +
+                " AND " + VALUES_COLUMN_VALUETYPE  + " = 'TEXT' ;";
+        Cursor csr = db.rawQuery(sqlstr,null);
+        if(csr.getCount() == 1) {
+            sqlstr = " UPDATE " + VALUES_TABLE_NAME + " SET " + VALUES_COLUMN_VALUETEXT +
+                    " = '" + newstringvalue + "' " +
+                    " WHERE " + VALUES_COLUMN_VALUENAME + " = '" + valuename + "' ;";
+            db.execSQL(sqlstr);
+            rv = true;
         }
         csr.close();
         db.close();
@@ -2266,6 +2352,18 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         sqlstr = sqlstr + " ;";
         return db.rawQuery(sqlstr,null);
     }
+
+    /**
+     * getExportSQL - Return the SQL required to build and populate all tables
+     *                  Note!! Calls invokes generateDBSchema to create a
+     *                  working instance of the schema (proposed rather than real)
+     *                  generateExportSchemaSQL is then called to generate SQL to
+     *                  build the table structure.
+     *                  generateExportDataSQL is then called to create the SQL to
+     *                  insert the data. The two strings are concatenated and returned.
+     *
+     * @return
+     */
     public String getExportSQL() {
 
         String savedata = "";
@@ -2276,5 +2374,103 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         savedata = savedata + dbschema.generateExportDataSQL(db);
         db.close();
         return savedata;
+    }
+
+    /**
+     * getSuggestedRules
+     *      return a cursor contain suggested rules
+     *      A suggested rule is based upon the first and latest buy dates and
+     *      the number of purchases made.
+     *
+     *      4 tables are joined with the productusage table to provide product, shop, aisle
+     *      and rule data (note no coulmns required for rule data).
+     *
+     *      The query only selects product usages:-
+     *          whose buycount is greater than 0 AND
+     *          where the first and latest buy dates differ AND
+     *          the difference is 90 days (7776000000 micro seconds) AND
+     *          where there is no existing rule.
+     *
+     *
+     * @return Cursor
+     */
+    public Cursor getSuggestedRules() {
+
+        String sql =
+                "SELECT \n" +
+                        // Create a unique (likely) _id to suit cursor adapters wanting _id
+                        "productailseref * (productproductref * 100000) AS _id," +
+                        // ProductUsage columns
+                        "productusage.productailseref, " +
+                        "productusage.productproductref, " +
+                        "productusage.productcost, " +
+                        "productusage.productbuycount, " +
+                        "productusage.productfirstbuydate, " +
+                        "productusage.productlatestbuydate, " +
+                        "productusage.rulesuggestflag, " +
+
+                        // Product columns
+                        "products._id AS prodid, " +
+                        "products.productname, " +
+
+                        // Aisle  columns
+                        "aisles._id AS aisleid, " +
+                        "aisles.aislename, " +
+                        "aisles.aisleshopref, " +
+
+                        // Shop columns
+                        "shops._id AS shopid, " +
+                        "shops.shopname, " +
+                        "shops.shopstreet, " +
+                        "shops.shopcity, " +
+
+                        // Calculate approx purchase interval in days i.e number
+                        // of days between first and latest divided by the number of purchases
+                        "((productusage.productlatestbuydate - " +
+                        "productusage.productfirstbuydate) " +
+                        "/ 86400000) " +
+                        "/ productusage.productbuycount AS suggestedinterval " +
+
+                "FROM productusage " +
+                        "LEFT JOIN products ON productusage.productproductref = products._id  " +
+                        "LEFT JOIN aisles ON productusage.productailseref = aisles._id " +
+                        "LEFT JOIN shops ON aisles.aisleshopref = shops._id " +
+                        "LEFT JOIN rules ON productusage.productailseref = rules.ruleaisleref " +
+                            "AND productusage.productproductref = rules.ruleproductref " +
+
+                "WHERE productusage.productbuycount  > 0 AND " +
+                        "productusage.productlatestbuydate > productusage.productfirstbuydate  AND " +
+                        "( productusage.productlatestbuydate  " +
+                            "- productusage.productfirstbuydate ) > 7776000000 AND " +
+                "    rules._id IS NULL AND" +
+                "    productusage.rulesuggestflag = 0";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        return  db.rawQuery(sql,null);
+    }
+    private void setRuleSuggestFlag(long productref, long aisleref, int flag) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(PRODUCTUSAGE_COLUMN_RULESUGGESTFLAG,flag);
+        db.update(PRODUCTUSAGE_TABLE_NAME, cv, PRODUCTUSAGE_COLUMN_PRODUCTREF +
+                " = " + productref +
+                " AND " + PRODUCTUSAGE_COLUMN_AISLEREF +
+                " = " + aisleref + " ;",null
+        );
+        db.close();
+    }
+
+    public void dismissRule(long productref, long aisleref) {
+        setRuleSuggestFlag(productref,aisleref,RULESUGGESTFLAG_DIMISSED);
+    }
+    public void disableRule(long productref, long aisleref) {
+        setRuleSuggestFlag(productref, aisleref, RULESUGGESTFLAG_DISABLED);
+    }
+    public void enableDismissedRules() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(PRODUCTUSAGE_COLUMN_RULESUGGESTFLAG,RULESUGGESTFLAG_CLEAR);
+        db.update(PRODUCTUSAGE_TABLE_NAME, cv, PRODUCTUSAGE_COLUMN_RULESUGGESTFLAG + " = " + RULESUGGESTFLAG_DIMISSED, null);
+        db.close();
     }
 }

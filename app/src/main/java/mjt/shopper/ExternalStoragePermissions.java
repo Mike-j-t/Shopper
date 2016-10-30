@@ -28,6 +28,7 @@ public class ExternalStoragePermissions {
     public ExternalStoragePermissions() {}
     // Note call this method
     public static void verifyStoragePermissions(Activity activity) {
+
         int permission = ActivityCompat.checkSelfPermission(
                 activity,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);

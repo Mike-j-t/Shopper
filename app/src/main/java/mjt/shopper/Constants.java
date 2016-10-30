@@ -13,6 +13,7 @@ public interface Constants {
     String COMPARE_DATE_FORMAT = "yyyyMMdd";
     String RULEPERIODS = "AutoAddPeriods";
     String DEBUGFLAG = "Debug";
+    String LASTRULESUGGESTION = "LastRuleSuggestion";
 
     String PERIOD_DAYS = "DAYS";
     String PERIOD_DAYS_SINGULAR = "DAY";

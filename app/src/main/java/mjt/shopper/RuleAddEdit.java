@@ -197,9 +197,16 @@ public class RuleAddEdit extends AppCompatActivity {
             ruleaddeditperiodmultiplier.setText("1");
             ruleaddeditquantity.setText("1");
         }
+        /**
+         * Update an existing Rule
+         */
         if(caller.equals("RuleAddEditList_UPDATE")) {
             ruleaddeditrulename.setText(getIntent().getStringExtra(getResources().getString(R.string.intentkey_rulename)));
-            ruleaddeditperiodmultiplier.setText(Integer.toString(getIntent().getIntExtra(getResources().getString(R.string.intentkey_rulemultiplier),1)));
+            ruleaddeditperiodmultiplier.setText(Integer.toString(
+                    getIntent().getIntExtra(
+                            getResources().getString(R.string.intentkey_rulemultiplier),
+                            1
+                    )));
             ruleaddeditquantity.setText(Integer.toString(getIntent().getIntExtra(getResources().getString(R.string.intentkey_rulequantity),1)));
             ruleaddeditstartdate.setText(sdf.format(getIntent().getLongExtra(getResources().getString(R.string.intentkey_ruleactiveon),0)));
             int period = getIntent().getIntExtra(getResources().getString(R.string.intentkey_ruleperiod),0);
@@ -210,6 +217,20 @@ public class RuleAddEdit extends AppCompatActivity {
             } else {
                 ruleaddeditautoadd.setChecked(true);
             }
+        }
+        /**
+         * Add a suggested Rule (i.e. multiplier is supplied)
+         */
+        if(caller.equals("RuleSuggestionActivity_ADD")) {
+            ruleaddeditstartdate.setText(sdf.format(currentdate));
+            ruleaddeditperiodmultiplier.setText(Integer.toString(
+                    getIntent().getIntExtra(
+                            getResources().getString(R.string.intentkey_rulemultiplier),
+                            1
+                    )));
+            ruleaddeditquantity.setText("1");
+            ruleaddeditperiodselector.setSelection(0);
+            ruleaddeditautoadd.setChecked(false);
         }
 
     }
@@ -332,18 +353,17 @@ public class RuleAddEdit extends AppCompatActivity {
                 return;
             }
         }
-        //if(ruleaddeditautoadd.isChecked()) {
-        //currentautoadd = false;
-        //} else {
-        //currentautoadd = true;
-        //}
+
         currentautoadd = !ruleaddeditautoadd.isChecked();
-        if(caller.equals("RuleAddEditList_ADD")) {
+        if(caller.equals("RuleAddEditList_ADD") || caller.equals("RuleSuggestionActivity_ADD")) {
             shopperdb.insertRule(currentrulename,0,currentautoadd,currentperiodasint,
                     currentperiodmultiplier,currentstartdateastime,
                     currentproductid,currentaisleid,
                     0,0,0,
                     currentquantity);
+            if(caller.equals("RuleSuggestionActivity_ADD")) {
+                this.finish();
+            }
         }
         if(caller.equals("RuleAddEditList_UPDATE")) {
             shopperdb.updateRule(getIntent().getLongExtra(getResources().getString(R.string.intentkey_ruleid),-1),
@@ -352,6 +372,7 @@ public class RuleAddEdit extends AppCompatActivity {
                     0,0,0,
                     currentquantity);
         }
+
         currentrulelistcursor = shopperdb.getRuleList("","",(long) 0,false,false,currentrulelistsortorder);
         currentrulelistadapter.swapCursor(currentrulelistcursor);
     }
