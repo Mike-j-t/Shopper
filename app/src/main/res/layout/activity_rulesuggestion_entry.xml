@@ -7,7 +7,6 @@
     android:paddingLeft="@dimen/standard_listview_row_padding_horizontal"
     android:paddingRight="@dimen/standard_listview_row_padding_horizontal"
     android:paddingTop="@dimen/standard_listview_row_padding_vertical">
-    >
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"

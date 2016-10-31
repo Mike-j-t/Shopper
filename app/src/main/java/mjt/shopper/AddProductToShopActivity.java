@@ -334,7 +334,10 @@ public class AddProductToShopActivity extends AppCompatActivity {
         currentaislelistcursor = shopperdb.getAislesPerShopAsCursor(currentshopid,"");
         setAislesOffsets(currentaislelistcursor);
         current_aislelistspinner = (Spinner) findViewById(R.id.productusageedit_aisleselector);
-        current_aislelistspinneradapter = new AisleListSpinnerAdapter(this,currentaislelistcursor,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        current_aislelistspinneradapter = new AisleListSpinnerAdapter(this,
+                currentaislelistcursor,
+                CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER
+        );
         current_aislelistspinner.setAdapter(current_aislelistspinneradapter);
         if(devmode) {
             Log.d(Constants.LOG, "ACTIVITY: " + THIS_ACTIVITY + " SECTION: onCreate - SETUP AISLELIST SPINNER" +

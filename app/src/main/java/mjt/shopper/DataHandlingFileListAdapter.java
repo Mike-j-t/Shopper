@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -54,9 +55,8 @@ public class DataHandlingFileListAdapter extends ArrayAdapter<File> {
         }
         tv_filename = (TextView) v.findViewById(R.id.dhfl_filename);
         tv_filemod = (TextView) v.findViewById(R.id.dhfl_lastmodified);
-        tv_filename.setText(flentry.getName().toString());
+        tv_filename.setText(flentry.getName());
         tv_filemod.setText("ABT");
-
         return v;
     }
 
@@ -81,7 +81,7 @@ public class DataHandlingFileListAdapter extends ArrayAdapter<File> {
             tv_filename = (TextView) v.findViewById(R.id.dhfl_filename);
             tv_filemod = (TextView) v.findViewById(R.id.dhfl_lastmodified);
 
-            tv_filename.setText(flentry.getName().toString());
+            tv_filename.setText(flentry.getName());
             tv_filemod.setText("TBA");
         }
         return  v;

@@ -2,6 +2,7 @@ package mjt.shopper;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,16 +36,16 @@ public class ProductListSpinnerAdapter extends CursorAdapter{
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.activity_product_list_entry, parent, false);
+        return LayoutInflater.from(context).inflate(R.layout.activity_product_list_selector, parent, false);
     }
     @Override
     public void bindView(View view,Context context, Cursor cursor) {
-        TextView textviewproductid = (TextView) view.findViewById(R.id.product_id_entry);
-        TextView textviewproductname = (TextView) view.findViewById(R.id.product_name_entry);
-        TextView textviewproductorder = (TextView) view.findViewById(R.id.product_order_entry);
-        TextView textviewproductaisleref = (TextView) view.findViewById(R.id.product_aisle_entry);
-        TextView textviewproductnotes = (TextView) view.findViewById(R.id.product_notes_entry);
-        TextView textviewproductuses = (TextView) view.findViewById(R.id.product_uses_entry);
+        TextView textviewproductid = (TextView) view.findViewById(R.id.product_id_selector);
+        TextView textviewproductname = (TextView) view.findViewById(R.id.product_name_selector);
+        TextView textviewproductorder = (TextView) view.findViewById(R.id.product_order_selector);
+        TextView textviewproductaisleref = (TextView) view.findViewById(R.id.product_aisle_selector);
+        TextView textviewproductnotes = (TextView) view.findViewById(R.id.product_notes_selector);
+        TextView textviewproductuses = (TextView) view.findViewById(R.id.product_uses_selector);
 
         textviewproductid.setText(cursor.getString(products_productid_offset));
         textviewproductid.setVisibility(View.GONE);
@@ -56,6 +57,47 @@ public class ProductListSpinnerAdapter extends CursorAdapter{
         textviewproductuses.setText(cursor.getString(products_productuses_offset));
         textviewproductuses.setVisibility(View.GONE);
         textviewproductnotes.setText(cursor.getString(products_productnotes_offset));
+    }
+
+    @Override
+    public View getDropDownView(int position, View convertview, ViewGroup parent) {
+
+        View v = convertview;
+        if(v == null) {
+            v = LayoutInflater.from(parent.getContext()).inflate(
+                    R.layout.activity_product_list_entry,
+                    parent,
+                    false
+            );
+        }
+        Context context = v.getContext();
+        Cursor cursor = getCursor();
+        cursor.moveToPosition(position);
+        TextView textviewproductid = (TextView) v.findViewById(R.id.product_id_entry);
+        TextView textviewproductname = (TextView) v.findViewById(R.id.product_name_entry);
+        TextView textviewproductorder = (TextView) v.findViewById(R.id.product_order_entry);
+        TextView textviewproductaisleref = (TextView) v.findViewById(R.id.product_aisle_entry);
+        TextView textviewproductnotes = (TextView) v.findViewById(R.id.product_notes_entry);
+        TextView textviewproductuses = (TextView) v.findViewById(R.id.product_uses_entry);
+
+        textviewproductid.setText(cursor.getString(products_productid_offset));
+        textviewproductid.setVisibility(View.GONE);
+        textviewproductname.setText(cursor.getString(products_productname_offset));
+        textviewproductorder.setText(cursor.getString(products_productorder_offset));
+        textviewproductorder.setVisibility(View.GONE);
+        textviewproductaisleref.setText(cursor.getString(products_productaisleref_offset));
+        textviewproductaisleref.setVisibility(View.GONE);
+        textviewproductuses.setText(cursor.getString(products_productuses_offset));
+        textviewproductuses.setVisibility(View.GONE);
+        textviewproductnotes.setText(cursor.getString(products_productnotes_offset));
+
+        if(position % 2 == 0) {
+            v.setBackgroundColor(ContextCompat.getColor(context,R.color.colorlistviewroweven));
+        } else {
+            v.setBackgroundColor(ContextCompat.getColor(context,R.color.colorlistviewrowodd));
+        }
+
+        return v;
     }
 
     // Set Products Table query offsets into returned cursor, if not already set

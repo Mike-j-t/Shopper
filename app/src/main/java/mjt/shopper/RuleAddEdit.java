@@ -153,7 +153,7 @@ public class RuleAddEdit extends AppCompatActivity {
         ruleaddeditperiodselector = (Spinner) findViewById(R.id.ruleaddedit_periodselector);
         ruleaddeditperiodmultiplier = (EditText) findViewById(R.id.ruleaddedit_periodmultiplier);
         ruleaddeditquantity = (EditText) findViewById(R.id.ruleaddedit_quantity);
-        ruleaddeditcurrentrules = (ListView) findViewById(R.id.ruleaddedit_currentrules);
+       currentrulelistlistview = (ListView) findViewById(R.id.ruleaddedit_currentrules);
 
         //Get the data from the calling activity
         currentproductid = getIntent().getLongExtra(getResources().getString(R.string.intentkey_productid),-1);
@@ -175,7 +175,10 @@ public class RuleAddEdit extends AppCompatActivity {
         //Populate the period selector spinner
         ruleaddeditperiodselectorcursor = shopperdb.getCursorvalue(Constants.RULEPERIODS,false);
         setValuesOffsets(ruleaddeditperiodselectorcursor);
-        ruleaddeditperiodselectoradapter = new RuleAddEditPeriodSpinnerCursorAdapter(this,ruleaddeditperiodselectorcursor, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        ruleaddeditperiodselectoradapter = new RuleAddEditPeriodSpinnerCursorAdapter(this,
+                ruleaddeditperiodselectorcursor,
+                CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER
+        );
         ruleaddeditperiodselector.setAdapter(ruleaddeditperiodselectoradapter);
 
         //Display Help according to Disable Help preference setting
@@ -184,10 +187,24 @@ public class RuleAddEdit extends AppCompatActivity {
         } else {
             ruleaddedithelplayout.setVisibility(View.GONE);
         }
-        currentrulelistcursor = shopperdb.getRuleList("","",(long)0,false,false,currentrulelistsortorder);
+
+        // Get a cursor containing the current(exisiting) rules
+        currentrulelistcursor = shopperdb.getRuleList("",
+                "",
+                (long)0,
+                false,
+                false,
+                currentrulelistsortorder
+        );
+        // Ensure that we have the cursor index/offsets for the columns
         setRuleListOffsfets(currentrulelistcursor);
-        currentrulelistlistview = (ListView) findViewById(R.id.ruleaddedit_currentrules);
-        currentrulelistadapter = new RuleListAdapter(this,currentrulelistcursor,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+
+        // Prepare the adapter/inflater for the current rules list
+        currentrulelistadapter = new RuleListAdapter(this,
+                currentrulelistcursor,
+                CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER
+        );
+        // Set the current rules Listview to use the adapter
         currentrulelistlistview.setAdapter(currentrulelistadapter);
 
         // Initialise editable inputs according to how activity was invoked
@@ -207,7 +224,12 @@ public class RuleAddEdit extends AppCompatActivity {
                             getResources().getString(R.string.intentkey_rulemultiplier),
                             1
                     )));
-            ruleaddeditquantity.setText(Integer.toString(getIntent().getIntExtra(getResources().getString(R.string.intentkey_rulequantity),1)));
+            ruleaddeditquantity.setText(Integer.toString(
+                    getIntent().getIntExtra(
+                            getResources().getString(
+                                    R.string.intentkey_rulequantity),
+                            1
+                    )));
             ruleaddeditstartdate.setText(sdf.format(getIntent().getLongExtra(getResources().getString(R.string.intentkey_ruleactiveon),0)));
             int period = getIntent().getIntExtra(getResources().getString(R.string.intentkey_ruleperiod),0);
             ruleaddeditperiodselector.setSelection(getIntent().getIntExtra(getResources().getString(R.string.intentkey_ruleperiod),0));

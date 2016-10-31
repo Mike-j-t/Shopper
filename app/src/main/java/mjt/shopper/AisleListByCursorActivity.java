@@ -42,6 +42,7 @@ public class AisleListByCursorActivity extends AppCompatActivity {
     public ListView aisleslistview;
     public Cursor aislelistcursor;
     public Cursor shopspinnercursor;
+
     private int shopid = 0;
 
     //==============================================================================================
@@ -110,14 +111,15 @@ public class AisleListByCursorActivity extends AppCompatActivity {
         final Spinner aisleshopname = (Spinner) findViewById(R.id.aislelist_storeselect_selector);
         shopspinnercursor = shopperdb.getShopsAsCursor("");
         setShopsOffsets(shopspinnercursor);
-        final ShopListSpinnerAdapter adapter = new ShopListSpinnerAdapter(this, shopspinnercursor, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-        aisleshopname.setAdapter(adapter);
+        currentslspa = new ShopListSpinnerAdapter(this, shopspinnercursor, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        aisleshopname.setAdapter(currentslspa);
 
 
         // Click on the spinner (dropdown) to select a Shop who's Aisles are to be displayed
         aisleshopname.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int cpos = shopspinnercursor.getPosition();
                 shopspinnercursor.moveToPosition(position);
                 currentshopid = shopspinnercursor.getLong(shops_shopid_offset);
                 aislelistcursor = shopperdb.getAislesPerShopAsCursor(currentshopid, aislelistsortorder);
@@ -126,6 +128,7 @@ public class AisleListByCursorActivity extends AppCompatActivity {
                 AislesCursorAdapter aisleadapter = new AislesCursorAdapter(lv.getContext(), aislelistcursor, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
                 currentaca = aisleadapter;
                 lv.setAdapter(aisleadapter);
+                shopspinnercursor.moveToPosition(cpos);
             }
 
             @Override

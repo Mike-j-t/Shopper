@@ -2,6 +2,8 @@ package mjt.shopper;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,25 +34,68 @@ public class ShopListSpinnerAdapter extends CursorAdapter{
     public static int shops_shopphone_offset;
     public static int shops_shopnotes_offset;
 
+    private Context context;
+    private static final int aaslsid = R.id.aasls;
+    private static final int aasleid = R.id.aasle;
+
     public ShopListSpinnerAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, FLAG_REGISTER_CONTENT_OBSERVER);
         setShopsOffsets(cursor);
+        this.context = context;
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.activity_aisle_shop_list_entry, parent, false);
+        return LayoutInflater.from(context).inflate(
+                R.layout.activity_aisle_shop_list_selector,
+                parent,
+                false
+        );
     }
     @Override
     public void bindView(View view,Context context, Cursor cursor) {
-        TextView textViewShopName = (TextView) view.findViewById(R.id.aasletv01);
-        TextView textViewShopStreet = (TextView) view.findViewById(R.id.aasletv03);
-        TextView textViewShopCity = (TextView) view.findViewById(R.id.aasletv02);
 
-        textViewShopName.setText(cursor.getString(shops_shopname_offset));
-        textViewShopStreet.setText(cursor.getString(shops_shopstreet_offset));
-        textViewShopCity.setText(cursor.getString(shops_shopcity_offset));
+        TextView sel_shopname = (TextView) view.findViewById(R.id.aaslstv01);
+        TextView sel_shopstreet = (TextView) view.findViewById(R.id.aaslstv03);
+        TextView sel_shopcity = (TextView) view.findViewById(R.id.aaslstv02);
+
+        sel_shopname.setText(cursor.getString(shops_shopname_offset));
+        sel_shopstreet.setText(cursor.getString(shops_shopstreet_offset));
+        sel_shopcity.setText(cursor.getString(shops_shopcity_offset));
     }
+
+    public View getDropDownView(int position, View convertview, ViewGroup parent) {
+        View v = convertview;
+        if( v == null) {
+            v = LayoutInflater.from(parent.getContext()).inflate(
+                    R.layout.activity_aisle_shop_list_entry,
+                    parent,
+                    false
+            );
+            //return v;
+        }
+        Context context = v.getContext();
+        Cursor cursor = getCursor();
+        cursor.moveToPosition(position);
+
+
+        TextView shopname = (TextView) v.findViewById(R.id.aasletv01);
+        TextView shopstreet = (TextView) v.findViewById(R.id.aasletv03);
+        TextView shopcity = (TextView) v.findViewById(R.id.aasletv02);
+        //getCursor().moveToPosition(position);
+
+        shopname.setText(cursor.getString(shops_shopname_offset));
+        shopstreet.setText(cursor.getString(shops_shopstreet_offset));
+        shopcity.setText(cursor.getString(shops_shopcity_offset));
+
+        if(position % 2 == 0) {
+            v.setBackgroundColor(ContextCompat.getColor(context,R.color.colorlistviewroweven));
+        } else {
+            v.setBackgroundColor(ContextCompat.getColor(context,R.color.colorlistviewrowodd));
+        }
+        return v;
+    }
+
 
     // Set Shops Table query offsets into returned cursor, if not already set
     public void setShopsOffsets(Cursor cursor) {
@@ -66,5 +111,26 @@ public class ShopListSpinnerAdapter extends CursorAdapter{
         shops_shopstate_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STATE);
         shops_shopphone_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_PHONE);
         shops_shopnotes_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NOTES);
+    }
+
+    public void determineViewBeingProcessed(View view, String tag, int pv) {
+        if(tag.length() > 8) {
+            tag = tag.substring(0,7);
+        }
+        if(view == null) {
+            Log.i("DVBP_" + tag,"View passed is NULL");
+            return;
+        }
+        switch (view.getId()) {
+            case aaslsid:
+                Log.i("DVBP_" + tag,"Processing the Selector View from the Spinner.");
+                break;
+            case aasleid:
+                Log.i("DVBP_" + tag, "Processing a Dropdown Entry View from the Spinner." +
+                " Position passed = " + Integer.toString(pv));
+                break;
+            default:
+                Log.i("DVBP" + tag, "???? Not sure what is being processed by the Spinner.");
+        }
     }
 }

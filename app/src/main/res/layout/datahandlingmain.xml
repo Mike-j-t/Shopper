@@ -221,7 +221,7 @@
             android:id="@+id/dh_dbrestore_spinner"
             style="@style/spinner_style"
             android:layout_weight="0.1"
-            >
+            android:layout_width="0dp">
         </Spinner>
     </LinearLayout>
     <!-- SQL Backup (Generate SQL to DLT, BLD and LOAD all tables) Button -->
@@ -351,7 +351,7 @@
             android:id="@+id/dh_sqlrestore_spinner"
             style="@style/spinner_style"
             android:layout_weight="0.1"
-            >
+            android:layout_width="0dp">
         </Spinner>
     </LinearLayout>
     <!-- Dump (Export into custom file) Button -->
@@ -484,7 +484,7 @@
             android:id="@+id/dh_dumprestore_spinner"
             style="@style/spinner_style"
             android:layout_weight="0.1"
-            >
+            android:layout_width="0dp">
         </Spinner>
     </LinearLayout>
     <!-- CSV Save (crt CSV for a table) Button -->

@@ -2,6 +2,7 @@ package mjt.shopper;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,15 +36,44 @@ public class RuleAddEditPeriodSpinnerCursorAdapter extends CursorAdapter {
         super(context, cursor, 0);
         setValuesOffsets(cursor);
     }
+
+    @Override
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        return LayoutInflater.from(context).inflate(
+                R.layout.ruleaddedit_period_spinner_entry,
+                parent,
+                false
+        );
+    }
+
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         TextView textviewvaluestr = (TextView) view.findViewById(R.id.ruleaddedit_ruleperiodentry);
-
         textviewvaluestr.setText(cursor.getString(values_valuetext_offset));
     }
+
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.ruleaddedit_period_spinner_entry, parent, false);
+    public View getDropDownView(int position, View convertview, ViewGroup parent) {
+        View v = convertview;
+        if(v == null) {
+            v = LayoutInflater.from(parent.getContext()).inflate(
+                    R.layout.ruleaddedit_period_spinner_entry,
+                    parent,
+                    false
+            );
+        }
+        Context context = v.getContext();
+        Cursor cursor = getCursor();
+        cursor.moveToPosition(position);
+        TextView textviewvaluestr = (TextView) v.findViewById(R.id.ruleaddedit_ruleperiodentry);
+        textviewvaluestr.setText(cursor.getString(values_valuetext_offset));
+
+        if(position % 2 == 0) {
+            v.setBackgroundColor(ContextCompat.getColor(context,R.color.colorlistviewroweven));
+        } else {
+            v.setBackgroundColor(ContextCompat.getColor(context,R.color.colorlistviewrowodd));
+        }
+        return v;
     }
 
     public void setValuesOffsets(Cursor cursor) {

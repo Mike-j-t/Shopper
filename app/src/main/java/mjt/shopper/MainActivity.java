@@ -27,12 +27,12 @@ import java.util.Date;
 // Setup Values table (if already done then duplicates won't be added)
 // Button handling as per xml then handle selection of options
 
-//TODO change all drops downs (spinners) to have two layouts drop down alternating backgrounds
 //TODO update manual for new features added
 //TODO additional settings for Rule Selection 3; allow suggestions, freq and Next suggest
 //TODO update manual for addition actions (...) Data handling and Rule suggestions
 //TODO update manual to fully cover Datahandling
 //TODO update manual to full cover Rule Suggestion
+//TODO Help display for Rule Suggestion
 
 public class MainActivity extends AppCompatActivity {
 

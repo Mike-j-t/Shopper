@@ -2362,7 +2362,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
      *                  generateExportDataSQL is then called to create the SQL to
      *                  insert the data. The two strings are concatenated and returned.
      *
-     * @return
+     * @return returns the SQL
      */
     public String getExportSQL() {
 
