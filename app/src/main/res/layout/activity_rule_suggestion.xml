@@ -49,7 +49,7 @@
         >
         <TextView
             android:id="@+id/rulesuggestion_listview_title"
-            android:layout_width="@dimen/standard_dummy_size"
+            android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="@dimen/standard_subsubsubheading_height"
             android:text="@string/title_activtyrulesuggestion_list"

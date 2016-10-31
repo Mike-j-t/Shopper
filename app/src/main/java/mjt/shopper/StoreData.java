@@ -1,8 +1,5 @@
 package mjt.shopper;
 
-import android.app.Activity;
-import android.app.Application;
-import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
 

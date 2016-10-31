@@ -40,7 +40,8 @@
             android:id="@+id/aislelist_help"
             style="@style/textview_help_style"
             android:layout_weight="1"
-            android:text="@string/rules_ruleaddedit_instructions" />
+            android:text="@string/rules_ruleaddedit_instructions"
+            android:layout_height="0dp" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ruleaddedit_productheader"

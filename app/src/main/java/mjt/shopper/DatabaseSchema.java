@@ -45,7 +45,7 @@ public class DatabaseSchema extends AppCompatActivity {
         tv.setTypeface(null, Typeface.BOLD_ITALIC);
         tv.setBackgroundColor(ContextCompat.getColor(context, R.color.colorNormalButton));
         tv.setTextColor(ContextCompat.getColor(context, R.color.colorNormalButtonText));
-        ((LinearLayout)ll).addView((TextView) tv); // Don't want to indent, already done in XML
+        ll.addView(tv); // Don't want to indent, already done in XML
     }
     private void dbiAddDBTables(LinearLayout ll, LinearLayout.LayoutParams llparams, Context context) {
 
@@ -66,7 +66,7 @@ public class DatabaseSchema extends AppCompatActivity {
             tv.setTypeface(null, Typeface.BOLD);
             tv.setBackgroundColor(ContextCompat.getColor(context, R.color.colorlistviewrowodd));
             tv.setPadding(16,0,0,0);
-            ll.addView((TextView) tv, llparams);
+            ll.addView(tv, llparams);
 
 
             // Now go and get the Table's Columns
