@@ -13,6 +13,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -58,6 +59,7 @@ public class MainDataHandlingActivity extends AppCompatActivity {
     private Spinner dbrestore_spinner;
     private TextView dbbutton;
     private TextView dbfcnt;
+    private TextView dbrestorebutton;
 
     private EditText sqlbasefilename;
     private EditText sqlfileext;
@@ -65,6 +67,7 @@ public class MainDataHandlingActivity extends AppCompatActivity {
     private Spinner sqlrestore_spinner;
     private TextView sqlbutton;
     private TextView sqlfcnt;
+    private TextView sqlrestorebutton;
 
     private EditText dumpbasefilename;
     private EditText dumpfileext;
@@ -128,6 +131,7 @@ public class MainDataHandlingActivity extends AppCompatActivity {
         dbrestore_spinner = (Spinner) findViewById(R.id.dh_dbrestore_spinner);
         dbbutton = (TextView) findViewById(R.id.dh_dbsave);
         dbfcnt = (TextView) findViewById(R.id.dh_dbrestore_fcnt);
+        dbrestorebutton = (TextView) findViewById(R.id.dh_dbrestore);
 
         sqlbasefilename = (EditText) findViewById(R.id.dh_sqlsave_basefilename);
         sqlfileext = (EditText) findViewById(R.id.dh_sqlsave_fileext);
@@ -135,6 +139,7 @@ public class MainDataHandlingActivity extends AppCompatActivity {
         sqlrestore_spinner = (Spinner) findViewById(R.id.dh_sqlrestore_spinner);
         sqlbutton = (TextView) findViewById(R.id.dh_sqlsave);
         sqlfcnt = (TextView) findViewById(R.id.dh_sqlrestore_fcnt);
+        sqlrestorebutton = (TextView) findViewById(R.id.dh_sqlrestore);
 
         dumpbasefilename = (EditText) findViewById(R.id.dh_dumpsave_basefilename);
         dumpfileext = (EditText) findViewById(R.id.dh_dumpsave_fileext);
@@ -286,20 +291,25 @@ public class MainDataHandlingActivity extends AppCompatActivity {
                 dbfcnt,
                 dbbasefilename.getText().toString(),
                 dbfileext.getText().toString(),
-                sdbase
+                sdbase,
+                dbrestorebutton
         );
         //SQL
         populateRestoreSpinner(sqlrestore_spinner,
                 sqlfcnt,
                 sqlbasefilename.getText().toString(),
                 sqlfileext.getText().toString(),
-                sdbase);
+                sdbase,
+                sqlrestorebutton
+        );
         //DUMP
         populateRestoreSpinner(dumprestore_spinner,
                 dumpfcnt,
                 dumpbasefilename.getText().toString(),
                 dumpfileext.getText().toString(),
-                sdbase);
+                sdbase,
+                null
+        );
     }
 
     /**
@@ -310,7 +320,7 @@ public class MainDataHandlingActivity extends AppCompatActivity {
      * @param fileext - fileextension
      * @param sd - StoreData
      */
-    private void populateRestoreSpinner(Spinner spn, TextView tv, String basefilename, String fileext, StoreData sd) {
+    private void populateRestoreSpinner(Spinner spn, TextView tv, String basefilename, String fileext, StoreData sd, TextView restorebutton) {
 
         String spnname = "";
         boolean used = false;
@@ -348,9 +358,22 @@ public class MainDataHandlingActivity extends AppCompatActivity {
         }
 
         // Reverse the order of the list so most recent backups appear first
+        // Also hide/show the Restore button and spinner according to if
+        // files exist or not
+        // (doing nothing in the case where the is no restore button i.e.
+        //  null has been passed)
         if(flst.size() > 0) {
             for (int i = (flst.size() -1); i >= 0; i--) {
                 reverseflist.add(flst.get(i));
+            }
+            if (restorebutton != null) {
+                spn.setVisibility(View.VISIBLE);
+                restorebutton.setVisibility(View.VISIBLE);
+            }
+        } else {
+            if (restorebutton != null) {
+                spn.setVisibility(View.INVISIBLE);
+                restorebutton.setVisibility(View.INVISIBLE);
             }
         }
 
@@ -442,6 +465,22 @@ public class MainDataHandlingActivity extends AppCompatActivity {
         copydbfilename = currentdbfilename +
                 "OLD" +
                 getDateandTimeasYYMMDDhhmm();
+        if(dbrestore_spinner.getSelectedItemPosition() == AdapterView.INVALID_POSITION) {
+            AlertDialog.Builder notokdialog = new AlertDialog.Builder(this);
+            notokdialog.setTitle("No DB Restore File.");
+            notokdialog.setMessage("There is no file to restore from selected." +
+                    "\n\nThe restore request cannot be undertaken" +
+                    " and will be cancelled. "
+            );
+            notokdialog.setCancelable(true);
+            notokdialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            }).show();
+            return;
+        }
         backupfilename = dbrestore_spinner.getSelectedItem().toString();
 
         AlertDialog.Builder okdialog = new AlertDialog.Builder(this);
@@ -678,6 +717,22 @@ public class MainDataHandlingActivity extends AppCompatActivity {
     private void restoreSQL() {
         currentdbfilename = this.getDatabasePath(ShopperDBHelper.DATABASE_NAME).getPath();
         copydbfilename = currentdbfilename + "OLDSQL" + getDateandTimeasYYMMDDhhmm();
+        if(sqlrestore_spinner.getSelectedItemPosition() == AdapterView.INVALID_POSITION) {
+            AlertDialog.Builder notokdialog = new AlertDialog.Builder(this);
+            notokdialog.setTitle("No SQL Restore File.");
+            notokdialog.setMessage("There is no file to restore from selected." +
+                    "\n\nThe restore request cannot be undertaken," +
+                    " so the request will be cancelled."
+            );
+            notokdialog.setCancelable(true);
+            notokdialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            }).show();
+            return;
+        }
         backupfilename = sqlrestore_spinner.getSelectedItem().toString();
 
         AlertDialog.Builder okdialog = new AlertDialog.Builder(this);

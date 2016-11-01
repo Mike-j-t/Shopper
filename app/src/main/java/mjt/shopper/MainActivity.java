@@ -27,11 +27,7 @@ import java.util.Date;
 // Setup Values table (if already done then duplicates won't be added)
 // Button handling as per xml then handle selection of options
 
-//TODO update manual for new features added
-//TODO additional settings for Rule Selection 3; allow suggestions, freq and Next suggest
-//TODO update manual for addition actions (...) Data handling and Rule suggestions
-//TODO update manual to fully cover Datahandling
-//TODO update manual to full cover Rule Suggestion
+//TODO Allow Enabling of Disabled Rule Suggestions
 //TODO Help display for Rule Suggestion
 
 public class MainActivity extends AppCompatActivity {
@@ -233,9 +229,28 @@ public class MainActivity extends AppCompatActivity {
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
                 THIS_ACTIVITY,"getSettings",developermode);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        developermode = sharedPreferences.getBoolean(getString(R.string.sharedpreferencekey_developermode),false);
-        helpoffmode = sharedPreferences.getBoolean(getString(R.string.sharedpreferencekey_showhelpmode),false);
-        rulesuggestion = sharedPreferences.getBoolean(getString(R.string.sharedpreferencekey_allowrulesuggest),true);
+        //Developer Mode - Allows Data and Schema buttons does additional log writing
+        developermode = sharedPreferences.getBoolean(
+                getString(
+                        R.string.sharedpreferencekey_developermode
+                ),
+                false
+        );
+        // HelpOffMode - DIsable/Enable help displays
+        helpoffmode = sharedPreferences.getBoolean(
+                getString(
+                        R.string.sharedpreferencekey_showhelpmode
+                ),
+                false
+        );
+        // Diable/Enable Regular Rule suggestions
+        rulesuggestion = sharedPreferences.getBoolean(
+                getString(
+                        R.string.sharedpreferencekey_allowrulesuggest
+                ),
+                true
+        );
+        // Number of days between rule suggestions
         rulesuggestionfrequency =
                 Integer.parseInt(
                         sharedPreferences.getString(getResources().getString(
@@ -245,13 +260,16 @@ public class MainActivity extends AppCompatActivity {
                 );
     }
 
-    //==============================================================================================
-    // Select Buttons that are to be dissplayed
-    // Displays buttons relevant to the current state/context i.e. DB state and developermode
-    // e.g. if no stores or products then only Stores and Products buttons as other information is
-    // dependany up stores or products (and so on as per comments)
-    // developer mode is independant of stores/products etc if true then display DATA and SCHEMA
-    // buttons else display neither.
+    /**
+     * Method - selectButtons - Turn buttons on/off according to various states
+     * Stores Button is always available.
+     * The Aisles button will only be available if at least 1 store exists
+     * Products Button is always available.
+     * To Get Button is only available when at least one product is assigned
+     *      to an aisle. As such at least one aisle and one product exists and
+     *      therefore that at least one shop exists.
+     *
+     */
     private void selectButtons() {
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
                 THIS_ACTIVITY,"selectButtons",developermode);
@@ -304,8 +322,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // Only show ShoppingList button if there are shops and there are products and there are
-        // products in aisles.
+        // Only show ShoppingList button if at least one shopping list row wxists
         if(shoppinglistcount < 1 & rulecount < 1) {
             shoppinglistbutton.setVisibility(View.GONE);
             shoppinglisthelpbutton.setVisibility(View.GONE);
@@ -339,9 +356,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //==============================================================================================
-    // Get statistics # of shops, aisles, products, products in aisles, rules and shopping list entries.
-    // Also show date and time and then timestamp. Only shown in developer mode.
+    /**
+     * Set database row count display views
+     * Also Date and Timestamps
+     * Note! Data is only displayed when developer Mode is on.
+     */
     private void handleStats() {
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
                 THIS_ACTIVITY,"handleStats",developermode);
@@ -372,10 +391,17 @@ public class MainActivity extends AppCompatActivity {
         stats.setText(statstr);
     }
 
-    //==============================================================================================
-    // Do Initialisation checks -
-    // expand database (add any new tables and/or columns)
-    // if no stores(shops) then invoke store add
+    /**
+     * Method - initialisationChecks - invoke the onExpand method
+     * The onExpand method checks the actual database against a
+     *      proposed structure adding tables and columns if any
+     *      are missing.
+     * This is an alternative method to using the SQLIte onUpgrade.
+     * Classes ShopperDBHelper.DBColumn, DBTable and DBDatabase,
+     *      all in ShopperDBHelper.java, have additional information
+     * Note! invoking the ShopAddActivity if no stores exists has
+     *      been commented out as it may be confusing.
+     */
     private void initialisationChecks() {
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
                 THIS_ACTIVITY,"initialisationChecks",developermode);
@@ -383,11 +409,13 @@ public class MainActivity extends AppCompatActivity {
         ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
         shopperdb.onExpand();
 
+        /*
         if(shopcount < 1 ) {
             Intent intent = new Intent(this, ShopAddActivity.class);
             intent.putExtra("Caller",THIS_ACTIVITY);
             startActivity(intent);
         }
+        */
         shopperdb.close();
     }
 
@@ -468,7 +496,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Check if Database exists
+    /**
+     * method doesDatabaseExist - Checks if the database exists
+     * @param context
+     * @param dbName
+     * @return true if the database file exists, false if not
+     */
     public boolean doesDatabaseExist(Context context, String dbName) {
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
                 THIS_ACTIVITY,"doesDatabaseExist",developermode);
