@@ -28,6 +28,7 @@ import java.util.Date;
 // Button handling as per xml then handle selection of options
 
 //TODO Allow Enabling of Disabled Rule Suggestions
+//TODO Add ability to suggest Rule modifications???
 //TODO Help display for Rule Suggestion
 
 public class MainActivity extends AppCompatActivity {

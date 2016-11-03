@@ -491,6 +491,17 @@
         \nIt is only advisable to disable help displays when you are comfortable with using Shopper.
     </string>
 
+    <string name="sharedpreferencekey_strictbackupmode">strictbackupmode</string>
+    <string name="strictbackupmode_label">Strict Backup Mode</string>
+    <string name="strictbackupmode_info">This determines what backups are listed.
+        \nIf checked then backup files listed will have to have be comprised of both the specified
+        BaseFileName AND the specified File Extension.
+        \n\nIf unchecked the backup files listed can have either the specified BaseFileName OR
+        the specified File Extension.
+        \n\nThe former, the default, is the safest, as it reduces the chance of selecting the
+        wrong type of file.
+    </string>
+
 
     <string name="dbinspect_shopcols_line1">ID - Order - Store Name - Street (2nd Line) City - Phone (3rd Line) Notes</string>
     <string name="dbinspect_shopcols_l1">ID - Store Name - Order </string>
