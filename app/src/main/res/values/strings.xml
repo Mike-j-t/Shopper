@@ -183,6 +183,7 @@
     <string name="standardaddbuttontext">ADD</string>
     <string name="standardskipbuttontext">SKIP</string>
     <string name="standarddisablebuttontext">DISABLE</string>
+    <string name="standardenablebuttontext">ENABLE</string>
     <string name="standardcanceltext">@android:string/cancel</string>
     <string name="standardedittext">EDIT</string>
     <string name="standarddeletetext">DELETE</string>
@@ -214,8 +215,15 @@
     <string name="title_activity_product_edit">Shopper - Edit Product</string>
     <string name="title_activity_product_list">Shopper - Product List (click Product to Edit, long click to Delete)</string>
     <string name="title_activity_add_product_to_shop">Shopper - Add Product to Store</string>
+    <string name="title_activity_ruleaddedit">Shopper - Rule Add/Edit</string>
     <string name="title_activityproductusage_edit">Shopper - Edit Product Usage</string>
     <string name="title_activtyrulesuggestion_list">Shopper - Rule Suggestion List</string>
+    <string name="title_activityreviewdisabledrulesuggestions">Shopper - Review Disabled Rule Suggestions</string>
+    <string name="title_activity_usersettings">Shopper - User Settings</string>
+    <string name="title_activity_ruleaddeditlist">Shopper - Rules</string>
+    <string name="title_activity_shoppinglist">Shopper - Shopping List</string>
+    <string name="title_activity_addpurchaseableproducttoshoplist">Shopper - Add to Shopping List</string>
+    <string name="title_activity_database_inspector">Shopper- Database Inspector</string>
 
     <!-- <string name="standardHeadingStyle">bold</string> -->
 
@@ -489,6 +497,17 @@
     <string name="showhelpmode_info">You can diasble help displays throughout Shopper.
         \nOverall this will give a more display space.
         \nIt is only advisable to disable help displays when you are comfortable with using Shopper.
+    </string>
+
+    <string name="sharedpreferencekey_strictbackupmode">strictbackupmode</string>
+    <string name="strictbackupmode_label">Strict Backup Mode</string>
+    <string name="strictbackupmode_info">This determines what backups are listed.
+        \nIf checked then backup files listed will have to have be comprised of both the specified
+        BaseFileName AND the specified File Extension.
+        \n\nIf unchecked the backup files listed can have either the specified BaseFileName OR
+        the specified File Extension.
+        \n\nThe former, the default, is the safest, as it reduces the chance of selecting the
+        wrong type of file.
     </string>
 
 

@@ -141,6 +141,5 @@ public class RuleSuggestion extends AppCompatActivity{
             csr.close();
             db.close();
         }
-
     }
 }

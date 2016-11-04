@@ -23,81 +23,104 @@
             android:name=".ShopListByCursorActivity"
             android:label="@string/title_activity_shop_list_by_cursor"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity
             android:name=".ShopAddActivity"
             android:label="@string/title_activity_shop_add"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity android:name=".AisleListByCursorActivity"
             android:label="@string/title_activity_ailse_list_by_cursor"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity android:name=".AisleAddActivity"
             android:label="@string/title_activity_aisle_add"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity android:name="ProductListByCursorActivity"
             android:label="@string/title_activity_product_list"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity android:name=".ProductAddActivity"
             android:label="@string/title_activity_product_add"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity android:name=".AddProductToShopActivity"
             android:label="@string/title_activity_add_product_to_shop"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity android:name=".Database_Inspector_Activity"
-            android:label="Database Inspector"
+            android:label="@string/title_activity_database_inspector"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity android:name=".DatabaseSchema"
             android:label="Database Information"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity android:name=".ProductUsageEdit"
             android:label="@string/title_activityproductusage_edit"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity android:name=".AddPurchasableProductsToShopList"
-            android:label="Add to Shop List"
+            android:label="@string/title_activity_addpurchaseableproducttoshoplist"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity android:name=".ShoppingListActivity"
-            android:label="Shopping List"
+            android:label="@string/title_activity_shoppinglist"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity android:name=".RuleAddEditList"
-            android:label="Rules"
+            android:label="@string/title_activity_ruleaddeditlist"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity android:name=".UserSettings"
-            android:label="User Settings"
+            android:label="@string/title_activity_usersettings"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity android:name=".RuleAddEdit"
-            android:label="Add/Edit Rule"
-            android:screenOrientation="portrait">
+            android:label="@string/title_activity_ruleaddedit"
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity android:name=".MainDataHandlingActivity"
             android:label="@string/datalabel"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
         </activity>
         <activity android:name=".RuleSuggestionActivity"
-            android:label="Rule Suggestion List"
-            android:screenOrientation="portrait">
+            android:label="@string/title_activityreviewdisabledrulesuggestions"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+        <activity android:name=".ReviewDisabledRuleSuggestionsActivity"
+            android:label="@string/title_activityreviewdisabledrulesuggestions"
+            android:screenOrientation="portrait"
+            >
         </activity>
     </application>
 </manifest>

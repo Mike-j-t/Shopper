@@ -75,7 +75,4 @@ public interface Constants {
     String RULELISTORDER_BY_PROMPT = " ORDER BY " + ShopperDBHelper.RULES_TABLE_NAME + "." + ShopperDBHelper.RULES_COLUMN_PROMPTFLAG + " ASC, " +
             ShopperDBHelper.RULES_TABLE_NAME + "." + ShopperDBHelper.RULES_COLUMN_NAME + " ASC ;";
 }
-/**
- * Created by Mike092015 on 20/02/2016.
- */
 

@@ -3,10 +3,14 @@ package mjt.shopper;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -38,12 +42,15 @@ import java.util.Calendar;
  */
 public class MainDataHandlingActivity extends AppCompatActivity {
 
+    private final String THIS_ACTIVITY = "MainDataHandling";
+
     private TextView backupdir;
     private EditText datetimepart;
     private String datetimestr = "";
 
     private String backupfilename = "";
     private String currentdbfilename = "";
+    private String icdbfilename = "";
     private String copydbfilename = "";
     private String logtag = "";
     private String resulttitle = "";
@@ -82,6 +89,9 @@ public class MainDataHandlingActivity extends AppCompatActivity {
     private TextView csvbutton;
     private StoreData sdbase;
 
+    private SharedPreferences sp;
+    private boolean strictbackupmode = true;
+
     private ProgressDialog busy;
     private boolean copytaken = false;
     private boolean origdeleted = false;
@@ -94,9 +104,11 @@ public class MainDataHandlingActivity extends AppCompatActivity {
 
     private static final int BUFFERSZ = 32768;
     private byte[] buffer = new byte[BUFFERSZ];
+    private boolean dbcorrupted = false;
 
     private boolean confirmaction = false;
     private String exportdata = "";
+    private boolean developermode;
 
 
     private ArrayList<String> errlist = new ArrayList<>();
@@ -108,6 +120,26 @@ public class MainDataHandlingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datahandlingmain);
         context = this;
+
+
+        sp = PreferenceManager.getDefaultSharedPreferences(context);
+        // Get developermode from shared preferences
+        developermode = sp.getBoolean(
+                getResources().getString(
+                        R.string.sharedpreferencekey_developermode
+                ),
+                false
+        );
+        // Get strictbackupmode from shared preferences
+        // if false allows files with BaseFileName or FileExtenstion
+        // to be listed.
+        // if true files must have BaseFileName AND FileExtension
+        // to be listed.
+        strictbackupmode = sp.getBoolean(
+                getResources().getString(
+                        R.string.sharedpreferencekey_strictbackupmode),
+                        true
+        );
 
         backupdir = (TextView) this.findViewById(R.id.dh_backupdir);
         datetimepart = (EditText) this.findViewById(R.id.dh_datetimepart);
@@ -341,17 +373,13 @@ public class MainDataHandlingActivity extends AppCompatActivity {
         // file selector
         for(int i = 0; i < flst.size(); i++) {
             used = false;
-            if(flst.get(i).getName().endsWith(fileext)) {
+            boolean endingok = flst.get(i).getName().endsWith(fileext);
+            boolean containsok = flst.get(i).getName().contains(basefilename);
+            if((strictbackupmode && endingok && containsok)
+                || (!strictbackupmode && (endingok || containsok))) {
                 used = true;
                 fcount++;
-            }
-            else {
-                if(flst.get(i).getName().contains(basefilename)) {
-                    used = true;
-                    fcount++;
-                }
-            }
-            if(!used) {
+            } else {
                 flst.remove(i);
                 i--;
             }
@@ -459,12 +487,24 @@ public class MainDataHandlingActivity extends AppCompatActivity {
      */
     private void restoreDB() {
 
+        //Prepare filenames
+        //      currentdbfilename = curreant Shopper DataBase
+        //      copydbfilename = filename used when renaming current
+        //      icdbfilename = filename of an intermediate/test database used
+        //                      to perform an integrity check to see if the
+        //                      restore file creates a valid database.
         currentdbfilename = this.getDatabasePath(
                 ShopperDBHelper.DATABASE_NAME)
                 .getPath();
         copydbfilename = currentdbfilename +
                 "OLD" +
                 getDateandTimeasYYMMDDhhmm();
+        icdbfilename = currentdbfilename.substring(0,
+                currentdbfilename.lastIndexOf(ShopperDBHelper.DATABASE_NAME))
+                + "IC" + ShopperDBHelper.DATABASE_NAME;
+
+        // Get the backup file, checking that there is one (should always be one
+        // as the restore button should be hidden if there are no files
         if(dbrestore_spinner.getSelectedItemPosition() == AdapterView.INVALID_POSITION) {
             AlertDialog.Builder notokdialog = new AlertDialog.Builder(this);
             notokdialog.setTitle("No DB Restore File.");
@@ -483,6 +523,9 @@ public class MainDataHandlingActivity extends AppCompatActivity {
         }
         backupfilename = dbrestore_spinner.getSelectedItem().toString();
 
+        // Confirm restore request is wanted and if so invoke it BUT only
+        // if the itegrity check is passed
+        // if integrity check is passed the invoke doDBRestore method which does the restore
         AlertDialog.Builder okdialog = new AlertDialog.Builder(this);
         okdialog.setTitle("Database Restore Requested");
         okdialog.setMessage(
@@ -504,7 +547,9 @@ public class MainDataHandlingActivity extends AppCompatActivity {
         okdialog.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                doDBRestore();
+                if(dataBaseIntegrityCheck()) {
+                    doDBRestore();
+                }
             }
         });
         okdialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -514,6 +559,81 @@ public class MainDataHandlingActivity extends AppCompatActivity {
             }
         });
         okdialog.show();
+    }
+
+    /**
+     *
+     * @return false if the backup file is invalid.
+     *
+     *  determine by creating a differently name database (prefixed with IC), openein it with it's
+     *  own helper (does nothing) and then trying to check if there are tables in the database.
+     *  No tables reflects that file is invalid type.
+     *
+     *  Note! if an attempt to open an invalid database file then SQLite deletes the file.
+     */
+    private boolean dataBaseIntegrityCheck() {
+
+        final String THIS_METHOD = "dataBaseIntegrityCheck";
+        String sqlstr_mstr = "SELECT name FROM sqlite_master WHERE type = 'table' AND name!='android_metadata' ORDER by name;";
+        Cursor iccsr;
+        boolean rv = true;
+
+        //Note no use having the handler as it actualy introduces problems  as SQLite assumes that
+        // the handler will restore the database.
+        // No need to comment out as handler can be disabled by not not passing it as a parameter
+        // of the DBHelper
+        DatabaseErrorHandler myerrorhandler = new DatabaseErrorHandler() {
+            @Override
+            public void onCorruption(SQLiteDatabase sqLiteDatabase) {
+                mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"DB onCorruption error handler invoked",THIS_ACTIVITY,THIS_METHOD,developermode);
+            }
+        };
+        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Restore Databae Integrity Check - Starting",THIS_METHOD,THIS_ACTIVITY,developermode);
+        try {
+            FileInputStream bkp = new FileInputStream(backupfilename);
+            OutputStream ic = new FileOutputStream(icdbfilename);
+            while ((copylength = bkp.read(buffer)) > 0) {
+                ic.write(buffer, 0, copylength);
+            }
+            ic.close();
+            bkp.close();
+
+            mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"restore Database Integrity Check - IC Database created",THIS_METHOD,THIS_ACTIVITY,developermode);
+
+            //Note SQLite will actually check for corruption and if so delete the file
+            //
+            IntegrityCheckDBHelper icdbh = new IntegrityCheckDBHelper(this,null,null,1,null);
+            SQLiteDatabase icdb = icdbh.getReadableDatabase();
+
+            //Check to see if there are any tables, if wrong file type shouldn't be any
+            iccsr = icdb.rawQuery(sqlstr_mstr,null);
+            if(iccsr.getCount() < 1) {
+                errlist.add("Integrity Check extract from sqlite_master returned nothing - Propsoed file is corrupt or not a database file.");
+                rv = false;
+            }
+            iccsr.close();
+            icdb.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            errlist.add("Integrity Check Failed Error Message was " + e.getMessage());
+        }
+
+        if(!rv) {
+            AlertDialog.Builder notokdialog = new AlertDialog.Builder(this);
+            notokdialog.setTitle("Invalid Restore File.");
+            notokdialog.setCancelable(true);
+            String msg = "File " + backupfilename + " is an invalid file." +
+                    "\n\nThe Restore cannot continue and will be canclled. " +
+                    "\n\nPlease Use a Valid Database Backup File!";
+            notokdialog.setMessage(msg);
+            notokdialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            }).show();
+        }
+        return rv;
     }
 
     /**

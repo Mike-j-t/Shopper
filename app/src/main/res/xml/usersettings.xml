@@ -35,4 +35,10 @@
             android:key="@string/sharedpreferencekey_nextdatefromwhendone"
             android:defaultValue="true"
             />
+        <CheckBoxPreference
+                android:title="@string/strictbackupmode_label"
+            android:summary="@string/strictbackupmode_info"
+            android:key="@string/sharedpreferencekey_strictbackupmode"
+            android:defaultValue="true"
+            />
 </PreferenceScreen>
