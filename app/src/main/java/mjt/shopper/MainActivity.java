@@ -27,9 +27,8 @@ import java.util.Date;
 // Setup Values table (if already done then duplicates won't be added)
 // Button handling as per xml then handle selection of options
 
-//TODO Allow Enabling of Disabled Rule Suggestions
 //TODO Add ability to suggest Rule modifications???
-//TODO Help display for Rule Suggestion
+//TODO Help display for Rule Suggestion and for Enabling disabled rules
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private boolean helpoffmode = false;
     private boolean rulesuggestion = true;
     private int rulesuggestionfrequency = 30;
-    private boolean resumestate = false;
 
     // Data/DB variables (generally in unset state)
     public ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
@@ -70,10 +68,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView dbschemabutton;
     private TextView dbschemahelpbutton;
 
+    private MenuItem reviewdisabledrulesuggestions;
+
     //==============================================================================================
     //==============================================================================================
     protected void onCreate(Bundle savedInstanceState) {
-        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG, "Shopper Application Starting", THIS_ACTIVITY, "onCreate", true);
+        final String THIS_METHOD = "onCreate";
+        mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG, "Shopper Application Starting", THIS_ACTIVITY, THIS_METHOD, true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
@@ -127,22 +128,22 @@ public class MainActivity extends AppCompatActivity {
         handleStats();
         selectButtons();
         initialisationChecks();
-        ShopperDBHelper valuesdb = new ShopperDBHelper(this,null,null,1);
+        //this.invalidateOptionsMenu();
 
 
         //Setup AutoAdd Periods for dropdown selection
         //To add another repeat
         //Retrieve via getStringArrayListValue method
-        valuesdb.insertValuesEntry(Constants.RULEPERIODS,Constants.PERIOD_DAYS,true,false,"");
-        valuesdb.insertValuesEntry(Constants.RULEPERIODS,Constants.PERIOD_WEEKS,true,false,"");
-        valuesdb.insertValuesEntry(Constants.RULEPERIODS,Constants.PERIOD_FORTNIGHTS,true,false,"");
-        valuesdb.insertValuesEntry(Constants.RULEPERIODS,Constants.PERIOD_MONTHS,true,false,"");
-        valuesdb.insertValuesEntry(Constants.RULEPERIODS,Constants.PERIOD_QUARTERS,true,false,"");
-        valuesdb.insertValuesEntry(Constants.RULEPERIODS,Constants.PERIOD_YEARS,true,false,"");
-        valuesdb.insertValuesEntry(Constants.LASTRULESUGGESTION,(long)0,false,false,"");
+        shopperdb.insertValuesEntry(Constants.RULEPERIODS,Constants.PERIOD_DAYS,true,false,"");
+        shopperdb.insertValuesEntry(Constants.RULEPERIODS,Constants.PERIOD_WEEKS,true,false,"");
+        shopperdb.insertValuesEntry(Constants.RULEPERIODS,Constants.PERIOD_FORTNIGHTS,true,false,"");
+        shopperdb.insertValuesEntry(Constants.RULEPERIODS,Constants.PERIOD_MONTHS,true,false,"");
+        shopperdb.insertValuesEntry(Constants.RULEPERIODS,Constants.PERIOD_QUARTERS,true,false,"");
+        shopperdb.insertValuesEntry(Constants.RULEPERIODS,Constants.PERIOD_YEARS,true,false,"");
+        shopperdb.insertValuesEntry(Constants.LASTRULESUGGESTION,(long)0,false,false,"");
         // Settings
         // Debug option note sharedpreferences are used
-        valuesdb.insertValuesEntry(Constants.DEBUGFLAG,(long) 0,false,true,"Turn On Debugging Options");
+        shopperdb.insertValuesEntry(Constants.DEBUGFLAG,(long) 0,false,true,"Turn On Debugging Options");
 
         //Just for testing purposes
         /*
@@ -158,8 +159,7 @@ public class MainActivity extends AppCompatActivity {
         valuesdb.alterStringValue("TESTSTRING","Goodbye World");
         */
 
-
-        valuesdb.enableDismissedRules();
+        shopperdb.enableDismissedRules();
         RuleSuggestion.checkRuleSuggestions(this, false);
 
     }
@@ -172,6 +172,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.usersettingsmenu, menu);
+        return true;
+    }
+
+    //TODO look into checking whether RuleSuggestions should be enabled
+    /**
+     * Disable/Enable menu options depending upon states
+     * @param menu
+     * @return always true
+     */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem reviewdisabledsuggestions = menu.findItem(R.id.reviewdisabledsuggestions);
+        MenuItem forcerulesuggestion = menu.findItem(R.id.forcesuggestions);
+
+        /**
+         * Enable Review Disabled Rule Suggestions only if some rules are disabled
+         * Note really it's productusages that are disbabled
+         */
+        if(shopperdb.getDisabledRuleCount() > 0 ) {
+            reviewdisabledsuggestions.setVisible(true);
+        } else {
+            reviewdisabledsuggestions.setVisible(false);
+        }
+        /**
+         * Enable Force Rule Suggestions only if there are rules that can be suggested.
+         */
+        if(shopperdb.getSuggestedRulesCount() > 0 ) {
+            forcerulesuggestion.setVisible(true);
+        } else {
+            forcerulesuggestion.setVisible(false);
+        }
         return true;
     }
 
@@ -195,6 +226,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.forcesuggestions:
                 RuleSuggestion.checkRuleSuggestions(this, true);
                 break;
+            case R.id.reviewdisabledsuggestions:
+                new ReviewDisabledRuleSuggestions(this);
+                break;
             default:
         }
         return super.onOptionsItemSelected(menuItem);
@@ -209,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
         getSettings();
         handleStats();
         selectButtons();
-        resumestate = true;
+        //this.invalidateOptionsMenu();
     }
 
     //==============================================================================================
@@ -499,13 +533,14 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * method doesDatabaseExist - Checks if the database exists
-     * @param context
-     * @param dbName
+     * @param context the context
+     * @param dbName The database name to check
      * @return true if the database file exists, false if not
      */
     public boolean doesDatabaseExist(Context context, String dbName) {
+        String THIS_METHOD = "doesDatabaseExist";
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
-                THIS_ACTIVITY,"doesDatabaseExist",developermode);
+                THIS_ACTIVITY,THIS_METHOD,developermode);
         File dbFile = context.getDatabasePath(dbName);
         return dbFile.exists();
     }

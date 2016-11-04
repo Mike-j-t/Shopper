@@ -183,6 +183,7 @@
     <string name="standardaddbuttontext">ADD</string>
     <string name="standardskipbuttontext">SKIP</string>
     <string name="standarddisablebuttontext">DISABLE</string>
+    <string name="standardenablebuttontext">ENABLE</string>
     <string name="standardcanceltext">@android:string/cancel</string>
     <string name="standardedittext">EDIT</string>
     <string name="standarddeletetext">DELETE</string>
@@ -214,8 +215,15 @@
     <string name="title_activity_product_edit">Shopper - Edit Product</string>
     <string name="title_activity_product_list">Shopper - Product List (click Product to Edit, long click to Delete)</string>
     <string name="title_activity_add_product_to_shop">Shopper - Add Product to Store</string>
+    <string name="title_activity_ruleaddedit">Shopper - Rule Add/Edit</string>
     <string name="title_activityproductusage_edit">Shopper - Edit Product Usage</string>
     <string name="title_activtyrulesuggestion_list">Shopper - Rule Suggestion List</string>
+    <string name="title_activityreviewdisabledrulesuggestions">Shopper - Review Disabled Rule Suggestions</string>
+    <string name="title_activity_usersettings">Shopper - User Settings</string>
+    <string name="title_activity_ruleaddeditlist">Shopper - Rules</string>
+    <string name="title_activity_shoppinglist">Shopper - Shopping List</string>
+    <string name="title_activity_addpurchaseableproducttoshoplist">Shopper - Add to Shopping List</string>
+    <string name="title_activity_database_inspector">Shopper- Database Inspector</string>
 
     <!-- <string name="standardHeadingStyle">bold</string> -->
 

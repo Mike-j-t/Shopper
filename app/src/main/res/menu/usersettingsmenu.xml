@@ -10,4 +10,10 @@
         android:icon="@android:drawable/ic_menu_call"
         android:title="@string/forcesuggestions"
         />
+    <item
+        android:id="@+id/reviewdisabledsuggestions"
+        android:icon="@android:drawable/ic_menu_call"
+        android:title="Review Disabled Suggestions"
+        android:visible="false"
+        />
 </menu>

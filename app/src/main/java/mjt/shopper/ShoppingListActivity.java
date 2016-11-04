@@ -386,6 +386,7 @@ public class ShoppingListActivity extends AppCompatActivity{
             // is then processed and so on
             if(autoaddentriescursor.getInt(rulelist_rulemultiplier_offset) > 0) {
                 //Build report string for this entry
+                /*
                 autoaddoverview = autoaddoverview +
                         "Rule - " + autoaddentriescursor.getString(ruleslist_rulename_offset) +
                         "ID=" + Long.toString(autoaddentriescursor.getLong(ruleslist_ruleid_offset)) +
@@ -394,11 +395,11 @@ public class ShoppingListActivity extends AppCompatActivity{
                         autoaddentriescursor.getString(rulelist_shopcity_offset) + " - " +
                         autoaddentriescursor.getString(rulelist_shopstreet_offset) +
                         " \n\t\tAISLE=" + autoaddentriescursor.getString(rulelist_aislename_offset) +
-                        " being ";
+                        " being ";  */
                 // Increment count of rules added
                 autoaddcount++;
                 // Set action (sort redundant after removing processing of promptables)
-                autoaddoverview = autoaddoverview + "ADDED\n";
+                //autoaddoverview = autoaddoverview + "ADDED\n";
                 // Add the entry to the shopping list
                 shopperdb.insertShopListEntry(autoaddentriescursor.getLong(rulelist_ruleproductref_offset),
                         autoaddentriescursor.getLong(rulelist_ruleaisleref_offset),

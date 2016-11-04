@@ -2448,6 +2448,20 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         return  db.rawQuery(sql,null);
     }
+
+    public int getSuggestedRulesCount() {
+        Cursor csr = this.getSuggestedRules();
+        int rv = csr.getCount();
+        csr.close();
+        return rv;
+    }
+
+    /**
+     *
+     * @param productref
+     * @param aisleref
+     * @param flag
+     */
     private void setRuleSuggestFlag(long productref, long aisleref, int flag) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -2460,17 +2474,111 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     *
+     * @param productref
+     * @param aisleref
+     */
     public void dismissRule(long productref, long aisleref) {
         setRuleSuggestFlag(productref,aisleref,RULESUGGESTFLAG_DIMISSED);
     }
-    public void disableRule(long productref, long aisleref) {
-        setRuleSuggestFlag(productref, aisleref, RULESUGGESTFLAG_DISABLED);
-    }
+
+    /**
+     *
+     */
     public void enableDismissedRules() {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(PRODUCTUSAGE_COLUMN_RULESUGGESTFLAG,RULESUGGESTFLAG_CLEAR);
         db.update(PRODUCTUSAGE_TABLE_NAME, cv, PRODUCTUSAGE_COLUMN_RULESUGGESTFLAG + " = " + RULESUGGESTFLAG_DIMISSED, null);
         db.close();
+    }
+
+    /**
+     *
+     * @param productref
+     * @param aisleref
+     */
+    public void disableRule(long productref, long aisleref) {
+        setRuleSuggestFlag(productref, aisleref, RULESUGGESTFLAG_DISABLED);
+    }
+
+    /**
+     *
+     * @param productref
+     * @param aisleref
+     */
+    public void enableDisabledRule(long productref, long aisleref) {
+        setRuleSuggestFlag(productref, aisleref, RULESUGGESTFLAG_CLEAR);
+    }
+
+    /**
+     *
+     * @return # of Disabled Rules
+     */
+    public int getDisabledRuleCount() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sqlstr = "SELECT * FROM " +
+                PRODUCTUSAGE_TABLE_NAME +
+                " WHERE " +
+                PRODUCTUSAGE_COLUMN_RULESUGGESTFLAG +
+                " = " +
+                RULESUGGESTFLAG_DISABLED;
+        Cursor csr = db.rawQuery(sqlstr,null);
+        int count = csr.getCount();
+        csr.close();
+        return count;
+    }
+
+    /**
+     *
+     *  SELECT
+     ((productusage.productproductref * 100000)  / productusage.productbuycount ) + productusage.productlatestbuydate AS _id,
+     products.productname,
+     productusage.productproductref,
+     productusage.productailseref,
+     aisles.aislename,
+     shops.shopname,
+     shops.shopcity,
+     shops.shopstreet
+     FROM productusage
+     LEFT JOIN aisles ON aisles._id = productusage.productailseref
+     LEFT JOIN shops ON shops._id = aisles.aisleshopref
+     LEFT JOIN products ON products._id = productusage.productproductref
+     WHERE rulesuggestflag = 2
+     * @return
+     */
+
+    public Cursor getDisabledRules() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sqlstr = "SELECT " +
+                "((" + PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_PRODUCTREF  +
+                " * 100000 " +
+                ")" +
+                " / " + PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_BUYCOUNT +
+                ") + " + PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_LATESTBUYDATE +
+                " AS _id" + ", " +
+                PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_NAME + ", " +
+                PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_PRODUCTREF + ", " +
+                PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_AISLEREF + ", " +
+                AISLES_TABLE_NAME + "." + AISLES_COLUMN_NAME + ", " +
+                SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_NAME + ", " +
+                SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_CITY + ", " +
+                SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_STREET + " " +
+                " FROM " + PRODUCTUSAGE_TABLE_NAME +
+                " LEFT JOIN " + AISLES_TABLE_NAME +
+                    " ON " + AISLES_TABLE_NAME + "." + AISLES_COLUMN_ID +
+                    " = " + PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_AISLEREF +
+                " LEFT JOIN " + SHOPS_TABLE_NAME +
+                    " ON " + SHOPS_TABLE_NAME + "." + SHOPS_COLUMN_ID +
+                    " = " + AISLES_TABLE_NAME + "." + AISLES_COLUMN_SHOP +
+                " LEFT JOIN " + PRODUCTS_TABLE_NAME +
+                    " ON " + PRODUCTS_TABLE_NAME + "." + PRODUCTS_COLUMN_ID +
+                    " = " + PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_PRODUCTREF +
+                " WHERE " +PRODUCTUSAGE_TABLE_NAME + "." + PRODUCTUSAGE_COLUMN_RULESUGGESTFLAG +
+                    " = " + RULESUGGESTFLAG_DISABLED +
+                "; "
+                ;
+        return db.rawQuery(sqlstr,null);
     }
 }

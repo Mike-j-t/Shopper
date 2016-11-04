@@ -141,8 +141,6 @@ public class MainDataHandlingActivity extends AppCompatActivity {
                         true
         );
 
-
-
         backupdir = (TextView) this.findViewById(R.id.dh_backupdir);
         datetimepart = (EditText) this.findViewById(R.id.dh_datetimepart);
 
