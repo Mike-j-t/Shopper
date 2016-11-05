@@ -1,5 +1,6 @@
 package mjt.shopper;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.widget.Toast;
  *  is no need to display the activity.
  *  Saying that the menu option will only be available if some are disabled
  */
+@SuppressLint("Registered")
 public class ReviewDisabledRuleSuggestions extends AppCompatActivity {
     private final static String LOGTAG = "REVIEWSUGGEST";
 
@@ -24,6 +26,5 @@ public class ReviewDisabledRuleSuggestions extends AppCompatActivity {
         } else {
             Toast.makeText(context,"No Products are Disabled.",Toast.LENGTH_LONG).show();
         }
-        return;
     }
 }

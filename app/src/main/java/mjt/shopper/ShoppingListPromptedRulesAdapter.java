@@ -15,9 +15,9 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 
 /**
- * Created by Mike092015 on 29/04/2016.
+ *
  */
-public class ShoppingListPromptedRulesAdapter extends CursorAdapter {
+class ShoppingListPromptedRulesAdapter extends CursorAdapter {
     //==============================================================================================
     // Cursor Offsets.
     // Cursor offsets are set to the offset ino the respective cursor. They are set, once when the
@@ -26,29 +26,29 @@ public class ShoppingListPromptedRulesAdapter extends CursorAdapter {
     // Note! column use changes may still be required if adding or deleting columns from tables or
     //     queries.
 
-    public static int ruleslist_ruleid_offset = -1;
-    public static int ruleslist_rulename_offset;
-    public static int rulelist_ruletype_offset;
-    public static int rulelist_rulepromptflag_offset;
-    public static int rulelist_ruleperiod_offset;
-    public static int rulelist_rulemultiplier_offset;
-    public static int rulelist_ruleactiveon_offset;
-    public static int rulelist_ruleproductref_offset;
-    public static int rulelist_ruleaisleref_offset;
-    public static int rulelist_ruleuses_offset;
-    public static int rulelist_rulenumbertoget_offset;
-    public static int rulelist_rulemincost_offset;
-    public static int rulelist_rulemaxcost_offset;
-    public static int rulelist_productname_offset;
-    public static int rulelist_aislename_offset;
-    public static int rulelist_aisleshopref_offset;
-    public static int rulelist_shopname_offset;
-    public static int rulelist_shopcity_offset;
-    public static int rulelist_shopstreet_offset;
-    public static int rulelist_productusagecost_offset;
+    private static int ruleslist_ruleid_offset = -1;
+    private static int ruleslist_rulename_offset;
+    private static int rulelist_ruletype_offset;
+    private static int rulelist_rulepromptflag_offset;
+    private static int rulelist_ruleperiod_offset;
+    private static int rulelist_rulemultiplier_offset;
+    private static int rulelist_ruleactiveon_offset;
+    private static int rulelist_ruleproductref_offset;
+    private static int rulelist_ruleaisleref_offset;
+    private static int rulelist_ruleuses_offset;
+    private static int rulelist_rulenumbertoget_offset;
+    private static int rulelist_rulemincost_offset;
+    private static int rulelist_rulemaxcost_offset;
+    private static int rulelist_productname_offset;
+    private static int rulelist_aislename_offset;
+    private static int rulelist_aisleshopref_offset;
+    private static int rulelist_shopname_offset;
+    private static int rulelist_shopcity_offset;
+    private static int rulelist_shopstreet_offset;
+    private static int rulelist_productusagecost_offset;
 
     @SuppressLint("SimpleDateFormat")
-    public SimpleDateFormat sdf = new SimpleDateFormat(Constants.EXTENDED__DATE_DORMAT);
+    private SimpleDateFormat sdf = new SimpleDateFormat(Constants.EXTENDED__DATE_DORMAT);
 
     ShoppingListPromptedRulesAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
@@ -148,7 +148,7 @@ public class ShoppingListPromptedRulesAdapter extends CursorAdapter {
         return LayoutInflater.from(context).inflate(R.layout.autoaddprompt_entry,parent,false);
     }
 
-    public void setRuleListOffsfets(Cursor cursor) {
+    private void setRuleListOffsfets(Cursor cursor) {
         if(ruleslist_ruleid_offset != -1) {
             return;
         }

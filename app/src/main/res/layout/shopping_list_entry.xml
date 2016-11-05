@@ -113,54 +113,54 @@
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
             android:layout_weight="0.05"
-            android:singleLine="true"
             android:gravity="right"
             android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="italic"/>
+            android:textStyle="italic"
+            android:maxLines="1" />
         <TextView
             android:id="@+id/shoppinglist_shopid"
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
             android:layout_weight="0.05"
-            android:singleLine="true"
             android:gravity="right"
             android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="italic"/>
+            android:textStyle="italic"
+            android:maxLines="1" />
         <TextView
             android:id="@+id/shoppinglist_aisleorder"
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
             android:layout_weight="0.05"
-            android:singleLine="true"
             android:gravity="right"
             android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="italic"/>
+            android:textStyle="italic"
+            android:maxLines="1" />
         <TextView
             android:id="@+id/shoppinglist_aisleid"
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
             android:layout_weight="0.05"
-            android:singleLine="true"
             android:gravity="right"
             android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="italic"/>
+            android:textStyle="italic"
+            android:maxLines="1" />
         <TextView
             android:id="@+id/shoppinglist_puorder"
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
             android:layout_weight="0.05"
-            android:singleLine="true"
             android:gravity="right"
             android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="italic"/>
+            android:textStyle="italic"
+            android:maxLines="1" />
         <TextView
             android:id="@+id/shoppinglist_puprodref"
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
             android:layout_weight="0.05"
-            android:singleLine="true"
             android:gravity="right"
             android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textStyle="italic"/>
+            android:textStyle="italic"
+            android:maxLines="1" />
     </LinearLayout>
 </LinearLayout>

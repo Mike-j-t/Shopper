@@ -74,7 +74,7 @@ import java.util.ArrayList;
  *  String = obj.getErrorMessages()
  *      Returns a string list the current error messages, 1 per line.
  */
-class StoreData {
+public class StoreData {
 
     private String directory; //Note built internally and includes subdirectory
     private String subdirectory;
@@ -268,9 +268,9 @@ class StoreData {
         File[] dirlist = dir.listFiles();
         if((dirlist.length) > 0) {
             otherfilesindirectory.clear();
-            for(int i = 0; i < dirlist.length; i++) {
-                if (!(dirlist[i].getName().equals(this.filename))) {
-                    otherfilesindirectory.add(dirlist[i]);
+            for (File aDirlist : dirlist) {
+                if (!(aDirlist.getName().equals(this.filename))) {
+                    otherfilesindirectory.add(aDirlist);
                 }
             }
         }

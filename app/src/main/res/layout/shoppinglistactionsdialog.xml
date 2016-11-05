@@ -20,7 +20,7 @@
             android:id="@+id/shoppinglistactions_originaldata_heading"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Original Shopping-List Values"
+            android:text="@string/shoppinglistoriginalvales"
             android:textSize="@dimen/standard_heading_text_size"
             android:textStyle="bold"
             android:textColor="@color/colorNormalButtonText"/>
@@ -36,7 +36,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:text="Product"
+            android:text="@string/productlabel"
             android:textSize="@dimen/standard_heading_text_size"
             android:textStyle="bold"
             android:textColor="@color/colorNormalButtonText"/>
@@ -44,21 +44,21 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="10"
-            android:text="Qty"
+            android:text="@string/shopping_list_quantity"
             android:textSize="@dimen/standard_heading_text_size"
             android:textColor="@color/colorNormalButtonText"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="20"
-            android:text="Cost"
+            android:text="@string/shopping_list_cost"
             android:textSize="@dimen/standard_heading_text_size"
             android:textColor="@color/colorNormalButtonText"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="20"
-            android:text="Total"
+            android:text="@string/shopping_list_total"
             android:textSize="@dimen/standard_heading_text_size"
             android:textColor="@color/colorNormalButtonText"/>
     </LinearLayout>
@@ -73,26 +73,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:text="Product"
+            android:text="@string/productlabel"
             android:textStyle="bold"/>
         <TextView
             android:id="@+id/shoppinglistactions_originaldata_quantity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="10"
-            android:text="Qty"/>
+            android:text="@string/shopping_list_quantity"/>
         <TextView
             android:id="@+id/shoppinglistactions_originaldata_cost"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="20"
-            android:text="Cost"/>
+            android:text="@string/shopping_list_cost"/>
         <TextView
             android:id="@+id/shoppinglistactions_originaldata_total"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="20"
-            android:text="Total"/>
+            android:text="@string/shopping_list_total"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/shoppinglistactions_help_layout"
@@ -117,7 +117,7 @@
             android:id="@+id/shoppinglistactions_heading"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Actions"
+            android:text="@string/shopping_list_actions"
             android:textSize="@dimen/standard_heading_text_size"
             android:textStyle="bold"
             android:textColor="@color/colorNormalButtonText"/>
@@ -130,12 +130,12 @@
         android:layout_marginBottom="@dimen/activity_vertical_margin">
         <Button
             android:id="@+id/shoppinglistactions_quantityplus_button"
-            android:text="+1"
+            android:text="@string/shopping_list_increment"
             style="@style/textviewbutton"
             />
         <Button
             android:id="@+id/shoppinglistactions_quantityminus_button"
-            android:text="-1"
+            android:text="@string/shopping_list_decrement"
             style="@style/textviewbutton"
             />
         <TextView
@@ -147,7 +147,7 @@
             android:paddingTop="5dp"
             android:layout_height="match_parent"
             android:layout_weight="30"
-            android:text="New Quantity"
+            android:text="@string/shopping_list_newquantity"
             android:textColor="@color/colorNormalButtonText"
             android:background="@color/colorlistviewheading"/>
         <EditText
@@ -186,7 +186,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="30"
-            android:text="New Cost"
+            android:text="@string/shopping_list_newcost"
             android:textColor="@color/colorNormalButtonText"
             android:background="@color/colorlistviewheading"/>
         <EditText
@@ -225,7 +225,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="30"
-            android:text="New Product Name"
+            android:text="@string/shopping_list_newproductname"
             android:textColor="@color/colorNormalButtonText"
             android:background="@color/colorlistviewheading"/>
         <EditText
@@ -247,7 +247,7 @@
             />
         <Button
             android:id="@+id/shoppinglistactions_restore_button"
-            android:text="Restore"
+            android:text="@string/standardrestorebutton"
             style="@style/textviewbutton"
             />
         <Button

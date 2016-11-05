@@ -24,7 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by Mike092015 on 25/04/2016.
+ *
  */
 public class RuleAddEdit extends AppCompatActivity {
     public final static int RESUMESTATE_NOTHING = 0;

@@ -13,7 +13,7 @@ import android.widget.Toast;
 import java.util.Date;
 
 /**
- * Created by Mike092015 on 26/10/2016.
+ *
  */
 public class RuleSuggestion extends AppCompatActivity{
 
@@ -43,7 +43,7 @@ public class RuleSuggestion extends AppCompatActivity{
         // Allowed to suggest Rules so continue
 
         // Need to get rule suggestion frequency in days
-        long rsf = (long) Long.parseLong(
+        long rsf = Long.parseLong(
                 sp.getString(
                 context.getResources().getString(
                         R.string.sharedpreferencekey_rulesuggestfrequency),

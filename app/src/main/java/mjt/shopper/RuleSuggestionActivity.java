@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * Created by Mike092015 on 27/10/2016.
+ *
  */
 public class RuleSuggestionActivity extends AppCompatActivity {
 
@@ -83,6 +83,7 @@ public class RuleSuggestionActivity extends AppCompatActivity {
                 db.enableDismissedRules();
             }
             catch (NullPointerException e) {
+                e.printStackTrace();
             }
         }
         db.close();

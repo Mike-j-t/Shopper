@@ -19,7 +19,7 @@ import java.text.NumberFormat;
 import java.util.Calendar;
 
 /**
- * Created by Mike092015 on 21/03/2016.
+ *
  */
 public class ShoppingListActivity extends AppCompatActivity{
     public final static int RESUMESTATE_NOTHING = 0;
@@ -174,11 +174,11 @@ public class ShoppingListActivity extends AppCompatActivity{
         params = shoppinglistlv.getLayoutParams();
 
         if(!helpoffmode) {
-            params.height = (int) 500;
+            params.height = 500;
             shoppinglistlv.setLayoutParams(params);
             shoppinglisthelplayout.setVisibility(View.VISIBLE);
         } else {
-            params.height = (int) 750;
+            params.height = 750;
             shoppinglistlv.setLayoutParams(params);
             shoppinglisthelplayout.setVisibility(View.GONE);
         }
