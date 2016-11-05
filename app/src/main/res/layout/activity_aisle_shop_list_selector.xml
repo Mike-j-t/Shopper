@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/aasls"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/standard_listview_row_padding_vertical"
+    android:paddingBottom="@dimen/standard_listview_row_padding_vertical"
+    android:paddingLeft="@dimen/standard_listview_row_padding_horizontal"
+    android:paddingRight="@dimen/standard_listview_row_padding_horizontal">
+    <!-- Shop name -->
+    <TextView
+        android:id="@+id/aaslstv01"
+        style="@style/textview_listentryimportant_style"
+        android:layout_weight="0.3"
+        />
+    <!-- Shop City -->
+    <TextView
+        android:id="@+id/aaslstv02"
+        style="@style/textview_listentry_style"
+        android:layout_weight="0.3"
+        />
+    <!-- Shop Street -->
+    <TextView
+        android:id="@+id/aaslstv03"
+        style="@style/textview_listentry_style"
+        android:layout_weight="0.4"
+        />
+</LinearLayout>

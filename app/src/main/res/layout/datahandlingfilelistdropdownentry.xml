@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/standard_listview_row_padding_vertical"
+    android:paddingLeft="@dimen/standard_listview_row_padding_horizontal"
+    android:paddingRight="@dimen/standard_listview_row_padding_horizontal"
+    android:paddingTop="@dimen/standard_listview_row_padding_vertical"
+    >
+    <TextView
+        android:id="@+id/dhfl_filename"
+        style="@style/textview_listentryimportant_style"
+        android:layout_weight="0.775"
+        />
+    <TextView
+        style="@style/textview_listentry_style"
+        android:layout_weight="0.025"
+        />
+    <TextView
+        android:id="@+id/dhfl_lastmodified"
+        style="@style/textview_listentry_style"
+        android:layout_weight="0.2"
+        />
+</LinearLayout>

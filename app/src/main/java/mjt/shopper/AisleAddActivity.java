@@ -2,7 +2,6 @@ package mjt.shopper;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -34,6 +33,32 @@ public class AisleAddActivity extends AppCompatActivity  {
     public boolean helpoffmode;
     public final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
 
+    //==============================================================================================
+    // Cursor Offsets.
+    // Cursor offsets are set to the offset ino the respective cursor. They are set, once when the
+    // respective cursor is invoked, by obtaining the actual index via the columns name, thus
+    // negating a need to alter offsets if column orders are changed (e.g. column added/deleted)
+    // Note! column use changes may still be required if adding or deleting columns from tables or
+    //     queries.
+
+    // Variables to store shops table offsets as obtained via the defined column names by
+    // call to setShopsOffsets (shops_shopid_offset set -1 to act as notdone flag )
+    public static int shops_shopid_offset = -1;
+    public static int shops_shopname_offset;
+    public static int shops_shoporder_offset;
+    public static int shops_shopstreet_offset;
+    public static int shops_shopcity_offset;
+    public static int shops_shopstate_offset;
+    public static int shops_shopphone_offset;
+    public static int shops_shopnotes_offset;
+
+    // Variables to store aisles table offsets as obtained via the defined column names by
+    // call to setAislesOffsets (aisles_aisleid_offset set -1 to act as notdone flag )
+    public static int aisles_aisleid_offset = -1;
+    public static int aisles_aislename_offset;
+    public static int aisles_aisleorder_offset;
+    public static int aisles_aisleshopref_offset;
+
     private Cursor shoplistcsr;
     private ShopListSpinnerAdapter shoplistspinneradapter;
     private Spinner shoplistspinner;
@@ -52,6 +77,7 @@ public class AisleAddActivity extends AppCompatActivity  {
             case RESUMESTATE_AISLEADD:case RESUMESTATE_AISLEUPDATE: {
                 resume_state = RESUMESTATE_NOTHING;
                 aislespershopcursor = shopperdb.getAislesPerShopAsCursor(shopid,"");
+                setAislesOffsets(aislespershopcursor);
                 aislespershopcursoradapter.swapCursor(aislespershopcursor);
                 break;
             }
@@ -96,6 +122,7 @@ public class AisleAddActivity extends AppCompatActivity  {
             findViewById(R.id.aisleaddedit_done_button).setVisibility(View.VISIBLE);
         }
         shoplistcsr = shopperdb.getShopsAsCursor("");
+        setShopsOffsets(shoplistcsr);
         if (caller.equals("ShopAddActivity")
                 | caller.equals("AddProductToShopActivity")
                 | caller.equals("AisleListByCursorActivity")
@@ -105,7 +132,7 @@ public class AisleAddActivity extends AppCompatActivity  {
             if (passedshopid > 0) {
                 shoplistcsr.moveToPosition(-1);
                 while(shoplistcsr.moveToNext()) {
-                    if (shoplistcsr.getLong(0) == passedshopid) {
+                    if (shoplistcsr.getLong(shops_shopid_offset) == passedshopid) {
                         passedshopposition = shoplistcsr.getPosition();
                         break;
                     }
@@ -138,8 +165,8 @@ public class AisleAddActivity extends AppCompatActivity  {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         shoplistcsr.moveToPosition(position);
-                        String shopname = shoplistcsr.getString(ShopperDBHelper.SHOPS_COLUMN_NAME_INDEX);
-                        shopid = shoplistcsr.getInt(ShopperDBHelper.SHOPS_COLUMNN_ID_INDEX);
+                        String shopname = shoplistcsr.getString(shops_shopname_offset);
+                        shopid = shoplistcsr.getInt(shops_shopid_offset);
                         Toast.makeText(view.getContext(), "You have Selected Shop " + shopname, Toast.LENGTH_LONG).show();
                         aislespershopcursor = shopperdb.getAislesPerShopAsCursor(shopid,"");
                         aislespershopcursoradapter.swapCursor(aislespershopcursor);
@@ -155,95 +182,10 @@ public class AisleAddActivity extends AppCompatActivity  {
 
         //Get the list of aisles in the current shop
         aislespershopcursor = shopperdb.getAislesPerShopAsCursor(shopid, aislelistsortorder);
+        setAislesOffsets(aislespershopcursor);
         aislespershoplistview = (ListView) findViewById(R.id.aisleaddedit_aisleslist);
         aislespershopcursoradapter =  new AislesCursorAdapter(this,aislespershopcursor,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         aislespershoplistview.setAdapter(aislespershopcursoradapter);
-
-        // If Item (Aisle) is clicked then allow the aisle to be edited or to be stocked
-        // Note!! if edit then starts another instance of this activity as a child and as update
-        // If stock then start AddProductToShop activity
-        aislespershoplistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AlertDialog.Builder okdialog = new AlertDialog.Builder(view.getContext());
-                okdialog.setTitle(getString(R.string.aislelistclicktitle));
-                okdialog.setMessage(getString(R.string.aislelistclicktext001));
-                okdialog.setCancelable(true);
-                okdialog.setPositiveButton(getString(R.string.standardedittext), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        resume_state = RESUMESTATE_AISLEUPDATE;
-                        Intent intent = new Intent(aislespershoplistview.getContext(), AisleAddActivity.class);
-                        intent.putExtra("Caller", THIS_ACTIVITY + "Update");
-                        intent.putExtra("AisleID", aislespershopcursor.getString(ShopperDBHelper.AISLES_COLUMN_ID_INDEX));
-                        intent.putExtra("AISLEID", aislespershopcursor.getLong(ShopperDBHelper.AISLES_COLUMN_ID_INDEX));
-                        intent.putExtra("AisleName", aislespershopcursor.getString(ShopperDBHelper.AISLES_COLUMN_NAME_INDEX));
-                        intent.putExtra("AisleOrder", aislespershopcursor.getString(ShopperDBHelper.AISLES_COLUMN_ORDER_INDEX));
-                        intent.putExtra("AisleShopRef", aislespershopcursor.getString(ShopperDBHelper.AISLES_COLUMN_SHOP_INDEX));
-                        intent.putExtra("SHOPID", aislespershopcursor.getLong(ShopperDBHelper.AISLES_COLUMN_SHOP_INDEX));
-                        startActivity(intent);
-                        dialog.cancel();
-                    }
-                });
-                okdialog.setNegativeButton(getString(R.string.standardstockaisletext), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        resume_state = RESUMESTATE_AISLESTOCK;
-                        Intent intent = new Intent(aislespershoplistview.getContext(), AddProductToShopActivity.class);
-                        intent.putExtra("Caller", THIS_ACTIVITY + "Update");
-                        intent.putExtra("AisleID", aislespershopcursor.getString(ShopperDBHelper.AISLES_COLUMN_ID_INDEX));
-                        intent.putExtra("AISLEID", aislespershopcursor.getLong(ShopperDBHelper.AISLES_COLUMN_ID_INDEX));
-                        intent.putExtra("AisleName", aislespershopcursor.getString(ShopperDBHelper.AISLES_COLUMN_NAME_INDEX));
-                        intent.putExtra("AisleOrder", aislespershopcursor.getString(ShopperDBHelper.AISLES_COLUMN_ORDER_INDEX));
-                        intent.putExtra("AisleShopRef", aislespershopcursor.getString(ShopperDBHelper.AISLES_COLUMN_SHOP_INDEX));
-                        intent.putExtra("SHOPID", aislespershopcursor.getLong(ShopperDBHelper.AISLES_COLUMN_SHOP_INDEX));
-                        startActivity(intent);
-                        dialog.cancel();
-                    }
-                });
-                okdialog.setNeutralButton(getString(R.string.standardbacktext), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        resume_state = RESUMESTATE_NOTHING;
-                        dialog.cancel();
-                    }
-                });
-                okdialog.show();
-            }
-        });
-
-        // If Item (Aisle) is Long Clicked then allow the aisle to be deleted
-        aislespershoplistview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                resume_state = RESUMESTATE_AISLEDELETE;
-                AlertDialog.Builder okdialog = new AlertDialog.Builder(view.getContext());
-                okdialog.setTitle(getString(R.string.aisleconfirmdeletetitle));
-                okdialog.setMessage(getString(R.string.aisleconfirmdeletetext001));
-                okdialog.setCancelable(true);
-                okdialog.setPositiveButton(getString(R.string.standarddeletetext), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        shopperdb.deleteAisle(aislespershopcursor.getLong(ShopperDBHelper.AISLES_COLUMN_ID_INDEX));
-                        aislespershopcursor = shopperdb.getAislesPerShopAsCursor(shopid,"");
-                        aislespershopcursoradapter.swapCursor(aislespershopcursor);
-                        resume_state = RESUMESTATE_NOTHING;
-                        dialog.cancel();
-                    }
-                });
-                okdialog.setNegativeButton(getString(R.string.standardcanceltext), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        resume_state = RESUMESTATE_NOTHING;
-                        dialog.cancel();
-                    }
-                });
-                okdialog.show();
-                return true;
-            }
-        });
-
-        //TODO click listener long click to delete
     }
     @Override
     protected void onDestroy() {
@@ -316,5 +258,32 @@ public class AisleAddActivity extends AppCompatActivity  {
 
     public void doneAdding(View view) {
         this.finish();
+    }
+
+    // Set Shops Table query offsets into returned cursor, if not already set
+    public void setShopsOffsets(Cursor cursor) {
+        // If not -1 then already done
+        if(shops_shopid_offset != -1) {
+            return;
+        }
+        shops_shopid_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_ID);
+        shops_shopname_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NAME);
+        shops_shoporder_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_ORDER);
+        shops_shopstreet_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
+        shops_shopcity_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_CITY);
+        shops_shopstate_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STATE);
+        shops_shopphone_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_PHONE);
+        shops_shopnotes_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NOTES);
+    }
+
+    // Set Aisles Table query offsets into returned cursor, if not already set
+    public void setAislesOffsets(Cursor cursor) {
+        if(aisles_aisleid_offset != -1) {
+            return;
+        }
+        aisles_aisleid_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_ID);
+        aisles_aislename_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_NAME);
+        aisles_aisleorder_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_ORDER);
+        aisles_aisleshopref_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_SHOP);
     }
 }

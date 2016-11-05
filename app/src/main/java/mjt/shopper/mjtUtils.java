@@ -4,13 +4,11 @@ import android.util.Log;
 import java.util.Date;
 
 /**
- * Created by Mike092015 on 2/03/2016.
+ * Emsg (Extended Message for returning more than just a boolean for validation, rather:
+ *  boolean (true = error condition)
+ *  integer (return code)
+ *  String (Message)
  */
-
-//Emsg (Extended Message for returning more than just a boolean for validation, rather:
-// boolean (true = error condition)
-// integer (return code)
-// String (Message)
 class Emsg {
     private boolean error_indicator;
     private int error_number;
@@ -21,18 +19,18 @@ class Emsg {
         this.error_number = 0;
         this.error_message = "";
     }
-    public Emsg(boolean error_indicator, int error_number, String error_message) {
+    Emsg(boolean error_indicator, int error_number, String error_message) {
         this.error_indicator = error_indicator;
         this.error_number = error_number;
         this.error_message = error_message;
     }
-    public boolean getErrorIndicator() {
+    boolean getErrorIndicator() {
         return this.error_indicator;
     }
     public int getErrorNumber() {
         return this.error_number;
     }
-    public String getErrorMessage() {
+    String getErrorMessage() {
         return  this.error_message;
     }
     public void setErrorIndicator(boolean error_indicator) {
@@ -56,7 +54,13 @@ class mjtUtils {
     public final static int LOG_WARNINGMSG = Constants.LOGTYPE_WARNING;
     public final static int LOG_DEBUGMSG = Constants.LOGTYPE_DEBUG;
     public final static int LOG_INFORMATIONMSG = Constants.LOGTYPE_INFORMATIONAL;
-    public static void logMsg(int msgtype, String msg, String calleractivity, String callermethod, boolean debugmode) {
+
+
+    public static void logMsg(int msgtype,
+                              String msg,
+                              String calleractivity,
+                              String callermethod,
+                              boolean debugmode) {
         if(!debugmode) {
             return;
         }
@@ -149,37 +153,44 @@ class mjtUtils {
             }
         }
         if(partcount != 3) {
-            retmsg.setAll(true, 2, "Invalid Format - Must have 3 parts seperated by 2 /'s (dd/MM/yyyy).");
+            retmsg.setAll(true, 2, "Invalid Format - " +
+                    "Must have 3 parts seperated by 2 /'s (dd/MM/yyyy).");
             return retmsg;
         }
         if(day.length() < 1 | day.length() > 2) {
-            retmsg.setAll(true, 3, "Invalid Day - Must be 1 or 2 numerics.");
+            retmsg.setAll(true, 3, "Invalid Day - " +
+                    "Must be 1 or 2 numerics.");
             return retmsg;
         }
         if(month.length() < 1 | month.length() > 2 ) {
-            retmsg.setAll(true, 4, "Invalid Month - Must be 1 or 2 numerics.");
+            retmsg.setAll(true, 4, "Invalid Month - " +
+                    "Must be 1 or 2 numerics.");
             return retmsg;
         }
         if(year.length() != 4) {
-            retmsg.setAll(true, 5, "Invalid Year - Must be 4 numerics.");
+            retmsg.setAll(true, 5, "Invalid Year - " +
+                    "Must be 4 numerics.");
             return retmsg;
         }
         try {
             dayasint = Integer.parseInt(day);
         } catch (NumberFormatException e) {
-            retmsg.setAll(true, 6, "Invalid Day - Non-numeric(s).");
+            retmsg.setAll(true, 6, "Invalid Day - " +
+                    "Non-numeric(s).");
             return retmsg;
         }
         try {
             monthasint = Integer.parseInt(month);
         } catch (NumberFormatException e) {
-            retmsg.setAll(true, 7, "Invalid Month - Non-numeric(s).");
+            retmsg.setAll(true, 7, "Invalid Month - " +
+                    "Non-numeric(s).");
             return retmsg;
         }
         try {
             yearasint = Integer.parseInt(year);
         } catch (NumberFormatException e) {
-            retmsg.setAll(true, 8, "Invalid Year - Non-numeric(s).");
+            retmsg.setAll(true, 8, "Invalid Year - " +
+                    "Non-numeric(s).");
             return retmsg;
         }
 
@@ -199,17 +210,20 @@ class mjtUtils {
         int[] daysinmonth = {31,28+leapyear,31,30,31,30,31,31,30,31,30,31};
 
         if(monthasint < 1 | monthasint > 12) {
-            retmsg.setAll(true, 10, "Invalid Month - Must be 1-12.");
+            retmsg.setAll(true, 10, "Invalid Month - " +
+                    "Must be 1-12.");
             return retmsg;
         }
 
         if(dayasint < 1 | dayasint > daysinmonth[(monthasint - 1)] ) {
-            retmsg.setAll(true, 9, "Invalid Day - Must be 1-" + daysinmonth[(monthasint - 1)]);
+            retmsg.setAll(true, 9, "Invalid Day - " +
+                    "Must be 1-" + daysinmonth[(monthasint - 1)]);
             return retmsg;
         }
 
         if(yearasint < 1970) {
-            retmsg.setAll(true, 11, "Invalid Year - The Year must be 1970 or later.");
+            retmsg.setAll(true, 11, "Invalid Year - " +
+                    "The Year must be 1970 or later.");
             return retmsg;
         }
         return retmsg;

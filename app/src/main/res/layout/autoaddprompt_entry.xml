@@ -20,18 +20,14 @@
             android:layout_height="match_parent">
             <TextView
                 android:id="@+id/autoaddprompt_rulename"
-                android:layout_width="@dimen/standard_dummy_size"
-                android:layout_height="match_parent"
+                style="@style/textview_listentryimportant_style"
                 android:layout_weight="0.5"
-                android:textSize="@dimen/standard_subsubsubheading_text_size"
-                android:textStyle="bold"/>
+                />
             <TextView
                 android:id="@+id/autoaddprompt_ruledate"
-                android:layout_width="@dimen/standard_dummy_size"
-                android:layout_height="match_parent"
+                style="@style/textview_listentry_style"
                 android:layout_weight="0.2"
-                android:textSize="@dimen/standard_subsubsubheading_text_size"
-                android:textStyle="bold"/>
+                />
             <Button
                 android:id="@+id/autoaddprompt_addbutton"
                 android:layout_width="@dimen/standard_button_width"
@@ -53,13 +49,11 @@
             android:id="@+id/autoprompt_itembottom"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/standard_subsubsubheading_height">
+            android:layout_height="match_parent">
             <TextView
                 android:id="@+id/autoprompt_ruleastext"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                style="@style/textview_listentry_style"
                 android:layout_weight="1"/>
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>

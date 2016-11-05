@@ -118,7 +118,8 @@
             android:layout_width="700sp"
             android:layout_height="350sp"
             android:layout_centerHorizontal="true"
-            android:background="#EEEEEE"/>
+            android:background="#EEEEEE"
+            android:visibility="invisible"/>
         <TextView
             android:id="@+id/amtv10"
             android:layout_width="wrap_content"

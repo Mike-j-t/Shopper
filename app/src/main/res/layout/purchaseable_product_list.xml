@@ -10,7 +10,7 @@
     android:layout_marginBottom="@dimen/activity_vertical_margin"
     android:layout_marginLeft="@dimen/activity_horizontal_margin"
     android:layout_marginRight="@dimen/activity_horizontal_margin"
-    tools:context="mjt.shopper.AddPurchaseableProductsToShopList">
+    tools:context=".AddPurchasableProductsToShopList">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -59,8 +59,8 @@
             android:textSize="@dimen/standard_subsubheading_text_size"
             android:textStyle="bold" />
         <EditText
-            style="@style/edittext_optional_style"
             android:id="@+id/productselector"
+            style="@style/edittext_selection_style"
             android:layout_weight="0.15"
             android:singleLine="true"
             tools:ignore="LabelFor" />
@@ -76,8 +76,8 @@
             android:singleLine="true"
             android:textStyle="bold" />
         <EditText
-            style="@style/edittext_optional_style"
             android:id="@+id/shopselector"
+            style="@style/edittext_selection_style"
             android:layout_weight="0.15"
             tools:ignore="LabelFor" />
     </LinearLayout>

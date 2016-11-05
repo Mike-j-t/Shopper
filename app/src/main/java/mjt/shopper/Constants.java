@@ -13,6 +13,7 @@ public interface Constants {
     String COMPARE_DATE_FORMAT = "yyyyMMdd";
     String RULEPERIODS = "AutoAddPeriods";
     String DEBUGFLAG = "Debug";
+    String LASTRULESUGGESTION = "LastRuleSuggestion";
 
     String PERIOD_DAYS = "DAYS";
     String PERIOD_DAYS_SINGULAR = "DAY";
@@ -55,7 +56,7 @@ public interface Constants {
     String PRODUCTSPERAISLELISTORDER_BY_ORDER = " ORDER BY " + ShopperDBHelper.PRODUCTUSAGE_COLUMN_ORDER + " ASC, " + ShopperDBHelper.PRODUCTS_COLUMN_NAME + " ASC ;";
 
 
-    String PURCHASEABLEPRODUCTSLISTORDER_BY_PRODUCT = " ORDER BY " + ShopperDBHelper.PRODUCTS_COLUMN_NAME + " ASC, " +
+    String PURCHASABLEPRODUCTSLISTORDER_BY_PRODUCT = " ORDER BY " + ShopperDBHelper.PRODUCTS_COLUMN_NAME + " ASC, " +
             ShopperDBHelper.SHOPS_COLUMN_ORDER + " ASC, " + ShopperDBHelper.AISLES_COLUMN_ORDER + " ASC ;";
     String PURCHASEABLEPRODUCTSLISTORDER_BY_STORE = " ORDER BY " + ShopperDBHelper.SHOPS_COLUMN_NAME + " ASC,  " +
             ShopperDBHelper.SHOPS_COLUMN_CITY + " ASC, " + ShopperDBHelper.SHOPS_COLUMN_STREET + " ASC ;";
@@ -74,7 +75,4 @@ public interface Constants {
     String RULELISTORDER_BY_PROMPT = " ORDER BY " + ShopperDBHelper.RULES_TABLE_NAME + "." + ShopperDBHelper.RULES_COLUMN_PROMPTFLAG + " ASC, " +
             ShopperDBHelper.RULES_TABLE_NAME + "." + ShopperDBHelper.RULES_COLUMN_NAME + " ASC ;";
 }
-/**
- * Created by Mike092015 on 20/02/2016.
- */
 

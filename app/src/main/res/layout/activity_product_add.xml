@@ -62,8 +62,8 @@
             android:layout_height="match_parent"
             android:layout_weight="0.05"/>
         <EditText
-            style="@style/edittext_required_style"
             android:id="@+id/productaddedit_productname"
+            style="@style/edittext_required_style"
             android:layout_weight="0.6"
             android:maxLength="@integer/productname_maxcharacters"
             tools:ignore="LabelFor" />
@@ -91,8 +91,8 @@
             android:layout_height="match_parent"
             android:layout_weight="0.05"/>
         <EditText
-            style="@style/edittext_optional_style"
             android:id="@+id/productaddedit_productnotes"
+            style="@style/edittext_optional_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.75"

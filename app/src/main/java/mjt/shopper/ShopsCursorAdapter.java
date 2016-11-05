@@ -13,8 +13,29 @@ import android.widget.TextView;
  * Created by Mike092015 on 2/02/2016.
  */
 class ShopsCursorAdapter extends CursorAdapter {
+
+    //==============================================================================================
+    // Cursor Offsets.
+    // Cursor offsets are set to the offset ino the respective cursor. They are set, once when the
+    // respective cursor is invoked, by obtaining the actual index via the columns name, thus
+    // negating a need to alter offsets if column orders are changed (e.g. column added/deleted)
+    // Note! column use changes may still be required if adding or deleting columns from tables or
+    //     queries.
+
+    // Variables to store shops table offsets as obtained via the defined column names by
+    // call to setShopsOffsets (shops_shopid_offset set -1 to act as notdone flag )
+    public static int shops_shopid_offset = -1;
+    public static int shops_shopname_offset;
+    public static int shops_shoporder_offset;
+    public static int shops_shopstreet_offset;
+    public static int shops_shopcity_offset;
+    public static int shops_shopstate_offset;
+    public static int shops_shopphone_offset;
+    public static int shops_shopnotes_offset;
+
     public ShopsCursorAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
+        setShopsOffsets(cursor);
     }
 
     @Override
@@ -34,7 +55,6 @@ class ShopsCursorAdapter extends CursorAdapter {
     }
     @Override
     public void bindView(View view,Context context, Cursor cursor) {
-        //TextView textviewShopid = (TextView) view.findViewById(R.id.shop_id_entry);
         TextView textViewShopName = (TextView) view.findViewById(R.id.shop_name_entry);
         TextView textViewShopOrder = (TextView) view.findViewById(R.id.shop_order_entry);
         TextView textViewShopStreet = (TextView) view.findViewById(R.id.shop_street_entry);
@@ -43,13 +63,28 @@ class ShopsCursorAdapter extends CursorAdapter {
         TextView textViewShopPhone = (TextView) view.findViewById(R.id.shop_phone_entry);
         TextView textViewShopNotes = (TextView) view.findViewById(R.id.shop_notes_entry);
 
-        //textviewShopid.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMNN_ID_INDEX));
-        textViewShopName.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMN_NAME_INDEX));
-        textViewShopOrder.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMN_ORDER_INDEX));
-        textViewShopStreet.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMN_STREET_INDEX));
-        textViewShopCity.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMN_CITY_INDEX));
-        textViewShopState.setText(cursor.getString(ShopperDBHelper.SHOPS_COLUMN_STATE_INDEX));
-        textViewShopPhone.setText(cursor.getString(ShopperDBHelper.SHOPS_COULMN_PHONE_INDEX));
-        textViewShopNotes.setText(cursor.getString(ShopperDBHelper.SHOPS_COULMN_NOTES_INDEX));
+        textViewShopName.setText(cursor.getString(shops_shopname_offset));
+        textViewShopOrder.setText(cursor.getString(shops_shoporder_offset));
+        textViewShopStreet.setText(cursor.getString(shops_shopstreet_offset));
+        textViewShopCity.setText(cursor.getString(shops_shopcity_offset));
+        textViewShopState.setText(cursor.getString(shops_shopstate_offset));
+        textViewShopPhone.setText(cursor.getString(shops_shopphone_offset));
+        textViewShopNotes.setText(cursor.getString(shops_shopnotes_offset));
+    }
+
+    // Set Shops Table query offsets into returned cursor, if not already set
+    public void setShopsOffsets(Cursor cursor) {
+        // If not -1 then already done
+        if(shops_shopid_offset != -1) {
+            return;
+        }
+        shops_shopid_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_ID);
+        shops_shopname_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NAME);
+        shops_shoporder_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_ORDER);
+        shops_shopstreet_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
+        shops_shopcity_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_CITY);
+        shops_shopstate_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STATE);
+        shops_shopphone_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_PHONE);
+        shops_shopnotes_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NOTES);
     }
 }

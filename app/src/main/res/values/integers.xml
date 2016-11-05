@@ -10,4 +10,5 @@
     <integer name="shoporder_maxcharacters">@integer/standardorder_maxcharacaters</integer>
     <integer name="aisleorder_maxcharacters">@integer/standardorder_maxcharacaters</integer>
     <integer name="productorder_maxcharacters">@integer/standardorder_maxcharacaters</integer>
+    <integer name="rulesuggest_frequency">30</integer>
 </resources>

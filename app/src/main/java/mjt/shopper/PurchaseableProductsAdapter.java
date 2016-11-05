@@ -15,8 +15,30 @@ import java.text.NumberFormat;
  * Created by Mike092015 on 16/03/2016.
  */
 public class PurchaseableProductsAdapter extends CursorAdapter {
+
+    //==============================================================================================
+    // Cursor Offsets.
+    // Cursor offsets are set to the offset ino the respective cursor. They are set, once when the
+    // respective cursor is invoked, by obtaining the actual index via the columns name, thus
+    // negating a need to alter offsets if column orders are changed (e.g. column added/deleted)
+    // Note! column use changes may still be required if adding or deleting columns from tables or
+    //     queries.
+
+    //Purchasable Products Query
+    public static int purchasableproducts_productusageaisleref_offset = -1; //**
+    public static int purchasableproducts_productusageproductref_offset;
+    public static int purchasableproducts_productusagecost_offset;
+    public static int purchasableproducts_productid_offset; //**
+    public static int purchasableproducts_productname_offset;
+    public static int purchasableproducts_aisleid_offset; //**
+    public static int purchasableproducts_aislename_offset;
+    public static int purchasableproducts_shopname_offset;
+    public static int purchasableproducts_shopcity_offset;
+    public static int purchasableproducts_shopstreet_offset;
+
     public PurchaseableProductsAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
+        setPurchasableProductsOffsets(cursor);
     }
 
     @Override
@@ -41,16 +63,32 @@ public class PurchaseableProductsAdapter extends CursorAdapter {
         TextView tvaislename = (TextView) view.findViewById(R.id.aisle_name_entry);
         TextView tvcost = (TextView) view.findViewById(R.id.cost_entry);
 
-        tvproductname.setText(cursor.getString(4));
-        tvshopname.setText(cursor.getString(7));
-        tvshopcity.setText(cursor.getString(8));
-        tvshopstreet.setText(cursor.getString(9));
-        tvaislename.setText(cursor.getString(6));
-        tvcost.setText(NumberFormat.getCurrencyInstance().format(cursor.getDouble(2)));
+        tvproductname.setText(cursor.getString(purchasableproducts_productname_offset));
+        tvshopname.setText(cursor.getString(purchasableproducts_shopname_offset));
+        tvshopcity.setText(cursor.getString(purchasableproducts_shopcity_offset));
+        tvshopstreet.setText(cursor.getString(purchasableproducts_shopstreet_offset));
+        tvaislename.setText(cursor.getString(purchasableproducts_aislename_offset));
+        tvcost.setText(NumberFormat.getCurrencyInstance().format(cursor.getDouble(purchasableproducts_productusagecost_offset)));
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         return LayoutInflater.from(context).inflate(R.layout.purchaseable_product_list_entry, parent, false);
+    }
+
+    public void setPurchasableProductsOffsets(Cursor cursor) {
+        if(purchasableproducts_productusageaisleref_offset != -1) {
+            return;
+        }
+        purchasableproducts_productusageaisleref_offset = cursor.getColumnIndex(ShopperDBHelper.PRIMARY_KEY_NAME);
+        purchasableproducts_productusageproductref_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_PRODUCTREF);
+        purchasableproducts_productusagecost_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_COST);
+        purchasableproducts_productid_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_ID_FULL);
+        purchasableproducts_productname_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTS_COLUMN_NAME);
+        purchasableproducts_aisleid_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_ID_FULL);
+        purchasableproducts_aislename_offset = cursor.getColumnIndex(ShopperDBHelper.AISLES_COLUMN_NAME);
+        purchasableproducts_shopname_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_NAME);
+        purchasableproducts_shopcity_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_CITY);
+        purchasableproducts_shopstreet_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
     }
 }

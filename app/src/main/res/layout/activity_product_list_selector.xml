@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/standard_listview_row_padding_vertical"
+    android:paddingBottom="@dimen/standard_listview_row_padding_vertical"
+    android:paddingLeft="@dimen/standard_listview_row_padding_horizontal"
+    android:paddingRight="@dimen/standard_listview_row_padding_horizontal">
+    <TextView
+        android:id="@+id/product_id_selector"
+        style="@style/textview_listentry_style" />
+    <TextView
+        android:id="@+id/product_name_selector"
+        style="@style/textview_listentryimportant_style"
+        android:layout_weight="0.45"
+        />
+    <TextView
+        android:id="@+id/product_notes_selector"
+        style="@style/textview_listentry_style"
+        android:layout_weight="0.55"
+        />
+    <TextView
+        android:id="@+id/product_order_selector"
+        style="@style/textview_listentry_style"
+        />
+    <TextView
+        android:id="@+id/product_aisle_selector"
+        style="@style/textview_listentry_style"
+        />
+    <TextView
+        android:id="@+id/product_uses_selector"
+        style="@style/textview_listentry_style"
+        />
+</LinearLayout>

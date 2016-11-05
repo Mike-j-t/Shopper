@@ -16,8 +16,27 @@ import java.text.NumberFormat;
  * Created by Mike092015 on 17/02/2016.
  */
 public class Database_Inspector_ProductUsageDB_Adapter extends CursorAdapter{
+
+    //==============================================================================================
+    // Cursor Offsets.
+    // Cursor offsets are set to the offset ino the respective cursor. They are set, once when the
+    // respective cursor is invoked, by obtaining the actual index via the columns name, thus
+    // negating a need to alter offsets if column orders are changed (e.g. column added/deleted)
+    // Note! column use changes may still be required if adding or deleting columns from tables or
+    //     queries.
+
+    public static int productusage_productusageaislref_offset = -1;
+    public static int productusage_productusageproductref_offset;
+    public static int productusage_productusagecost_offset;
+    public static int productusage_productusagebuycount_offset;
+    public static int productusage_productusagefirstbuydate_offset;
+    public static int productusage_productusagelatestbuydate_offset;
+    public static int productusage_productusagemincost_offset;
+    public static int productusage_productusageorder_offset;
+
     public Database_Inspector_ProductUsageDB_Adapter(Context context, Cursor cursor, int flags) {
         super(context,cursor, 0);
+        setProductUsageOffsets(cursor);
     }
 
     @Override
@@ -42,17 +61,31 @@ public class Database_Inspector_ProductUsageDB_Adapter extends CursorAdapter{
         TextView textviewproductusagelastbuydate = (TextView) view.findViewById(R.id.adipue_productusagedb_productlastbuydate);
         TextView textviewproductusagemincost = (TextView) view.findViewById(R.id.adipue_productusagedb_mincost);
 
-        textviewproductusageaislref.setText(cursor.getString(ShopperDBHelper.PRODUCTUSAGE_COLUMN_AISLEREF_INDEX));
-        textviewproductusageproductref.setText(cursor.getString(ShopperDBHelper.PRODUCTUSAGE_COLUMN_PRODUCTREF_INDEX));
-        textviewproductusagecost.setText(NumberFormat.getCurrencyInstance().format(cursor.getFloat(ShopperDBHelper.PRODUCTUSAGE_COLUMN_COST_INDEX)));
-        textviewproductusagebuycount.setText(cursor.getString(ShopperDBHelper.PRODUCTUSAGE_COLUMN_BUYCOUNT_INDEX));
-        textviewproductusagefirstbuydate.setText(DateFormat.format(Constants.STANDARD_DDMMYYY_FORMAT,cursor.getLong(ShopperDBHelper.PRODUCTUSAGE_COLUMN_FIRSTBUYDATE_INDEX)));
-        textviewproductusagelastbuydate.setText(DateFormat.format(Constants.STANDARD_DDMMYYY_FORMAT, cursor.getLong(ShopperDBHelper.PRODUCTUSAGE_COLUMN_LASTBUYDATE_INDEX)));
-        textviewproductusagemincost.setText(NumberFormat.getCurrencyInstance().format(cursor.getLong(ShopperDBHelper.PRODUCTUSAGE_COLUMN_MINCOST_INDEX)));
+        textviewproductusageaislref.setText(cursor.getString(productusage_productusageaislref_offset));
+        textviewproductusageproductref.setText(cursor.getString(productusage_productusageproductref_offset));
+        textviewproductusagecost.setText(NumberFormat.getCurrencyInstance().format(cursor.getFloat(productusage_productusagecost_offset)));
+        textviewproductusagebuycount.setText(cursor.getString(productusage_productusagebuycount_offset));
+        textviewproductusagefirstbuydate.setText(DateFormat.format(Constants.STANDARD_DDMMYYY_FORMAT,cursor.getLong(productusage_productusagefirstbuydate_offset)));
+        textviewproductusagelastbuydate.setText(DateFormat.format(Constants.STANDARD_DDMMYYY_FORMAT, cursor.getLong(productusage_productusagelatestbuydate_offset)));
+        textviewproductusagemincost.setText(NumberFormat.getCurrencyInstance().format(cursor.getLong(productusage_productusagemincost_offset)));
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         return LayoutInflater.from(context).inflate(R.layout.activity_database_inspect_productusagedb_entry, parent, false);
+    }
+
+    public void setProductUsageOffsets(Cursor cursor) {
+        if(productusage_productusageaislref_offset != -1) {
+            return;
+        }
+        productusage_productusageaislref_offset = cursor.getColumnIndex(ShopperDBHelper.PRIMARY_KEY_NAME);
+        productusage_productusageproductref_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_PRODUCTREF);
+        productusage_productusagecost_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_COST);
+        productusage_productusagebuycount_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_BUYCOUNT);
+        productusage_productusagefirstbuydate_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_FIRSTBUYDATE);
+        productusage_productusagelatestbuydate_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_LATESTBUYDATE);
+        productusage_productusagemincost_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_MINCOST);
+        productusage_productusageorder_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_ORDER);
     }
 }

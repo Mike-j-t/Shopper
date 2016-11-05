@@ -1,11 +1,13 @@
 package mjt.shopper;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.text.ParseException;
@@ -18,8 +20,10 @@ import java.util.Date;
 public class ProductUsageEdit extends AppCompatActivity {
     private final static String THIS_ACTIVITY = "ProductUsageEdit";
     private final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
-    public ProductsPerAisleCursorAdapter plpa_adapter;
     public boolean devmode;
+    public boolean helpoffmode;
+
+    public LinearLayout productusageedit_helplayout;
 
     /*==============================================================================================
         Main processing
@@ -30,6 +34,15 @@ public class ProductUsageEdit extends AppCompatActivity {
         setContentView(R.layout.activity_productusage_edit);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         devmode = sp.getBoolean(getResources().getString(R.string.sharedpreferencekey_developermode),false);
+        helpoffmode = sp.getBoolean(getResources().getString(R.string.sharedpreferencekey_showhelpmode),false);
+
+        productusageedit_helplayout = (LinearLayout) findViewById(R.id.productlist_help_layout);
+
+        if(!helpoffmode) {
+            productusageedit_helplayout.setVisibility(View.VISIBLE);
+        } else {
+            productusageedit_helplayout.setVisibility(View.GONE);
+        }
 
         final String caller = this.getIntent().getStringExtra("CALLER");
         final long shopid = this.getIntent().getLongExtra("SHOPID", -1);
@@ -45,7 +58,7 @@ public class ProductUsageEdit extends AppCompatActivity {
         //final long shopid = sidcsr.getLong(ShopperDBHelper.AISLES_COLUMN_SHOP_INDEX);
         final Date firstpurchased = new Date(productfirstpurchased);
         final Date lastpurchased = new Date(productlastpurchased);
-        final SimpleDateFormat sdf = new SimpleDateFormat(Constants.STANDARD_DDMMYYY_FORMAT);
+        @SuppressLint("SimpleDateFormat") final SimpleDateFormat sdf = new SimpleDateFormat(Constants.STANDARD_DDMMYYY_FORMAT);
 
         ((TextView) this.findViewById(R.id.apue_shopname_data)).setText(getIntent().getStringExtra("SHOPNAME"));
         ((TextView) this.findViewById(R.id.apue_aislename_data)).setText(getIntent().getStringExtra("AISLENAME"));
@@ -240,7 +253,7 @@ public class ProductUsageEdit extends AppCompatActivity {
         int bc =0;
         float mc = 0.0f;
         int oia = 0;
-        final SimpleDateFormat sdf = new SimpleDateFormat(Constants.STANDARD_DDMMYYY_FORMAT);
+        @SuppressLint("SimpleDateFormat") final SimpleDateFormat sdf = new SimpleDateFormat(Constants.STANDARD_DDMMYYY_FORMAT);
 
         // Check that the firstbuydate is a valid date, if not set message, issue Toast and return
         EditText fbd_et = (EditText) findViewById(R.id.apue_productusage_firstbuydate_data);
