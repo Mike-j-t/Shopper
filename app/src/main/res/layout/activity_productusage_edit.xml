@@ -58,24 +58,24 @@
             android:id="@+id/apue_shopname_label"
             android:layout_width="200dp"
             android:layout_height="match_parent"
-            android:singleLine="true"
             android:text="@string/shoplabel"
             android:textSize="@dimen/standard_heading_text_size"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:maxLines="1" />
         <TextView
             android:id="@+id/apue_shopname_data"
             android:layout_width="500dp"
             android:layout_height="match_parent"
-            android:singleLine="true"
             android:text=""
-            android:textSize="@dimen/standard_heading_text_size"/>
+            android:textSize="@dimen/standard_heading_text_size"
+            android:maxLines="1" />
         <TextView
             android:id="@+id/apue_shop_id"
             android:layout_width="@dimen/standard_realnumb_width"
             android:layout_height="match_parent"
-            android:singleLine="true"
             android:textSize="@dimen/standard_heading_text_size"
-            android:textColor="@color/colorRequiredLabel"/>
+            android:textColor="@color/colorRequiredLabel"
+            android:maxLines="1" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/apue_aisle_container"
@@ -86,24 +86,24 @@
             android:id="@+id/apue_aislename_label"
             android:layout_width="200dp"
             android:layout_height="match_parent"
-            android:singleLine="true"
             android:text="@string/aislelabel"
             android:textSize="@dimen/standard_heading_text_size"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:maxLines="1" />
         <TextView
             android:id="@+id/apue_aislename_data"
             android:layout_width="500dp"
             android:layout_height="match_parent"
-            android:singleLine="true"
             android:text=""
-            android:textSize="@dimen/standard_heading_text_size"/>
+            android:textSize="@dimen/standard_heading_text_size"
+            android:maxLines="1" />
         <TextView
             android:id="@+id/apue_aisle_id"
             android:layout_width="@dimen/standard_realnumb_width"
             android:layout_height="match_parent"
-            android:singleLine="true"
             android:textSize="@dimen/standard_heading_text_size"
-            android:textColor="@color/colorRequiredLabel"/>
+            android:textColor="@color/colorRequiredLabel"
+            android:maxLines="1" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/apue_product_container"
@@ -114,24 +114,24 @@
             android:id="@+id/apue_product_label"
             android:layout_width="200dp"
             android:layout_height="match_parent"
-            android:singleLine="true"
             android:text="@string/productlabel"
             android:textSize="@dimen/standard_heading_text_size"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:maxLines="1" />
         <TextView
             android:id="@+id/apue_product_data"
             android:layout_width="500dp"
             android:layout_height="match_parent"
-            android:singleLine="true"
             android:text=""
-            android:textSize="@dimen/standard_heading_text_size"/>
+            android:textSize="@dimen/standard_heading_text_size"
+            android:maxLines="1" />
         <TextView
             android:id="@+id/apue_product_id"
             android:layout_width="@dimen/standard_realnumb_width"
             android:layout_height="match_parent"
-            android:singleLine="true"
             android:textSize="@dimen/standard_heading_text_size"
-            android:textColor="@color/colorRequiredLabel"/>
+            android:textColor="@color/colorRequiredLabel"
+            android:maxLines="1" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/apue_productcost_container"
@@ -143,10 +143,10 @@
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
-            android:singleLine="true"
             android:text="@string/productusage_cost_label"
             android:textSize="@dimen/standard_heading_text_size"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:maxLines="1" />
         <TextView
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
@@ -155,11 +155,11 @@
             android:id="@+id/apue_productcost_data"
             style="@style/edittext_optional_style"
             android:layout_weight="0.1"
-            android:singleLine="true"
             android:inputType="numberDecimal"
             android:digits="0123456789."
             android:text=""
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            android:maxLines="1" />
         <TextView
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
@@ -169,10 +169,10 @@
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
             android:layout_weight="0.6"
-            android:singleLine="true"
             android:padding="0dp"
             android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorRequiredLabel"/>
+            android:textColor="@color/colorRequiredLabel"
+            android:maxLines="1" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/apue_productusage_orderinaisle_container"
@@ -184,10 +184,10 @@
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
-            android:singleLine="true"
             android:text="@string/productusage_orderinaisle_label"
             android:textSize="@dimen/standard_heading_text_size"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:maxLines="1" />
         <TextView
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
@@ -198,10 +198,10 @@
             android:layout_weight="0.1"
             android:inputType="number"
             android:digits="01234567899"
-            android:singleLine="true"
             android:text=""
             android:maxLength="@integer/aisleorder_maxcharacters"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            android:maxLines="1" />
         <TextView
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
@@ -211,10 +211,10 @@
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
             android:layout_weight="0.6"
-            android:singleLine="true"
             android:padding="0dp"
             android:textSize="@dimen/standard_subsubheading_text_size"
-            android:textColor="@color/colorRequiredLabel"/>
+            android:textColor="@color/colorRequiredLabel"
+            android:maxLines="1" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/apue_advancedoptions_explian_text_container"
@@ -241,11 +241,11 @@
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_weight="0.2"
             android:layout_height="match_parent"
-            android:singleLine="true"
             android:text="@string/productusage_buycount_label"
             android:textSize="@dimen/standard_heading_text_size"
             android:textStyle="bold|italic"
-            android:textColor="@color/advancedinputoption"/>
+            android:textColor="@color/advancedinputoption"
+            android:maxLines="1" />
         <TextView
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
@@ -254,12 +254,12 @@
             android:id="@+id/apue_productusage_buycount_data"
             style="@style/edittext_optional_style"
             android:layout_weight="0.1"
-            android:singleLine="true"
             android:inputType="number"
             android:digits="0123456789."
             android:padding="0dp"
             android:text=""
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            android:maxLines="1" />
         <TextView
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
@@ -269,10 +269,10 @@
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_weight="0.6"
             android:layout_height="match_parent"
-            android:singleLine="true"
             android:padding="0dp"
             android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorRequiredLabel"/>
+            android:textColor="@color/colorRequiredLabel"
+            android:maxLines="1" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/apue_productusage_firstbuydate_container"
@@ -284,11 +284,11 @@
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
-            android:singleLine="true"
             android:text="@string/productusage_firstbuydate_label"
             android:textSize="@dimen/standard_heading_text_size"
             android:textStyle="bold|italic"
-            android:textColor="@color/advancedinputoption"/>
+            android:textColor="@color/advancedinputoption"
+            android:maxLines="1" />
         <TextView
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
@@ -297,11 +297,11 @@
             android:id="@+id/apue_productusage_firstbuydate_data"
             style="@style/edittext_optional_style"
             android:layout_weight="0.2"
-            android:singleLine="true"
             android:text=""
             android:inputType="date"
             android:digits="0123456789/"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            android:maxLines="1" />
         <TextView
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
@@ -311,10 +311,10 @@
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:singleLine="true"
             android:padding="0dp"
             android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorRequiredLabel"/>
+            android:textColor="@color/colorRequiredLabel"
+            android:maxLines="1" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/apue_productusage_lastbuydate_container"
@@ -326,11 +326,11 @@
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
-            android:singleLine="true"
             android:text="@string/productusage_lastbuydate_label"
             android:textSize="@dimen/standard_heading_text_size"
             android:textStyle="bold|italic"
-            android:textColor="@color/advancedinputoption"/>
+            android:textColor="@color/advancedinputoption"
+            android:maxLines="1" />
         <TextView
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
@@ -339,11 +339,11 @@
             android:id="@+id/apue_productusage_lastbuydate_data"
             style="@style/edittext_optional_style"
             android:layout_weight="0.2"
-            android:singleLine="true"
             android:text=""
             android:inputType="date"
             android:digits="0123456789/"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            android:maxLines="1" />
         <TextView
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
@@ -353,10 +353,10 @@
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:singleLine="true"
             android:padding="0dp"
             android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorRequiredLabel"/>
+            android:textColor="@color/colorRequiredLabel"
+            android:maxLines="1" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/apue_productusage_mincost_container"
@@ -368,11 +368,11 @@
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_weight="0.2"
             android:layout_height="match_parent"
-            android:singleLine="true"
             android:text="@string/productusage_mincost_label"
             android:textSize="@dimen/standard_heading_text_size"
             android:textStyle="bold|italic"
-            android:textColor="@color/advancedinputoption"/>
+            android:textColor="@color/advancedinputoption"
+            android:maxLines="1" />
         <TextView
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
@@ -381,11 +381,11 @@
             android:id="@+id/apue_productusage_mincost_data"
             style="@style/edittext_optional_style"
             android:layout_weight="0.2"
-            android:singleLine="true"
             android:text=""
             android:inputType="numberDecimal"
             android:digits="0123456789."
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            android:maxLines="1" />
         <TextView
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
@@ -395,10 +395,10 @@
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:singleLine="true"
             android:padding="0dp"
             android:textSize="@dimen/standard_subsubsubheading_text_size"
-            android:textColor="@color/colorRequiredLabel"/>
+            android:textColor="@color/colorRequiredLabel"
+            android:maxLines="1" />
     </LinearLayout>
 
 </LinearLayout>

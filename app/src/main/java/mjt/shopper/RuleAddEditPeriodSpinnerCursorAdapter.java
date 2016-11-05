@@ -10,10 +10,9 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 /**
- * Created by Mike092015 on 30/03/2016.
+ *
  */
-
-public class RuleAddEditPeriodSpinnerCursorAdapter extends CursorAdapter {
+class RuleAddEditPeriodSpinnerCursorAdapter extends CursorAdapter {
 
     //==============================================================================================
     // Cursor Offsets.
@@ -23,16 +22,16 @@ public class RuleAddEditPeriodSpinnerCursorAdapter extends CursorAdapter {
     // Note! column use changes may still be required if adding or deleting columns from tables or
     //     queries.
 
-    public static int values_valueid_offset = -1;
-    public static int values_valuename_offset;
-    public static int values_valuetype_offset;
-    public static int values_valueint_offset;
-    public static int values_valuereal_offset;
-    public static int values_valuetext_offset;
-    public static int values_valueincludeinsettings_offset;
-    public static int values_valuesettingsinfro_offset;
+    private static int values_valueid_offset = -1;
+    private static int values_valuename_offset;
+    private static int values_valuetype_offset;
+    private static int values_valueint_offset;
+    private static int values_valuereal_offset;
+    private static int values_valuetext_offset;
+    private static int values_valueincludeinsettings_offset;
+    private static int values_valuesettingsinfro_offset;
 
-    public RuleAddEditPeriodSpinnerCursorAdapter(Context context, Cursor cursor, int flags) {
+    RuleAddEditPeriodSpinnerCursorAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
         setValuesOffsets(cursor);
     }
@@ -76,7 +75,7 @@ public class RuleAddEditPeriodSpinnerCursorAdapter extends CursorAdapter {
         return v;
     }
 
-    public void setValuesOffsets(Cursor cursor) {
+    private void setValuesOffsets(Cursor cursor) {
         if(values_valueid_offset != -1) {
             return;
         }

@@ -75,6 +75,7 @@
     <string name="shopaddaisletitle">Add Aisle(s) to Store?</string>
     <string name="shopaddaisletext001">Do you wish to Add Aisles to Store:-\n\t</string>
     <string name="shopaddaisletext002">\?</string>
+    <string name="shoppinglistoriginalvales">Original Shopping-List values</string>
 
     <!--========== Aisles ========-->
     <string name="aisleslabel">Aisles</string>
@@ -173,6 +174,15 @@
     <string name="shoppinglist_totalcostremaining">Approximate Cost of Remaining Items </string>
     <string name="shoppinglist_totalspent">Approximate Amount Spent </string>
     <string name="shopping_list">ShpLst</string>
+    <string name="shopping_list_quantity">Qty</string>
+    <string name="shopping_list_cost">Cost</string>
+    <string name="shopping_list_total">Total</string>
+    <string name="shopping_list_actions">Actions</string>
+    <string name="shopping_list_increment">+1</string>
+    <string name="shopping_list_decrement">-1</string>
+    <string name="shopping_list_newquantity">New Quantity</string>
+    <string name="shopping_list_newcost">New Cost</string>
+    <string name="shopping_list_newproductname">New product Name</string>
 
     <!-- values -->
     <string name="values_label">Values</string>
@@ -197,6 +207,7 @@
     <string name="standardrestorebutton">RESTORE</string>
     <string name="standardreorgbutton">TIDY</string>
     <string name="standardruleaddtext">ADDRULE</string>
+    <!--suppress CheckTagEmptyBody -->
     <string name="standardedittexthint"><font size="15"></font></string>
     <string name="shoppinglistpurchasedbutton">BOUGHT</string>
     <string name="shoppinglistradjustbutton">ADJUST</string>
@@ -224,6 +235,7 @@
     <string name="title_activity_shoppinglist">Shopper - Shopping List</string>
     <string name="title_activity_addpurchaseableproducttoshoplist">Shopper - Add to Shopping List</string>
     <string name="title_activity_database_inspector">Shopper- Database Inspector</string>
+    <string name="title_activity_reviewdisabledsuggestions">Review Disabled Suggestions</string>
 
     <!-- <string name="standardHeadingStyle">bold</string> -->
 

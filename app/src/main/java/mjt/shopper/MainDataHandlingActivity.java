@@ -364,7 +364,7 @@ public class MainDataHandlingActivity extends AppCompatActivity {
         sd.refreshOtherFilesInDirectory();
 
         // Build the File ArrayList
-        ArrayList<File> flst = new ArrayList<File>(sd.getFilesInDirectory());
+        ArrayList<File> flst = new ArrayList<>(sd.getFilesInDirectory());
         if(flst.size() < 1) {
             Toast.makeText(this,"No Saved Files Found",Toast.LENGTH_SHORT).show();
         }

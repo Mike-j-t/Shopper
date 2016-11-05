@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by Mike092015 on 29/02/2016.
+ *
  */
 public class ProductUsageEdit extends AppCompatActivity {
     private final static String THIS_ACTIVITY = "ProductUsageEdit";

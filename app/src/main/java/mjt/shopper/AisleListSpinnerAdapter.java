@@ -10,7 +10,7 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 /**
- * Created by Mike092015 on 11/02/2016.
+ *
  */
 class AisleListSpinnerAdapter extends CursorAdapter {
 

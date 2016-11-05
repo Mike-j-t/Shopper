@@ -10,9 +10,9 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 /**
- * Created by Mike092015 on 25/02/2016.
+ *
  */
-public class Database_Inspector_RulesDB_Adapter extends CursorAdapter {
+class Database_Inspector_RulesDB_Adapter extends CursorAdapter {
 
     //==============================================================================================
     // Cursor Offsets.
@@ -22,19 +22,19 @@ public class Database_Inspector_RulesDB_Adapter extends CursorAdapter {
     // Note! column use changes may still be required if adding or deleting columns from tables or
     //     queries.
 
-    public static int ruleslist_ruleid_offset = -1;
-    public static int ruleslist_rulename_offset;
-    public static int rulelist_ruletype_offset;
-    public static int rulelist_rulepromptflag_offset;
-    public static int rulelist_ruleperiod_offset;
-    public static int rulelist_rulemultiplier_offset;
-    public static int rulelist_ruleactiveon_offset;
-    public static int rulelist_ruleproductref_offset;
-    public static int rulelist_ruleaisleref_offset;
-    public static int rulelist_ruleuses_offset;
-    public static int rulelist_rulenumbertoget_offset;
-    public static int rulelist_rulemincost_offset;
-    public static int rulelist_rulemaxcost_offset;
+    private static int ruleslist_ruleid_offset = -1;
+    private static int ruleslist_rulename_offset;
+    private static int rulelist_ruletype_offset;
+    private static int rulelist_rulepromptflag_offset;
+    private static int rulelist_ruleperiod_offset;
+    private static int rulelist_rulemultiplier_offset;
+    private static int rulelist_ruleactiveon_offset;
+    private static int rulelist_ruleproductref_offset;
+    private static int rulelist_ruleaisleref_offset;
+    private static int rulelist_ruleuses_offset;
+    private static int rulelist_rulenumbertoget_offset;
+    private static int rulelist_rulemincost_offset;
+    private static int rulelist_rulemaxcost_offset;
     public static int rulelist_productname_offset;
     public static int rulelist_aislename_offset;
     public static int rulelist_aisleshopref_offset;
@@ -43,7 +43,7 @@ public class Database_Inspector_RulesDB_Adapter extends CursorAdapter {
     public static int rulelist_shopstreet_offset;
     public static int rulelist_productusagecost_offset;
 
-    public Database_Inspector_RulesDB_Adapter(Context context, Cursor cursor, int flags) {
+    Database_Inspector_RulesDB_Adapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
         setRuleListOffsfets(cursor);
     }
@@ -92,7 +92,7 @@ public class Database_Inspector_RulesDB_Adapter extends CursorAdapter {
         return LayoutInflater.from(context).inflate(R.layout.activity_database_inspect_rulesdb_entry, parent, false);
     }
 
-    public void setRuleListOffsfets(Cursor cursor) {
+    private void setRuleListOffsfets(Cursor cursor) {
         if(ruleslist_ruleid_offset != -1) {
             return;
         }

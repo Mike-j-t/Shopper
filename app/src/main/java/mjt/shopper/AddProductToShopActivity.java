@@ -26,7 +26,7 @@ import android.widget.Toast;
  * AddProductToShopActivity
  * Allows the addition of a product or products to an Aisle(s) within a shop.
  * Uses a spinner to select a shop
- * Uses a spinner to select an Ailse (no Aisles then nothing to be or can be selected)
+ * Uses a spinner to select an Aisle (no Aisles then nothing to be or can be selected)
  * Uses a spinner to select a Product (no Aisles then no products will be available)
  * Has two edittext's to set the cost(price) and order of the product
  * ADD button will attempt to add according to the shop/aisle/product/cost and order

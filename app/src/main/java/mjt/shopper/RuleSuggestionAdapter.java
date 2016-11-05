@@ -10,9 +10,9 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 /**
- * Created by Mike092015 on 27/10/2016.
+ *
  */
-public class RuleSuggestionAdapter extends CursorAdapter {
+class RuleSuggestionAdapter extends CursorAdapter {
 
 
     /**
@@ -58,12 +58,12 @@ public class RuleSuggestionAdapter extends CursorAdapter {
     private static int rsl_shops_shopcity_offset;
     private static int rsl_calc_frequency_offset;
 
-    private static TextView addbutton;
-    private static TextView dismissbutton;
-    private static TextView disablebutton;
+    private TextView addbutton;
+    private TextView dismissbutton;
+    private TextView disablebutton;
 
 
-    public RuleSuggestionAdapter(Context context,Cursor cursor, int flags) {
+    RuleSuggestionAdapter(Context context,Cursor cursor, int flags) {
         super(context, cursor, FLAG_REGISTER_CONTENT_OBSERVER);
         setRuleSuggestionListOffets(cursor);
     }

@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 /**
- * Created by Mike092015 on 9/02/2016.
+ *
  */
 public class ProductListByCursorActivity extends AppCompatActivity {
     private final static String THIS_ACTIVITY = "ProductListByCursorActivity";

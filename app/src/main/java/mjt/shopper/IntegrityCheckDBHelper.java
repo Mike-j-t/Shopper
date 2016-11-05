@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.v7.app.AlertDialog;
 
 /**
  * SQLite DB Openhelper specifically for the purpose of an integrity check
@@ -13,24 +12,24 @@ import android.support.v7.app.AlertDialog;
  *  Note! Dependant upon the main DB as it's name is used as the suffix of the
  *  IC database name i.e. IC is the prefix, first part of the database name.
  */
-public class IntegrityCheckDBHelper extends SQLiteOpenHelper implements DatabaseErrorHandler{
+class IntegrityCheckDBHelper extends SQLiteOpenHelper implements DatabaseErrorHandler{
 
-    public static final String DATABASE_NAME = "IC"+ShopperDBHelper.DATABASE_NAME;
-    public static final int DATABASE_CORRUPTED = 1;
+    private static final String DATABASE_NAME = "IC"+ShopperDBHelper.DATABASE_NAME;
+    private static final int DATABASE_CORRUPTED = 1;
     private static int databasestate = 0;
     private Context context;
 
-    public IntegrityCheckDBHelper(Context context,
+    IntegrityCheckDBHelper(Context context,
                                   String name,
                                   SQLiteDatabase.CursorFactory factory,
                                   int version, DatabaseErrorHandler errorHandler) {
         super(context, DATABASE_NAME,factory,1,errorHandler);
         this.context = context;
 
-    };
+    }
 
-    public void onCreate(SQLiteDatabase db) {};
-    public void onUpgrade(SQLiteDatabase db, int oldversion, int newversion) {};
+    public void onCreate(SQLiteDatabase db) {}
+    public void onUpgrade(SQLiteDatabase db, int oldversion, int newversion) {}
     public void onCorruption(SQLiteDatabase db) {
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"DB Corruption detected","IntegrityCheckDBHelper","onCurrption",true);
         databasestate = 1;
@@ -41,6 +40,7 @@ public class IntegrityCheckDBHelper extends SQLiteOpenHelper implements Database
         Cursor iccsr;
 
         iccsr = icdb.rawQuery(icsqlstr,null);
+        iccsr.close();
         return false;
     }
     public static void setDatabaseCorrupted() {

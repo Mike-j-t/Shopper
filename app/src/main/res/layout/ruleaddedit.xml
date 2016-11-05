@@ -110,9 +110,8 @@
                 android:id="@+id/ruleaddedit_rulenamelabel"
                 style="@style/textview_normal_style"
                 android:layout_weight="0.15"
-                android:singleLine="true"
                 android:text="@string/rulename_label"
-                />
+                android:maxLines="1" />
             <EditText
                 android:id="@+id/ruleaddedit_rulename"
                 style="@style/edittext_required_style"

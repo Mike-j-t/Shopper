@@ -10,9 +10,9 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 /**
- * Created by Mike092015 on 14/02/2016.
+ *
  */
-public class ProductListSpinnerAdapter extends CursorAdapter{
+class ProductListSpinnerAdapter extends CursorAdapter{
 
     //==============================================================================================
     // Cursor Offsets.
@@ -22,14 +22,14 @@ public class ProductListSpinnerAdapter extends CursorAdapter{
     // Note! column use changes may still be required if adding or deleting columns from tables or
     //     queries.
 
-    public static int products_productid_offset = -1;
-    public static int products_productname_offset;
-    public static int products_productorder_offset;
-    public static int products_productaisleref_offset;
-    public static int products_productuses_offset;
-    public static int products_productnotes_offset;
+    private static int products_productid_offset = -1;
+    private static int products_productname_offset;
+    private static int products_productorder_offset;
+    private static int products_productaisleref_offset;
+    private static int products_productuses_offset;
+    private static int products_productnotes_offset;
 
-    public ProductListSpinnerAdapter(Context context, Cursor cursor, int flags) {
+    ProductListSpinnerAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
         setProductsOffsets(cursor);
     }
@@ -101,7 +101,7 @@ public class ProductListSpinnerAdapter extends CursorAdapter{
     }
 
     // Set Products Table query offsets into returned cursor, if not already set
-    public void setProductsOffsets(Cursor cursor) {
+    private void setProductsOffsets(Cursor cursor) {
         if(products_productid_offset != -1) {
             return;
         }

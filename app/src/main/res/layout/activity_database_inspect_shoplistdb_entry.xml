@@ -15,9 +15,9 @@
             android:layout_height="match_parent"
             android:layout_weight="0.05"
             android:gravity="end"
-            android:singleLine="true"
             android:text=""
-            android:textColor="@color/colorRequiredLabel" />
+            android:textColor="@color/colorRequiredLabel"
+            android:maxLines="1" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -27,9 +27,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.05"
-            android:singleLine="true"
             android:gravity="end"
-            android:textColor="@color/colorRequiredLabel"/>
+            android:textColor="@color/colorRequiredLabel"
+            android:maxLines="1" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -39,7 +39,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
-            android:singleLine="true" />
+            android:maxLines="1" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -49,8 +49,8 @@
             android:layout_width="0dp"
             android:layout_weight="0.05"
             android:layout_height="match_parent"
-            android:singleLine="true"
-            android:gravity="end"/>
+            android:gravity="end"
+            android:maxLines="1" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -60,8 +60,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.05"
-            android:singleLine="true"
-            android:gravity="end"/>
+            android:gravity="end"
+            android:maxLines="1" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -71,7 +71,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.15"
-            android:singleLine="true" />
+            android:maxLines="1" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -81,8 +81,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.1"
-            android:singleLine="true"
-            android:gravity="end"/>
+            android:gravity="end"
+            android:maxLines="1" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -92,9 +92,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.05"
-            android:singleLine="true"
             android:gravity="end"
-            android:textColor="@color/colorRequiredLabel"/>
+            android:textColor="@color/colorRequiredLabel"
+            android:maxLines="1" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -104,9 +104,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.05"
-            android:singleLine="true"
             android:gravity="end"
-            android:textColor="@color/colorRequiredLabel"/>
+            android:textColor="@color/colorRequiredLabel"
+            android:maxLines="1" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"

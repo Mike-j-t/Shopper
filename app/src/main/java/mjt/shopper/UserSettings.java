@@ -5,7 +5,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 
 /**
- * Created by Mike092015 on 11/04/2016.
+ *
  */
 public class UserSettings extends PreferenceActivity {
     public void onCreate(Bundle savedinstancestate) {

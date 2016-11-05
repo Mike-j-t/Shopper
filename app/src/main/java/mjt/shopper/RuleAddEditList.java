@@ -20,7 +20,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 /**
- * Created by Mike092015 on 21/04/2016.
+ *
  */
 public class RuleAddEditList extends AppCompatActivity {
 
