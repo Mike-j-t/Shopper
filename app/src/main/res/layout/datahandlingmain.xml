@@ -6,17 +6,20 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:paddingTop="@dimen/activity_vertical_margin"
+    >
     <!-- Display Title as opposed to title in heading bar-->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/standard_listview_row_height">
         <TextView
+            android:id="@+id/dh_title"
             style="@style/textview_listheading_style"
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="@string/datahandlingtitle"
+            android:labelFor="@+id/dh_title"
             android:layout_width="0dp"
             />
     </LinearLayout>
@@ -33,7 +36,6 @@
         android:layout_height="wrap_content">
         <TextView
             style="@style/textview_normal_style"
-            android:singleLine="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="italic"
@@ -79,7 +81,9 @@
         <EditText
             android:id="@+id/dh_datetimepart"
             style="@style/edittext_required_style"
-            android:layout_weight="0.2" />
+            android:layout_weight="0.2"
+            android:labelFor="@+id/dh_datetimepart"
+            />
         <TextView
             style="@style/textview_normal_style"
             android:layout_weight="0.025"
@@ -137,6 +141,7 @@
             style="@style/edittext_required_style"
             android:layout_weight="0.3"
             android:text="@string/datahandlingdbsavebasefilename_default"
+            android:labelFor="@+id/dh_dbsave_basefilename"
             />
         <TextView
             style="@style/textview_normal_style"
@@ -152,6 +157,7 @@
             style="@style/edittext_required_style"
             android:layout_weight="0.05"
             android:text="@string/datahandlingdbfileext_default"
+            android:labelFor="@+id/dh_dbsave_fileext"
             />
     </LinearLayout>
     <!-- DataBase Backup (Copy database file asis) Full Filename Display -->
@@ -266,6 +272,7 @@
             style="@style/edittext_required_style"
             android:layout_weight="0.3"
             android:text="@string/datahandlingsqlsavebasefilename_default"
+            android:labelFor="@+id/dh_sqlsave_basefilename"
             />
         <TextView
             style="@style/textview_normal_style"
@@ -281,6 +288,7 @@
             style="@style/edittext_required_style"
             android:layout_weight="0.05"
             android:text="@string/datahandlingsqlfileext_default"
+            android:labelFor="@+id/dh_sqlsave_fileext"
             />
     </LinearLayout>
     <!-- SQL Backup (Generate SQL to DLT, BLD and LOAD all tables)
@@ -397,6 +405,7 @@
             style="@style/edittext_required_style"
             android:layout_weight="0.3"
             android:text="@string/datahandlingdumpsavebasefilename_default"
+            android:labelFor="@+id/dh_dumpsave_basefilename"
             />
         <TextView
             style="@style/textview_normal_style"
@@ -412,6 +421,7 @@
             style="@style/edittext_required_style"
             android:layout_weight="0.05"
             android:text="@string/datahandlingdumpfileext_default"
+            android:labelFor="@+id/dh_dumpsave_fileext"
             />
     </LinearLayout>
     <!-- Dump (Export into custom file) Full Filename display -->
@@ -530,6 +540,7 @@
             style="@style/edittext_required_style"
             android:layout_weight="0.3"
             android:text="@string/datahandlingcsvbasefilename_default"
+            android:labelFor="@+id/dh_csvsave_basefilename"
             />
         <TextView
             style="@style/textview_normal_style"
@@ -545,6 +556,7 @@
             style="@style/edittext_required_style"
             android:layout_weight="0.05"
             android:text="@string/datahandlingcsvfileext_default"
+            android:labelFor="@+id/dh_csvsave_fileext"
             />
     </LinearLayout>
     <!-- CSV Save (crt CSV for a table) Full Filename -->

@@ -11,9 +11,9 @@ import android.widget.TextView;
 import java.text.NumberFormat;
 
 /**
- * Created by Mike092015 on 8/03/2016.
+ *
  */
-public class Database_Inspector_ShopListDB_Adapter extends CursorAdapter {
+class Database_Inspector_ShopListDB_Adapter extends CursorAdapter {
 
     //==============================================================================================
     // Cursor Offsets.
@@ -23,18 +23,18 @@ public class Database_Inspector_ShopListDB_Adapter extends CursorAdapter {
     // Note! column use changes may still be required if adding or deleting columns from tables or
     //     queries.
 
-    public static int shoppinglist_shoplistid_offset = -1;
-    public static int shoppinglist_shoplistproductref_offset;
-    public static int shoppinglist_shoplistdateadded_offset;
-    public static int shoppinglist_shoplistnumbertoget_offset;
-    public static int shoppinglist_shoplistdone_offset;
-    public static int shoppinglist_shoplistdategot_offset;
-    public static int shoppinglist_shoplistcost_offset;
-    public static int shoppinglist_shoplistproductusageref_offset;
-    public static int shoppinglist_shoplistaisleref_offset;
+    private static int shoppinglist_shoplistid_offset = -1;
+    private static int shoppinglist_shoplistproductref_offset;
+    private static int shoppinglist_shoplistdateadded_offset;
+    private static int shoppinglist_shoplistnumbertoget_offset;
+    private static int shoppinglist_shoplistdone_offset;
+    private static int shoppinglist_shoplistdategot_offset;
+    private static int shoppinglist_shoplistcost_offset;
+    private static int shoppinglist_shoplistproductusageref_offset;
+    private static int shoppinglist_shoplistaisleref_offset;
 
 
-    public Database_Inspector_ShopListDB_Adapter(Context context, Cursor cursor, int flags) {
+    Database_Inspector_ShopListDB_Adapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, FLAG_REGISTER_CONTENT_OBSERVER);
         setShoppingListOffsets(cursor);
     }
@@ -78,7 +78,7 @@ public class Database_Inspector_ShopListDB_Adapter extends CursorAdapter {
         return LayoutInflater.from(context).inflate(R.layout.activity_database_inspect_shoplistdb_entry,parent,false);
     }
 
-    public void setShoppingListOffsets(Cursor cursor) {
+    private void setShoppingListOffsets(Cursor cursor) {
         if(shoppinglist_shoplistid_offset != -1) {
             return;
         }

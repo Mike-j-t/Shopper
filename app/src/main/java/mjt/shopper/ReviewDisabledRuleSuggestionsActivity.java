@@ -6,16 +6,14 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ListViewCompat;
 import android.view.View;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 /**
- * Created by Mike092015 on 4/11/2016.
+ *
  */
-
 public class ReviewDisabledRuleSuggestionsActivity  extends AppCompatActivity {
 
     public final static int RESUMESTATE_NOTHING = 0;

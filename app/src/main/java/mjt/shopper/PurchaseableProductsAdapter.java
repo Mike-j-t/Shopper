@@ -12,9 +12,9 @@ import android.widget.TextView;
 import java.text.NumberFormat;
 
 /**
- * Created by Mike092015 on 16/03/2016.
+ *
  */
-public class PurchaseableProductsAdapter extends CursorAdapter {
+class PurchaseableProductsAdapter extends CursorAdapter {
 
     //==============================================================================================
     // Cursor Offsets.
@@ -25,18 +25,18 @@ public class PurchaseableProductsAdapter extends CursorAdapter {
     //     queries.
 
     //Purchasable Products Query
-    public static int purchasableproducts_productusageaisleref_offset = -1; //**
-    public static int purchasableproducts_productusageproductref_offset;
-    public static int purchasableproducts_productusagecost_offset;
-    public static int purchasableproducts_productid_offset; //**
-    public static int purchasableproducts_productname_offset;
-    public static int purchasableproducts_aisleid_offset; //**
-    public static int purchasableproducts_aislename_offset;
-    public static int purchasableproducts_shopname_offset;
-    public static int purchasableproducts_shopcity_offset;
-    public static int purchasableproducts_shopstreet_offset;
+    private static int purchasableproducts_productusageaisleref_offset = -1; //**
+    private static int purchasableproducts_productusageproductref_offset;
+    private static int purchasableproducts_productusagecost_offset;
+    private static int purchasableproducts_productid_offset; //**
+    private static int purchasableproducts_productname_offset;
+    private static int purchasableproducts_aisleid_offset; //**
+    private static int purchasableproducts_aislename_offset;
+    private static int purchasableproducts_shopname_offset;
+    private static int purchasableproducts_shopcity_offset;
+    private static int purchasableproducts_shopstreet_offset;
 
-    public PurchaseableProductsAdapter(Context context, Cursor cursor, int flags) {
+    PurchaseableProductsAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
         setPurchasableProductsOffsets(cursor);
     }
@@ -76,7 +76,7 @@ public class PurchaseableProductsAdapter extends CursorAdapter {
         return LayoutInflater.from(context).inflate(R.layout.purchaseable_product_list_entry, parent, false);
     }
 
-    public void setPurchasableProductsOffsets(Cursor cursor) {
+    private void setPurchasableProductsOffsets(Cursor cursor) {
         if(purchasableproducts_productusageaisleref_offset != -1) {
             return;
         }

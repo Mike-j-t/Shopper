@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -16,22 +15,20 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Mike092015 on 22/10/2016.
+ *
  */
-public class DataHandlingFileListAdapter extends ArrayAdapter<File> {
+class DataHandlingFileListAdapter extends ArrayAdapter<File> {
 
     private Activity context;
     private List<File> flst;
-    private int ilayout;
 
     private TextView tv_filename;
     private TextView tv_filemod;
 
-    public DataHandlingFileListAdapter(Activity context, int layout, ArrayList<File> flst) {
+    DataHandlingFileListAdapter(Activity context, int layout, ArrayList<File> flst) {
         super(context, layout, flst);
         this.context = context;
         this.flst = flst;
-        this.ilayout = layout;
     }
 
     public long getItemId(int position) {

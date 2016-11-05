@@ -16,7 +16,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 /**
- * Created by Mike092015 on 6/02/2016.
+ *
  */
 public class AisleListByCursorActivity extends AppCompatActivity {
 

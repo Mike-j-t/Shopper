@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.text.NumberFormat;
 
 /**
- * Created by Mike092015 on 21/03/2016.
+ *
  */
 public class ShoppingListAdapter extends CursorAdapter {
 
@@ -27,41 +27,41 @@ public class ShoppingListAdapter extends CursorAdapter {
     // Note! column use changes may still be required if adding or deleting columns from tables or
     //     queries.
 
-    public static int shoppinglist_shoplistid_offset = -1;
-    public static int shoppinglist_shoplistproductref_offset;
-    public static int shoppinglist_shoplistdateadded_offset;
-    public static int shoppinglist_shoplistnumbertoget_offset;
-    public static int shoppinglist_shoplistdone_offset;
-    public static int shoppinglist_shoplistdategot_offset;
-    public static int shoppinglist_shoplistcost_offset;
-    public static int shoppinglist_shoplistproductusageref_offset;
-    public static int shoppinglist_shoplistaisleref_offset;
-    public static int shoppinglist_productusageproductref_offset;
-    public static int shoppinglist_productusageaisleref_offset;
-    public static int shoppinglist_productusagecost_offset;
-    public static int shoppinglist_productusagebuycount_offset;
-    public static int shoppinglist_productusagefirstbuydate_offset;
-    public static int shoppinglist_productusagelatestbuydate_offset;
-    public static int shoppinglist_productusagemincost_offset;
-    public static int shoppinglist_productusageorder_offset;
-    public static int shoppinglist_aisleid_offset;
-    public static int shoppinglist_aislename_offset;
-    public static int shoppinglist_aisleorder_offset;
-    public static int shoppinglist_aisleshopref_offest;
-    public static int shoppinglist_shopid_offset;
-    public static int shoppinglist_shopname_offset;
-    public static int shopponglist_shoporder_offset;
-    public static int shopponglist_shopstreet_offset;
-    public static int shoppinglist_shopcity_offset;
-    public static int shoppinglist_shopstate_offset;
-    public static int shoppinglist_shopphone_offset;
-    public static int shoppinglist_shopnotes_offset;
-    public static int shoppinglist_productid_offset;
-    public static int shoppinglist_productname_offset;
-    public static int shoppinglist_productorder_offset;
-    public static int shoppinglist_productaisleref_offset;
-    public static int shoppinglist_productuses_offset;
-    public static int shoppinglist_productnotes_offset;
+    private static int shoppinglist_shoplistid_offset = -1;
+    private static int shoppinglist_shoplistproductref_offset;
+    private static int shoppinglist_shoplistdateadded_offset;
+    private static int shoppinglist_shoplistnumbertoget_offset;
+    private static int shoppinglist_shoplistdone_offset;
+    private static int shoppinglist_shoplistdategot_offset;
+    private static int shoppinglist_shoplistcost_offset;
+    private static int shoppinglist_shoplistproductusageref_offset;
+    private static int shoppinglist_shoplistaisleref_offset;
+    private static int shoppinglist_productusageproductref_offset;
+    private static int shoppinglist_productusageaisleref_offset;
+    private static int shoppinglist_productusagecost_offset;
+    private static int shoppinglist_productusagebuycount_offset;
+    private static int shoppinglist_productusagefirstbuydate_offset;
+    private static int shoppinglist_productusagelatestbuydate_offset;
+    private static int shoppinglist_productusagemincost_offset;
+    private static int shoppinglist_productusageorder_offset;
+    private static int shoppinglist_aisleid_offset;
+    private static int shoppinglist_aislename_offset;
+    private static int shoppinglist_aisleorder_offset;
+    private static int shoppinglist_aisleshopref_offest;
+    private static int shoppinglist_shopid_offset;
+    private static int shoppinglist_shopname_offset;
+    private static int shopponglist_shoporder_offset;
+    private static int shopponglist_shopstreet_offset;
+    private static int shoppinglist_shopcity_offset;
+    private static int shoppinglist_shopstate_offset;
+    private static int shoppinglist_shopphone_offset;
+    private static int shoppinglist_shopnotes_offset;
+    private static int shoppinglist_productid_offset;
+    private static int shoppinglist_productname_offset;
+    private static int shoppinglist_productorder_offset;
+    private static int shoppinglist_productaisleref_offset;
+    private static int shoppinglist_productuses_offset;
+    private static int shoppinglist_productnotes_offset;
 
 
     public ShoppingListAdapter(Context context, Cursor cursor, int flags, int myvar) {
@@ -178,7 +178,7 @@ public class ShoppingListAdapter extends CursorAdapter {
         return LayoutInflater.from(context).inflate(R.layout.shopping_list_entry, parent, false);
     }
 
-    public void setShoppingListOffsets(Cursor cursor) {
+    private void setShoppingListOffsets(Cursor cursor) {
         if(shoppinglist_shoplistid_offset != -1) {
             return;
         }

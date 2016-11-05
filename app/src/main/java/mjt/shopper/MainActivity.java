@@ -175,10 +175,9 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    //TODO look into checking whether RuleSuggestions should be enabled
     /**
      * Disable/Enable menu options depending upon states
-     * @param menu
+     * @param menu The menu inflated via the onCreateOptionsMenu
      * @return always true
      */
     @Override

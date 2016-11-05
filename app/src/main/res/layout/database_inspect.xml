@@ -73,8 +73,8 @@
                 android:layout_weight="0.2"
                 android:text="@string/shoplabel_plural"
                 android:textStyle="bold"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
             <TextView
                 android:id="@+id/adi_shopsdb_rowcount"
                 android:layout_width="@dimen/standard_dummy_size"
@@ -82,8 +82,8 @@
                 android:layout_weight="0.2"
                 android:text=""
                 android:textStyle="bold|italic"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
             <TextView
                 android:layout_width="@dimen/standard_dummy_size"
                 android:layout_height="match_parent"
@@ -100,22 +100,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/dbinspect_shopcols_l1"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
             <TextView
                 android:id="@+id/adi_shopsdb_columns2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/dbinspect_shocols_l2"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
             <TextView
                 android:id="@+id/adi_shopsdb_columns3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/dbinspect_shopcols_l3"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
         </LinearLayout>
         <ListView
             android:id="@+id/adi_shopsdb_tablelist"
@@ -143,8 +143,8 @@
                 android:layout_weight="0.2"
                 android:text="@string/aislelabel_plural"
                 android:textStyle="bold"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                    android:textColor="@color/colorNormalButtonText"
+                    android:maxLines="1" />
             <TextView
                 android:id="@+id/adi_aislesdb_rowcount"
                 android:layout_width="@dimen/standard_dummy_size"
@@ -152,8 +152,8 @@
                 android:layout_weight="0.2"
                 android:text=""
                 android:textStyle="bold|italic"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
             <TextView
                 android:layout_width="@dimen/standard_dummy_size"
                 android:layout_height="match_parent"
@@ -170,8 +170,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/dbinspect_aislecols_line1"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
         </LinearLayout>
         <ListView
             android:id="@+id/adi_aislesdb_tablelist"
@@ -199,8 +199,8 @@
                 android:layout_weight="0.2"
                 android:text="@string/productlabel_plural"
                 android:textStyle="bold"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
             <TextView
                 android:id="@+id/adi_productsdb_rowcount"
                 android:layout_width="@dimen/standard_dummy_size"
@@ -208,8 +208,8 @@
                 android:layout_weight="0.2"
                 android:text=""
                 android:textStyle="bold|italic"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
             <TextView
                 android:layout_width="@dimen/standard_dummy_size"
                 android:layout_height="match_parent"
@@ -226,8 +226,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/dbinspect_productcols_l1"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/adi_products_info3"
@@ -240,8 +240,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/dbinspect_productcols_l2"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
         </LinearLayout>
         <ListView
             android:id="@+id/adi_productsdb_tablelist"
@@ -269,8 +269,8 @@
                 android:layout_weight="0.2"
                 android:text="@string/productusage_label"
                 android:textStyle="bold"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
             <TextView
                 android:id="@+id/adi_productusagedb_rowcount"
                 android:layout_width="@dimen/standard_dummy_size"
@@ -278,8 +278,8 @@
                 android:layout_weight="0.8"
                 android:text=""
                 android:textStyle="bold|italic"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
 
         </LinearLayout>
         <LinearLayout
@@ -294,8 +294,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/dbinspect_productusagecols_line1"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
         </LinearLayout>
         <ListView
             android:id="@+id/adi_productusagedb_tablelist"
@@ -324,8 +324,8 @@
                 android:layout_weight="0.2"
                 android:text="@string/rulelabel_plural"
                 android:textStyle="bold"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
             <TextView
                 android:id="@+id/adi_rulesdb_rowcount"
                 android:layout_width="@dimen/standard_dummy_size"
@@ -333,8 +333,8 @@
                 android:layout_weight="0.8"
                 android:text=""
                 android:textStyle="bold|italic"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -347,8 +347,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/dbinspect_rulecols_l1"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -361,8 +361,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/dbinspect_rulecols_l2"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
         </LinearLayout>
         <ListView
             android:id="@+id/adi_rulesdb_tablelist"
@@ -390,8 +390,8 @@
                 android:layout_weight="0.2"
                 android:text="@string/shopping_list"
                 android:textStyle="bold"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
             <TextView
                 android:id="@+id/adi_shoplistdb_rowcount"
                 android:layout_width="@dimen/standard_dummy_size"
@@ -399,8 +399,8 @@
                 android:layout_weight="0.8"
                 android:text=""
                 android:textStyle="bold|italic"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/adi_shoplist_info2"
@@ -414,8 +414,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/dbinspect_shoppinglistcols_l1"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
             </LinearLayout>
         <ListView
             android:id="@+id/adi_shoplistdb_tablelist"
@@ -443,8 +443,8 @@
                 android:layout_weight="0.2"
                 android:text="@string/values_label"
                 android:textStyle="bold"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
             <TextView
                 android:id="@+id/adi_appvaluesdb_rowcount"
                 android:layout_width="@dimen/standard_dummy_size"
@@ -452,8 +452,8 @@
                 android:layout_weight="0.8"
                 android:text=""
                 android:textStyle="bold|italic"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/adi_appvaluesdb_heading2"
@@ -467,8 +467,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/dbinspect_appvaluescols_l1"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/adi_appvaluesdb_heading3"
@@ -482,8 +482,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/dbinspect_appvaluescols_l2"
-                android:singleLine="true"
-                android:textColor="@color/colorNormalButtonText"/>
+                android:textColor="@color/colorNormalButtonText"
+                android:maxLines="1" />
         </LinearLayout>
         <ListView
             android:id="@+id/adi_appvaluesdb_tablelist"

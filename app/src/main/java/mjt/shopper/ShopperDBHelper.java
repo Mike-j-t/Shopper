@@ -185,7 +185,7 @@ class DBDatabase {
     }
     // Generate all of the SQL to build the defined database
     public ArrayList<String> generateDBBuildSQL(SQLiteDatabase db) {
-        ArrayList<String> generatedSQLStatements = new ArrayList<String>();
+        ArrayList<String> generatedSQLStatements = new ArrayList<>();
         for(DBTable dbt : this.database_tables) {
             String current_create_string = dbt.getSQLCreateString(db);
             if(current_create_string.length() > 0) {
@@ -285,7 +285,7 @@ class DBDatabase {
     // only create tables that don't exist.
     // As such there is no need to compare what actually exists with the coded schema/design
     public void actionDBBuildSQL(SQLiteDatabase db) {
-        ArrayList<String> actionsql = new ArrayList<String >();
+        ArrayList<String> actionsql = new ArrayList<>();
         actionsql.addAll(generateDBBuildSQL(db));
         for(String currentsql : actionsql) {
             db.execSQL(currentsql);
@@ -297,7 +297,7 @@ class DBDatabase {
     // NOTE!!! this is limited to basically just comparing the databse column names
     // NOTE!!! This only considers adding columns that don't exist.
     public ArrayList<String> generateDBAlterSQL(SQLiteDatabase db) {
-        ArrayList<String> generatedSQLStatements = new ArrayList<String>();
+        ArrayList<String> generatedSQLStatements = new ArrayList<>();
         for(DBTable dbt: this.database_tables) {
             generatedSQLStatements.addAll(dbt.getSQLAlterToAddNewColumns(db));
         }
@@ -308,7 +308,7 @@ class DBDatabase {
     // Actually perform the automatically generated SQL ALTERs (Add columns)
     // See generateDBAlterSQL
     public void actionDBAlterSQL(SQLiteDatabase db) {
-        ArrayList<String> actionsql = new ArrayList<String>();
+        ArrayList<String> actionsql = new ArrayList<>();
         actionsql.addAll(generateDBAlterSQL(db));
         for(String currentsql : actionsql) {
             db.execSQL(currentsql);
@@ -357,7 +357,7 @@ class DBTable {
     public DBTable() {
         this.usable = false;
         this.table_name = "";
-        this.table_columns = new ArrayList<DBColumn>();
+        this.table_columns = new ArrayList<>();
         this.problem_msg = "WDBT0004 - Uninstantiated - " +
                 "Use addDBColumnToDBTable to add at least 1 usable DBColumn or " +
                 "Use addDBColumnsToDBTable to add at least 1 usable DBColumn or " +
@@ -372,7 +372,7 @@ class DBTable {
     public DBTable(String table_name) {
         this.usable = false;
         this.table_name = table_name.toLowerCase();
-        this.table_columns = new ArrayList<DBColumn>();
+        this.table_columns = new ArrayList<>();
         this.problem_msg = "WDBT0005 - Partially Instantiated - " +
                 "Use addDBColumnToDBTable to add at least 1 usable DBColumns or " +
                 "Use addDBColumnsToDBTable to add at least 1 usable DBColumn or " +
@@ -510,7 +510,7 @@ class DBTable {
 
         // Extract Columns that are flagged as PRIMARY INDEXES so we have a count
         // More than one has to be handled differently
-        ArrayList<String> indexes = new ArrayList<String>();
+        ArrayList<String> indexes = new ArrayList<>();
         for(DBColumn dc : this.table_columns) {
             if(dc.getDBColumnIsPrimaryIndex()) {
                 indexes.add(dc.getDBColumnName());
@@ -557,7 +557,7 @@ class DBTable {
 
         // Extract Columns that are flagged as PRIMARY INDEXES so we have a count
         // More than one has to be handled differently
-        ArrayList<String> indexes = new ArrayList<String>();
+        ArrayList<String> indexes = new ArrayList<>();
         for(DBColumn dc : this.table_columns) {
             if(dc.getDBColumnIsPrimaryIndex()) {
                 indexes.add(dc.getDBColumnName());
@@ -1022,7 +1022,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     public DBDatabase generateDBSchema(SQLiteDatabase db) {
 
         // Shops Table and columns
-        ArrayList<DBColumn> shopscolumns = new ArrayList<DBColumn>();
+        ArrayList<DBColumn> shopscolumns = new ArrayList<>();
         shopscolumns.add(new DBColumn(SHOPS_COLUMN_ID,"INTEGER",true,""));
         shopscolumns.add(new DBColumn(SHOPS_COLUMN_NAME,"TEXT",false,""));
         shopscolumns.add(new DBColumn(SHOPS_COLUMN_ORDER,"INTEGER",false,"100"));
@@ -1035,7 +1035,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         SHOPS_COLUMN_COUNT = shops.numberOfColumnsInTable();
 
         // Aisles Table and columns
-        ArrayList<DBColumn> aislescolumns = new ArrayList<DBColumn>();
+        ArrayList<DBColumn> aislescolumns = new ArrayList<>();
         aislescolumns.add(new DBColumn(AISLES_COLUMN_ID,"INTEGER",true,""));
         aislescolumns.add(new DBColumn(AISLES_COLUMN_NAME,"TEXT",false,""));
         aislescolumns.add(new DBColumn(AISLES_COLUMN_ORDER,"INTEGER",false,"100"));
@@ -1044,7 +1044,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         AISLES_COLUMN_COUNT = aisles.numberOfColumnsInTable();
 
         // Products Table and columns
-        ArrayList<DBColumn> productscolumns = new ArrayList<DBColumn>();
+        ArrayList<DBColumn> productscolumns = new ArrayList<>();
         productscolumns.add(new DBColumn(PRODUCTS_COLUMN_ID,"INTEGER",true,""));
         productscolumns.add(new DBColumn(PRODUCTS_COLUMN_NAME,"TEXT",false,""));
         productscolumns.add(new DBColumn(PRODUCTS_COLUMN_ORDER,"INTEGER",false,"100"));
@@ -1057,7 +1057,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
 
         // Product Usage Table (link table between Product and Aisle.
         // Includes columns for ailse/product specfic data
-        ArrayList<DBColumn> productusagecolumns = new ArrayList<DBColumn>();
+        ArrayList<DBColumn> productusagecolumns = new ArrayList<>();
         productusagecolumns.add(new DBColumn(PRODUCTUSAGE_COLUMN_AISLEREF,"INTEGER",true,""));
         productusagecolumns.add(new DBColumn(PRODUCTUSAGE_COLUMN_PRODUCTREF,"INTEGER",true,""));
         productusagecolumns.add(new DBColumn(PRODUCTUSAGE_COLUMN_COST,"REAL",false,"1.00"));
@@ -1071,7 +1071,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         PRODUCTUSAGE_COLUMN_COUNT = productusage.numberOfColumnsInTable();
 
         // Rules Table (Rules allow auto picking of regularly purchased items)
-        ArrayList<DBColumn> rulecolumns = new ArrayList<DBColumn>();
+        ArrayList<DBColumn> rulecolumns = new ArrayList<>();
         rulecolumns.add(new DBColumn(RULES_COLUMN_ID,RULES_COLUMN_ID_TYPE,true,""));
         rulecolumns.add(new DBColumn(RULES_COLUMN_NAME,RULES_COULMN_NAME_TYPE,false,""));
         rulecolumns.add(new DBColumn(RULES_COLUMN_TYPE,RULES_COLUMN_TYPE_TYPE,false,""));
@@ -1090,8 +1090,8 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
 
 
 
-        // Shoplist Table (The actual shopiing list - TODO still being designed)
-        ArrayList<DBColumn> shoplistcolumns = new ArrayList<DBColumn>();
+        // Shoplist Table (The actual shopiing list
+        ArrayList<DBColumn> shoplistcolumns = new ArrayList<>();
         shoplistcolumns.add(new DBColumn(SHOPLIST_COLUMN_ID,SHOPLIST_COLUMN_ID_TYPE,true,""));
         shoplistcolumns.add(new DBColumn(SHOPLIST_COLUMN_PRODUCTREF,SHOPLIST_COLUMN_PRODUCTREF_TYPE,false,""));
         shoplistcolumns.add(new DBColumn(SHOPLIST_COLUMN_DATEADDED,SHOPLIST_COLUMN_DATEADDED_TYPE,false,"0"));
@@ -1105,7 +1105,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         SHOPLIST_COLUMN_COUNT = shoplist.numberOfColumnsInTable();
 
         //Values Table (Values akin to global variables)
-        ArrayList<DBColumn> valuescolumns = new ArrayList<DBColumn>();
+        ArrayList<DBColumn> valuescolumns = new ArrayList<>();
         valuescolumns.add(new DBColumn(VALUES_COLUMN_ID,VALUES_COLUMN_ID_TYPE,true,""));
         valuescolumns.add(new DBColumn(VALUES_COLUMN_VALUENAME,VALUES_COLUMN_VALUENAME_TYPE,false,""));
         valuescolumns.add(new DBColumn(VALUES_COLUMN_VALUETYPE,VALUES_COLUMN_VALUETYPE_TYPE,false,""));
@@ -1117,7 +1117,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         DBTable values = new DBTable(VALUES_TABLE_NAME,valuescolumns);
 
         // Database
-        ArrayList<DBTable> databasetables = new ArrayList<DBTable>();
+        ArrayList<DBTable> databasetables = new ArrayList<>();
         databasetables.add(shops);
         databasetables.add(aisles);
         databasetables.add(products);
@@ -1142,7 +1142,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
             return;
         }
 
-        ArrayList<String> SQLBuildStatements = new ArrayList<String>(shopper.generateDBBuildSQL(db));
+        ArrayList<String> SQLBuildStatements = new ArrayList<>(shopper.generateDBBuildSQL(db));
 
         // Build the Tables according to the generated schema
         shopper.actionDBBuildSQL(db);
@@ -1196,7 +1196,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         // Note!!! this DOES NOT build them rather it's run to allow debugging to display the
         // SQL before  actionDBBuildSQL runs. actionDBBuildSQL is basically a wrapper that calls
         // generateDBBuildSQL and then loops through the resultant ArrayList executing the SQL
-        ArrayList<String> SQLBuildStatements = new ArrayList<String>(shopper.generateDBBuildSQL(db));
+        ArrayList<String> SQLBuildStatements = new ArrayList<>(shopper.generateDBBuildSQL(db));
 
         // Actually action the Build SQL (regenerates them)
         shopper.actionDBBuildSQL(db);
@@ -1204,7 +1204,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         // Create an array of SQL statements, if any, that would, if used, ADD colums that are coded
         // but don't actually exist. This mainly for testing purposes as next line invokes
         // the actionDBAlterSQL (this uses the generateDBALterSQL method).
-        ArrayList<String> SQLALterStatements = new ArrayList<String>(shopper.generateDBAlterSQL(db));
+        ArrayList<String> SQLALterStatements = new ArrayList<>(shopper.generateDBAlterSQL(db));
 
         // Actually action the ALTER SQL statements
         shopper.actionDBAlterSQL(db);
@@ -2285,7 +2285,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     // Get List of AppValues as Long according to given key.
     // Note!! used to extract multiple same key entries
     public ArrayList<Long> getLongArrayListValue(String valuename) {
-        ArrayList<Long> rv = new ArrayList<Long>();
+        ArrayList<Long> rv = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         String sqlstr = " SELECT " + VALUES_COLUMN_VALUEINT + " FROM " + VALUES_TABLE_NAME +
                 " WHERE " + VALUES_COLUMN_VALUENAME + " = '" + valuename + "' " +
@@ -2304,7 +2304,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     // Get ArrayList of AppValues as Doubles according to given key.
     // Note!! used to extract multiple same key entries
     public ArrayList<Double> getDoubleArrayListValue(String valuename) {
-        ArrayList<Double> rv = new ArrayList<Double>();
+        ArrayList<Double> rv = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         String sqlstr = " SELECT " + VALUES_COLUMN_VALUEREAL + " FROM " + VALUES_TABLE_NAME +
                 " WHERE " + VALUES_COLUMN_VALUENAME + " = '" + valuename + "' " +
@@ -2323,7 +2323,7 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     // Get ArrayList of AppValues as Strings according to given key.
     // Note!! used to extract multiple same key entries
     public ArrayList<String> getStringArrayListValue(String valuename) {
-        ArrayList<String> rv = new ArrayList<String>();
+        ArrayList<String> rv = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         String sqlstr = " SELECT " + VALUES_COLUMN_VALUETEXT + " FROM " + VALUES_TABLE_NAME +
                 " WHERE " + VALUES_COLUMN_VALUENAME + " = '" + valuename + "' " +
@@ -2458,9 +2458,9 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
 
     /**
      *
-     * @param productref
-     * @param aisleref
-     * @param flag
+     * @param productref    reference to the product
+     * @param aisleref      regeresnce to the aisle
+     * @param flag          flag to be set
      */
     private void setRuleSuggestFlag(long productref, long aisleref, int flag) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -2476,8 +2476,8 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
 
     /**
      *
-     * @param productref
-     * @param aisleref
+     * @param productref    reference to the product
+     * @param aisleref      reference to the aisle
      */
     public void dismissRule(long productref, long aisleref) {
         setRuleSuggestFlag(productref,aisleref,RULESUGGESTFLAG_DIMISSED);
@@ -2496,8 +2496,8 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
 
     /**
      *
-     * @param productref
-     * @param aisleref
+     * @param productref    reference to the product
+     * @param aisleref      referennce to the aisle
      */
     public void disableRule(long productref, long aisleref) {
         setRuleSuggestFlag(productref, aisleref, RULESUGGESTFLAG_DISABLED);
@@ -2505,8 +2505,8 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
 
     /**
      *
-     * @param productref
-     * @param aisleref
+     * @param productref    reference to the product
+     * @param aisleref      reference to the aisle
      */
     public void enableDisabledRule(long productref, long aisleref) {
         setRuleSuggestFlag(productref, aisleref, RULESUGGESTFLAG_CLEAR);

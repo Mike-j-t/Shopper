@@ -62,8 +62,8 @@
             android:id="@+id/productselector"
             style="@style/edittext_selection_style"
             android:layout_weight="0.15"
-            android:singleLine="true"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            android:maxLines="1" />
         <TextView
             android:id="@+id/shopselectorlabel"
             android:padding="@dimen/standard_dummy_size"
@@ -73,8 +73,8 @@
             android:layout_weight="0.03"
             android:text="@string/shoplabel"
             android:textSize="@dimen/standard_subsubheading_text_size"
-            android:singleLine="true"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:maxLines="1" />
         <EditText
             android:id="@+id/shopselector"
             style="@style/edittext_selection_style"
@@ -91,23 +91,23 @@
             android:layout_height="@dimen/standard_subsubheading_height"
             android:padding="@dimen/standard_dummy_size"
             android:layout_weight="0.475"
-            android:singleLine="true"
             android:text="@string/productlabel"
             android:textSize="@dimen/standard_subsubsubheading_text_size"
             android:textStyle="bold"
             android:textColor="@color/colorNormalButtonText"
-            android:onClick="orderByProduct"/>
+            android:onClick="orderByProduct"
+            android:maxLines="1" />
         <TextView
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="@dimen/standard_subsubheading_height"
             android:padding="@dimen/standard_dummy_size"
             android:layout_weight="0.2625"
-            android:singleLine="true"
             android:text="@string/shoplabel"
             android:textSize="@dimen/standard_subsubsubheading_text_size"
             android:textStyle="bold"
             android:textColor="@color/colorNormalButtonText"
-            android:onClick="orderByStore"/>
+            android:onClick="orderByStore"
+            android:maxLines="1" />
         <TextView
             android:layout_width="@dimen/standard_dummy_size"
             android:layout_height="@dimen/standard_subsubsubheading_height"
@@ -153,12 +153,12 @@
             android:layout_height="@dimen/standard_subsubheading_height"
             android:padding="@dimen/standard_dummy_size"
             android:layout_weight="0.075"
-            android:singleLine="true"
             android:text="@string/productusage_cost_label"
             android:textSize="@dimen/standard_subsubsubheading_text_size"
             android:textStyle="bold"
             android:textColor="@color/colorNormalButtonText"
-            android:onClick="orderByCost"/>
+            android:onClick="orderByCost"
+            android:maxLines="1" />
     </LinearLayout>
     <ListView
         android:id="@+id/purchaseable_product_list"

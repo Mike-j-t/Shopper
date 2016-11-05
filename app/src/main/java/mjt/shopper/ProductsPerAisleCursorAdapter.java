@@ -13,9 +13,9 @@ import java.io.Serializable;
 import java.text.NumberFormat;
 
 /**
- * Created by Mike092015 on 27/02/2016.
+ *
  */
-public class ProductsPerAisleCursorAdapter extends CursorAdapter implements Serializable {
+class ProductsPerAisleCursorAdapter extends CursorAdapter implements Serializable {
 
     //==============================================================================================
     // Cursor Offsets.
@@ -28,22 +28,22 @@ public class ProductsPerAisleCursorAdapter extends CursorAdapter implements Seri
 
     // Variables to store productsperaisle query offsets as obtained via the defined column names by
     // call to setProductsPerAisleOffsets (productsperaisle_productid_offset set -1 to act as notdone flag )
-    public static int productsperaisle_productid_offset = -1;
-    public static int productsperaisle_productname_offset;
-    public static int productsperaisle_productorder_offset;
-    public static int productsperaisle_productaisleref_offset;
-    public static int productsperaisle_productuses_offset;
-    public static int productsperaisle_productnotes_offset;
-    public static int productsperaisle_productusageaisleref_offset;
-    public static int productsperaisle_productusageproductref_offset;
-    public static int productsperaisle_productusagecost_offset;
-    public static int productsperaisle_productusagebuycount_offset;
-    public static int productsperaisle_productusagefirstbuydate_offset;
-    public static int proudctsperaisle_productusagelatestbuydate_offset;
-    public static int productsaperaisle_productusagemincost_offset;
-    public static int productsperaisle_productusageorder_offset;
+    private static int productsperaisle_productid_offset = -1;
+    private static int productsperaisle_productname_offset;
+    private static int productsperaisle_productorder_offset;
+    private static int productsperaisle_productaisleref_offset;
+    private static int productsperaisle_productuses_offset;
+    private static int productsperaisle_productnotes_offset;
+    private static int productsperaisle_productusageaisleref_offset;
+    private static int productsperaisle_productusageproductref_offset;
+    private static int productsperaisle_productusagecost_offset;
+    private static int productsperaisle_productusagebuycount_offset;
+    private static int productsperaisle_productusagefirstbuydate_offset;
+    private static int proudctsperaisle_productusagelatestbuydate_offset;
+    private static int productsaperaisle_productusagemincost_offset;
+    private static int productsperaisle_productusageorder_offset;
 
-    public ProductsPerAisleCursorAdapter(Context context, Cursor cursor, int flags) {
+    ProductsPerAisleCursorAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, FLAG_REGISTER_CONTENT_OBSERVER);
         setProductsPerAisleOffsets(cursor);
     }
@@ -100,7 +100,7 @@ public class ProductsPerAisleCursorAdapter extends CursorAdapter implements Seri
     }
 
     // Set ProductsPerAisle query offsets into returned cursor, if not already set
-    public void setProductsPerAisleOffsets(Cursor cursor) {
+    private void setProductsPerAisleOffsets(Cursor cursor) {
         if(productsperaisle_productid_offset != -1) {
             return;
         }

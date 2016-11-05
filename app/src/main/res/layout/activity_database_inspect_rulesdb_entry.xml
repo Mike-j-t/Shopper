@@ -12,38 +12,38 @@
             android:id="@+id/adire_rulesdb_id"
             android:layout_width="@dimen/standard_idref_width"
             android:layout_height="@dimen/standard_listview_row_height"
-            android:singleLine="true"
-            android:textColor="@color/colorRequiredLabel"/>
+            android:textColor="@color/colorRequiredLabel"
+            android:maxLines="1" />
         <TextView
             android:id="@+id/adire_rulesdb_rulename"
             android:layout_width="200dp"
             android:layout_height="@dimen/standard_listview_row_height"
-            android:singleLine="true" />
+            android:maxLines="1" />
         <TextView
             android:id="@+id/adire_rulesdb_ruletype"
             android:layout_width="@dimen/standard_idref_width"
             android:layout_height="@dimen/standard_listview_row_height"
-            android:singleLine="true"/>
+            android:maxLines="1" />
         <TextView
             android:id="@+id/adire_rulesdb_rulepromtflag"
             android:layout_width="@dimen/standard_idref_width"
             android:layout_height="@dimen/standard_listview_row_height"
-            android:singleLine="true"/>
+            android:maxLines="1" />
         <TextView
             android:id="@+id/adire_rulesdb_ruleperiod"
             android:layout_width="@dimen/standard_idref_width"
             android:layout_height="@dimen/standard_listview_row_height"
-            android:singleLine="true"/>
+            android:maxLines="1" />
         <TextView
             android:id="@+id/adire_rulesdb_rulemultiplier"
             android:layout_width="@dimen/standard_idref_width"
             android:layout_height="@dimen/standard_listview_row_height"
-            android:singleLine="true"/>
+            android:maxLines="1" />
         <TextView
             android:id="@+id/adire_rulesdb_ruleactiveon"
             android:layout_width="200dp"
             android:layout_height="@dimen/standard_listview_row_height"
-            android:singleLine="true"/>
+            android:maxLines="1" />
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
@@ -54,28 +54,28 @@
             android:layout_width="@dimen/standard_idref_width"
             android:layout_height="@dimen/standard_listview_row_height"
             android:textColor="@color/colorRequiredLabel"
-            android:singleLine="true"/>
+            android:maxLines="1" />
         <TextView
             android:id="@+id/adire_rulesdb_ruleaisleref"
             android:layout_width="@dimen/standard_idref_width"
             android:layout_height="@dimen/standard_listview_row_height"
             android:textColor="@color/colorRequiredLabel"
-            android:singleLine="true"/>
+            android:maxLines="1" />
         <TextView
             android:id="@+id/adire_rulesdb_ruleuses"
             android:layout_width="@dimen/standard_idref_width"
             android:layout_height="@dimen/standard_listview_row_height"
-            android:singleLine="true"/>
+            android:maxLines="1" />
         <TextView
             android:id="@+id/adire_rulesdb_mincost"
             android:layout_width="@dimen/standard_realnumb_width"
             android:layout_height="@dimen/standard_listview_row_height"
-            android:singleLine="true"/>
+            android:maxLines="1" />
         <TextView
             android:id="@+id/adire_rulesdb_maxcost"
             android:layout_width="@dimen/standard_realnumb_width"
             android:layout_height="@dimen/standard_listview_row_height"
-            android:singleLine="true"/>
+            android:maxLines="1" />
     </LinearLayout>
 
 </LinearLayout>

@@ -10,7 +10,7 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 /**
- * Created by Mike092015 on 17/02/2016.
+ *
  */
 public class Database_Inspector_ProductsDB_Adadpter extends CursorAdapter {
 

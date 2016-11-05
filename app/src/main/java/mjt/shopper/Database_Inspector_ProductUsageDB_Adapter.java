@@ -13,7 +13,7 @@ import android.text.format.DateFormat;
 import java.text.NumberFormat;
 
 /**
- * Created by Mike092015 on 17/02/2016.
+ *
  */
 public class Database_Inspector_ProductUsageDB_Adapter extends CursorAdapter{
 
