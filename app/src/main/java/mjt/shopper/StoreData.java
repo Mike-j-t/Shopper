@@ -10,7 +10,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * StoreData is a Class for Storing and retrieving data
@@ -74,7 +77,7 @@ import java.util.ArrayList;
  *  String = obj.getErrorMessages()
  *      Returns a string list the current error messages, 1 per line.
  */
-public class StoreData {
+class StoreData {
 
     private String directory; //Note built internally and includes subdirectory
     private String subdirectory;
@@ -89,10 +92,10 @@ public class StoreData {
 
     // Need to be aware of the API
     public static final int API_VERSION = Build.VERSION.SDK_INT;
-    public static final long UNMOUNTED = 1;
-    public static final long FILEIOERR = 2;
-    public static final long READERR = 4;
-    public static final String NEWLINE = "\r\n";
+    private static final long UNMOUNTED = 1;
+    private static final long FILEIOERR = 2;
+    private static final long READERR = 4;
+    private static final String NEWLINE = "\r\n";
 
     /**
      * Sole Constructor for a StoreData object
@@ -225,17 +228,6 @@ public class StoreData {
         }
         if(direxists) {
             refreshOtherFilesInDirectory();
-            /**
-            File[] dirlist = new File[]{};
-            dirlist = dir.listFiles();
-            if ((dirlist.length) > 0) {
-                for (int i = 0; i < dirlist.length; i++) {
-                    if (!(dirlist[i].getName().equals(this.filename))) {
-                        otherfilesindirectory.add(dirlist[i]);
-                    }
-                }
-            }
-             **/
         }
 
         // File level
@@ -267,6 +259,13 @@ public class StoreData {
         File dir = new File(directory);
         File[] dirlist = dir.listFiles();
         if((dirlist.length) > 0) {
+            // Sort the list
+            Arrays.sort(dirlist, new Comparator<File>() {
+                @Override
+                public int compare(File object1, File object2) {
+                    return object1.getName().compareTo(object2.getName());
+                }
+            });
             otherfilesindirectory.clear();
             for (File aDirlist : dirlist) {
                 if (!(aDirlist.getName().equals(this.filename))) {
@@ -361,10 +360,7 @@ public class StoreData {
      * @return true if OK else false
      */
     public boolean isOK() {
-        if (errorcode != 0 || !mounted || inerror) {
-            return false;
-        }
-        return  true;
+        return !(errorcode != 0 || !mounted || inerror);
     }
 
     /**
@@ -376,10 +372,7 @@ public class StoreData {
     }
 
     public boolean isOKandExists() {
-        if(this.isOK() && this.fileexists) {
-            return true;
-        }
-        return false;
+        return this.isOK() && this.fileexists;
     }
 
     /**

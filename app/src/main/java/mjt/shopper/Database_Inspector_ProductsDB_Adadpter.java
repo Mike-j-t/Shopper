@@ -12,7 +12,7 @@ import android.widget.TextView;
 /**
  *
  */
-public class Database_Inspector_ProductsDB_Adadpter extends CursorAdapter {
+class Database_Inspector_ProductsDB_Adadpter extends CursorAdapter {
 
     //==============================================================================================
     // Cursor Offsets.
@@ -27,12 +27,12 @@ public class Database_Inspector_ProductsDB_Adadpter extends CursorAdapter {
 
     // Variables to store products table offsets as obtained via the defined column names by
     // call to setProductsOffsets (products_productid_offset set -1 to act as notdone flag )
-    public static int products_productid_offset = -1;
-    public static int products_productname_offset;
-    public static int products_productorder_offset;
-    public static int products_productaisleref_offset;
-    public static int products_productuses_offset;
-    public static int products_productnotes_offset;
+    private static int products_productid_offset = -1;
+    private static int products_productname_offset;
+    private static int products_productorder_offset;
+    private static int products_productaisleref_offset;
+    private static int products_productuses_offset;
+    private static int products_productnotes_offset;
 
     public Database_Inspector_ProductsDB_Adadpter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
@@ -76,7 +76,7 @@ public class Database_Inspector_ProductsDB_Adadpter extends CursorAdapter {
     }
 
     // Set Products Table query offsets into returned cursor, if not already set
-    public void setProductsOffsets(Cursor cursor) {
+    private void setProductsOffsets(Cursor cursor) {
         if(products_productid_offset != -1) {
             return;
         }

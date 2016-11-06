@@ -23,16 +23,16 @@ import android.widget.ListView;
  */
 public class ProductListByCursorActivity extends AppCompatActivity {
     private final static String THIS_ACTIVITY = "ProductListByCursorActivity";
-    final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null, null, 1);
+    private final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null, null, 1);
 
-    public final static int RESUMESTATE_NOTHING = 0;
-    public final static int RESUMESTATE_PRODUCTADD = 1;
-    public final static int RESUMESTATE_PRODUCTUPDATE = 2;
-    public final static int RESUMESTATE_PRODUCTDELETE = 2;
-    public int resume_state = RESUMESTATE_NOTHING;
-    SharedPreferences sp;
-    public boolean devmode;
-    public boolean helpoffmode;
+    private final static int RESUMESTATE_NOTHING = 0;
+    private final static int RESUMESTATE_PRODUCTADD = 1;
+    private final static int RESUMESTATE_PRODUCTUPDATE = 2;
+    private final static int RESUMESTATE_PRODUCTDELETE = 2;
+    private int resume_state = RESUMESTATE_NOTHING;
+    private SharedPreferences sp;
+    private boolean devmode;
+    private boolean helpoffmode;
 
     //==============================================================================================
     // Cursor Offsets.
@@ -42,24 +42,24 @@ public class ProductListByCursorActivity extends AppCompatActivity {
     // Note! column use changes may still be required if adding or deleting columns from tables or
     //     queries.
 
-    public static int products_productid_offset = -1;
-    public static int products_productname_offset;
-    public static int products_productorder_offset;
-    public static int products_productaisleref_offset;
-    public static int products_productuses_offset;
-    public static int products_productnotes_offset;
+    private static int products_productid_offset = -1;
+    private static int products_productname_offset;
+    private static int products_productorder_offset;
+    private static int products_productaisleref_offset;
+    private static int products_productuses_offset;
+    private static int products_productnotes_offset;
 
-    public ListView productlistview;
-    public EditText productselectioninput;
-    public Context productlistview_context;
-    public ProductsCursorAdapter currentpca;
-    public Cursor productlist_csr;
-    public long productid;
-    public String productname;
+    private ListView productlistview;
+    private EditText productselectioninput;
+    private Context productlistview_context;
+    private ProductsCursorAdapter currentpca;
+    private Cursor productlist_csr;
+    private long productid;
+    private String productname;
     public String productnotes;
-    public LinearLayout productlisthelplayout;
-    public String productslistsortorder = Constants.PRODUCTLISTORDER_BY_PRODUCT;
-    public String productselectionstr = "";
+    private LinearLayout productlisthelplayout;
+    private String productslistsortorder = Constants.PRODUCTLISTORDER_BY_PRODUCT;
+    private String productselectionstr = "";
 
     protected void onResume() {
         super.onResume();
@@ -232,7 +232,7 @@ public class ProductListByCursorActivity extends AppCompatActivity {
     }
 
     // Set Products Table query offsets into returned cursor, if not already set
-    public void setProductsOffsets(Cursor cursor) {
+    private void setProductsOffsets(Cursor cursor) {
         if(products_productid_offset != -1) {
             return;
         }

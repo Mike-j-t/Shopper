@@ -28,8 +28,9 @@ import java.util.Date;
 // Button handling as per xml then handle selection of options
 
 //TODO Add ability to suggest Rule modifications???
-//TODO Help display for Rule Suggestion and for Enabling disabled rules
+//TODO suss out dialog sizing for Shopping list adjust
 
+@SuppressWarnings("FieldCanBeLocal")
 public class MainActivity extends AppCompatActivity {
 
     // Activity/Shared preferences variables
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private int rulesuggestionfrequency = 30;
 
     // Data/DB variables (generally in unset state)
-    public ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
+    private ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
     private int shopcount;
     private int aislecount;
     private int productcount;
@@ -67,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView dbdatahelpbutton;
     private TextView dbschemabutton;
     private TextView dbschemahelpbutton;
-
     private MenuItem reviewdisabledrulesuggestions;
 
     //==============================================================================================
@@ -536,7 +536,7 @@ public class MainActivity extends AppCompatActivity {
      * @param dbName The database name to check
      * @return true if the database file exists, false if not
      */
-    public boolean doesDatabaseExist(Context context, String dbName) {
+    private boolean doesDatabaseExist(Context context, String dbName) {
         String THIS_METHOD = "doesDatabaseExist";
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",
                 THIS_ACTIVITY,THIS_METHOD,developermode);

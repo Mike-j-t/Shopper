@@ -28,37 +28,44 @@ public class Database_Inspector_Activity extends AppCompatActivity {
         final Cursor shoplist_csr = shopperdb.getAllRowsFromTable(ShopperDBHelper.SHOPLIST_TABLE_NAME);
         final Cursor appvalues_csr = shopperdb.getAllRowsFromTable(ShopperDBHelper.VALUES_TABLE_NAME);
 
-        ((TextView) findViewById(R.id.adi_shopsdb_rowcount)).setText("Rows= " + shopperdb.numberOfShops());
+        String suppresconcat = "Rows= " + shopperdb.numberOfShops();
+        ((TextView) findViewById(R.id.adi_shopsdb_rowcount)).setText(suppresconcat);
         ListView shops_lv = (ListView) findViewById(R.id.adi_shopsdb_tablelist);
         Database_Inspector_ShopsDB_Adapter shopsdb_adapter = new Database_Inspector_ShopsDB_Adapter(this,shops_csr,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         shops_lv.setAdapter(shopsdb_adapter);
 
-        ((TextView) findViewById(R.id.adi_aislesdb_rowcount)).setText("Rows= " + shopperdb.numberOfAisles());
+        suppresconcat = "Rows= " + shopperdb.numberOfAisles();
+        ((TextView) findViewById(R.id.adi_aislesdb_rowcount)).setText(suppresconcat);
         ListView aisles_lv = (ListView) findViewById(R.id.adi_aislesdb_tablelist);
         Database_Inspector_AislesDB_Adapter aislesdb_adapter = new Database_Inspector_AislesDB_Adapter(this, aisles_csr,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         aisles_lv.setAdapter(aislesdb_adapter);
 
-        ((TextView) findViewById(R.id.adi_productsdb_rowcount)).setText("Rows= " + shopperdb.numberOfProducts());
+        suppresconcat = "Rows= " + shopperdb.numberOfProducts();
+        ((TextView) findViewById(R.id.adi_productsdb_rowcount)).setText(suppresconcat);
         ListView products_lv = (ListView) findViewById(R.id.adi_productsdb_tablelist);
         Database_Inspector_ProductsDB_Adadpter products_adapter = new Database_Inspector_ProductsDB_Adadpter(this, products_csr, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         products_lv.setAdapter(products_adapter);
 
-        ((TextView) findViewById(R.id.adi_productusagedb_rowcount)).setText("Rows= " + shopperdb.numberOfProductUsages());
+        suppresconcat = "Rows= " + shopperdb.numberOfProductUsages();
+        ((TextView) findViewById(R.id.adi_productusagedb_rowcount)).setText(suppresconcat);
         ListView productusage_lv = (ListView) findViewById(R.id.adi_productusagedb_tablelist);
         Database_Inspector_ProductUsageDB_Adapter productusage_adapter = new Database_Inspector_ProductUsageDB_Adapter(this, productusage_csr, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         productusage_lv.setAdapter(productusage_adapter);
 
-        ((TextView) findViewById(R.id.adi_rulesdb_rowcount)).setText("Rows= " + shopperdb.numberOfRules());
+        suppresconcat = "Rows= " + shopperdb.numberOfRules();
+        ((TextView) findViewById(R.id.adi_rulesdb_rowcount)).setText(suppresconcat);
         ListView rules_lv = (ListView) findViewById(R.id.adi_rulesdb_tablelist);
         Database_Inspector_RulesDB_Adapter rules_adapter = new Database_Inspector_RulesDB_Adapter(this,rules_csr,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         rules_lv.setAdapter(rules_adapter);
 
-        ((TextView) findViewById(R.id.adi_shoplistdb_rowcount)).setText("Rows= " + shopperdb.numberofShoppingListEntries());
+        suppresconcat = "Rows= " + shopperdb.numberofShoppingListEntries();
+        ((TextView) findViewById(R.id.adi_shoplistdb_rowcount)).setText(suppresconcat);
         ListView shoplist_lv = (ListView) findViewById(R.id.adi_shoplistdb_tablelist);
         Database_Inspector_ShopListDB_Adapter shoplist_adapter = new Database_Inspector_ShopListDB_Adapter(this,shoplist_csr,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         shoplist_lv.setAdapter(shoplist_adapter);
 
-        ((TextView) findViewById(R.id.adi_appvaluesdb_rowcount)).setText("Rows= " + shopperdb.numberofAppValues());
+        suppresconcat = "Rows= " + shopperdb.numberofAppValues();
+        ((TextView) findViewById(R.id.adi_appvaluesdb_rowcount)).setText(suppresconcat);
         ListView appvalues_lv = (ListView) findViewById(R.id.adi_appvaluesdb_tablelist);
         Database_Inspector_ValuesDB_Adapter appvalues_adapter = new Database_Inspector_ValuesDB_Adapter(this,appvalues_csr,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         appvalues_lv.setAdapter(appvalues_adapter);
@@ -74,7 +81,7 @@ public class Database_Inspector_Activity extends AppCompatActivity {
     public void showshoplist(View view) { flipviews(ShopperDBHelper.SHOPLIST_TABLE_NAME);}
     public void showappvalues(View view) { flipviews(ShopperDBHelper.VALUES_TABLE_NAME); }
 
-    public void flipviews(String viewtosee) {
+    private void flipviews(String viewtosee) {
 
         // Turn all off
         findViewById(R.id.adi_stores).setVisibility(View.GONE);

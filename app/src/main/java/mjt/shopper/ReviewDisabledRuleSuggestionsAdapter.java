@@ -27,6 +27,7 @@ import android.widget.TextView;
  *
  *  See getDisabledRules() method in ShopperDBHelper for generation of the cursor
  */
+@SuppressWarnings("FieldCanBeLocal")
 class ReviewDisabledRuleSuggestionsAdapter extends CursorAdapter {
 
     private Cursor cursor;

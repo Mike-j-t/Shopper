@@ -1,5 +1,6 @@
 package mjt.shopper;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -7,11 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +25,7 @@ class DataHandlingFileListAdapter extends ArrayAdapter<File> {
 
     private TextView tv_filename;
     private TextView tv_filemod;
+    @SuppressLint("SimpleDateFormat")private SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd yyyy 'at' HH:mm");
 
     DataHandlingFileListAdapter(Activity context, int layout, ArrayList<File> flst) {
         super(context, layout, flst);
@@ -37,7 +39,7 @@ class DataHandlingFileListAdapter extends ArrayAdapter<File> {
 
     // This is the view used for the dropdown entries
     @Override
-    public View getDropDownView(int position, View convertview, ViewGroup parent) {
+    public View getDropDownView(int position, final View convertview, ViewGroup parent) {
         View v = convertview;
         if (v == null) {
             v = LayoutInflater
@@ -53,7 +55,18 @@ class DataHandlingFileListAdapter extends ArrayAdapter<File> {
         tv_filename = (TextView) v.findViewById(R.id.dhfl_filename);
         tv_filemod = (TextView) v.findViewById(R.id.dhfl_lastmodified);
         tv_filename.setText(flentry.getName());
-        tv_filemod.setText("ABT");
+        tv_filemod.setText(sdf.format(flentry.lastModified()));
+
+
+        /*
+        v.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(context,"Delete File Here???",Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+        */
         return v;
     }
 
@@ -61,10 +74,6 @@ class DataHandlingFileListAdapter extends ArrayAdapter<File> {
     //This is the view used for the displayed/selected entry
     @Override
     public View getView(int position, View convertview, ViewGroup parent) {
-        Date date = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd:HH.mm");
-
-
         View v = convertview;
         if(v == null) {
             v = LayoutInflater
@@ -79,7 +88,7 @@ class DataHandlingFileListAdapter extends ArrayAdapter<File> {
             tv_filemod = (TextView) v.findViewById(R.id.dhfl_lastmodified);
 
             tv_filename.setText(flentry.getName());
-            tv_filemod.setText("TBA");
+            tv_filemod.setText(sdf.format(flentry.lastModified()));
         }
         return  v;
     }

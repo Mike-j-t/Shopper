@@ -12,6 +12,7 @@ import android.widget.TextView;
 /**
  *
  */
+@SuppressWarnings("FieldCanBeLocal")
 class RuleSuggestionAdapter extends CursorAdapter {
 
 
@@ -114,7 +115,7 @@ class RuleSuggestionAdapter extends CursorAdapter {
                         false);
     }
 
-    public void setRuleSuggestionListOffets(Cursor cursor) {
+    private void setRuleSuggestionListOffets(Cursor cursor) {
 
         // Already determined offsets?, if so return
         if(rsl_calc_id_offset != -1) {

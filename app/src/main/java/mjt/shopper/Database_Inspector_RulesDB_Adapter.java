@@ -12,6 +12,7 @@ import android.widget.TextView;
 /**
  *
  */
+@SuppressWarnings("FieldCanBeLocal")
 class Database_Inspector_RulesDB_Adapter extends CursorAdapter {
 
     //==============================================================================================

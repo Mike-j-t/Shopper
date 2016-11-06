@@ -13,6 +13,7 @@ import android.widget.TextView;
 /**
  *
  */
+@SuppressWarnings("FieldCanBeLocal")
 class ShopListSpinnerAdapter extends CursorAdapter{
 
     //==============================================================================================

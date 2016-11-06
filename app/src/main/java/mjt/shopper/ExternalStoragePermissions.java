@@ -15,7 +15,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 
-public class ExternalStoragePermissions {
+class ExternalStoragePermissions {
 
     public int API_VERSION = Build.VERSION.SDK_INT;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;

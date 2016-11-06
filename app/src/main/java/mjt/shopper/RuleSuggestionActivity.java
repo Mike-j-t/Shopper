@@ -8,28 +8,30 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CursorAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 /**
  *
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class RuleSuggestionActivity extends AppCompatActivity {
 
-    public final static int RESUMESTATE_NOTHING = 0;
-    public final static int RESUMMESTATE_ADJUSTED = 1;
-    public static int resume_state = RESUMESTATE_NOTHING;
-    public final static String THIS_ACTIVITY = "RuleSuggestionActivity";
+    private final static int RESUMESTATE_NOTHING = 0;
+    private final static int RESUMMESTATE_ADJUSTED = 1;
+    private static int resume_state = RESUMESTATE_NOTHING;
+    private final static String THIS_ACTIVITY = "RuleSuggestionActivity";
 
-    public boolean devmode;
-    public SharedPreferences sp;
-    public boolean helpoffmode;
+    private boolean devmode;
+    private SharedPreferences sp;
+    private boolean helpoffmode;
+    private boolean forced;
 
     private ShopperDBHelper db;
     private Cursor csr;
-    private TextView done_button;
     private ListView suggestedrulelist;
+    private LinearLayout helplayout;
     private RuleSuggestionAdapter rsa;
     private long nextrulesuggestion;
 
@@ -41,15 +43,23 @@ public class RuleSuggestionActivity extends AppCompatActivity {
                 THIS_ACTIVITY,"onCreate",true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rule_suggestion);
+        helplayout = (LinearLayout) this.findViewById(R.id.rulesuggestion_help_layout);
         Intent intent = getIntent();
 
-        done_button = (TextView) findViewById(R.id.rulesuggestion_done_button);
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         devmode = sp.getBoolean(getResources().getString(R.string.sharedpreferencekey_developermode),
                 false);
         helpoffmode = sp.getBoolean(getResources().getString(R.string.sharedpreferencekey_showhelpmode),
                 false);
         nextrulesuggestion = intent.getLongExtra(getResources().getString(R.string.intentkey_nextrulesuggestion),0);
+        forced  = intent.getBooleanExtra(getResources().getString(R.string.intentkey_rulesuggestionsforced),false);
+
+        // Enable/Disable help display according to user preferences
+        if(helpoffmode) {
+            helplayout.setVisibility(View.GONE);
+        } else {
+            helplayout.setVisibility(View.VISIBLE);
+        }
 
         db = new ShopperDBHelper(this,null,null,1);
         csr = db.getSuggestedRules();
@@ -71,7 +81,6 @@ public class RuleSuggestionActivity extends AppCompatActivity {
             default:
                 break;
         }
-
     }
 
     @Override
@@ -95,8 +104,11 @@ public class RuleSuggestionActivity extends AppCompatActivity {
                         THIS_ACTIVITY,
                         "done button",
                         devmode);
-                db.alterLongValue(Constants.LASTRULESUGGESTION,
-                        nextrulesuggestion);
+                // Only update LASTRULESUGGESTION Date if force hasn't been used
+                if (!forced) {
+                    db.alterLongValue(Constants.LASTRULESUGGESTION,
+                            nextrulesuggestion);
+                }
                 csr.close();
                 db.close();
                 this.finish();
@@ -109,7 +121,6 @@ public class RuleSuggestionActivity extends AppCompatActivity {
                 THIS_ACTIVITY,
                 "Add Button",false);
         Integer tag = (Integer) view.getTag();
-        int csrpos = csr.getPosition();
         csr.moveToPosition(tag);
         Toast.makeText(this,"Add Button Clicked tag=" + tag.toString() + ")",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this,RuleAddEdit.class);
@@ -155,7 +166,6 @@ public class RuleSuggestionActivity extends AppCompatActivity {
                 THIS_ACTIVITY,
                 "Disable Button",false);
         Integer tag = (Integer) view.getTag();
-        int csrpos = csr.getPosition();
         csr.moveToPosition(tag);
         db.disableRule(csr.getLong(csr.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_PRODUCTREF)),
                 csr.getLong(csr.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_AISLEREF)));

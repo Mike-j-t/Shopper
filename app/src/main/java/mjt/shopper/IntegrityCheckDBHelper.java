@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  *  Note! Dependant upon the main DB as it's name is used as the suffix of the
  *  IC database name i.e. IC is the prefix, first part of the database name.
  */
+@SuppressWarnings("FieldCanBeLocal")
 class IntegrityCheckDBHelper extends SQLiteOpenHelper implements DatabaseErrorHandler{
 
     private static final String DATABASE_NAME = "IC"+ShopperDBHelper.DATABASE_NAME;
@@ -47,7 +48,6 @@ class IntegrityCheckDBHelper extends SQLiteOpenHelper implements DatabaseErrorHa
         databasestate = DATABASE_CORRUPTED;
     }
     public boolean isDatabaseCouurpted() {
-        if(databasestate != 0) return false;
-        return true;
+        return databasestate == 0;
     }
 }

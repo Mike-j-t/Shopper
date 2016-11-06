@@ -50,9 +50,9 @@ class Emsg {
 }
 
 class mjtUtils {
-    public final static int LOG_ERRORMSG = Constants.LOGTYPE_ERROR;
-    public final static int LOG_WARNINGMSG = Constants.LOGTYPE_WARNING;
-    public final static int LOG_DEBUGMSG = Constants.LOGTYPE_DEBUG;
+    private final static int LOG_ERRORMSG = Constants.LOGTYPE_ERROR;
+    private final static int LOG_WARNINGMSG = Constants.LOGTYPE_WARNING;
+    private final static int LOG_DEBUGMSG = Constants.LOGTYPE_DEBUG;
     public final static int LOG_INFORMATIONMSG = Constants.LOGTYPE_INFORMATIONAL;
 
 

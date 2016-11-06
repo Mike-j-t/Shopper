@@ -32,69 +32,69 @@ public class RuleAddEditList extends AppCompatActivity {
     // Note! column use changes may still be required if adding or deleting columns from tables or
     //     queries.
 
-    public static int purchasableproducts_productusageaisleref_offset = -1; //**
-    public static int purchasableproducts_productusageproductref_offset;
-    public static int purchasableproducts_productusagecost_offset;
-    public static int purchasableproducts_productid_offset; //**
-    public static int purchasableproducts_productname_offset;
-    public static int purchasableproducts_aisleid_offset; //**
-    public static int purchasableproducts_aislename_offset;
-    public static int purchasableproducts_shopname_offset;
-    public static int purchasableproducts_shopcity_offset;
-    public static int purchasableproducts_shopstreet_offset;
+    private static int purchasableproducts_productusageaisleref_offset = -1; //**
+    private static int purchasableproducts_productusageproductref_offset;
+    private static int purchasableproducts_productusagecost_offset;
+    private static int purchasableproducts_productid_offset; //**
+    private static int purchasableproducts_productname_offset;
+    private static int purchasableproducts_aisleid_offset; //**
+    private static int purchasableproducts_aislename_offset;
+    private static int purchasableproducts_shopname_offset;
+    private static int purchasableproducts_shopcity_offset;
+    private static int purchasableproducts_shopstreet_offset;
 
-    public static int ruleslist_ruleid_offset = -1;
-    public static int ruleslist_rulename_offset;
-    public static int rulelist_ruletype_offset;
-    public static int rulelist_rulepromptflag_offset;
-    public static int rulelist_ruleperiod_offset;
-    public static int rulelist_rulemultiplier_offset;
-    public static int rulelist_ruleactiveon_offset;
-    public static int rulelist_ruleproductref_offset;
-    public static int rulelist_ruleaisleref_offset;
-    public static int rulelist_ruleuses_offset;
-    public static int rulelist_rulenumbertoget_offset;
-    public static int rulelist_rulemincost_offset;
-    public static int rulelist_rulemaxcost_offset;
-    public static int rulelist_productname_offset;
-    public static int rulelist_aislename_offset;
-    public static int rulelist_aisleshopref_offset;
-    public static int rulelist_shopname_offset;
-    public static int rulelist_shopcity_offset;
-    public static int rulelist_shopstreet_offset;
-    public static int rulelist_productusagecost_offset;
+    private static int ruleslist_ruleid_offset = -1;
+    private static int ruleslist_rulename_offset;
+    private static int rulelist_ruletype_offset;
+    private static int rulelist_rulepromptflag_offset;
+    private static int rulelist_ruleperiod_offset;
+    private static int rulelist_rulemultiplier_offset;
+    private static int rulelist_ruleactiveon_offset;
+    private static int rulelist_ruleproductref_offset;
+    private static int rulelist_ruleaisleref_offset;
+    private static int rulelist_ruleuses_offset;
+    private static int rulelist_rulenumbertoget_offset;
+    private static int rulelist_rulemincost_offset;
+    private static int rulelist_rulemaxcost_offset;
+    private static int rulelist_productname_offset;
+    private static int rulelist_aislename_offset;
+    private static int rulelist_aisleshopref_offset;
+    private static int rulelist_shopname_offset;
+    private static int rulelist_shopcity_offset;
+    private static int rulelist_shopstreet_offset;
+    private static int rulelist_productusagecost_offset;
 
-    public final static int RESUMESTATE_NOTHING = 0;
-    public final static int RESUMESTATE_ADD = 1;
-    public final static int RESUMESTATE_UPDATE = 2;
+    private final static int RESUMESTATE_NOTHING = 0;
+    private final static int RESUMESTATE_ADD = 1;
+    private final static int RESUMESTATE_UPDATE = 2;
     public final static int RESUMESTATE_DELETE = 3;
-    public int resume_state = RESUMESTATE_NOTHING;
-    public  boolean devmode;
-    public boolean helpoffmode;
-    public SharedPreferences sp;
+    private int resume_state = RESUMESTATE_NOTHING;
+    private boolean devmode;
+    private boolean helpoffmode;
+    private SharedPreferences sp;
     private final static String THIS_ACTIVITY = "RuleAddEditList";
 
     private final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
 
-    public LinearLayout help_layout;
-    public ListView potentialruleslist;
-    public Cursor potentialrulescursor;
-    public PurchaseableProductsAdapter potentialruleslistadapter;
-    public String potentialrulesproductsearcharg = "";
-    public String potentialrulesstoresearcharg = "";
-    public EditText potentialrulesproductinput;
-    public EditText potentialrulesstoreinput;
-    public ListView currentruleslist;
-    public Cursor currentrulescursor;
-    public RuleListAdapter currentruleslistadapter;
+    private LinearLayout help_layout;
+    private ListView potentialruleslist;
+    private Cursor potentialrulescursor;
+    private PurchaseableProductsAdapter potentialruleslistadapter;
+    private String potentialrulesproductsearcharg = "";
+    private String potentialrulesstoresearcharg = "";
+    private EditText potentialrulesproductinput;
+    private EditText potentialrulesstoreinput;
+    private ListView currentruleslist;
+    private Cursor currentrulescursor;
+    private RuleListAdapter currentruleslistadapter;
     public long currentproductid = -1;
     public String currentproductname = "";
-    public long currentaisleid = -1;
-    public String currentaislename = "";
+    private long currentaisleid = -1;
+    private String currentaislename = "";
     public long currentstoreid = -1;
-    public String currentstorename = "";
-    public String potentialruleslistsortorder = Constants.PURCHASABLEPRODUCTSLISTORDER_BY_PRODUCT;
-    public String rulelistsortorder = Constants.RULELISTORDER_BY_RULE;
+    private String currentstorename = "";
+    private String potentialruleslistsortorder = Constants.PURCHASABLEPRODUCTSLISTORDER_BY_PRODUCT;
+    private String rulelistsortorder = Constants.RULELISTORDER_BY_RULE;
 
 
     protected void  onCreate(Bundle savedInstanceState) {
@@ -339,7 +339,7 @@ public class RuleAddEditList extends AppCompatActivity {
         currentruleslistadapter.swapCursor(currentrulescursor);
     }
 
-    public void setPurchasableProductsOffsets(Cursor cursor) {
+    private void setPurchasableProductsOffsets(Cursor cursor) {
         if(purchasableproducts_productusageaisleref_offset != -1) {
             return;
         }
@@ -355,7 +355,7 @@ public class RuleAddEditList extends AppCompatActivity {
         purchasableproducts_shopstreet_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
     }
 
-    public void setRuleListOffsfets(Cursor cursor) {
+    private void setRuleListOffsfets(Cursor cursor) {
         if(ruleslist_ruleid_offset != -1) {
             return;
         }

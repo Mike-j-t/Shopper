@@ -45,45 +45,45 @@ import android.widget.Toast;
  */
 public class AddProductToShopActivity extends AppCompatActivity {
     private final static String THIS_ACTIVITY = "AddProductToShopActivity";
-    public boolean devmode;
-    public boolean helpoffmode = false;
+    private boolean devmode;
+    private boolean helpoffmode = false;
     private final ShopperDBHelper shopperdb = new ShopperDBHelper(this, null, null, 1);
-    public final static int RESUMESTATE_NOTHING = 0;
-    public final static int RESUMESTATE_PRODUCTUSAGEEDIT = 1;
-    public final static String[] RESUMESTATE_DESCRIPTIONS = {"Nothing","ProductUsageEdit"};
-    public int resume_state = RESUMESTATE_NOTHING;
+    private final static int RESUMESTATE_NOTHING = 0;
+    private final static int RESUMESTATE_PRODUCTUSAGEEDIT = 1;
+    private final static String[] RESUMESTATE_DESCRIPTIONS = {"Nothing","ProductUsageEdit"};
+    private int resume_state = RESUMESTATE_NOTHING;
 
-    public long currentshopid = -1;
-    public LinearLayout productusageedit_helplayout;
-    public Spinner current_shoplistspinner;
-    public ShopListSpinnerAdapter current_shoplistspinneradapter;
-    public ShopsCursorAdapter current_shoplistcursoradapter;
-    public Cursor currentshoplistcursor;
+    private long currentshopid = -1;
+    private LinearLayout productusageedit_helplayout;
+    private Spinner current_shoplistspinner;
+    private ShopListSpinnerAdapter current_shoplistspinneradapter;
+    private ShopsCursorAdapter current_shoplistcursoradapter;
+    private Cursor currentshoplistcursor;
 
-    public long currentaisleid = -1;
-    public Spinner current_aislelistspinner;
-    public AisleListSpinnerAdapter current_aislelistspinneradapter;
-    public AislesCursorAdapter current_aislelistcursoradapater;
-    public Cursor currentaislelistcursor;
+    private long currentaisleid = -1;
+    private Spinner current_aislelistspinner;
+    private AisleListSpinnerAdapter current_aislelistspinneradapter;
+    private AislesCursorAdapter current_aislelistcursoradapater;
+    private Cursor currentaislelistcursor;
 
-    public long currentproductid = -1;
-    public Spinner current_productlistspinner;
-    public ProductListSpinnerAdapter current_productlistspinneradapter;
-    public ProductsCursorAdapter current_productscursoradapter;
-    public Cursor currentproductlistcursor;
+    private long currentproductid = -1;
+    private Spinner current_productlistspinner;
+    private ProductListSpinnerAdapter current_productlistspinneradapter;
+    private ProductsCursorAdapter current_productscursoradapter;
+    private Cursor currentproductlistcursor;
     
-    public long currentproductperaisleaisleid = -1;
-    public long currentproductperaisleproductid = -1;
-    public ListView current_productsperaislelistview;
-    public ProductsPerAisleCursorAdapter current_productsperaislecursoradapter;
-    public Cursor currentproductsperaisleecursor;
-    public String productsperaislesortorder = Constants.PRODUCTSPERAISLELISTORDER_BY_PRODUCT;
-    public String productselectionstr = "";
+    private long currentproductperaisleaisleid = -1;
+    private long currentproductperaisleproductid = -1;
+    private ListView current_productsperaislelistview;
+    private ProductsPerAisleCursorAdapter current_productsperaislecursoradapter;
+    private Cursor currentproductsperaisleecursor;
+    private String productsperaislesortorder = Constants.PRODUCTSPERAISLELISTORDER_BY_PRODUCT;
+    private String productselectionstr = "";
 
-    public EditText priceinput;
-    public EditText orderinput;
-    public EditText productselectioninput;
-    public TextView addbutton;
+    private EditText priceinput;
+    private EditText orderinput;
+    private EditText productselectioninput;
+    private TextView addbutton;
 
     //==============================================================================================
     // Cursor Offsets.
@@ -95,47 +95,47 @@ public class AddProductToShopActivity extends AppCompatActivity {
 
     // Variables to store shops table offsets as obtained via the defined column names by
     // call to setShopsOffsets (shops_shopid_offset set -1 to act as notdone flag )
-    public static int shops_shopid_offset = -1;
-    public static int shops_shopname_offset;
-    public static int shops_shoporder_offset;
-    public static int shops_shopstreet_offset;
-    public static int shops_shopcity_offset;
-    public static int shops_shopstate_offset;
-    public static int shops_shopphone_offset;
-    public static int shops_shopnotes_offset;
+    private static int shops_shopid_offset = -1;
+    private static int shops_shopname_offset;
+    private static int shops_shoporder_offset;
+    private static int shops_shopstreet_offset;
+    private static int shops_shopcity_offset;
+    private static int shops_shopstate_offset;
+    private static int shops_shopphone_offset;
+    private static int shops_shopnotes_offset;
 
     // Variables to store aisles table offsets as obtained via the defined column names by
     // call to setAislesOffsets (aisles_aisleid_offset set -1 to act as notdone flag )
-    public static int aisles_aisleid_offset = -1;
-    public static int aisles_aislename_offset;
-    public static int aisles_aisleorder_offset;
-    public static int aisles_aisleshopref_offset;
+    private static int aisles_aisleid_offset = -1;
+    private static int aisles_aislename_offset;
+    private static int aisles_aisleorder_offset;
+    private static int aisles_aisleshopref_offset;
 
     // Variables to store products table offsets as obtained via the defined column names by
     // call to setProductsOffsets (products_productid_offset set -1 to act as notdone flag )
-    public static int products_productid_offset = -1;
-    public static int products_productname_offset;
-    public static int products_productorder_offset;
-    public static int products_productaisleref_offset;
-    public static int products_productuses_offset;
-    public static int products_productnotes_offset;
+    private static int products_productid_offset = -1;
+    private static int products_productname_offset;
+    private static int products_productorder_offset;
+    private static int products_productaisleref_offset;
+    private static int products_productuses_offset;
+    private static int products_productnotes_offset;
 
     // Variables to store productsperaisle query offsets as obtained via the defined column names by
     // call to setProductsPerAisleOffsets (productsperaisle_productid_offset set -1 to act as notdone flag )
-    public static int productsperaisle_productid_offset = -1;
-    public static int productsperaisle_productname_offset;
-    public static int productsperaisle_productorder_offset;
-    public static int productsperaisle_productaisleref_offset;
-    public static int productsperaisle_productuses_offset;
-    public static int productsperaisle_productnotes_offset;
-    public static int productsperaisle_productusageaisleref_offset;
-    public static int productsperaisle_productusageproductref_offset;
-    public static int productsperaisle_productusagecost_offset;
-    public static int productsperaisle_productusagebuycount_offset;
-    public static int productsperaisle_productusagefirstbuydate_offset;
-    public static int proudctsperaisle_productusagelatestbuydate_offset;
-    public static int productsaperaisle_productusagemincost_offset;
-    public static int productsperaisle_productusageorder_offset;
+    private static int productsperaisle_productid_offset = -1;
+    private static int productsperaisle_productname_offset;
+    private static int productsperaisle_productorder_offset;
+    private static int productsperaisle_productaisleref_offset;
+    private static int productsperaisle_productuses_offset;
+    private static int productsperaisle_productnotes_offset;
+    private static int productsperaisle_productusageaisleref_offset;
+    private static int productsperaisle_productusageproductref_offset;
+    private static int productsperaisle_productusagecost_offset;
+    private static int productsperaisle_productusagebuycount_offset;
+    private static int productsperaisle_productusagefirstbuydate_offset;
+    private static int proudctsperaisle_productusagelatestbuydate_offset;
+    private static int productsaperaisle_productusagemincost_offset;
+    private static int productsperaisle_productusageorder_offset;
 
     protected void onResume() {
         super.onResume();
@@ -724,7 +724,7 @@ public class AddProductToShopActivity extends AppCompatActivity {
     }
 
     // Set Shops Table query offsets into returned cursor, if not already set
-    public void setShopsOffsets(Cursor cursor) {
+    private void setShopsOffsets(Cursor cursor) {
         // If not -1 then already done
         if(shops_shopid_offset != -1) {
             return;
@@ -740,7 +740,7 @@ public class AddProductToShopActivity extends AppCompatActivity {
     }
 
     // Set Aisles Table query offsets into returned cursor, if not already set
-    public void setAislesOffsets(Cursor cursor) {
+    private void setAislesOffsets(Cursor cursor) {
         if(aisles_aisleid_offset != -1) {
             return;
         }
@@ -751,7 +751,7 @@ public class AddProductToShopActivity extends AppCompatActivity {
     }
 
     // Set Products Table query offsets into returned cursor, if not already set
-    public void setProductsOffsets(Cursor cursor) {
+    private void setProductsOffsets(Cursor cursor) {
         if(products_productid_offset != -1) {
             return;
         }
@@ -764,7 +764,7 @@ public class AddProductToShopActivity extends AppCompatActivity {
     }
 
     // Set ProductsPerAisle query offsets into returned cursor, if not already set
-    public void setProductsPerAisleOffsets(Cursor cursor) {
+    private void setProductsPerAisleOffsets(Cursor cursor) {
         if(productsperaisle_productid_offset != -1) {
             return;
         }

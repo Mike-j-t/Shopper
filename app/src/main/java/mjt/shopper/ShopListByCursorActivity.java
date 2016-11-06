@@ -17,14 +17,14 @@ import android.widget.TextView;
 
 public class ShopListByCursorActivity extends AppCompatActivity {
 
-    public final static int RESUMESTATE_NOTHING = 0;
-    public final static int RESUMESTATE_SHOPADD = 1;
-    public final static int RESUMESTATE_SHOPSTOCK = 2;
-    public final static int RESUMESTATE_SHOPDELETE =3;
-    public final static int RESUMESTATE_SHOPUPDATE = 4;
-    public int resume_state = RESUMESTATE_NOTHING;
-    public boolean devmode;
-    public boolean helpoffmode;
+    private final static int RESUMESTATE_NOTHING = 0;
+    private final static int RESUMESTATE_SHOPADD = 1;
+    private final static int RESUMESTATE_SHOPSTOCK = 2;
+    private final static int RESUMESTATE_SHOPDELETE =3;
+    private final static int RESUMESTATE_SHOPUPDATE = 4;
+    private int resume_state = RESUMESTATE_NOTHING;
+    private boolean devmode;
+    private boolean helpoffmode;
 
     //==============================================================================================
     // Cursor Offsets.
@@ -36,28 +36,28 @@ public class ShopListByCursorActivity extends AppCompatActivity {
 
     // Variables to store shops table offsets as obtained via the defined column names by
     // call to setShopsOffsets (shops_shopid_offset set -1 to act as notdone flag )
-    public static int shops_shopid_offset = -1;
-    public static int shops_shopname_offset;
-    public static int shops_shoporder_offset;
-    public static int shops_shopstreet_offset;
-    public static int shops_shopcity_offset;
-    public static int shops_shopstate_offset;
-    public static int shops_shopphone_offset;
-    public static int shops_shopnotes_offset;
+    private static int shops_shopid_offset = -1;
+    private static int shops_shopname_offset;
+    private static int shops_shoporder_offset;
+    private static int shops_shopstreet_offset;
+    private static int shops_shopcity_offset;
+    private static int shops_shopstate_offset;
+    private static int shops_shopphone_offset;
+    private static int shops_shopnotes_offset;
 
-    public ShopsCursorAdapter currentsca;
-    public Cursor shoplistcursor;
-    public ListView shoplistlistview;
-    public LinearLayout shoplisthelplayout;
-    public TextView storelist_store_heading;
-    public TextView storelist_order_heading;
-    public TextView storelist_city_heading;
-    public TextView storelist_street_heading;
-    public TextView storelist_state_heading;
-    public TextView storelist_phone_heading;
-    public TextView storelist_notes_heading;
+    private ShopsCursorAdapter currentsca;
+    private Cursor shoplistcursor;
+    private ListView shoplistlistview;
+    private LinearLayout shoplisthelplayout;
+    private TextView storelist_store_heading;
+    private TextView storelist_order_heading;
+    private TextView storelist_city_heading;
+    private TextView storelist_street_heading;
+    private TextView storelist_state_heading;
+    private TextView storelist_phone_heading;
+    private TextView storelist_notes_heading;
 
-    public String storelistorder = Constants.STORELISTORDER_BY_STORE;
+    private String storelistorder = Constants.STORELISTORDER_BY_STORE;
 
     private final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
     private final static String THIS_ACTIVITY = "ShopListByCursorActivity";
@@ -304,7 +304,7 @@ public class ShopListByCursorActivity extends AppCompatActivity {
     public void aslbcDone(View view) { this.finish(); }
 
     // Set Shops Table query offsets into returned cursor, if not already set
-    public void setShopsOffsets(Cursor cursor) {
+    private void setShopsOffsets(Cursor cursor) {
         // If not -1 then already done
         if(shops_shopid_offset != -1) {
             return;

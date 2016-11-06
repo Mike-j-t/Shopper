@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 /**
  *
  */
+@SuppressWarnings("FieldCanBeLocal")
 class ShoppingListPromptedRulesAdapter extends CursorAdapter {
     //==============================================================================================
     // Cursor Offsets.
@@ -61,8 +62,8 @@ class ShoppingListPromptedRulesAdapter extends CursorAdapter {
         Context context = view.getContext();
         Button addbutton = (Button) view.findViewById(R.id.autoaddprompt_addbutton);
         Button skipbutton = (Button) view.findViewById(R.id.autoaddprompt_skipbutton);
-        addbutton.setTag(Integer.valueOf(position));
-        skipbutton.setTag(Integer.valueOf(position));
+        addbutton.setTag(position);
+        skipbutton.setTag(position);
 
         if (position % 2 == 0) {
             view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorlistviewroweven));

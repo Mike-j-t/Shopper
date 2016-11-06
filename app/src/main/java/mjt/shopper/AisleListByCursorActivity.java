@@ -20,28 +20,28 @@ import android.widget.Spinner;
  */
 public class AisleListByCursorActivity extends AppCompatActivity {
 
-    public final static int RESUMESTATE_NOTHING = 0;
-    public final static int RESUMESTATE_AISLEADD = 1;
-    public final static int RESUMESTATE_AISLESTOCK = 2;
-    public final static int RESUMESTATE_AISLEDELETE =3;
-    public final static int RESUMESTATE_AISLEUPDATE = 4;
-    public int resume_state = RESUMESTATE_NOTHING;
-    public boolean devmode;
-    public boolean helpoffmode;
+    private final static int RESUMESTATE_NOTHING = 0;
+    private final static int RESUMESTATE_AISLEADD = 1;
+    private final static int RESUMESTATE_AISLESTOCK = 2;
+    private final static int RESUMESTATE_AISLEDELETE =3;
+    private final static int RESUMESTATE_AISLEUPDATE = 4;
+    private int resume_state = RESUMESTATE_NOTHING;
+    private boolean devmode;
+    private boolean helpoffmode;
     public ShopsCursorAdapter currentsca;
-    public AislesCursorAdapter currentaca;
-    public ShopListSpinnerAdapter currentslspa;
-    public long currentshopid;
-    public LinearLayout aislelisthelplayout;
-    public SharedPreferences sp;
-    public String aislelistsortorder = Constants.AISLELISTORDER_BY_ORDER;
+    private AislesCursorAdapter currentaca;
+    private ShopListSpinnerAdapter currentslspa;
+    private long currentshopid;
+    private LinearLayout aislelisthelplayout;
+    private SharedPreferences sp;
+    private String aislelistsortorder = Constants.AISLELISTORDER_BY_ORDER;
 
     private final static String THIS_ACTIVITY = "AisleListByCursorActivity";
     private final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null, null, 1);
 
-    public ListView aisleslistview;
-    public Cursor aislelistcursor;
-    public Cursor shopspinnercursor;
+    private ListView aisleslistview;
+    private Cursor aislelistcursor;
+    private Cursor shopspinnercursor;
 
     private int shopid = 0;
 
@@ -55,21 +55,21 @@ public class AisleListByCursorActivity extends AppCompatActivity {
 
     // Variables to store shops table offsets as obtained via the defined column names by
     // call to setShopsOffsets (shops_shopid_offset set -1 to act as notdone flag )
-    public static int shops_shopid_offset = -1;
-    public static int shops_shopname_offset;
-    public static int shops_shoporder_offset;
-    public static int shops_shopstreet_offset;
-    public static int shops_shopcity_offset;
-    public static int shops_shopstate_offset;
-    public static int shops_shopphone_offset;
-    public static int shops_shopnotes_offset;
+    private static int shops_shopid_offset = -1;
+    private static int shops_shopname_offset;
+    private static int shops_shoporder_offset;
+    private static int shops_shopstreet_offset;
+    private static int shops_shopcity_offset;
+    private static int shops_shopstate_offset;
+    private static int shops_shopphone_offset;
+    private static int shops_shopnotes_offset;
 
     // Variables to store aisles table offsets as obtained via the defined column names by
     // call to setAislesOffsets (aisles_aisleid_offset set -1 to act as notdone flag )
-    public static int aisles_aisleid_offset = -1;
-    public static int aisles_aislename_offset;
-    public static int aisles_aisleorder_offset;
-    public static int aisles_aisleshopref_offset;
+    private static int aisles_aisleid_offset = -1;
+    private static int aisles_aislename_offset;
+    private static int aisles_aisleorder_offset;
+    private static int aisles_aisleshopref_offset;
 
     protected void onResume() {
         super.onResume();
@@ -283,7 +283,7 @@ public class AisleListByCursorActivity extends AppCompatActivity {
     public void aalbcdone(View view) { this.finish(); }
 
     // Set Shops Table query offsets into returned cursor, if not already set
-    public void setShopsOffsets(Cursor cursor) {
+    private void setShopsOffsets(Cursor cursor) {
         // If not -1 then already done
         if(shops_shopid_offset != -1) {
             return;
@@ -299,7 +299,7 @@ public class AisleListByCursorActivity extends AppCompatActivity {
     }
 
     // Set Aisles Table query offsets into returned cursor, if not already set
-    public void setAislesOffsets(Cursor cursor) {
+    private void setAislesOffsets(Cursor cursor) {
         if(aisles_aisleid_offset != -1) {
             return;
         }

@@ -1,5 +1,6 @@
 package mjt.shopper;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,19 +14,40 @@ import android.widget.Toast;
 import java.util.Date;
 
 /**
+ * Class to hold the checkRuleSuggestions method. This
+ * will invoke the RuleSuggestionsActivity if criteria is met.
+ *
+ * Criteria is dependent upon a number of factors
+ *
+ * Whether or not user preferences allow rule sugestion
+ * Whether or not Rule Suggestion is now due
+ * Whether or not Rule Suggestion has been forced (param to checkRuleSuggestions)
+ * Only if there are Rules to Suggest
  *
  */
+@SuppressLint("Registered")
 public class RuleSuggestion extends AppCompatActivity{
 
     private final static String LOGTAG = "RULESUGGEST";
-
-    //static private long lastrulesuggestion;
-    //static private boolean allowrulesuggestion;
-    //static private SharedPreferences sp;
     private final static String THIS_ACTIVITY = "RuleSuggestion";
 
+    /**
+     * Invoke RuleSuggestionActivity if criteria met.
+     *
+     * 1) User preference allowrulesuggest must be true
+     * 2) If Force is false then only if RuleSuggestion is now due
+     *      that is, if the current date is or is greater than the date
+     *      stored in the values table as the last date rulesuggestion
+     *      was actioned
+     *     If Force is true then RuleSuggestion being due is ignored hence
+     *     "Force".
+     * 3) Only if there are Rules to can be suggested according to the criteria
+     *        of the SQL select as per ShopperDBHelper.getSuggestedRules
+     * @param context   context from the caller
+     * @param force     true if to force Rule Suggestion, otherwiese false
+     */
     static public void checkRuleSuggestions(Context context, boolean force) {
-        // Prepare to and also get Shared Preferences
+        // Prepare to get values from Shared Preferences
         PreferenceManager.setDefaultValues(context,R.xml.usersettings,false);
          SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         // Get whether or not shared preferences allow Rule suggestion
@@ -40,8 +62,6 @@ public class RuleSuggestion extends AppCompatActivity{
             return;
         }
 
-        // Allowed to suggest Rules so continue
-
         // Need to get rule suggestion frequency in days
         long rsf = Long.parseLong(
                 sp.getString(
@@ -52,10 +72,9 @@ public class RuleSuggestion extends AppCompatActivity{
         //Convert rule suggestion frequency to microseconds
         rsf = rsf * 1000 * 60 * 60 * 24;
 
-        // Retrieve the last time rules were suggested
+        // Retrieve the last time rules were suggested from the values table
         ShopperDBHelper db = new ShopperDBHelper(context,null,null,1);
         long lastrulesuggestiondate = db.getLongValue(Constants.LASTRULESUGGESTION);
-
         long rulesuggestnext = lastrulesuggestiondate + rsf;
 
         // Get the current date/time as long
@@ -79,7 +98,6 @@ public class RuleSuggestion extends AppCompatActivity{
         // Not date/time yet to look at rule suggestion so finish
         if ((!todorulesuggest) && (!force)) {
             db.close();
-
             return;
         }
 
@@ -103,6 +121,7 @@ public class RuleSuggestion extends AppCompatActivity{
                 csr.close();
                 Intent intent = new Intent(context,RuleSuggestionActivity.class);
                 intent.putExtra(context.getResources().getString(R.string.intentkey_activitycaller),THIS_ACTIVITY);
+                intent.putExtra(context.getResources().getString(R.string.intentkey_rulesuggestionsforced),force);
                 String ikey = context.getResources().getString(R.string.intentkey_nextrulesuggestion);
                 if(nextfromwhendone) {
                     intent.putExtra(ikey,(now_as_millisecs + rsf));
@@ -136,7 +155,6 @@ public class RuleSuggestion extends AppCompatActivity{
                     });
                     nosuggestions.show();
                 }
-
             }
             csr.close();
             db.close();
