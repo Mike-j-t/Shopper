@@ -8,27 +8,30 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CursorAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 /**
  *
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class ReviewDisabledRuleSuggestionsActivity  extends AppCompatActivity {
 
-    public final static int RESUMESTATE_NOTHING = 0;
-    public final static int RESUMESTATE_ADJUSTED = 1;
-    public static int resume_state = RESUMESTATE_NOTHING;
-    public final static String THIS_ACTIVITY = "ReviewDisabledRuleSuggestionActivity";
+    private final static int RESUMESTATE_NOTHING = 0;
+    private final static int RESUMESTATE_ADJUSTED = 1;
+    private static int resume_state = RESUMESTATE_NOTHING;
+    private final static String THIS_ACTIVITY = "ReviewDisabledRuleSuggestionActivity";
 
-    public boolean devmode;
-    public SharedPreferences sp;
-    public  boolean helpoffmode;
+    private boolean devmode;
+    private SharedPreferences sp;
+    private boolean helpoffmode;
 
     private ShopperDBHelper db = new ShopperDBHelper(this,null,null,1);
     private Cursor csr;
     private TextView done_button;
     private ListView disabledrulelist;
+    private LinearLayout reviewdisabledsuggestionshelp;
     private ReviewDisabledRuleSuggestionsAdapter rdra;
 
     @Override
@@ -48,6 +51,15 @@ public class ReviewDisabledRuleSuggestionsActivity  extends AppCompatActivity {
                 R.string.sharedpreferencekey_showhelpmode),
                 false
         );
+        reviewdisabledsuggestionshelp = (LinearLayout) this.findViewById(R.id.rrs_help_layout);
+
+        if(helpoffmode) {
+            reviewdisabledsuggestionshelp.setVisibility(View.GONE);
+        } else {
+            reviewdisabledsuggestionshelp.setVisibility(View.VISIBLE);
+        }
+
+
         done_button = (TextView) this.findViewById(R.id.rrs_done_button);
         disabledrulelist = (ListView) this.findViewById(R.id.rrs_proposedlist);
 

@@ -1,5 +1,6 @@
 package mjt.shopper;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -8,6 +9,8 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
@@ -22,12 +25,12 @@ import java.util.Calendar;
  *
  */
 public class ShoppingListActivity extends AppCompatActivity{
-    public final static int RESUMESTATE_NOTHING = 0;
-    public final static int RESUMESTATE_ADJUSTED = 1;
-    public int resume_state = RESUMESTATE_NOTHING;
-    public boolean devmode;
-    public SharedPreferences sp;
-    public boolean helpoffmode;
+    private final static int RESUMESTATE_NOTHING = 0;
+    private final static int RESUMESTATE_ADJUSTED = 1;
+    private int resume_state = RESUMESTATE_NOTHING;
+    private boolean devmode;
+    private SharedPreferences sp;
+    private boolean helpoffmode;
 
     //==============================================================================================
     // Cursor Offsets.
@@ -37,77 +40,77 @@ public class ShoppingListActivity extends AppCompatActivity{
     // Note! column use changes may still be required if adding or deleting columns from tables or
     //     queries.
 
-    public static int ruleslist_ruleid_offset = -1;
-    public static int ruleslist_rulename_offset;
-    public static int rulelist_ruletype_offset;
-    public static int rulelist_rulepromptflag_offset;
-    public static int rulelist_ruleperiod_offset;
-    public static int rulelist_rulemultiplier_offset;
-    public static int rulelist_ruleactiveon_offset;
-    public static int rulelist_ruleproductref_offset;
-    public static int rulelist_ruleaisleref_offset;
-    public static int rulelist_ruleuses_offset;
-    public static int rulelist_rulenumbertoget_offset;
-    public static int rulelist_rulemincost_offset;
-    public static int rulelist_rulemaxcost_offset;
-    public static int rulelist_productname_offset;
-    public static int rulelist_aislename_offset;
-    public static int rulelist_aisleshopref_offset;
-    public static int rulelist_shopname_offset;
-    public static int rulelist_shopcity_offset;
-    public static int rulelist_shopstreet_offset;
-    public static int rulelist_productusagecost_offset;
+    private static int ruleslist_ruleid_offset = -1;
+    private static int ruleslist_rulename_offset;
+    private static int rulelist_ruletype_offset;
+    private static int rulelist_rulepromptflag_offset;
+    private static int rulelist_ruleperiod_offset;
+    private static int rulelist_rulemultiplier_offset;
+    private static int rulelist_ruleactiveon_offset;
+    private static int rulelist_ruleproductref_offset;
+    private static int rulelist_ruleaisleref_offset;
+    private static int rulelist_ruleuses_offset;
+    private static int rulelist_rulenumbertoget_offset;
+    private static int rulelist_rulemincost_offset;
+    private static int rulelist_rulemaxcost_offset;
+    private static int rulelist_productname_offset;
+    private static int rulelist_aislename_offset;
+    private static int rulelist_aisleshopref_offset;
+    private static int rulelist_shopname_offset;
+    private static int rulelist_shopcity_offset;
+    private static int rulelist_shopstreet_offset;
+    private static int rulelist_productusagecost_offset;
 
-    public static int shoppinglist_shoplistid_offset = -1;
-    public static int shoppinglist_shoplistproductref_offset;
-    public static int shoppinglist_shoplistdateadded_offset;
-    public static int shoppinglist_shoplistnumbertoget_offset;
-    public static int shoppinglist_shoplistdone_offset;
-    public static int shoppinglist_shoplistdategot_offset;
-    public static int shoppinglist_shoplistcost_offset;
-    public static int shoppinglist_shoplistproductusageref_offset;
-    public static int shoppinglist_shoplistaisleref_offset;
-    public static int shoppinglist_productusageproductref_offset;
-    public static int shoppinglist_productusageaisleref_offset;
-    public static int shoppinglist_productusagecost_offset;
-    public static int shoppinglist_productusagebuycount_offset;
-    public static int shoppinglist_productusagefirstbuydate_offset;
-    public static int shoppinglist_productusagelatestbuydate_offset;
-    public static int shoppinglist_productusagemincost_offset;
-    public static int shoppinglist_productusageorder_offset;
-    public static int shoppinglist_aisleid_offset;
-    public static int shoppinglist_aislename_offset;
-    public static int shoppinglist_aisleorder_offset;
-    public static int shoppinglist_aisleshopref_offest;
-    public static int shoppinglist_shopid_offset;
-    public static int shoppinglist_shopname_offset;
-    public static int shopponglist_shoporder_offset;
-    public static int shopponglist_shopstreet_offset;
-    public static int shoppinglist_shopcity_offset;
-    public static int shoppinglist_shopstate_offset;
-    public static int shoppinglist_shopphone_offset;
-    public static int shoppinglist_shopnotes_offset;
-    public static int shoppinglist_productid_offset;
-    public static int shoppinglist_productname_offset;
-    public static int shoppinglist_productorder_offset;
-    public static int shoppinglist_productaisleref_offset;
-    public static int shoppinglist_productuses_offset;
-    public static int shoppinglist_productnotes_offset;
+    private static int shoppinglist_shoplistid_offset = -1;
+    private static int shoppinglist_shoplistproductref_offset;
+    private static int shoppinglist_shoplistdateadded_offset;
+    private static int shoppinglist_shoplistnumbertoget_offset;
+    private static int shoppinglist_shoplistdone_offset;
+    private static int shoppinglist_shoplistdategot_offset;
+    private static int shoppinglist_shoplistcost_offset;
+    private static int shoppinglist_shoplistproductusageref_offset;
+    private static int shoppinglist_shoplistaisleref_offset;
+    private static int shoppinglist_productusageproductref_offset;
+    private static int shoppinglist_productusageaisleref_offset;
+    private static int shoppinglist_productusagecost_offset;
+    private static int shoppinglist_productusagebuycount_offset;
+    private static int shoppinglist_productusagefirstbuydate_offset;
+    private static int shoppinglist_productusagelatestbuydate_offset;
+    private static int shoppinglist_productusagemincost_offset;
+    private static int shoppinglist_productusageorder_offset;
+    private static int shoppinglist_aisleid_offset;
+    private static int shoppinglist_aislename_offset;
+    private static int shoppinglist_aisleorder_offset;
+    private static int shoppinglist_aisleshopref_offest;
+    private static int shoppinglist_shopid_offset;
+    private static int shoppinglist_shopname_offset;
+    private static int shopponglist_shoporder_offset;
+    private static int shopponglist_shopstreet_offset;
+    private static int shoppinglist_shopcity_offset;
+    private static int shoppinglist_shopstate_offset;
+    private static int shoppinglist_shopphone_offset;
+    private static int shoppinglist_shopnotes_offset;
+    private static int shoppinglist_productid_offset;
+    private static int shoppinglist_productname_offset;
+    private static int shoppinglist_productorder_offset;
+    private static int shoppinglist_productaisleref_offset;
+    private static int shoppinglist_productuses_offset;
+    private static int shoppinglist_productnotes_offset;
 
 
-    public ShoppingListAdapter currentsla;
-    public double purchasedamount = 0;
-    public double remainingamount = 0;
-    public String autoaddoverview = "";
-    public Cursor autoaddentriescursor;
-    public Cursor promptentriescursor;
-    public ListView promptentrieslist;
-    public ShoppingListPromptedRulesAdapter promptentriesadapter;
-    public TextView shoppinglisthelp;
-    public long chkdate;
-    public long promptentriescount = 0;
-    public String shoppinglist_normalhelp;
-    public String shoppinglist_promptedhelp;
+    private ShoppingListAdapter currentsla;
+    private double purchasedamount = 0;
+    private double remainingamount = 0;
+    private String autoaddoverview = "";
+    private Cursor autoaddentriescursor;
+    private Cursor promptentriescursor;
+    private ListView promptentrieslist;
+    private ShoppingListPromptedRulesAdapter promptentriesadapter;
+    private TextView shoppinglisthelp;
+    private long chkdate;
+    private long promptentriescount = 0;
+    private String shoppinglist_normalhelp;
+    private String shoppinglist_promptedhelp;
 
     private final static String THIS_ACTIVITY = "ShoppingListActivity";
     private final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
@@ -355,7 +358,7 @@ public class ShoppingListActivity extends AppCompatActivity{
     }
 
     // Routines (Methods)
-    public Double calculateRemainingAmount(Cursor csr) {
+    private Double calculateRemainingAmount(Cursor csr) {
         mjtUtils.logMsg(mjtUtils.LOG_INFORMATIONMSG,"Method Call",THIS_ACTIVITY,"calculateRemainingAmount",devmode);
         double ra = 0;
         csr.moveToPosition(-1);
@@ -367,7 +370,7 @@ public class ShoppingListActivity extends AppCompatActivity{
     }
 
     // Automatically Add Rules based (un-prompted)Entries
-    public void getAutoAddEntries() {
+    private void getAutoAddEntries() {
         long autoaddcount = 0;
         autoaddoverview = "";
         // Extract extended rules (ie shop, aisle and product in aisle data included) for all
@@ -423,7 +426,7 @@ public class ShoppingListActivity extends AppCompatActivity{
     }
 
     // Update Rule to the next activeon date
-    public void setNextAutoAddDate(long ruleid, long currentdate, int period, int multiplier, int uses) {
+    private void setNextAutoAddDate(long ruleid, long currentdate, int period, int multiplier, int uses) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(currentdate);
         switch(period) {
@@ -596,6 +599,7 @@ public class ShoppingListActivity extends AppCompatActivity{
 
         // Handle +1 (increment quantity) Button i.e. add 1 to quantity within bounds
         increasequantity.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                 Integer nqty = Integer.parseInt(newquantity.getText().toString()) + 1;
@@ -609,6 +613,7 @@ public class ShoppingListActivity extends AppCompatActivity{
 
         // Handle -1 (decrement quantity) Button i.e. subtract 1 from quantity within bounds
         decreasequantity.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                 Integer nqty = Integer.parseInt(newquantity.getText().toString()) - 1;
@@ -620,9 +625,16 @@ public class ShoppingListActivity extends AppCompatActivity{
             }
         });
         actionsdialog.show();
+        Window adw = actionsdialog.getWindow();
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(actionsdialog.getWindow().getAttributes());
+        lp.width = (WindowManager.LayoutParams.MATCH_PARENT);
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        actionsdialog.show();
+        adw.setAttributes(lp);
     }
 
-    public void setRuleListOffsfets(Cursor cursor) {
+    private void setRuleListOffsfets(Cursor cursor) {
         if(ruleslist_ruleid_offset != -1) {
             return;
         }
@@ -648,7 +660,7 @@ public class ShoppingListActivity extends AppCompatActivity{
         rulelist_productusagecost_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_COST);
     }
 
-    public void setShoppingListOffsets(Cursor cursor) {
+    private void setShoppingListOffsets(Cursor cursor) {
         if(shoppinglist_shoplistid_offset != -1) {
             return;
         }

@@ -1,5 +1,5 @@
 package mjt.shopper;
-public interface Constants {
+interface Constants {
     String LOG = "mjt.shopper";
     int HEADING_TEXT_SIZE = 25;
     int LIST_TEXT_SIZE = 20;

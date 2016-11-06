@@ -112,13 +112,14 @@
             >
         </activity>
         <activity android:name=".RuleSuggestionActivity"
-            android:label="@string/title_activityreviewdisabledrulesuggestions"
+            android:label="@string/title_activity_rulesuggestion_list"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
             >
         </activity>
         <activity android:name=".ReviewDisabledRuleSuggestionsActivity"
             android:label="@string/title_activityreviewdisabledrulesuggestions"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
             >
         </activity>

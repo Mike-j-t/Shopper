@@ -1,12 +1,8 @@
 <resources>
     <!-- <string name="app_name">Shopper</string> -->
-    <string name="SPACE">\u0020</string>
-    <string name="SPACES">@string/SPACE</string>
     <string name="standardNotSavedToast">"Not Saved. Unfortunately The Data could not be Saved. Please check messages for the reason(s)."</string>
     <string name="standardSavedToast">"Saved. The Data has been Saved."</string>
 
-    <!-- <string name="shopareas_db">Aisles</string> -->
-    <!-- <string name="groups_db">Groups</string> -->
     <string name="mainbutton_stores">STORES</string>
     <string name="mainbutton_aisles">AISLES</string>
     <string name="mainbutton_products">PRODUCTS</string>
@@ -182,7 +178,7 @@
     <string name="shopping_list_decrement">-1</string>
     <string name="shopping_list_newquantity">New Quantity</string>
     <string name="shopping_list_newcost">New Cost</string>
-    <string name="shopping_list_newproductname">New product Name</string>
+    <string name="shopping_list_newproductname">New Product Name</string>
 
     <!-- values -->
     <string name="values_label">Values</string>
@@ -228,7 +224,7 @@
     <string name="title_activity_add_product_to_shop">Shopper - Add Product to Store</string>
     <string name="title_activity_ruleaddedit">Shopper - Rule Add/Edit</string>
     <string name="title_activityproductusage_edit">Shopper - Edit Product Usage</string>
-    <string name="title_activtyrulesuggestion_list">Shopper - Rule Suggestion List</string>
+    <string name="title_activity_rulesuggestion_list">Shopper - Rule Suggestion List</string>
     <string name="title_activityreviewdisabledrulesuggestions">Shopper - Review Disabled Rule Suggestions</string>
     <string name="title_activity_usersettings">Shopper - User Settings</string>
     <string name="title_activity_ruleaddeditlist">Shopper - Rules</string>
@@ -385,6 +381,28 @@
         \n\nBoth lists can be <b>Sorted</b> by clicking on the Heading Labels.
     </string>
 
+    <string name="datahandling_instructions">Click<b>DB Backup</b> to create a Database backup
+        (copy of the database file).
+        The name of the file will be as per <b>Full FillName</b>b>
+        \n\nClick<b>SQL Backup</b> to create a backup file containing SQL statements that can be
+        used to restore the database.
+        \n\n<b><i>Note! <u>DB Backup is recommeded, this is faster and more accurate.</u> </i></b>
+        \n\nIf backups are present then you can restore the datbase by selecting the required backup
+        and clicking the respective <b>Rstr</b> button.
+        \n\n<b><i>Note! it is recommended that you read the manual. especially if adjusting other fields.</i></b>
+    </string>
+
+    <string name="rulesuggestion_instructions">Click <b>DONE</b> to return to the <b>Main Display</b>.
+        \n\nClick <b>ADD</b> to add a rule based upon the respective item. <i>Note! the standard <b>Rule Add</b> screen is displayed.</i>
+        \n\nClick <b>SKIP</b> to temporarily remove the respective item from the list.
+        \n\nClick <b>DISABLE</b> to permanently(*see note) exclude the <i>"purchasble product"</i> from Rule Suggestion.
+        \n\n<b><i>Note! <u>Review Disabled Suggestions</u></i></b> can be used to re-enable disabled items.
+    </string>
+
+    <string name="reviewdiabledsuggestions_instructions">Click <b>DONE</b> to return to the <b>Main Display</b>.
+        \n\nClick <b>ENABLE</b> to re-enable the <i>purchasable product</i> and thus allow it to appear as a suggestable rule.
+    </string>
+
     <string name="intentkey_activitycaller">CALLER</string>
     <string name="intentkey_storeid_long">STOREID_LONG</string>
     <string name="intentkey_storeid">STOREID</string>
@@ -412,6 +430,7 @@
     <string name="intentkey_rulemincost">RULEMINCOST</string>
     <string name="intentkey_rulemaxcost">RULEMAXCOST</string>
     <string name="intentkey_nextrulesuggestion">NEXTRULESUGGESTION</string>
+    <string name="intentkey_rulesuggestionsforced">RULESUGGESTIONFORCED</string>
 
     <string name="usersettingslabel">Settings</string>
     <string name="datalabel">Data Handling</string>

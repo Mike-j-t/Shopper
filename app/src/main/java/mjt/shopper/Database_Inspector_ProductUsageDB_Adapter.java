@@ -15,7 +15,7 @@ import java.text.NumberFormat;
 /**
  *
  */
-public class Database_Inspector_ProductUsageDB_Adapter extends CursorAdapter{
+class Database_Inspector_ProductUsageDB_Adapter extends CursorAdapter{
 
     //==============================================================================================
     // Cursor Offsets.
@@ -25,14 +25,14 @@ public class Database_Inspector_ProductUsageDB_Adapter extends CursorAdapter{
     // Note! column use changes may still be required if adding or deleting columns from tables or
     //     queries.
 
-    public static int productusage_productusageaislref_offset = -1;
-    public static int productusage_productusageproductref_offset;
-    public static int productusage_productusagecost_offset;
-    public static int productusage_productusagebuycount_offset;
-    public static int productusage_productusagefirstbuydate_offset;
-    public static int productusage_productusagelatestbuydate_offset;
-    public static int productusage_productusagemincost_offset;
-    public static int productusage_productusageorder_offset;
+    private static int productusage_productusageaislref_offset = -1;
+    private static int productusage_productusageproductref_offset;
+    private static int productusage_productusagecost_offset;
+    private static int productusage_productusagebuycount_offset;
+    private static int productusage_productusagefirstbuydate_offset;
+    private static int productusage_productusagelatestbuydate_offset;
+    private static int productusage_productusagemincost_offset;
+    private static int productusage_productusageorder_offset;
 
     public Database_Inspector_ProductUsageDB_Adapter(Context context, Cursor cursor, int flags) {
         super(context,cursor, 0);
@@ -75,7 +75,7 @@ public class Database_Inspector_ProductUsageDB_Adapter extends CursorAdapter{
         return LayoutInflater.from(context).inflate(R.layout.activity_database_inspect_productusagedb_entry, parent, false);
     }
 
-    public void setProductUsageOffsets(Cursor cursor) {
+    private void setProductUsageOffsets(Cursor cursor) {
         if(productusage_productusageaislref_offset != -1) {
             return;
         }

@@ -27,15 +27,15 @@ import java.util.Date;
  *
  */
 public class RuleAddEdit extends AppCompatActivity {
-    public final static int RESUMESTATE_NOTHING = 0;
+    private final static int RESUMESTATE_NOTHING = 0;
     public int resume_state = RESUMESTATE_NOTHING;
-    public boolean devmode;
-    public boolean helpoffmode;
-    public SharedPreferences sp;
+    private boolean devmode;
+    private boolean helpoffmode;
+    private SharedPreferences sp;
     private final static String THIS_ACTIVITY = "RuleAddEdit";
     @SuppressLint("SimpleDateFormat")
-    public SimpleDateFormat sdf = new SimpleDateFormat(Constants.STANDARD_DDMMYYY_FORMAT);
-    public Date currentdate = new Date();
+    private SimpleDateFormat sdf = new SimpleDateFormat(Constants.STANDARD_DDMMYYY_FORMAT);
+    private Date currentdate = new Date();
     public DatePickerDialog dpd;
 
     //==============================================================================================
@@ -46,88 +46,89 @@ public class RuleAddEdit extends AppCompatActivity {
     // Note! column use changes may still be required if adding or deleting columns from tables or
     //     queries.
 
-    public static int purchasableproducts_productusageaisleref_offset = -1; //**
-    public static int purchasableproducts_productusageproductref_offset;
-    public static int purchasableproducts_productusagecost_offset;
-    public static int purchasableproducts_productid_offset; //**
-    public static int purchasableproducts_productname_offset;
-    public static int purchasableproducts_aisleid_offset; //**
-    public static int purchasableproducts_aislename_offset;
-    public static int purchasableproducts_shopname_offset;
-    public static int purchasableproducts_shopcity_offset;
-    public static int purchasableproducts_shopstreet_offset;
+    private static int purchasableproducts_productusageaisleref_offset = -1; //**
+    private static int purchasableproducts_productusageproductref_offset;
+    private static int purchasableproducts_productusagecost_offset;
+    private static int purchasableproducts_productid_offset; //**
+    private static int purchasableproducts_productname_offset;
+    private static int purchasableproducts_aisleid_offset; //**
+    private static int purchasableproducts_aislename_offset;
+    private static int purchasableproducts_shopname_offset;
+    private static int purchasableproducts_shopcity_offset;
+    private static int purchasableproducts_shopstreet_offset;
 
-    public static int ruleslist_ruleid_offset = -1;
-    public static int ruleslist_rulename_offset;
-    public static int rulelist_ruletype_offset;
-    public static int rulelist_rulepromptflag_offset;
-    public static int rulelist_ruleperiod_offset;
-    public static int rulelist_rulemultiplier_offset;
-    public static int rulelist_ruleactiveon_offset;
-    public static int rulelist_ruleproductref_offset;
-    public static int rulelist_ruleaisleref_offset;
-    public static int rulelist_ruleuses_offset;
-    public static int rulelist_rulenumbertoget_offset;
-    public static int rulelist_rulemincost_offset;
-    public static int rulelist_rulemaxcost_offset;
-    public static int rulelist_productname_offset;
-    public static int rulelist_aislename_offset;
-    public static int rulelist_aisleshopref_offset;
-    public static int rulelist_shopname_offset;
-    public static int rulelist_shopcity_offset;
-    public static int rulelist_shopstreet_offset;
-    public static int rulelist_productusagecost_offset;
+    private static int ruleslist_ruleid_offset = -1;
+    private static int ruleslist_rulename_offset;
+    private static int rulelist_ruletype_offset;
+    private static int rulelist_rulepromptflag_offset;
+    private static int rulelist_ruleperiod_offset;
+    private static int rulelist_rulemultiplier_offset;
+    private static int rulelist_ruleactiveon_offset;
+    private static int rulelist_ruleproductref_offset;
+    private static int rulelist_ruleaisleref_offset;
+    private static int rulelist_ruleuses_offset;
+    private static int rulelist_rulenumbertoget_offset;
+    private static int rulelist_rulemincost_offset;
+    private static int rulelist_rulemaxcost_offset;
+    private static int rulelist_productname_offset;
+    private static int rulelist_aislename_offset;
+    private static int rulelist_aisleshopref_offset;
+    private static int rulelist_shopname_offset;
+    private static int rulelist_shopcity_offset;
+    private static int rulelist_shopstreet_offset;
+    private static int rulelist_productusagecost_offset;
 
-    public static int values_valueid_offset = -1;
-    public static int values_valuename_offset;
-    public static int values_valuetype_offset;
-    public static int values_valueint_offset;
-    public static int values_valuereal_offset;
-    public static int values_valuetext_offset;
-    public static int values_valueincludeinsettings_offset;
-    public static int values_valuesettingsinfro_offset;
+    private static int values_valueid_offset = -1;
+    private static int values_valuename_offset;
+    private static int values_valuetype_offset;
+    private static int values_valueint_offset;
+    private static int values_valuereal_offset;
+    private static int values_valuetext_offset;
+    private static int values_valueincludeinsettings_offset;
+    private static int values_valuesettingsinfro_offset;
 
-    public LinearLayout ruleaddedithelplayout;
-    public TextView ruleaddeditproductname;
+    private LinearLayout ruleaddedithelplayout;
+    private TextView ruleaddeditproductname;
     public int ruleaddeditproductid = -1;
-    public TextView ruleaddeditstorename;
+    private TextView ruleaddeditstorename;
     public int ruleaddeditstoreid = -1;
-    public TextView ruleaddeditaislename;
+    private TextView ruleaddeditaislename;
     public int ruleaddeditaisleid = -1;
-    public EditText ruleaddeditrulename;
-    public Switch ruleaddeditautoadd;
-    public EditText ruleaddeditstartdate;
-    public Spinner ruleaddeditperiodselector;
-    public EditText ruleaddeditperiodmultiplier;
-    public EditText ruleaddeditquantity;
+    private EditText ruleaddeditrulename;
+    private Switch ruleaddeditautoadd;
+    private EditText ruleaddeditstartdate;
+    private Spinner ruleaddeditperiodselector;
+    private EditText ruleaddeditperiodmultiplier;
+    private EditText ruleaddeditquantity;
     public ListView ruleaddeditcurrentrules;
-    public long currentproductid;
-    public String currentproductname;
-    public long currentaisleid;
-    public String currentaislename;
-    public String currentstorename;
-    public String currentstorecity;
-    public String currentstorestreet;
-    public RuleAddEditPeriodSpinnerCursorAdapter ruleaddeditperiodselectoradapter;
-    public Cursor ruleaddeditperiodselectorcursor;
-    public Cursor currentrulelistcursor;
-    public RuleListAdapter currentrulelistadapter;
-    public ListView currentrulelistlistview;
-    public String caller;
-    public String currentrulename = "";
-    public Date currentstartdate;
-    public long currentstartdateastime;
-    public boolean currentautoadd;
-    public String currentperiod;
-    public int currentperiodasint;
-    public int currentperiodmultiplier;
-    public int currentquantity;
-    public String currentrulelistsortorder = Constants.RULELISTORDER_BY_RULE;
-    public Date oldate;
+    private long currentproductid;
+    private String currentproductname;
+    private long currentaisleid;
+    private String currentaislename;
+    private String currentstorename;
+    private String currentstorecity;
+    private String currentstorestreet;
+    private RuleAddEditPeriodSpinnerCursorAdapter ruleaddeditperiodselectoradapter;
+    private Cursor ruleaddeditperiodselectorcursor;
+    private Cursor currentrulelistcursor;
+    private RuleListAdapter currentrulelistadapter;
+    private ListView currentrulelistlistview;
+    private String caller;
+    private String currentrulename = "";
+    private Date currentstartdate;
+    private long currentstartdateastime;
+    private boolean currentautoadd;
+    private String currentperiod;
+    private int currentperiodasint;
+    private int currentperiodmultiplier;
+    private int currentquantity;
+    private String currentrulelistsortorder = Constants.RULELISTORDER_BY_RULE;
+    private Date oldate;
 
 
     private final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Create standard method call log entry (after getting the activities caller)
@@ -457,7 +458,7 @@ public class RuleAddEdit extends AppCompatActivity {
         purchasableproducts_shopstreet_offset = cursor.getColumnIndex(ShopperDBHelper.SHOPS_COLUMN_STREET);
     }
 
-    public void setRuleListOffsfets(Cursor cursor) {
+    private void setRuleListOffsfets(Cursor cursor) {
         if(ruleslist_ruleid_offset != -1) {
             return;
         }
@@ -483,7 +484,7 @@ public class RuleAddEdit extends AppCompatActivity {
         rulelist_productusagecost_offset = cursor.getColumnIndex(ShopperDBHelper.PRODUCTUSAGE_COLUMN_COST);
     }
 
-    public void setValuesOffsets(Cursor cursor) {
+    private void setValuesOffsets(Cursor cursor) {
         if(values_valueid_offset != -1) {
             return;
         }

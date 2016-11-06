@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="@dimen/standard_dummy_size"
     android:layout_marginTop="@dimen/activity_vertical_margin"
     android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -138,6 +138,10 @@
             android:text="@string/shopping_list_decrement"
             style="@style/textviewbutton"
             />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/standard_heading_height">
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -146,8 +150,9 @@
             android:layout_width="0dp"
             android:paddingTop="5dp"
             android:layout_height="match_parent"
-            android:layout_weight="30"
+            android:layout_weight="20"
             android:text="@string/shopping_list_newquantity"
+            android:maxLines="1"
             android:textColor="@color/colorNormalButtonText"
             android:background="@color/colorlistviewheading"/>
         <EditText
@@ -160,7 +165,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="45"/>
+            android:layout_weight="55"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/shoppinglistactions_changecost_layout"
@@ -168,16 +173,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin">
-        <Button
-            android:id="@+id/shoppinglistactions_donothing1_button"
-            style="@style/textviewbutton"
-            android:visibility="invisible"
-            />
-        <Button
-            android:id="@+id/shoppinglistactions_donothing2_button"
-            style="@style/textviewbutton"
-            android:visibility="invisible"
-            />
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -185,7 +180,8 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="30"
+            android:layout_weight="20"
+            android:maxLines="1"
             android:text="@string/shopping_list_newcost"
             android:textColor="@color/colorNormalButtonText"
             android:background="@color/colorlistviewheading"/>
@@ -199,7 +195,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="45"/>
+            android:layout_weight="55"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/shoppinglistactions_changename_layout"
@@ -207,16 +203,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin">
-        <Button
-            android:id="@+id/shoppinglistactions_donothing3_button"
-            style="@style/textviewbutton"
-            android:visibility="invisible"
-            />
-        <Button
-            android:id="@+id/shoppinglistactions_donothing4_button"
-            style="@style/textviewbutton"
-            android:visibility="invisible"
-            />
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -224,7 +210,8 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="30"
+            android:layout_weight="20"
+            android:maxLines="1"
             android:text="@string/shopping_list_newproductname"
             android:textColor="@color/colorNormalButtonText"
             android:background="@color/colorlistviewheading"/>
@@ -232,7 +219,7 @@
             android:id="@+id/shoppinglistaction_newname"
             style="@style/edittext_optional_style"
             android:layout_width="0dp"
-            android:layout_weight="65"
+            android:layout_weight="75"
             tools:ignore="LabelFor" />
     </LinearLayout>
     <LinearLayout

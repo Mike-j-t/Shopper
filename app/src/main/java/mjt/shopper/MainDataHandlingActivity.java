@@ -1,5 +1,6 @@
 package mjt.shopper;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +42,7 @@ import java.util.Calendar;
  *  allowing the various options to be taken. All in regards to
  *  backup, restore and export operations.
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class MainDataHandlingActivity extends AppCompatActivity {
 
     private final String THIS_ACTIVITY = "MainDataHandling";
@@ -87,6 +90,7 @@ public class MainDataHandlingActivity extends AppCompatActivity {
     private EditText csvfileext;
     private TextView csvfullfilename;
     private TextView csvbutton;
+    private LinearLayout datahandlinghelp;
     private StoreData sdbase;
 
     private SharedPreferences sp;
@@ -109,6 +113,7 @@ public class MainDataHandlingActivity extends AppCompatActivity {
     private boolean confirmaction = false;
     private String exportdata = "";
     private boolean developermode;
+    private boolean helpoffmode;
 
 
     private ArrayList<String> errlist = new ArrayList<>();
@@ -123,6 +128,19 @@ public class MainDataHandlingActivity extends AppCompatActivity {
 
 
         sp = PreferenceManager.getDefaultSharedPreferences(context);
+
+        // Show/Hide Help
+        helpoffmode = sp.getBoolean(
+                getResources().getString(R.string.sharedpreferencekey_showhelpmode),
+                false
+        );
+        datahandlinghelp = (LinearLayout) this.findViewById(R.id.dh_help_layout);
+        if(helpoffmode) {
+            datahandlinghelp.setVisibility(View.GONE);
+        } else {
+            datahandlinghelp.setVisibility(View.VISIBLE);
+        }
+
         // Get developermode from shared preferences
         developermode = sp.getBoolean(
                 getResources().getString(
@@ -210,7 +228,7 @@ public class MainDataHandlingActivity extends AppCompatActivity {
      *      filename are changed.
      * @param et - Edittext to listen to
      */
-    public void setEditTextTextChangedListener(EditText et) {
+    private void setEditTextTextChangedListener(EditText et) {
         et.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -277,7 +295,7 @@ public class MainDataHandlingActivity extends AppCompatActivity {
     private String getDateandTimeasYYMMDDhhmm() {
         Calendar cldr = Calendar.getInstance();
         String rv = "";
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
         rv = "_" + sdf.format(cldr.getTime());
         return rv;
     }
@@ -347,11 +365,12 @@ public class MainDataHandlingActivity extends AppCompatActivity {
     /**
      * method populateRestoreSpinner - Populate a restore spinner
      *      with the appropriate files for the respective restore
-     * @param spn   - Spinner
-     * @param basefilename  - basefilename
-     * @param fileext - fileextension
-     * @param sd - StoreData
+     * @param spn           Spinner
+     * @param basefilename  basefilename
+     * @param fileext       fileextension
+     * @param sd            StoreData object
      */
+    @SuppressWarnings("ParameterCanBeLocal")
     private void populateRestoreSpinner(Spinner spn, TextView tv, String basefilename, String fileext, StoreData sd, TextView restorebutton) {
 
         String spnname = "";

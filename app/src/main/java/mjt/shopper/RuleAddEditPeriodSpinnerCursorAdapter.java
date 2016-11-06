@@ -12,6 +12,7 @@ import android.widget.TextView;
 /**
  *
  */
+@SuppressWarnings("FieldCanBeLocal")
 class RuleAddEditPeriodSpinnerCursorAdapter extends CursorAdapter {
 
     //==============================================================================================

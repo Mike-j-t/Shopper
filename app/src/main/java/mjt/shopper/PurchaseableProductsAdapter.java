@@ -14,6 +14,7 @@ import java.text.NumberFormat;
 /**
  *
  */
+@SuppressWarnings("FieldCanBeLocal")
 class PurchaseableProductsAdapter extends CursorAdapter {
 
     //==============================================================================================

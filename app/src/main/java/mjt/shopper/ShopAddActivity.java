@@ -17,9 +17,9 @@ import android.widget.Toast;
 public class ShopAddActivity extends AppCompatActivity {
 
     public final static String THIS_ACTIVITY = "ShopAddActivity";
-    public boolean devmode;
-    public boolean helpoffmode;
-    public final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
+    private boolean devmode;
+    private boolean helpoffmode;
+    private final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
 
     //==============================================================================================
     // Cursor Offsets.
@@ -31,37 +31,37 @@ public class ShopAddActivity extends AppCompatActivity {
 
     // Variables to store shops table offsets as obtained via the defined column names by
     // call to setShopsOffsets (shops_shopid_offset set -1 to act as notdone flag )
-    public static int shops_shopid_offset = -1;
-    public static int shops_shopname_offset;
-    public static int shops_shoporder_offset;
-    public static int shops_shopstreet_offset;
-    public static int shops_shopcity_offset;
-    public static int shops_shopstate_offset;
-    public static int shops_shopphone_offset;
-    public static int shops_shopnotes_offset;
+    private static int shops_shopid_offset = -1;
+    private static int shops_shopname_offset;
+    private static int shops_shoporder_offset;
+    private static int shops_shopstreet_offset;
+    private static int shops_shopcity_offset;
+    private static int shops_shopstate_offset;
+    private static int shops_shopphone_offset;
+    private static int shops_shopnotes_offset;
 
-    public int mode = 0;
-    public ListView shoplist;
-    public Cursor shoplistcsr;
-    public ShopsCursorAdapter shoplistcsradapter;
-    public boolean developermode;
-    public String caller;
-    public EditText storename_input;
-    public EditText storeorder_input;
-    public EditText storestreet_input;
-    public EditText storecity_input;
-    public EditText storestate_input;
-    public EditText storephone_input;
-    public EditText storenotes_input;
-    public String storename;
-    public String storeorder;
-    public String storestreet;
-    public String storecity;
-    public String storestate;
-    public String storephone;
-    public String storenotes;
-    public LinearLayout shopaddeditlayout;
-    public String storelistsortorder = Constants.STORELISTORDER_BY_STORE;
+    private int mode = 0;
+    private ListView shoplist;
+    private Cursor shoplistcsr;
+    private ShopsCursorAdapter shoplistcsradapter;
+    private boolean developermode;
+    private String caller;
+    private EditText storename_input;
+    private EditText storeorder_input;
+    private EditText storestreet_input;
+    private EditText storecity_input;
+    private EditText storestate_input;
+    private EditText storephone_input;
+    private EditText storenotes_input;
+    private String storename;
+    private String storeorder;
+    private String storestreet;
+    private String storecity;
+    private String storestate;
+    private String storephone;
+    private String storenotes;
+    private LinearLayout shopaddeditlayout;
+    private String storelistsortorder = Constants.STORELISTORDER_BY_STORE;
     //TODO could add options to edit or delete shop from current list??????? not important
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,7 +231,7 @@ public class ShopAddActivity extends AppCompatActivity {
     }
 
     // Set Shops Table query offsets into returned cursor, if not already set
-    public void setShopsOffsets(Cursor cursor) {
+    private void setShopsOffsets(Cursor cursor) {
         // If not -1 then already done
         if(shops_shopid_offset != -1) {
             return;

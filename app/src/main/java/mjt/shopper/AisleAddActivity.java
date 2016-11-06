@@ -19,6 +19,7 @@ import android.widget.Toast;
 /**
  *
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class AisleAddActivity extends AppCompatActivity  {
 
     private final static int RESUMESTATE_NOTHING = 0;
@@ -26,12 +27,12 @@ public class AisleAddActivity extends AppCompatActivity  {
     private final static int RESUMESTATE_AISLESTOCK = 2;
     private final static int RESUMESTATE_AISLEDELETE = 3;
     private final static int RESUMESTATE_AISLEUPDATE = 4;
-    public int resume_state = RESUMESTATE_NOTHING;
+    private int resume_state = RESUMESTATE_NOTHING;
 
-    public final static String THIS_ACTIVITY = "AisleAddActivity";
-    public boolean devmode;
-    public boolean helpoffmode;
-    public final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
+    private final static String THIS_ACTIVITY = "AisleAddActivity";
+    private boolean devmode;
+    private boolean helpoffmode;
+    private final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
 
     //==============================================================================================
     // Cursor Offsets.
@@ -43,21 +44,21 @@ public class AisleAddActivity extends AppCompatActivity  {
 
     // Variables to store shops table offsets as obtained via the defined column names by
     // call to setShopsOffsets (shops_shopid_offset set -1 to act as notdone flag )
-    public static int shops_shopid_offset = -1;
-    public static int shops_shopname_offset;
-    public static int shops_shoporder_offset;
-    public static int shops_shopstreet_offset;
-    public static int shops_shopcity_offset;
-    public static int shops_shopstate_offset;
-    public static int shops_shopphone_offset;
-    public static int shops_shopnotes_offset;
+    private static int shops_shopid_offset = -1;
+    private static int shops_shopname_offset;
+    private static int shops_shoporder_offset;
+    private static int shops_shopstreet_offset;
+    private static int shops_shopcity_offset;
+    private static int shops_shopstate_offset;
+    private static int shops_shopphone_offset;
+    private static int shops_shopnotes_offset;
 
     // Variables to store aisles table offsets as obtained via the defined column names by
     // call to setAislesOffsets (aisles_aisleid_offset set -1 to act as notdone flag )
-    public static int aisles_aisleid_offset = -1;
-    public static int aisles_aislename_offset;
-    public static int aisles_aisleorder_offset;
-    public static int aisles_aisleshopref_offset;
+    private static int aisles_aisleid_offset = -1;
+    private static int aisles_aislename_offset;
+    private static int aisles_aisleorder_offset;
+    private static int aisles_aisleshopref_offset;
 
     private Cursor shoplistcsr;
     private ShopListSpinnerAdapter shoplistspinneradapter;
@@ -69,7 +70,7 @@ public class AisleAddActivity extends AppCompatActivity  {
     private AislesCursorAdapter aislespershopcursoradapter;
     private ListView aislespershoplistview;
     private LinearLayout aisleaddedithelplayout;
-    public String aislelistsortorder = Constants.AISLELISTORDER_BY_ORDER;
+    private String aislelistsortorder = Constants.AISLELISTORDER_BY_ORDER;
 
     protected void onResume() {
         super.onResume();
@@ -261,7 +262,7 @@ public class AisleAddActivity extends AppCompatActivity  {
     }
 
     // Set Shops Table query offsets into returned cursor, if not already set
-    public void setShopsOffsets(Cursor cursor) {
+    private void setShopsOffsets(Cursor cursor) {
         // If not -1 then already done
         if(shops_shopid_offset != -1) {
             return;
@@ -277,7 +278,7 @@ public class AisleAddActivity extends AppCompatActivity  {
     }
 
     // Set Aisles Table query offsets into returned cursor, if not already set
-    public void setAislesOffsets(Cursor cursor) {
+    private void setAislesOffsets(Cursor cursor) {
         if(aisles_aisleid_offset != -1) {
             return;
         }

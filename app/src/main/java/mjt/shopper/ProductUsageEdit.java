@@ -20,14 +20,15 @@ import java.util.Date;
 public class ProductUsageEdit extends AppCompatActivity {
     private final static String THIS_ACTIVITY = "ProductUsageEdit";
     private final ShopperDBHelper shopperdb = new ShopperDBHelper(this,null,null,1);
-    public boolean devmode;
-    public boolean helpoffmode;
+    private boolean devmode;
+    private boolean helpoffmode;
 
-    public LinearLayout productusageedit_helplayout;
+    private LinearLayout productusageedit_helplayout;
 
     /*==============================================================================================
         Main processing
      =============================================================================================*/
+    @SuppressLint("SetTextI18n")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +109,7 @@ public class ProductUsageEdit extends AppCompatActivity {
             }
         });
         this.findViewById(R.id.apue_productusage_lastbuydate_data).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 EditText data_et = (EditText) findViewById(R.id.apue_productusage_lastbuydate_data);

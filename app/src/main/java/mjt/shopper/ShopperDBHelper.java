@@ -851,6 +851,7 @@ class DBColumn {
  * ======================
  */
 //==================================================================================================
+@SuppressWarnings("WeakerAccess")
 public class ShopperDBHelper extends SQLiteOpenHelper {
 
     // Shopper database

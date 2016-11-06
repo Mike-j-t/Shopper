@@ -15,7 +15,7 @@ import android.widget.TextView;
  *
  */
 public class DatabaseSchema extends AppCompatActivity {
-    final ShopperDBHelper db = new ShopperDBHelper(this,null,null,1);
+    private final ShopperDBHelper db = new ShopperDBHelper(this,null,null,1);
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +39,8 @@ public class DatabaseSchema extends AppCompatActivity {
     // Set the Title ie Database Name - add a TextView to existing XML defined layout
     private void dbiSetTitle(LinearLayout ll, Context context) {
         TextView tv = new TextView(context);
-        tv.setText(ShopperDBHelper.DATABASE_NAME + "     (database)");
+        String suppressconcat = ShopperDBHelper.DATABASE_NAME + "    (database)";
+        tv.setText(suppressconcat);
         //tv.setHeight(Constants.HEADING_TEXT_SIZE + 10);
         //tv.setTextSize(Constants.HEADING_TEXT_SIZE);
         tv.setTypeface(null, Typeface.BOLD_ITALIC);
@@ -60,7 +61,8 @@ public class DatabaseSchema extends AppCompatActivity {
         // traverse the list of tables adding 1 Textview for each. Still adding to existing layout
         while (csr.moveToNext()) {
             TextView tv = new TextView(context);
-            tv.setText(csr.getString(1).toUpperCase() + "     (table)");
+            String suppresconcat = csr.getString(1).toUpperCase() + "    (table)";
+            tv.setText(suppresconcat);
             //tv.setHeight(Constants.LIST_TEXT_SIZE + 10);
             //tv.setTextSize(Constants.LIST_TEXT_SIZE);
             tv.setTypeface(null, Typeface.BOLD);

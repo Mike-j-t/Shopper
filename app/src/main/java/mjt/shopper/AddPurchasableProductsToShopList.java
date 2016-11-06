@@ -24,6 +24,7 @@ import android.widget.Toast;
  * If clicked then a Shopping List entry is made if one doesn't exist or
  *  the quantity is increased by 1 (handled by insertShoppingListEntry )
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class AddPurchasableProductsToShopList extends AppCompatActivity{
 
     //==============================================================================================
@@ -35,23 +36,23 @@ public class AddPurchasableProductsToShopList extends AppCompatActivity{
     //     queries.
 
     //Purchasable Products Query
-    public static int purchasableproducts_productusageaisleref_offset = -1; //**
-    public static int purchasableproducts_productusageproductref_offset;
-    public static int purchasableproducts_productusagecost_offset;
-    public static int purchasableproducts_productid_offset; //**
-    public static int purchasableproducts_productname_offset;
-    public static int purchasableproducts_aisleid_offset; //**
-    public static int purchasableproducts_aislename_offset;
-    public static int purchasableproducts_shopname_offset;
-    public static int purchasableproducts_shopcity_offset;
-    public static int purchasableproducts_shopstreet_offset;
+    private static int purchasableproducts_productusageaisleref_offset = -1; //**
+    private static int purchasableproducts_productusageproductref_offset;
+    private static int purchasableproducts_productusagecost_offset;
+    private static int purchasableproducts_productid_offset; //**
+    private static int purchasableproducts_productname_offset;
+    private static int purchasableproducts_aisleid_offset; //**
+    private static int purchasableproducts_aislename_offset;
+    private static int purchasableproducts_shopname_offset;
+    private static int purchasableproducts_shopcity_offset;
+    private static int purchasableproducts_shopstreet_offset;
 
-    public final static int RESUMESTATE_NOTHING = 0;
-    public final static int RESUMESTATE_PRODUCTADDTOSHOPLIST = 1;
-    public int resume_state = RESUMESTATE_NOTHING;
-    public boolean devmode;
-    public boolean helpoffmode;
-    public PurchaseableProductsAdapter currentppa;
+    private final static int RESUMESTATE_NOTHING = 0;
+    private final static int RESUMESTATE_PRODUCTADDTOSHOPLIST = 1;
+    private int resume_state = RESUMESTATE_NOTHING;
+    private boolean devmode;
+    private boolean helpoffmode;
+    private PurchaseableProductsAdapter currentppa;
 
     private final static String THIS_ACTIVITY = "AddPurchasableProductsToShopList";
     private final ShopperDBHelper shopperdb = new ShopperDBHelper(this, null, null, 1);
@@ -60,9 +61,9 @@ public class AddPurchasableProductsToShopList extends AppCompatActivity{
     private EditText productselect;
     private EditText shopselect;
     private LinearLayout purchaseableproductslist_help_layout;
-    public String purchaseableproductslistsortorder = Constants.PURCHASABLEPRODUCTSLISTORDER_BY_PRODUCT;
-    public String currentshopid = "";
-    public String currentproductid = "";
+    private String purchaseableproductslistsortorder = Constants.PURCHASABLEPRODUCTSLISTORDER_BY_PRODUCT;
+    private String currentshopid = "";
+    private String currentproductid = "";
 
 
     protected  void onResume() {
@@ -199,7 +200,7 @@ public class AddPurchasableProductsToShopList extends AppCompatActivity{
         Toast.makeText(getApplicationContext(),"This will show the shopping list",Toast.LENGTH_LONG).show();
     }
 
-    public void setPurchasableProductsOffsets(Cursor cursor) {
+    private void setPurchasableProductsOffsets(Cursor cursor) {
         if(purchasableproducts_productusageaisleref_offset != -1) {
             return;
         }

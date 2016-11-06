@@ -19,15 +19,16 @@ import android.widget.Toast;
  * Created by Mike092015 on 9/02/2016.
  * Changed for GIT
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class ProductAddActivity extends AppCompatActivity {
     // standard definitions
     public final static String THIS_ACTIVITY = "ProductAddActivity";
     private final ShopperDBHelper shopperdb = new ShopperDBHelper(this, null, null, 1);
     // close to satndard definitions
-    public final static int RESUMESTATE_NOTHING = 0;
+    private final static int RESUMESTATE_NOTHING = 0;
     public int resume_state = RESUMESTATE_NOTHING;
-    public boolean devmode;
-    public boolean helpoffmode;
+    private boolean devmode;
+    private boolean helpoffmode;
 
     //==============================================================================================
     // Cursor Offsets.
@@ -37,31 +38,31 @@ public class ProductAddActivity extends AppCompatActivity {
     // Note! column use changes may still be required if adding or deleting columns from tables or
     //     queries.
 
-    public static int products_productid_offset = -1;
-    public static int products_productname_offset;
-    public static int products_productorder_offset;
-    public static int products_productaisleref_offset;
-    public static int products_productuses_offset;
-    public static int products_productnotes_offset;
+    private static int products_productid_offset = -1;
+    private static int products_productname_offset;
+    private static int products_productorder_offset;
+    private static int products_productaisleref_offset;
+    private static int products_productuses_offset;
+    private static int products_productnotes_offset;
 
     // Layout based variables - created here to allow access throughout this activity
-    public TextView productname_label;
-    public EditText productname_edittext;
-    public TextView productnotes_label;
-    public EditText productnotes_edittext;
-    public TextView save_button;
-    public TextView done_button;
-    public String productname;
-    public String productnotes;
-    public ListView currentproductslist;
-    public Cursor currentproductlistcsr;
-    public ProductsCursorAdapter currentproductslistadapter;
-    public LinearLayout productaddedithelplayout;
-    public String productlistsortorder = Constants.PRODUCTLISTORDER_BY_PRODUCT;
+    private TextView productname_label;
+    private EditText productname_edittext;
+    private TextView productnotes_label;
+    private EditText productnotes_edittext;
+    private TextView save_button;
+    private TextView done_button;
+    private String productname;
+    private String productnotes;
+    private ListView currentproductslist;
+    private Cursor currentproductlistcsr;
+    private ProductsCursorAdapter currentproductslistadapter;
+    private LinearLayout productaddedithelplayout;
+    private String productlistsortorder = Constants.PRODUCTLISTORDER_BY_PRODUCT;
 
     // Data based variables - created here to allow access throughout this activity
     private String passedproductname = "";
-    public String passedproductnotes = "";
+    private String passedproductnotes = "";
     private long passedproductid = -1;
     private int mode = 0;
 
@@ -163,7 +164,7 @@ public class ProductAddActivity extends AppCompatActivity {
             }
         }
     }
-    public void refreshCurrentProductsList() {
+    private void refreshCurrentProductsList() {
         currentproductlistcsr = shopperdb.getProductsAsCursor(productlistsortorder,"");
         currentproductslistadapter.swapCursor(currentproductlistcsr);
     }
@@ -180,7 +181,7 @@ public class ProductAddActivity extends AppCompatActivity {
     }
 
     // Set Products Table query offsets into returned cursor, if not already set
-    public void setProductsOffsets(Cursor cursor) {
+    private void setProductsOffsets(Cursor cursor) {
         if(products_productid_offset != -1) {
             return;
         }

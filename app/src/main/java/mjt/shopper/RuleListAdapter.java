@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 /**
  *
  */
+@SuppressWarnings("FieldCanBeLocal")
 class RuleListAdapter extends CursorAdapter {
 
     //==============================================================================================

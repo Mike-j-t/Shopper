@@ -36,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/standard_listview_text_size"
+            android:text="@string/rulesuggestion_instructions"
             android:background="@color/colorHelpButton"
             />
     </LinearLayout>
@@ -52,7 +53,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="@dimen/standard_subsubsubheading_height"
-            android:text="@string/title_activtyrulesuggestion_list"
+            android:text="@string/title_activity_rulesuggestion_list"
             android:textSize="@dimen/standard_subsubsubheading_text_size"
             android:textColor="@color/colorNormalButtonText"
             android:textStyle="bold"

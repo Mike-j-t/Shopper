@@ -25,10 +25,10 @@ class AisleListSpinnerAdapter extends CursorAdapter {
 
     // Variables to store aisles table offsets as obtained via the defined column names by
     // call to setAislesOffsets (aisles_aisleid_offset set -1 to act as notdone flag )
-    public static int aisles_aisleid_offset = -1;
-    public static int aisles_aislename_offset;
-    public static int aisles_aisleorder_offset;
-    public static int aisles_aisleshopref_offset;
+    private static int aisles_aisleid_offset = -1;
+    private static int aisles_aislename_offset;
+    private static int aisles_aisleorder_offset;
+    private static int aisles_aisleshopref_offset;
 
     public AisleListSpinnerAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
@@ -90,7 +90,7 @@ class AisleListSpinnerAdapter extends CursorAdapter {
 
 
     // Set Aisles Table query offsets into returned cursor, if not already set
-    public void setAislesOffsets(Cursor cursor) {
+    private void setAislesOffsets(Cursor cursor) {
         if(aisles_aisleid_offset != -1) {
             return;
         }
