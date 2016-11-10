@@ -123,5 +123,11 @@
             android:screenOrientation="portrait"
             >
         </activity>
+        <activity android:name=".RuleSuggestModifyActivity"
+            android:label="@string/title_activity_rulesuggestmodify"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            >
+        </activity>
     </application>
 </manifest>

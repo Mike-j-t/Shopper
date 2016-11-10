@@ -241,6 +241,37 @@ public class RuleAddEdit extends AppCompatActivity {
                 ruleaddeditautoadd.setChecked(true);
             }
         }
+        if(caller.equals("RuleSuggestModifyActivity_MODIFY")) {
+            ruleaddeditrulename.setText(
+                    getIntent().getStringExtra(
+                            getResources().getString(
+                                    R.string.intentkey_rulename)
+                    ));
+            ruleaddeditperiodmultiplier.setText(Integer.toString(
+                    getIntent().getIntExtra(
+                            getResources().getString(R.string.intentkey_rulemultiplier),
+                            1
+                    )));
+            ruleaddeditquantity.setText(Integer.toString(
+                    getIntent().getIntExtra(
+                            getResources().getString(
+                                    R.string.intentkey_rulequantity),
+                            1
+                    )));
+            ruleaddeditstartdate.setText(
+                    sdf.format(
+                            getIntent().getLongExtra(
+                                    getResources().getString(
+                                            R.string.intentkey_ruleactiveon),0)
+                    ));
+            ruleaddeditperiodselector.setSelection(0);
+            int prompt = getIntent().getIntExtra(getResources().getString(R.string.intentkey_ruleprompt),0);
+            if(prompt > 0) {
+                ruleaddeditautoadd.setChecked(false);
+            } else {
+                ruleaddeditautoadd.setChecked(true);
+            }
+        }
         /**
          * Add a suggested Rule (i.e. multiplier is supplied)
          */
@@ -388,7 +419,7 @@ public class RuleAddEdit extends AppCompatActivity {
                 this.finish();
             }
         }
-        if(caller.equals("RuleAddEditList_UPDATE")) {
+        if(caller.equals("RuleAddEditList_UPDATE") || caller.equals("RuleSuggestModifyActivity_MODIFY")) {
             shopperdb.updateRule(getIntent().getLongExtra(getResources().getString(R.string.intentkey_ruleid),-1),
                     currentrulename,0,currentautoadd,currentperiodasint,
                     currentperiodmultiplier,currentstartdateastime,currentproductid,currentaisleid,
