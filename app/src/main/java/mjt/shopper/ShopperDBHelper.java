@@ -216,7 +216,6 @@ class DBDatabase {
         return sql;
     }
     // Export All Table Data (not expect to work as no escaping as yet)
-    //TODO Getting close 1 issues.
     //TODO 1 Need to do equiv to MYSQL_REAL_ESCAPE otherwise OK load
     public String generateExportDataSQL(SQLiteDatabase db) {
         String sql = "";
@@ -911,6 +910,13 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     public static final int RULESUGGESTFLAG_CLEAR = 0;
     public static final int RULESUGGESTFLAG_DIMISSED = 1;
     public static final int RULESUGGESTFLAG_DISABLED = 2;
+    public static final int RULESUGGESTFLAG_ONLYCLEAR = 0;
+    public static final int RULESUGGESTFLAG_ONLYDISMISSED = 1;
+    public static final int RULESSUGGESTFLAG_ONLYDISABLED = 2;
+    public static final int RULESUGGESTFLAG_NOTCLEAR = 10;
+    public static final int RULSUGGESTFLAG_NOTDISMISSED = 11;
+    public static final int RULESUGGESTFLAG_NOTDISABLED = 12;
+    public static final int RULESUGGESTFLAG_IGNORE = 30;
 
 
     // Rules
@@ -1771,20 +1777,62 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
          cv.put(SHOPS_COLUMN_NOTES, shopnotes);
          db.update(SHOPS_TABLE_NAME, cv, SHOPS_COLUMN_ID + " = " + shopid + " ;", null);
     }
-    //==============================================================================================
+
+    /**
+     * deleteShop - Delete a Shop including all records associated with that shop.
+     *
+     *  For each Aisle in the shop :-
+     *      Delete any productusage rows (stocked products) that reference
+     *          the current aisle
+     *      Delete any Rule rows that reference the Aisle
+     *      Delete any ShoppingList rows that reference the Aisle
+     *  Delete the Aisle rows that reference the shop
+     *  Delete the shop row
+     *
+     * @param shopid - the id of the shop to be deleted.
+     */
     public void deleteShop(String shopid) {
         SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         String sqlstr = "SELECT " + AISLES_COLUMN_ID + " FROM " + AISLES_TABLE_NAME +
                 " WHERE " + AISLES_COLUMN_SHOP + " = " + shopid + "; ";
         Cursor csr = db.rawQuery(sqlstr, null);
         while(csr.moveToNext()) {
-            deleteAisle(csr.getLong(csr.getColumnIndex(AISLES_COLUMN_ID)));
+            //deleteAisle(csr.getLong(csr.getColumnIndex(AISLES_COLUMN_ID)));
+
+            //Delete any products in the Aisle
+            sqlstr = " DELETE FROM " + PRODUCTUSAGE_TABLE_NAME +
+                    " WHERE " + PRODUCTUSAGE_COLUMN_AISLEREF + " = " +
+                    csr.getString(csr.getColumnIndex(AISLES_COLUMN_ID)) +
+                    " ;";
+            db.execSQL(sqlstr);
+
+            //Delete any Rules that reference this Aisle
+            sqlstr = " DELETE FROM " + RULES_TABLE_NAME +
+                    " WHERE " + RULES_COLUMN_AISLEREF + " = " +
+                    csr.getString(csr.getColumnIndex(AISLES_COLUMN_ID)) +
+                    " ;";
+            db.execSQL(sqlstr);
+
+            //Delete any Shopping List entries that references this Aisle
+            sqlstr = " DELETE FROM " + SHOPLIST_TABLE_NAME +
+                    " WHERE " + SHOPLIST_COLUMN_AISLEREF + " = " +
+                    csr.getString(csr.getColumnIndex(AISLES_COLUMN_ID)) +
+                    " ;";
+            db.execSQL(sqlstr);
+
         }
+        // Delete any Aisles that reference the shop
+        sqlstr = " DELETE FROM " + AISLES_TABLE_NAME +
+                " WHERE " + AISLES_COLUMN_SHOP + " = " +
+                shopid + "; ";
+        db.execSQL(sqlstr);
+        // Finally delete the shop
         db.execSQL("DELETE FROM " + SHOPS_TABLE_NAME +
                 " WHERE " + SHOPS_COLUMN_ID + " = " + shopid + " ;");
         csr.close();
-        validateRules();
-        validateShoplist();
+        db.setTransactionSuccessful();
+        db.endTransaction();
         db.close();
     }
     //==============================================================================================
@@ -1798,13 +1846,42 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
         db.update(AISLES_TABLE_NAME, cv, AISLES_COLUMN_ID + " = " + aisleid + " ;", null);
     }
     //==============================================================================================
+
+    /**
+     * deleteAisleid - Delete an Aisle and all associated rows
+     * @param aisleid the aisle to be deleted
+     */
     public void deleteAisle(long aisleid) {
-        deleteProductsInAisle(aisleid);
+        //deleteProductsInAisle(aisleid);
         SQLiteDatabase db = this.getWritableDatabase();
+
+        db.beginTransaction();
+        //Delete productusages that reference this aisle
+        String sqlstr = " DELETE FROM " + PRODUCTUSAGE_TABLE_NAME +
+                " WHERE " + PRODUCTUSAGE_COLUMN_AISLEREF + " = " +
+                aisleid +
+                " ;";
+        db.execSQL(sqlstr);
+
+        //Delete any Rules that reference this Aisle
+        sqlstr = " DELETE FROM " + RULES_TABLE_NAME +
+                " WHERE " + RULES_COLUMN_AISLEREF + " = " +
+                aisleid +
+                " ;";
+        db.execSQL(sqlstr);
+
+        //Delete any Shopping List entries that references this Aisle
+        sqlstr = " DELETE FROM " + SHOPLIST_TABLE_NAME +
+                " WHERE " + SHOPLIST_COLUMN_AISLEREF + " = " +
+                aisleid +
+                " ;";
+        db.execSQL(sqlstr);
+
         db.execSQL("DELETE FROM " + AISLES_TABLE_NAME +
                 " WHERE " + AISLES_COLUMN_ID + " = " + aisleid + " ;");
-        validateRules();
-        validateShoplist();
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        db.close();
     }
     //==============================================================================================
     public void updateProduct(long productid, String productname, String productnotes) {
@@ -1821,17 +1898,16 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     public void deleteProduct(long productid) {
 
         SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         String sqlstr = " DELETE FROM " + PRODUCTUSAGE_TABLE_NAME +
                 " WHERE " + PRODUCTUSAGE_COLUMN_PRODUCTREF + " = " + productid + " ;";
         db.execSQL(sqlstr);
-        db.close();
-        db = this.getWritableDatabase();
         sqlstr = " DELETE FROM " + PRODUCTS_TABLE_NAME +
                 " WHERE " + PRODUCTS_COLUMN_ID + " = " + productid + " ;";
         db.execSQL(sqlstr);
+        db.setTransactionSuccessful();
+        db.endTransaction();
         db.close();
-        validateRules();
-        validateShoplist();
     }
     //==============================================================================================
     // Delete ALL products from an Aisle
@@ -1839,25 +1915,27 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     // not deleted.
     public void deleteProductsInAisle(long aisleid) {
         SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         String sqlstr = " DELETE FROM " + PRODUCTUSAGE_TABLE_NAME +
                 " WHERE " + PRODUCTUSAGE_COLUMN_AISLEREF + " = " + aisleid + " ;";
         db.execSQL(sqlstr);
+        db.setTransactionSuccessful();
+        db.endTransaction();
         db.close();
-        validateRules();
-        validateShoplist();
     }
     //==============================================================================================
     // Delete a single product from an aisle's persepctive
     // ie delete the link entry, not the product nor the aisle.
     public void deleteSingleProductFromAisle(long aisleid, long productid) {
         SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
         String sqlstr = " DELETE FROM " + PRODUCTUSAGE_TABLE_NAME +
                 " WHERE " + PRODUCTUSAGE_COLUMN_AISLEREF + " = " + aisleid +
                 " AND " + PRODUCTUSAGE_COLUMN_PRODUCTREF + " = " + productid + " ;";
         db.execSQL(sqlstr);
+        db.setTransactionSuccessful();
+        db.endTransaction();
         db.close();
-        validateRules();
-        validateShoplist();
     }
     //==============================================================================================
     public void updateProductInAisle(long aisleid, long productid, float cost,  int buycount,
@@ -2395,7 +2473,11 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
      *
      * @return Cursor
      */
-    public Cursor getSuggestedRules() {
+    //TODO change to use pre-defined names
+    public Cursor getSuggestedRules(
+            boolean if_rule_exists,
+            boolean if_rule_does_not_exist,
+            int rulesuggestflagoption) {
 
         String sql =
                 "SELECT \n" +
@@ -2425,6 +2507,17 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
                         "shops.shopstreet, " +
                         "shops.shopcity, " +
 
+                        // Rules Columns
+                        //NOTE!     alternative naming convetion for _id -> rules_id
+                        RULES_TABLE_NAME + "." + RULES_COLUMN_ID + " AS " +
+                        RULES_TABLE_NAME + RULES_COLUMN_ID + ", " +
+                        RULES_TABLE_NAME + "." + RULES_COLUMN_NAME + ", " +
+                        RULES_TABLE_NAME + "." + RULES_COLUMN_MULTIPLIER + ", " +
+                        RULES_TABLE_NAME + "." + RULES_COLUMN_PERIOD + ", " +
+                        RULES_TABLE_NAME + "." + RULES_COLUMN_NUMBERTOGET + ", " +
+                        RULES_TABLE_NAME + "." + RULES_COLUMN_ACTIVEON + ", " +
+                        RULES_TABLE_NAME + "." + RULES_COLUMN_PROMPTFLAG + ", " +
+
                         // Calculate approx purchase interval in days i.e number
                         // of days between first and latest divided by the number of purchases
                         "((productusage.productlatestbuydate - " +
@@ -2432,33 +2525,66 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
                         "/ 86400000) " +
                         "/ productusage.productbuycount AS suggestedinterval " +
 
-                "FROM productusage " +
+                        "FROM productusage " +
                         "LEFT JOIN products ON productusage.productproductref = products._id  " +
                         "LEFT JOIN aisles ON productusage.productailseref = aisles._id " +
                         "LEFT JOIN shops ON aisles.aisleshopref = shops._id " +
                         "LEFT JOIN rules ON productusage.productailseref = rules.ruleaisleref " +
-                            "AND productusage.productproductref = rules.ruleproductref " +
+                        "AND productusage.productproductref = rules.ruleproductref " +
 
-                "WHERE productusage.productbuycount  > 0 AND " +
+                        "WHERE productusage.productbuycount  > 0 AND " +
                         "productusage.productlatestbuydate > productusage.productfirstbuydate  AND " +
                         "( productusage.productlatestbuydate  " +
-                            "- productusage.productfirstbuydate ) > 7776000000 AND " +
-                "    rules._id IS NULL AND" +
-                "    productusage.rulesuggestflag = 0";
+                        "- productusage.productfirstbuydate ) > 7776000000 ";
+
+        // Filter according to rule exists and rule does not exist
+        // if both true or both false then ignore filter and get all else
+        //
+        // if we only want potential rules, for which a rule already exists
+        // then get rows where the join between the productusage and the rule
+        // is not null (i.e. there is a linked rule)
+        if (if_rule_exists && !if_rule_does_not_exist) {
+            sql = sql + " AND rules._id IS NOT NULL ";
+        }
+        // if we only want potential rules, for which there is not an existing
+        // rule, then get rows where the join between the productusage and the rule
+        // is NULL (i.e. no linked rule)
+        if (!if_rule_exists && if_rule_does_not_exist) {
+            sql = sql + " AND rules._id IS NULL ";
+        }
+        // The rule suggest flag can be 1 of 3 states; Clear, DISMISSED or DISABLED
+
+        if (rulesuggestflagoption >= 10) {
+            int compareval = rulesuggestflagoption - 10;
+            sql = sql + " AND " +
+                    ShopperDBHelper.PRODUCTUSAGE_TABLE_NAME + "." +
+                    ShopperDBHelper.PRODUCTUSAGE_COLUMN_RULESUGGESTFLAG +
+                    " <> " + Integer.toString(compareval);
+        } else {
+            sql = sql + " AND " +
+                    ShopperDBHelper.PRODUCTUSAGE_TABLE_NAME + "." +
+                    ShopperDBHelper.PRODUCTUSAGE_COLUMN_RULESUGGESTFLAG +
+                    " = " + Integer.toString(rulesuggestflagoption);
+        }
+
+        sql = sql + "; ";
 
         SQLiteDatabase db = this.getReadableDatabase();
         return  db.rawQuery(sql,null);
     }
 
     public int getSuggestedRulesCount() {
-        Cursor csr = this.getSuggestedRules();
+        Cursor csr = this.getSuggestedRules(false, true, RULESUGGESTFLAG_ONLYCLEAR);
         int rv = csr.getCount();
         csr.close();
         return rv;
     }
 
     /**
-     *
+     * setRuleSuggestFlag   set the rule suggestion flag according to flag
+     *                      flag may be RULESUGGESTFLAG_DISMISSED,
+     *                      RULESUGGESTFLAG_CLEAR, or
+     *                      RULESUGGESTFLAG_DISABLED
      * @param productref    reference to the product
      * @param aisleref      regeresnce to the aisle
      * @param flag          flag to be set
@@ -2547,9 +2673,8 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
      LEFT JOIN shops ON shops._id = aisles.aisleshopref
      LEFT JOIN products ON products._id = productusage.productproductref
      WHERE rulesuggestflag = 2
-     * @return
+     * @return returns cursor
      */
-
     public Cursor getDisabledRules() {
         SQLiteDatabase db = this.getReadableDatabase();
         String sqlstr = "SELECT " +

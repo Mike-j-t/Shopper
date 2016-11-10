@@ -16,4 +16,9 @@
         android:title="@string/title_activity_reviewdisabledsuggestions"
         android:visible="false"
         />
+    <item
+        android:id="@+id/rulesuggestmodify"
+        android:icon="@android:drawable/ic_menu_call"
+        android:title="@string/rulesuggestmodify"
+        />
 </menu>

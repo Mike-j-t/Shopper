@@ -208,6 +208,7 @@
     <string name="shoppinglistpurchasedbutton">BOUGHT</string>
     <string name="shoppinglistradjustbutton">ADJUST</string>
     <string name="standardskiptext">SKIP</string>
+    <string name="standardmodifybutton">MODIFY</string>
 
     <!-- <string name="title_activity_shops">Shopper - Shops</string> -->
     <string name="title_activity_main">Shopper</string>
@@ -232,6 +233,7 @@
     <string name="title_activity_addpurchaseableproducttoshoplist">Shopper - Add to Shopping List</string>
     <string name="title_activity_database_inspector">Shopper- Database Inspector</string>
     <string name="title_activity_reviewdisabledsuggestions">Review Disabled Suggestions</string>
+    <string name="title_activity_rulesuggestmodify">Shopper - Rule Modification Suggestions</string>
 
     <!-- <string name="standardHeadingStyle">bold</string> -->
 
@@ -435,6 +437,11 @@
     <string name="usersettingslabel">Settings</string>
     <string name="datalabel">Data Handling</string>
     <string name="forcesuggestions">Rule Suggestions</string>
+    <string name="rulesuggestmodify">Suggest Rule Modifications</string>
+    <string name="frequencydesc">Interval is the number of days per 1 Item.</string>
+    <string name="currentfrequencylabel">Rule\'s Interval</string>
+    <string name="actualfrequencylabel">Suggested Interval</string>
+    <string name="accuracylabel">Accuracy</string>
 
     <string name="datahandlingtitle">Shopper Database Data Handling Options</string>
     <string name="datahanglingbackupdirectory_label">Backup Directory:</string>

@@ -111,7 +111,7 @@ public class RuleSuggestion extends AppCompatActivity{
         // Get rule suggestions from database
         if(todorulesuggest || force) {
             db = new ShopperDBHelper(context,null,null,1);
-            Cursor csr = db.getSuggestedRules();
+            Cursor csr = db.getSuggestedRules(false,true,ShopperDBHelper.RULESUGGESTFLAG_ONLYCLEAR);
             Toast.makeText(context, "Number of Rule Suggestions is " +
                             Integer.toString(csr.getCount()),
                     Toast.LENGTH_LONG).show();

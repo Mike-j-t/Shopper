@@ -27,9 +27,6 @@ import java.util.Date;
 // Setup Values table (if already done then duplicates won't be added)
 // Button handling as per xml then handle selection of options
 
-//TODO Add ability to suggest Rule modifications???
-//TODO suss out dialog sizing for Shopping list adjust
-
 @SuppressWarnings("FieldCanBeLocal")
 public class MainActivity extends AppCompatActivity {
 
@@ -228,6 +225,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.reviewdisabledsuggestions:
                 new ReviewDisabledRuleSuggestions(this);
                 break;
+            case R.id.rulesuggestmodify:
+                Intent intent = new Intent(this,RuleSuggestModifyActivity.class);
+                startActivity(intent);
             default:
         }
         return super.onOptionsItemSelected(menuItem);
