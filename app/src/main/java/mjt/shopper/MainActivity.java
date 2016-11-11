@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView dbdatahelpbutton;
     private TextView dbschemabutton;
     private TextView dbschemahelpbutton;
-    private MenuItem reviewdisabledrulesuggestions;
+    //private MenuItem reviewdisabledrulesuggestions;
 
     //==============================================================================================
     //==============================================================================================
@@ -181,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem reviewdisabledsuggestions = menu.findItem(R.id.reviewdisabledsuggestions);
         MenuItem forcerulesuggestion = menu.findItem(R.id.forcesuggestions);
+        MenuItem rulesuggestmodify = menu.findItem(R.id.rulesuggestmodify);
 
         /**
          * Enable Review Disabled Rule Suggestions only if some rules are disabled
@@ -198,6 +199,15 @@ public class MainActivity extends AppCompatActivity {
             forcerulesuggestion.setVisible(true);
         } else {
             forcerulesuggestion.setVisible(false);
+        }
+        /**
+         * Enable Suggest Modify Rule only if the are modifiable rules AND
+         * history (link from productusage to the rule as per getSuggestedRules)
+         */
+        if(shopperdb.getSuggestedRulesCount(true,false,30) > 0 ) {
+            rulesuggestmodify.setVisible(true);
+        } else {
+            rulesuggestmodify.setVisible(false);
         }
         return true;
     }

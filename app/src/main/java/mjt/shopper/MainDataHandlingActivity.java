@@ -278,7 +278,8 @@ public class MainDataHandlingActivity extends AppCompatActivity {
                 datetimepart.setText(datetimestr);
                 break;
             case R.id.dh_done:
-                this.finish();
+                // Note! use UP rather than finish to force DB re-link
+                this.onNavigateUp();
                 break;
             default:
                 break;

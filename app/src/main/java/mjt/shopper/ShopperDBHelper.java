@@ -2581,6 +2581,25 @@ public class ShopperDBHelper extends SQLiteOpenHelper {
     }
 
     /**
+     *
+     * @param if_rule_exists            include rules that exist
+     * @param if_rule_does_not_exist    include rules that don't exist
+     * @param rulesuggestflagoption
+     * @return
+     */
+    public int getSuggestedRulesCount(boolean if_rule_exists,
+                                      boolean if_rule_does_not_exist,
+                                      int rulesuggestflagoption) {
+        Cursor csr = this.getSuggestedRules(
+                if_rule_exists,
+                if_rule_does_not_exist,
+                rulesuggestflagoption);
+        int rv = csr.getCount();
+        csr.close();
+        return rv;
+    }
+
+    /**
      * setRuleSuggestFlag   set the rule suggestion flag according to flag
      *                      flag may be RULESUGGESTFLAG_DISMISSED,
      *                      RULESUGGESTFLAG_CLEAR, or
